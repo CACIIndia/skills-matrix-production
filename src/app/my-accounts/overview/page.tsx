@@ -5,6 +5,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import SkillCard from "@/app/components/SkillsCard";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
 
@@ -225,25 +226,7 @@ const OverviewPage = () => {
           <div className="col-span-2">
             <div className="flex flex-col gap-5 lg:gap-7.5">
               <div className="flex flex-col gap-5 lg:gap-7.5">
-                <div className="card">
-                  <div className="card-header">
-                    <h3 className="card-title">Skills</h3>
-                  </div>
-                  <div className="card-body">
-                    <div className="flex flex-wrap gap-2.5 mb-2">
-                      <div className="flex gap-3">
-                        {skills.map((skill, index) => (
-                          <span
-                            key={index}
-                            className="badge badge-sm badge-gray-200"
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <SkillCard skills={skills} />
                 <div className="card" style={{zIndex:"-100"}}>
                   <div className="card-header ">
                     <h3 className="card-title">Projects History</h3>

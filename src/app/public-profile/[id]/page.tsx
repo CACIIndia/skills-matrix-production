@@ -5,7 +5,7 @@ import ProfileActions from "@/app/components/ProfileActions";
 import Menu from "../../components/Menu";
 import GeneralInfoCard from "../../components/GeneralInfoCard";
 import AdditionalInfoCard from "../../components/AdditionalInfoCard";
-import SkillsCard from "../../components/SkillsCard";
+import SkillCard from "@/app/components/SkillsCard";
 import ProjectHistoryCard from "../../components/ProjectHistoryCard";
 import { useParams } from "next/navigation";
 const defaultData: UserDetails = {
@@ -54,7 +54,10 @@ interface AdditionalInfo {
   location: string;
   cost_centre: string;
 }
-
+interface Skill {
+  name: string;
+  level: string;
+}
 interface Project {
   project_name: string;
   start_date: string;
@@ -103,7 +106,7 @@ interface UserDetails {
     sfia_level: string;
     reported_to: string;
   };
-  skills: string[];
+  skills: Skill[];
   projects: {
     current_project: CurrentProject;
     previous_projects: PreviousProject[];
@@ -179,7 +182,9 @@ const PublicProfile = () => {
 
           <div className='col-span-2 grid gap-5'>
             {/* Skills */}
-            <SkillsCard skills={data?.skills || []} />
+            {/* <SkillsCard skills={data?.skills || []} /> */}
+            <SkillCard skills={data?.skills || []} />  
+            
 
             {/* Project History */}
             <ProjectHistoryCard
