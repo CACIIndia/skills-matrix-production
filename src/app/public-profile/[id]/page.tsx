@@ -180,12 +180,11 @@ const PublicProfile = () => {
             <AdditionalInfoCard additional_info={data?.additional_info} />
           </div>
 
-          <div className='col-span-2 grid gap-5'>
-            {/* Skills */}
-            {/* <SkillsCard skills={data?.skills || []} /> */}
+          <div className='col-span-2 grid gap-5 grid-cols-1 '>
+          
             <SkillCard skills={data?.skills || []} />  
             
-
+          
             {/* Project History */}
             <ProjectHistoryCard
               current_project={data?.projects?.current_project}

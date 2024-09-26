@@ -32,7 +32,7 @@ export default function MasterLayout({
       {/* Sidebar */}
       <div
         id='SideBar'
-        className={`fixed z-40 hidden h-[100%] bg-white text-white transition-all duration-300 lg:flex ${
+        className={`fixed hidden h-[100%] bg-white text-white transition-all duration-300 lg:flex ${
           isExpanded ? `w-[10%] ${hoverClass}` : "w-[20%]"
         } `}
       >

@@ -15,41 +15,7 @@ export default function SkillsPage() {
     <div className='container-fixed'>
       <div className='lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3'>
         <div className='col-span-2'>
-          {/* <div className='lg:gap-7.5 flex flex-col gap-5'>
-            <div className='lg:gap-7.5 flex flex-col gap-5'>
-              <div className='card'>
-                <div className='card-header'>
-                  <h3 className='card-title'>Skills</h3>
-                </div>
-                <div className='card-body'>
-                  <div className='mb-2 flex flex-wrap gap-2.5'>
-                    <span className='badge badge-sm badge-success'>
-                      Web Design
-                    </span>
-                    <span className='badge badge-sm badge-success badge-outline'>
-                      Code Review
-                    </span>
-                    <span className='badge badge-sm badge-danger'>Figma</span>
-                    <span className='badge badge-sm badge-danger badge-outline'>
-                      Product Development
-                    </span>
-                    <span className='badge badge-sm badge-info'>Webflow</span>
-                    <span className='badge badge-sm badge-info badge-outline'>
-                      Webflow
-                    </span>
-                    <span className='badge badge-sm badge-warning badge-outline'>
-                      AI
-                    </span>
-                    <span className='badge badge-sm badge-warning'>AI</span>
-                    <span className='badge badge-sm badge-primary badge-outline'>
-                      noCode
-                    </span>
-                    <span className='badge badge-sm badge-primary'>noCode</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
+          
 
           <SkillCard skills={skills} showEditButton={true} />
         </div>

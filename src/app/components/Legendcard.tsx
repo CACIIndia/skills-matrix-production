@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 const skillLevels = [
   { level: 0, name: 'None', description: 'No knowledge of the skill', color: 'badge-outline' },
@@ -11,9 +11,10 @@ const skillLevels = [
 interface LegendProps {
   layout: 'grid' | 'flex'; // Accept 'grid' or 'flex' as props
   hideCardHeader?: boolean; 
+  optionalComponent?: ReactNode;
 }
 
-const Legend: React.FC<LegendProps> = ({ layout ,hideCardHeader = false }) => {
+const Legend: React.FC<LegendProps> = ({ layout ,hideCardHeader = false , optionalComponent}) => {
   const containerClasses = layout === 'grid' ? 'grid gap-5' : 'flex flex-row gap-3.5';
 
   return (
@@ -25,7 +26,7 @@ const Legend: React.FC<LegendProps> = ({ layout ,hideCardHeader = false }) => {
               <h3 className='card-title'>Legend</h3>
             </div>
           )}
-          <div className='card-body'>
+          <div className='card-body mb-0'>
             <div className={containerClasses}>
               {skillLevels.map((skill) => (
                 <div key={skill.level} className={`${layout==="grid"? "flex":"grid"} align-start gap-3.5 w-[100%]`}>
@@ -44,6 +45,13 @@ const Legend: React.FC<LegendProps> = ({ layout ,hideCardHeader = false }) => {
               ))}
             </div>
           </div>
+
+          {/* render here  when i pass component optional*/}
+          {optionalComponent && (
+            <div className="optional-component">
+              {optionalComponent}
+            </div>
+          )}
         </div>
       </div>
     </div>

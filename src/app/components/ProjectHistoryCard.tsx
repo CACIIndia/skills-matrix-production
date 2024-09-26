@@ -37,7 +37,7 @@ const ProjectHistoryCard: React.FC<ProjectHistoryCardProps> = ({
   employment_history,
 }) => {
   return (
-    <div className='card'>
+    <div className='card ' style={{zIndex:-1}}>
       <div className='card-header'>
         <h3 className='card-title'>Projects History</h3>
       </div>

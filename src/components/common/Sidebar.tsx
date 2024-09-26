@@ -20,8 +20,8 @@ const Sidebar: React.FC<SidebarProps> = ({isExpanded}) => {
 
 	return (
 		<div
-			style={{width: "90%", zIndex: 1}}
-			className="mx-auto z-1  lg:flex flex-col shrink-0  justify-center bg-light border-r border-r-gray-200 "
+			style={{width: "90%"}}
+			className="mx-auto   lg:flex flex-col shrink-0  justify-center bg-light border-r border-r-gray-200 "
 		>
 			{/* logo */}
 			<div className="p-6  ">
@@ -116,7 +116,7 @@ const Sidebar: React.FC<SidebarProps> = ({isExpanded}) => {
 							<div className="menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] pl-[10px] pr-[10px] py-[6px]">
 								<span
 									className={`menu-icon items-start ${
-										pathname === "/public-profile"
+										pathname.startsWith("/public-profile")
 											? "text-primary"
 											: "text-gray-700"
 									} dark:text-gray-400 w-[20px]`}
@@ -125,7 +125,7 @@ const Sidebar: React.FC<SidebarProps> = ({isExpanded}) => {
 								</span>
 								<span
 									className={`menu-title text-sm font-semibold ${
-										pathname === "/public-profile"
+										pathname.startsWith("/public-profile")
 											? "text-primary"
 											: "text-gray-700"
 									} menu-item-active:text-primary menu-link-hover:!text-primary `}
