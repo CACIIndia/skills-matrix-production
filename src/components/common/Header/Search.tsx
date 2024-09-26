@@ -71,7 +71,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, users, searchQuery }) =>
 
   return (
     <div
-      className={`fixed  w-full inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300 ${
+      className={`fixed text-start w-full inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300 ${
         isOpen ? "visible opacity-100" : "invisible opacity-0"
       }`}
       style={{ zIndex: 1050 }}
@@ -110,9 +110,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, users, searchQuery }) =>
                     {filteredUsers.length > 0 ? (
                       filteredUsers.map((user, index) => (
                         <Link
-                          href={`/public-profile/${String(user.id)}`}
+                          href={`/search-profile/${String(user.id)}`}
                           key={index}
                           className="menu-item"
+                          onClick={onClose}
                         >
                           <div className="menu-link flex justify-between gap-2">
                             <div className="flex items-center gap-2.5">

@@ -107,12 +107,12 @@ const Sidebar: React.FC<SidebarProps> = ({isExpanded}) => {
 										pathname === "/dashboard" ? "text-primary" : "text-gray-700"
 									} menu-item-active:text-primary menu-link-hover:!text-primary `}
 								>
-									<Link href={"/"}>Dashboards</Link>
+									<Link href={"/"}>Dashboard</Link>
 								</span>
 							</div>
 						</div>
 
-						<div className="menu-item">
+						{/* <div className="menu-item">
 							<div className="menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] pl-[10px] pr-[10px] py-[6px]">
 								<span
 									className={`menu-icon items-start ${
@@ -157,7 +157,7 @@ const Sidebar: React.FC<SidebarProps> = ({isExpanded}) => {
 									<Link href={"/my-accounts/overview"}> My Account</Link>
 								</span>
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</div>

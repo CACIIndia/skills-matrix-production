@@ -21,7 +21,7 @@ const skillLevels: Record<number, { name: string; color: string }> = {
   4: { name: "Specialist", color: "badge-success" },
 };
 
-const SkillCard: React.FC<SkillCardProps> = ({ skills, showEditButton }) => {
+const SkillCard: React.FC<SkillCardProps> = ({ skills =[], showEditButton }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleModal = () => {
@@ -70,7 +70,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ skills, showEditButton }) => {
   };
 
   return (
-    <div  className=""    >
+    <div  className="">
       <div className="lg:gap-7.5 flex flex-col gap-5" >
         <div className="card" >
           <div className="card-header flex items-center justify-between">
@@ -115,28 +115,25 @@ const SkillCard: React.FC<SkillCardProps> = ({ skills, showEditButton }) => {
           onClick={handleOverlayClick}
          
         >
-          <div className="flex h-[600px] w-[80%] flex-col rounded-lg bg-white shadow-lg">
+          <div className="flex relative h-[600px] w-[80%] flex-col rounded-lg bg-white shadow-lg">
             {/* Header */}
             <div className="flex items-center justify-between border-b-2 p-4">
-              <h2 className="text-xl">Editing Skills</h2>
-
+              {/* <h2 className="text-xl">Editing Skills</h2> */}
+              <Legend
+              layout="flex"
+              hideCardHeader={true}
+              
+            />
               <button
-                className="btn btn-sm btn-icon btn-light btn-clear shrink-0"
+                className="btn btn-sm btn-icon btn-light btn-clear shrink-0 absolute right-3 top-3"
                 onClick={toggleModal}
               >
                 <i className="ki-filled ki-cross"></i>
               </button>
             </div>
-            <Legend
-              layout="flex"
-              hideCardHeader={true}
-              optionalComponent={
-                <div className="px-4 py-2 text-lg font-bold">
-                  Click on the Skills below to cycle through the competency
-                  levels
-                </div>
-              }
-            />
+            <div className="text-start p-5">
+              <h5 className="font-bold">Click on the Skills below to cycle through the competency levels</h5>
+               </div>
             <hr />
 
             {/* Scrollable Content */}
@@ -151,11 +148,8 @@ const SkillCard: React.FC<SkillCardProps> = ({ skills, showEditButton }) => {
                     {category.sub_skills.map((skill) => {
                       const level = skill.level;
                       const levelInfo = skillLevels[level]; // Retrieve level information
-
                       if (!levelInfo) return null;
-
                       const { name, color } = levelInfo;
-
                       return (
                         <div
                           key={skill.skillsuid}
@@ -165,7 +159,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ skills, showEditButton }) => {
                           <span
                             className={`badge badge-sm text-sm ${color} rounded-full p-3`}
                           >
-                            {skill.name} ({name})
+                            {skill.name} ({level})
                           </span>
                         </div>
                       );

@@ -4,18 +4,16 @@ export const MENU_ITEMS = [
 		path: "/dashboard",
 		icon: "ki-element-11",
 		tab: "/dashboard",
-	},
-	{
-		name: "Public Profile",
-		path: "/public-profile",
-		icon: "ki-profile-circle ",
-		tab: "/public-profile",
-	},
+	}
 ];
 
 export const PROFILE_HEADER_ITEMS = [
-	{name: "Overview", path: "/my-accounts/overview"},
-	{name: "Skills", path: "/my-accounts/skills"},
+	{name: "Overview", path: "/profile/overview"},
+	{name: "Skills", path: "/profile/skills"},
 	// {name:"Project",path:"/my-accounts/project"},
-	{name: "Documents", path: "/my-accounts/documents"},
+	{name: "Documents", path: "/profile/documents"},
 ];
+
+export const SEARCH_PROFILE_HEADER_ITEMS =[
+	{name: "Overview", path: "/search-profile"},
+]

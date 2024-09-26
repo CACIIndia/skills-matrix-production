@@ -1,13 +1,13 @@
 "use client";
-import { useEffect, useState } from "react";
-import ProfileHeader from "@/app/components/ProfileHeader";
-import ProfileActions from "@/app/components/ProfileActions";
-import Menu from "../../components/Menu";
-import GeneralInfoCard from "../../components/GeneralInfoCard";
-import AdditionalInfoCard from "../../components/AdditionalInfoCard";
-import SkillCard from "@/app/components/SkillsCard";
-import ProjectHistoryCard from "../../components/ProjectHistoryCard";
-import { useParams } from "next/navigation";
+import React, { FC, useEffect, useState } from 'react';
+import ProfileHeader from '../components/ProfileHeader';
+import { useParams } from 'react-router-dom';
+import Menu from '../components/Menu';
+import ProfileActions from '../components/ProfileActions';
+import { PROFILE_HEADER_ITEMS } from '@/constants/header';
+import { ProfileProvider } from '@/context/profileContext';
+
+
 const defaultData: UserDetails = {
   id: 0,
   name: "",
@@ -46,7 +46,9 @@ const defaultData: UserDetails = {
     }
   }
 };
-
+interface ProfileLayoutProps {
+  children: React.ReactNode;
+}
 interface AdditionalInfo {
   discipline: string;
   specialism: string;
@@ -90,7 +92,6 @@ interface PreviousProject {
   code: string;
   members: ProjectMember[];
 }
-
 interface UserDetails {
   id: number;
   name: string;
@@ -116,22 +117,25 @@ interface UserDetails {
     };
   };
 }
+interface ProfileLayoutProps {
+  children: React.ReactNode;
+}
 
 
-const PublicProfile = () => {
+const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
+
   const [data, setData] = useState<UserDetails | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   // Fetch dynamically
   const params = useParams();
-  const { id } = params;
+ 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`/api/userdetails/${id}`);
-
+        const response = await fetch(`/api/userdetails/${1}`);
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
@@ -145,15 +149,14 @@ const PublicProfile = () => {
       }
     };
     fetchData();
-  }, [id]);
+  }, []);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-
   return (
-    <div className='w-[100%]'>
-      {/* Profile Header */}
-      <ProfileHeader
+<div className='w-[100%]'>
+  <ProfileProvider>
+    <ProfileHeader
         name={data?.name || ""}
         image={data?.image || "/default-avatar.png"}
         email={data?.email || ""}
@@ -164,38 +167,15 @@ const PublicProfile = () => {
       {/* Profile Actions and Menu */}
       <div className='container-fixed'>
         <div className='dark:border-b-coal-100 mb-5 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:mb-10 lg:items-end'>
-          <Menu />
+          <Menu items ={PROFILE_HEADER_ITEMS} />
           <ProfileActions />
         </div>
       </div>
+       {children}
+      </ProfileProvider>
+ </div>
 
-      {/* Part 3: Profile Details */}
-      <div className='container mx-auto p-4'>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-7.5">
-          <div className='col-span-1 grid gap-5'>
-            {/* General Info */}
-            <GeneralInfoCard data={data || defaultData} />
-
-            {/* Additional Info */}
-            <AdditionalInfoCard additional_info={data?.additional_info} />
-          </div>
-
-          <div className='col-span-2 grid gap-5 grid-cols-1 '>
-          
-            <SkillCard skills={data?.skills || []} />  
-            
-          
-            {/* Project History */}
-            <ProjectHistoryCard
-              current_project={data?.projects?.current_project}
-              previous_projects={data?.projects?.previous_projects || []}
-              employment_history={data?.projects?.employment_history}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
   );
 };
 
-export default PublicProfile;
+export default ProfileLayout;

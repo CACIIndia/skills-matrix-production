@@ -16,7 +16,7 @@ export default function Page() {
     }
 
     // Redirect to the /public-profile/[id] page
-    router.replace(`/public-profile/${id}`);
+    router.replace(`/profile/${id}`);
   }, [router]);
 
   return null; // Return null because this page is only for redirecting

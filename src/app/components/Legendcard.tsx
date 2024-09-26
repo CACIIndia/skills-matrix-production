@@ -20,20 +20,20 @@ const Legend: React.FC<LegendProps> = ({ layout ,hideCardHeader = false , option
   return (
     <div className={`col-span-1 text-start`}>
       <div className={`grid gap-5 lg:gap-7.5`}>
-        <div className='card'>
+        <div className={`${hideCardHeader?"":"card"}`}>
         {!hideCardHeader && (
             <div className='card-header'>
               <h3 className='card-title'>Legend</h3>
             </div>
           )}
-          <div className='card-body mb-0'>
+      <div className={`card-body  ${hideCardHeader ? "pb-0" : ""}`} >
             <div className={containerClasses}>
               {skillLevels.map((skill) => (
                 <div key={skill.level} className={`${layout==="grid"? "flex":"grid"} align-start gap-3.5 w-[100%]`}>
                   <div className={`flex ${layout==="grid"? "items-center justify-center":""} `}>
                     <span className={`badge badge-sm ${skill.color} w-14 h-7`}></span>
                   </div>
-                  <div className={`flex flex-col  ${layout==="grid"? "":"h-[70px]"} `}>
+                  <div className={`flex flex-col  ${layout==="grid"? "":"h-auto"} `}>
                     <span className='text-sm font-medium text-gray-800'>
                       {skill.level} | {skill.name}
                     </span>
@@ -50,6 +50,7 @@ const Legend: React.FC<LegendProps> = ({ layout ,hideCardHeader = false , option
           {optionalComponent && (
             <div className="optional-component">
               {optionalComponent}
+              choose your skills
             </div>
           )}
         </div>
