@@ -1,16 +1,19 @@
 "use client";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { useState, useEffect } from "react";
+
 import Sidebar from "../../components/common/Sidebar";
 import Header from "@/components/common/Header/index";
 
+// @TODO This component should be refactored and simplified
 export default function MasterLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [isExpanded, setIsExpanded] = useState(false); //sidebar expand
-  const [hoverClass, setHoverClass] = useState(""); // side bar hoverover extra class
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [hoverClass, setHoverClass] = useState("");
 
   const handleButtonClick = () => {
     setIsExpanded(!isExpanded);
@@ -20,15 +23,23 @@ export default function MasterLayout({
     if (isExpanded) {
       const timer = setTimeout(() => {
         setHoverClass("hover:w-[20%]");
-      }, 100); // Add hover class after 1 second
-      return () => clearTimeout(timer); // Cleanup timeout on unmount or state change
+      }, 100);
+      return () => clearTimeout(timer);
     } else {
-      setHoverClass(""); // Reset hover class when not expanded
+      setHoverClass("");
     }
   }, [isExpanded]);
 
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
+
   return (
-    <>
+    <QueryClientProvider client={client}>
       {/* Sidebar */}
       <div
         style={{ zIndex: 0 ,isolation:"inherit"}}
@@ -75,6 +86,6 @@ export default function MasterLayout({
       >
         {children}
       </div>
-    </>
+    </QueryClientProvider>
   );
 }

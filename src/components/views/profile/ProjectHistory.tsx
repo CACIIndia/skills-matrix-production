@@ -1,41 +1,20 @@
-// components/ProjectHistoryCard.tsx
-
 import Image from "next/image";
-import React from "react";
+import { CurrentProject, PreviousProject } from "@/lib/types/profile";
 
-interface Member {
-  name?: string;
-  image_url?: string;
-  count?: number;
-  placeholder?: string;
-}
+type ProjectHistoryCardProps = {
+  projects: {
+    current_project: CurrentProject;
+    previous_projects: PreviousProject[];
+    employment_history: {
+      company: string;
+      joined_date: string;
+    };
+  };
+};
 
-interface Project {
-  project_name: string;
-  start_date: string;
-  end_date?: string;
-  role: string;
-  description: string;
-  code: string;
-  members: Member[];
-}
-
-interface EmploymentHistory {
-  company: string;
-  joined_date: string;
-}
-
-interface ProjectHistoryCardProps {
-  current_project: Project | null;
-  previous_projects: Project[];
-  employment_history: EmploymentHistory;
-}
-
-const ProjectHistoryCard: React.FC<ProjectHistoryCardProps> = ({
-  current_project,
-  previous_projects,
-  employment_history,
-}) => {
+const ProjectHistoryCard = ({
+  projects: { current_project, previous_projects, employment_history },
+}: ProjectHistoryCardProps) => {
   return (
     <div className='card ' style={{zIndex:-1}}>
       <div className='card-header'>
@@ -43,7 +22,6 @@ const ProjectHistoryCard: React.FC<ProjectHistoryCardProps> = ({
       </div>
       <div className='card-body text-start'>
         <div className='flex flex-col'>
-          {/* Current Project */}
           {current_project && (
             <div className='relative flex items-start'>
               <div className='absolute bottom-0 left-0 top-9 w-9 translate-x-1/2 border-l border-l-gray-300'></div>
@@ -73,7 +51,7 @@ const ProjectHistoryCard: React.FC<ProjectHistoryCardProps> = ({
                           </span>
                         </div>
                       </div>
-                      {/* Members */}
+
                       <div className='flex items-center gap-1.5'>
                         <span className='text-2sm font-medium text-gray-500'>
                           Members:

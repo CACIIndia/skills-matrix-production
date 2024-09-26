@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.56.2",
+    "axios": "^1.7.7",
     "@azure/cosmos": "^4.1.1",
     "classnames": "^2.5.1",
     "mongodb": "^6.8.0",

@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   images: {
-    domains: ['randomuser.me'],
+    domains: ["randomuser.me"],
   },
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -15,6 +15,10 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      colors: {
+        primary: "#0F172A",
+        "primary-light": "#eff6ff",
       },
     },
   },

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { MENU_ITEMS } from "@/constants/header";
+import { MENU_ITEMS } from "@/lib/constants/header";
 
 type MegaMenuProps = {};
 
