@@ -14,6 +14,3 @@ export const PROFILE_HEADER_ITEMS = [
 	{name: "Documents", path: "/profile/documents"},
 ];
 
-export const SEARCH_PROFILE_HEADER_ITEMS =[
-	{name: "Overview", path: "/search-profile"},
-]

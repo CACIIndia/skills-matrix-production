@@ -136,7 +136,7 @@ const initialGeneralInfo: GeneralInfo = {
 };
 
 
-const PublicProfile = () => {
+const SearchProfile = () => {
   const [data, setData] = useState<UserDetails | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -184,13 +184,7 @@ const PublicProfile = () => {
   return (
     <div className='w-[100%]'>
       {/* Profile Header */}
-      <ProfileHeader
-        name={data?.name || ""}
-        image={data?.image || "/default-avatar.png"}
-        email={data?.email || ""}
-        additional_info={data?.additional_info}
-        data={data || defaultData} // Use default valu  e if data is null
-      />
+      <ProfileHeader useprofile={false} profile_header_data={data || {}}/>
 
       {/* Profile Actions and Menu */}
       <div className='container-fixed'>
@@ -245,4 +239,4 @@ const PublicProfile = () => {
   );
 };
 
-export default PublicProfile;
+export default SearchProfile;

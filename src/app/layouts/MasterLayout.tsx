@@ -31,8 +31,9 @@ export default function MasterLayout({
     <>
       {/* Sidebar */}
       <div
+        style={{ zIndex: 0 }}
         id='SideBar'
-        className={`fixed hidden z-1 h-[100%] bg-white text-white transition-all duration-300 lg:flex ${
+        className={`fixed hidden  h-[100%] bg-white text-white transition-all duration-300 lg:flex ${
           isExpanded ? `w-[10%] ${hoverClass}` : "w-[20%]"
         } `}
       >
@@ -58,14 +59,16 @@ export default function MasterLayout({
         className={`fixed flex h-[100px] w-[100%] grow bg-white text-center transition-all duration-300 ${
           isExpanded ? "lg:ml-[10%] lg:w-[90%]" : "lg:ml-[20%] lg:w-[80%]"
         }`}
-      >
+        style={{zIndex:0}}
+      > 
+      
         <Header />
       </div>
 
       {/* Body Div */}
       <div
         id='bodyDiv'
-        style={{ zIndex: -100 }}
+        // style={{ zIndex: -100 }}
         className={`flex h-auto min-h-[100vh] grow border-b-2 pt-[100px] text-center transition-all duration-300 ${
           isExpanded ? "lg:ml-[10%] lg:w-[90%]" : "lg:ml-[20%] lg:w-[80%]"
         }`}
