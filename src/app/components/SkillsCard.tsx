@@ -159,7 +159,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ skills =[], showEditButton }) => 
                           <span
                             className={`badge badge-sm text-sm ${color} rounded-full p-3`}
                           >
-                            {level} | {skill.name} 
+                            {level ==0? "": ` ${level} |`}  {skill.name} 
                           </span>
                         </div>
                       );

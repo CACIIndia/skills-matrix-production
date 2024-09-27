@@ -31,7 +31,7 @@ export default function MasterLayout({
     <>
       {/* Sidebar */}
       <div
-        style={{ zIndex: 0 }}
+        style={{ zIndex: 0 ,isolation:"inherit"}}
         id='SideBar'
         className={`fixed hidden  h-[100%] bg-white text-white transition-all duration-300 lg:flex ${
           isExpanded ? `w-[10%] ${hoverClass}` : "w-[20%]"
