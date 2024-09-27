@@ -6,6 +6,7 @@ import Menu from '../components/Menu';
 import ProfileActions from '../components/ProfileActions';
 import { PROFILE_HEADER_ITEMS } from '@/constants/header';
 import { ProfileProvider } from '@/context/profileContext';
+import { usePathname } from 'next/navigation';
 
 
 const defaultData: UserDetails = {
@@ -124,53 +125,21 @@ interface ProfileLayoutProps {
 
 const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
 
-  const [data, setData] = useState<UserDetails | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  
+  const pathname = usePathname(); // Get the current path
+  
+  // If the path matches profile/overview/[id], skip layout rendering
+  const shouldRenderLayout = pathname === '/profile/overview' || !pathname.startsWith('/profile/overview/');
+  
+  if (!shouldRenderLayout) {
+    return children; // Return only the child content if we're on profile/overview/[id]
+  }
 
-  // Fetch dynamically
-  const params = useParams();
  
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`/api/userdetails/${1}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const result = await response.json();
-        console.log(result, "response");
-        setData(result.data);
-      } catch (error) {
-        setError((error as Error).message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
   return (
 <div className='w-[100%]'>
   <ProfileProvider>
-    <ProfileHeader
-        name={data?.name || ""}
-        image={data?.image || "/default-avatar.png"}
-        email={data?.email || ""}
-        additional_info={data?.additional_info}
-        data={data || defaultData} // Use default value if data is null
-      />
-
-      {/* Profile Actions and Menu */}
-      <div className='container-fixed'>
-        <div className='dark:border-b-coal-100 mb-5 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:mb-10 lg:items-end'>
-          <Menu items ={PROFILE_HEADER_ITEMS} />
-          <ProfileActions />
-        </div>
-      </div>
+    
        {children}
       </ProfileProvider>
  </div>

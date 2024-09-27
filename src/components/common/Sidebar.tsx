@@ -54,38 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({isExpanded}) => {
 				</Link>
 			</div>
 
-			{/* Menus  like dashboard,profile */}
-			{/* <div
-        className="sidebar-content flex grow shrink-0 py-10 pr-2 "
-        id="sidebar_content"
-      >
-          <div className="flex flex-col gap-4">
-            {menuItems.map(({name,path,icon,tab})=>{
-              return <div key={name} className=" ">
-              
-              <Link
-                href={path}
-                className="flex items-center space-x-3   pr-20 py-1  "
-              >
-                <span className="w-[20px]  flex items-center">
-                  <i
-                    className={`ki-filled ${icon} text-lg ${pathname === path || pathname.startsWith(tab)  ? 'text-primary' : 'text-white'}`}
-                 
-                  ></i>
-                </span>
-                <span className={`menu-title text-white text-sm font-semibold  ${pathname === path || pathname.startsWith(tab)  ? 'text-primary' : 'text-white'} `}>
-                  {name}
-                </span>
-              </Link>
-           
-          </div>
-            })}
-            
-
-           
-          </div>
-       
-      </div> */}
+			
 
 			<div
 				className="sidebar-content flex grow shrink-0 py-5 pr-1 "
@@ -162,10 +131,7 @@ const Sidebar: React.FC<SidebarProps> = ({isExpanded}) => {
 				</div>
 			</div>
 
-			{/* SideBar Footer */}
-			{/* <div className="sidebar-footer flex flex-col px-3 py-4 ">
-        <button>Toggle Dark Mode</button>
-      </div> */}
+		
 		</div>
 	);
 };

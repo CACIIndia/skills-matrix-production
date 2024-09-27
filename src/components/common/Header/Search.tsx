@@ -1,3 +1,5 @@
+
+"use client";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Button from "@/components/common/Button";
@@ -26,6 +28,7 @@ const ProfileSearch: React.FC = () => {
   const toggleModal = () => setModalOpen((prev) => !prev);
   const closeModal = () => setModalOpen(false);
 
+ 
   // Fetch users from API on component mount
   useEffect(() => {
     const fetchUsers = async () => {
@@ -71,10 +74,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, users, searchQuery }) =>
 
   return (
     <div
-      className={`fixed text-start w-full inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300 ${
+      className={`fixed text-start w-full inset-0  flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300 ${
         isOpen ? "visible opacity-100" : "invisible opacity-0"
       }`}
-      style={{ zIndex: 1050 }}
+      style={{ zIndex: 2  }}
     >
       <div className="relative w-[90%] max-w-[550px] bg-white rounded-lg p-4 shadow-lg">
         {/* Modal Header */}
@@ -110,7 +113,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, users, searchQuery }) =>
                     {filteredUsers.length > 0 ? (
                       filteredUsers.map((user, index) => (
                         <Link
-                          href={`/search-profile/${String(user.id)}`}
+                          href={`/profile/overview/${String(user.id)}`}
                           key={index}
                           className="menu-item"
                           onClick={onClose}
