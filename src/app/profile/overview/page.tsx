@@ -31,7 +31,6 @@ const initialGeneralInfo: GeneralInfo = {
 
 const OverviewPage = () => {
   const { data, loading, error } = useProfile();
-  console.log(data, loading, error, "errorloadingdata");
   const [general_info, setGeneralInfo] =
     useState<GeneralInfo>(initialGeneralInfo);
   const [skills, setSkills] = useState([]);

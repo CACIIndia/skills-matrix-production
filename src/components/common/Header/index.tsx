@@ -17,16 +17,11 @@ const Header = () => {
             <div className='flex items-stretch' id='megamenu_container'>
               <div
                 className='flex items-stretch'
-                data-reparent='true'
-                data-reparent-mode='prepend|lg:prepend'
-                data-reparent-target='body|lg:#megamenu_container'
+              
               >
                 <div
                   className='hidden lg:flex lg:items-stretch'
-                  data-drawer='true'
-                  data-drawer-className='drawer drawer-start fixed z-10 top-0 bottom-0 w-full mr-5 max-w-[250px] p-5 lg:p-0 overflow-auto'
-                  data-drawer-enable='true|lg:false'
-                  id='megamenu_wrapper'
+                
                 >
                   <MegaMenu />
                 </div>
