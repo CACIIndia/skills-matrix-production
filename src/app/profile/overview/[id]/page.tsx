@@ -2,24 +2,24 @@
 import { useEffect, useState } from "react";
 import ProfileHeader from "@/app/components/ProfileHeader";
 import ProfileActions from "@/app/components/ProfileActions";
-import Menu from "../../components/Menu";
-import GeneralInfoCard from "../../components/GeneralInfoCard";
-import AdditionalInfoCard from "../../components/AdditionalInfoCard";
-import SkillsCard from "../../components/SkillsCard";
-import ProjectHistoryCard from "../../components/ProjectHistoryCard";
+import GeneralInfoCard from "@/app/components/GeneralInfoCard";
+import AdditionalInfoCard from "@/app/components/AdditionalInfoCard";
+import SkillCard from "@/app/components/SkillsCard";
+import ProjectHistoryCard from "@/app/components/ProjectHistoryCard";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 const defaultData: UserDetails = {
   id: 0,
   name: "",
   email: "",
   image: "/default-avatar.png",
-  role:"",
+  role: "",
   additional_info: {
     discipline: "",
     specialism: "",
     employee_type: "",
     location: "",
-    cost_centre: ""
+    cost_centre: "",
   },
   general_info: {
     phone: "",
@@ -27,7 +27,7 @@ const defaultData: UserDetails = {
     startdate: "",
     current_project: "",
     sfia_level: "",
-    reported_to: ""
+    reported_to: "",
   },
   skills: [],
   projects: {
@@ -37,14 +37,14 @@ const defaultData: UserDetails = {
       role: "",
       description: "",
       code: "",
-      members: []
+      members: [],
     },
     previous_projects: [],
     employment_history: {
       company: "",
-      joined_date: ""
-    }
-  }
+      joined_date: "",
+    },
+  },
 };
 
 interface AdditionalInfo {
@@ -54,7 +54,10 @@ interface AdditionalInfo {
   location: string;
   cost_centre: string;
 }
-
+interface Skill {
+  name: string;
+  level: string;
+}
 interface Project {
   project_name: string;
   start_date: string;
@@ -93,7 +96,7 @@ interface UserDetails {
   name: string;
   email: string;
   image: string;
-  role:string;
+  role: string;
   additional_info: AdditionalInfo;
   general_info: {
     phone: string;
@@ -103,7 +106,7 @@ interface UserDetails {
     sfia_level: string;
     reported_to: string;
   };
-  skills: string[];
+  skills: Skill[];
   projects: {
     current_project: CurrentProject;
     previous_projects: PreviousProject[];
@@ -113,12 +116,32 @@ interface UserDetails {
     };
   };
 }
+interface GeneralInfo {
+  email: string;
+  phone: string;
+  status: string;
+  startdate: string;
+  current_project: string;
+  sfia_level: string;
+  reported_to: string;
+}
+const initialGeneralInfo: GeneralInfo = {
+  email: '',
+  phone: '',
+  status: '',
+  startdate: '',
+  current_project: '',
+  sfia_level: '',
+  reported_to: ''
+};
 
 
-const PublicProfile = () => {
+const SearchProfile = () => {
   const [data, setData] = useState<UserDetails | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [general_info, setGeneralInfo] = useState<GeneralInfo>(initialGeneralInfo);
+  const [skills,setSkills] = useState<Skill>();
 
   // Fetch dynamically
   const params = useParams();
@@ -134,6 +157,17 @@ const PublicProfile = () => {
         }
         const result = await response.json();
         console.log(result, "response");
+        let general_info = {
+          email: result.data.email || "",
+          phone: result.data.phone || "",
+          status: result.data.status || "",
+          startdate: result.data.startdate || "",
+          current_project: result.data.current_project || "",
+          sfia_level: result.data.sfia_level || "",
+          reported_to: result.data.reported_to || "",
+        };
+        setGeneralInfo(general_info);
+        setSkills(result.data.skills);
         setData(result.data);
       } catch (error) {
         setError((error as Error).message);
@@ -150,42 +184,53 @@ const PublicProfile = () => {
   return (
     <div className='w-[100%]'>
       {/* Profile Header */}
-      <ProfileHeader
-        name={data?.name || ""}
-        image={data?.image || "/default-avatar.png"}
-        email={data?.email || ""}
-        additional_info={data?.additional_info}
-        data={data || defaultData} // Use default value if data is null
-      />
+      <ProfileHeader useprofile={false} profile_header_data={data || {}}/>
 
       {/* Profile Actions and Menu */}
       <div className='container-fixed'>
         <div className='dark:border-b-coal-100 mb-5 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:mb-10 lg:items-end'>
-          <Menu />
+          <div className='grid'>
+            <div className='scrollable-x-auto static'>
+              <div className='menu gap-3'>
+                <div
+                  key={""}
+                  className={`active menu-item menu-item-active:border-b-primary menu-item-here:border-b-primary border-b-2 border-b-transparent`}
+                >
+                  <Link
+                    href={""}
+                    className='menu-link gap-1.5 px-2 pb-2 lg:pb-4'
+                  >
+                    <span className='menu-title menu-item-active:text-primary menu-item-active:font-semibold menu-item-here:text-primary menu-item-here:font-semibold menu-item-show:text-primary menu-link-hover:text-primary text-nowrap text-sm font-medium text-gray-700'>
+                      {"Overview"}
+                    </span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
           <ProfileActions />
         </div>
       </div>
 
       {/* Part 3: Profile Details */}
       <div className='container mx-auto p-4'>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-7.5">
+        <div className='lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3'>
           <div className='col-span-1 grid gap-5'>
             {/* General Info */}
-            <GeneralInfoCard data={data || defaultData} />
+            <GeneralInfoCard data={general_info} />
 
             {/* Additional Info */}
-            <AdditionalInfoCard additional_info={data?.additional_info} />
+            <AdditionalInfoCard additional_info={data?.additional_info ?? null} />
           </div>
 
-          <div className='col-span-2 grid gap-5'>
-            {/* Skills */}
-            <SkillsCard skills={data?.skills || []} />
-
+          <div className='col-span-2 grid grid-cols-1 gap-5'>
+          <SkillCard skills={skills ?? []} />
             {/* Project History */}
             <ProjectHistoryCard
-              current_project={data?.projects?.current_project}
+              current_project={data?.projects?.current_project ?? null}
               previous_projects={data?.projects?.previous_projects || []}
-              employment_history={data?.projects?.employment_history}
+              employment_history={data?.projects?.employment_history ?? { company: 'Unknown', joined_date: 'N/A' }}
+
             />
           </div>
         </div>
@@ -194,4 +239,4 @@ const PublicProfile = () => {
   );
 };
 
-export default PublicProfile;
+export default SearchProfile;

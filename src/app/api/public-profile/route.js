@@ -22,14 +22,13 @@ export async function GET() {
       access_role: ["admin", "editor"],
       created_at: "2024-09-13T12:34:56Z",
       skills: [
-        "Web Design",
-        "Code Review",
-        "Figma",
-        "Product Development",
-        "Webflow",
-        "AI",
-        "noCode",
-        "Management"
+        { name: 'Web Design', level: 3 },   // Expert
+        { name: 'Code Review', level: 3 },  // Expert
+        { name: 'Figma', level: 1 },        // Novice
+        { name: 'Product Development', level: 1 }, // Novice
+        { name: 'Webflow', level: 2 },      // Proficient
+        { name: 'AI', level: 2 },           // Proficient
+        { name: 'noCode', level: 2 },       // Proficient
       ],
       additional_info: {
         discipline: "Development",

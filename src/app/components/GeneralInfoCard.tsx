@@ -10,7 +10,7 @@ interface GeneralInfo {
   }
   
   interface GeneralInfoCardProps {
-    data: GeneralInfo | null;
+    data: GeneralInfo ;
   }
   
   const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({ data }) => {

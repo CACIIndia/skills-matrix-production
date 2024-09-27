@@ -20,8 +20,8 @@ const Sidebar: React.FC<SidebarProps> = ({isExpanded}) => {
 
 	return (
 		<div
-			style={{width: "90%", zIndex: 1}}
-			className="mx-auto z-1  lg:flex flex-col shrink-0  justify-center bg-light border-r border-r-gray-200 "
+			style={{width: "90%"}}
+			className="mx-auto   lg:flex flex-col shrink-0  justify-center bg-light border-r border-r-gray-200 "
 		>
 			{/* logo */}
 			<div className="p-6  ">
@@ -54,38 +54,7 @@ const Sidebar: React.FC<SidebarProps> = ({isExpanded}) => {
 				</Link>
 			</div>
 
-			{/* Menus  like dashboard,profile */}
-			{/* <div
-        className="sidebar-content flex grow shrink-0 py-10 pr-2 "
-        id="sidebar_content"
-      >
-          <div className="flex flex-col gap-4">
-            {menuItems.map(({name,path,icon,tab})=>{
-              return <div key={name} className=" ">
-              
-              <Link
-                href={path}
-                className="flex items-center space-x-3   pr-20 py-1  "
-              >
-                <span className="w-[20px]  flex items-center">
-                  <i
-                    className={`ki-filled ${icon} text-lg ${pathname === path || pathname.startsWith(tab)  ? 'text-primary' : 'text-white'}`}
-                 
-                  ></i>
-                </span>
-                <span className={`menu-title text-white text-sm font-semibold  ${pathname === path || pathname.startsWith(tab)  ? 'text-primary' : 'text-white'} `}>
-                  {name}
-                </span>
-              </Link>
-           
-          </div>
-            })}
-            
-
-           
-          </div>
-       
-      </div> */}
+			
 
 			<div
 				className="sidebar-content flex grow shrink-0 py-5 pr-1 "
@@ -107,16 +76,16 @@ const Sidebar: React.FC<SidebarProps> = ({isExpanded}) => {
 										pathname === "/dashboard" ? "text-primary" : "text-gray-700"
 									} menu-item-active:text-primary menu-link-hover:!text-primary `}
 								>
-									<Link href={"/"}>Dashboards</Link>
+									<Link href={"/"}>Dashboard</Link>
 								</span>
 							</div>
 						</div>
 
-						<div className="menu-item">
+						{/* <div className="menu-item">
 							<div className="menu-link flex items-center grow cursor-pointer border border-transparent gap-[10px] pl-[10px] pr-[10px] py-[6px]">
 								<span
 									className={`menu-icon items-start ${
-										pathname === "/public-profile"
+										pathname.startsWith("/public-profile")
 											? "text-primary"
 											: "text-gray-700"
 									} dark:text-gray-400 w-[20px]`}
@@ -125,7 +94,7 @@ const Sidebar: React.FC<SidebarProps> = ({isExpanded}) => {
 								</span>
 								<span
 									className={`menu-title text-sm font-semibold ${
-										pathname === "/public-profile"
+										pathname.startsWith("/public-profile")
 											? "text-primary"
 											: "text-gray-700"
 									} menu-item-active:text-primary menu-link-hover:!text-primary `}
@@ -157,15 +126,12 @@ const Sidebar: React.FC<SidebarProps> = ({isExpanded}) => {
 									<Link href={"/my-accounts/overview"}> My Account</Link>
 								</span>
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</div>
 
-			{/* SideBar Footer */}
-			{/* <div className="sidebar-footer flex flex-col px-3 py-4 ">
-        <button>Toggle Dark Mode</button>
-      </div> */}
+		
 		</div>
 	);
 };

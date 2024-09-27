@@ -21,14 +21,13 @@ export async function GET(req, { params }) {
         access_role: ["admin", "editor"],
         created_at: "2024-09-13T12:34:56Z",
         skills: [
-          "Web Design",
-          "Code Review",
-          "Figma",
-          "Product Development",
-          "Webflow",
-          "AI",
-          "noCode",
-          "Management"
+          { name: 'Web Design', level: 3 },   // Expert
+          { name: 'Code Review', level: 3 },  // Expert
+          { name: 'Figma', level: 1 },        // Novice
+          { name: 'Product Development', level: 1 }, // Novice
+          { name: 'Webflow', level: 2 },      // Proficient
+          { name: 'AI', level: 2 },           // Proficient
+          { name: 'noCode', level: 2 },       // Proficient
         ],
         additional_info: {
           discipline: "Development",
@@ -137,12 +136,13 @@ export async function GET(req, { params }) {
         access_role: ["editor"],
         created_at: "2024-09-14T08:22:10Z",
         skills: [
-          "UI Design",
-          "UX Research",
-          "Adobe XD",
-          "Sketch",
-          "Prototyping",
-          "Wireframing"
+          { name: 'Web Design', level: 3 },   // Expert
+          { name: 'Code Review', level: 3 },  // Expert
+          { name: 'Figma', level: 1 },        // Novice
+          { name: 'Product Development', level: 1 }, // Novice
+          { name: 'Webflow', level: 2 },      // Proficient
+          { name: 'AI', level: 2 },           // Proficient
+          { name: 'noCode', level: 2 },       // Proficient
         ],
         additional_info: {
           discipline: "Design",
@@ -229,12 +229,13 @@ export async function GET(req, { params }) {
         access_role: ["editor"],
         created_at: "2024-09-14T08:22:10Z",
         skills: [
-          "UI Design",
-          "UX Research",
-          "Adobe XD",
-          "Sketch",
-          "Prototyping",
-          "Wireframing"
+          { name: 'Web Design', level: 3 },   // Expert
+          { name: 'Code Review', level: 3 },  // Expert
+          { name: 'Figma', level: 1 },        // Novice
+          { name: 'Product Development', level: 1 }, // Novice
+          { name: 'Webflow', level: 2 },      // Proficient
+          { name: 'AI', level: 2 },           // Proficient
+          { name: 'noCode', level: 2 },       // Proficient
         ],
         additional_info: {
           discipline: "Design",

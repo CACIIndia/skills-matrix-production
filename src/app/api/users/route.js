@@ -80,7 +80,7 @@ export async function GET() {
         statusColor: "green",
         profilePic: "https://randomuser.me/api/portraits/men/9.jpg"
       },
-      {
+      { 
         id: 10,
         name: "Karthik Raja",
         email: "isabella.garcia@example.com",
