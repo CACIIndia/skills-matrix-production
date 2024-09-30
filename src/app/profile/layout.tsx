@@ -1,26 +1,21 @@
 "use client";
-import React, { FC, useEffect, useState } from 'react';
-import ProfileHeader from '../components/ProfileHeader';
-import { useParams } from 'react-router-dom';
-import Menu from '../components/Menu';
-import ProfileActions from '../components/ProfileActions';
-import { PROFILE_HEADER_ITEMS } from '@/constants/header';
-import { ProfileProvider } from '@/context/profileContext';
-import { usePathname } from 'next/navigation';
+import React, { FC, useEffect, useState } from "react";
 
+import { ProfileProvider } from "@/context/profileContext";
+import { usePathname } from "next/navigation";
 
 const defaultData: UserDetails = {
   id: 0,
   name: "",
   email: "",
   image: "/default-avatar.png",
-  role:"",
+  role: "",
   additional_info: {
     discipline: "",
     specialism: "",
     employee_type: "",
     location: "",
-    cost_centre: ""
+    cost_centre: "",
   },
   general_info: {
     phone: "",
@@ -28,7 +23,7 @@ const defaultData: UserDetails = {
     startdate: "",
     current_project: "",
     sfia_level: "",
-    reported_to: ""
+    reported_to: "",
   },
   skills: [],
   projects: {
@@ -38,14 +33,14 @@ const defaultData: UserDetails = {
       role: "",
       description: "",
       code: "",
-      members: []
+      members: [],
     },
     previous_projects: [],
     employment_history: {
       company: "",
-      joined_date: ""
-    }
-  }
+      joined_date: "",
+    },
+  },
 };
 interface ProfileLayoutProps {
   children: React.ReactNode;
@@ -98,7 +93,7 @@ interface UserDetails {
   name: string;
   email: string;
   image: string;
-  role:string;
+  role: string;
   additional_info: AdditionalInfo;
   general_info: {
     phone: string;
@@ -122,28 +117,22 @@ interface ProfileLayoutProps {
   children: React.ReactNode;
 }
 
-
 const ProfileLayout: FC<ProfileLayoutProps> = ({ children }) => {
-
-  
   const pathname = usePathname(); // Get the current path
-  
+
   // If the path matches profile/overview/[id], skip layout rendering
-  const shouldRenderLayout = pathname === '/profile/overview' || !pathname.startsWith('/profile/overview/');
-  
+  const shouldRenderLayout =
+    pathname === "/profile/overview" ||
+    !pathname.startsWith("/profile/overview/");
+
   if (!shouldRenderLayout) {
     return children; // Return only the child content if we're on profile/overview/[id]
   }
 
- 
   return (
-<div className='w-[100%]'>
-  <ProfileProvider>
-    
-       {children}
-      </ProfileProvider>
- </div>
-
+    <div className='w-[100%]'>
+      <ProfileProvider>{children}</ProfileProvider>
+    </div>
   );
 };
 

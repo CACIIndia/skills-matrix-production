@@ -1,7 +1,7 @@
 "use client";
 
-import Legend from "@/app/components/Legendcard";
-import Menu from "@/app/components/Menu";
+import Legend from "@/components/views/profile/Legend";
+import Menu from "@/components/common/Menu";
 import Spinner from "@/components/common/Spinner";
 
 import ProfileActions from "@/components/views/profile/Actions";

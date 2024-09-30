@@ -40,3 +40,11 @@ export const DEFAULT_USER_DETAILS: UserDetails = {
     },
   },
 };
+
+export const SKILL_LEVELS = [
+  { name: "None", color: "badge-outline" },
+  { name: "Novice", color: "badge-danger" },
+  { name: "Proficient", color: "badge-warning" },
+  { name: "Expert", color: "badge-primary" },
+  { name: "Specialist", color: "badge-success" },
+];

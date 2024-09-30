@@ -12,11 +12,13 @@ type ProjectHistoryCardProps = {
   };
 };
 
+// @TODO Refactor this component
+
 const ProjectHistoryCard = ({
   projects: { current_project, previous_projects, employment_history },
 }: ProjectHistoryCardProps) => {
   return (
-    <div className='card ' style={{zIndex:-1}}>
+    <div className='card' style={{ zIndex: -1 }}>
       <div className='card-header'>
         <h3 className='card-title'>Projects History</h3>
       </div>
@@ -43,7 +45,7 @@ const ProjectHistoryCard = ({
                     <div className='flex grow flex-col gap-5'>
                       <div className='flex flex-wrap items-center justify-between'>
                         <div className='flex flex-col gap-0.5'>
-                          <span className='text-md hover:text-primary mb-px cursor-pointer font-semibold text-gray-900'>
+                          <span className='text-md mb-px cursor-pointer font-semibold text-gray-900 hover:text-primary'>
                             {current_project.role}
                           </span>
                           <span className='text-xs font-medium text-gray-500'>
@@ -109,7 +111,7 @@ const ProjectHistoryCard = ({
                     <div className='flex grow flex-col gap-5'>
                       <div className='flex flex-wrap items-center justify-between'>
                         <div className='flex flex-col gap-0.5'>
-                          <span className='text-md hover:text-primary mb-px cursor-pointer font-semibold text-gray-900'>
+                          <span className='text-md mb-px cursor-pointer font-semibold text-gray-900 hover:text-primary'>
                             {project.role}
                           </span>
                           <span className='text-xs font-medium text-gray-500'>

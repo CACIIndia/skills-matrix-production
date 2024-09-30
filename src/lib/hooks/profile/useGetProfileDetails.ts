@@ -7,7 +7,7 @@ const getProfileDetails = async (
   userId: string,
 ): Promise<UserDetails | undefined> => {
   try {
-    const response = await axiosInstance.get(`/userdetails/${userId}`);
+    const response = await axiosInstance.get(`userdetails/${userId}`);
 
     return response.data.data;
   } catch (error) {

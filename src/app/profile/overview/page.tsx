@@ -1,14 +1,14 @@
 "use client";
 
-import Menu from "@/app/components/Menu";
-import ProfileActions from "@/components/views/profile/Actions";
-import ProfileHeader from "@/components/views/profile/Header";
+import Menu from "@/components/common/Menu";
 import Spinner from "@/components/common/Spinner";
 
+import ProfileActions from "@/components/views/profile/Actions";
 import ProfileAdditionalInfo from "@/components/views/profile/AdditionalInfo";
-import ProfileSkills from "@/components/views/profile/Skills";
 import ProfileGeneralInfo from "@/components/views/profile/GeneralInfo";
+import ProfileHeader from "@/components/views/profile/Header";
 import ProfileProjectHistory from "@/components/views/profile/ProjectHistory";
+import ProfileSkills from "@/components/views/profile/Skills";
 
 import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
 import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
@@ -28,6 +28,7 @@ const OverviewPage = () => {
       <div className='container-fixed'>
         <div className='mb-5 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:mb-10 lg:items-end'>
           <Menu items={PROFILE_HEADER_ITEMS} />
+
           <ProfileActions />
         </div>
       </div>

@@ -56,6 +56,7 @@ const AdditionalInfoCard = ({ additional_info }: AdditionalInfoCardProps) => {
           </tbody>
         </table>
       </div>
+
       <div className='card-footer flex justify-center'>
         <a
           className='btn btn-link'
