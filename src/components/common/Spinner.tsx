@@ -7,7 +7,7 @@ type BaseSpinnerProps = {
 };
 
 const Spinner = ({
-  svgClasses = "fill-blue-600 dark:text-gray-600",
+  svgClasses = "fill-blue-600",
   className,
   size = "base",
 }: BaseSpinnerProps) => {

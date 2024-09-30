@@ -38,6 +38,11 @@ export type Contributor = {
   image: string;
 };
 
+export type Skill = {
+  name: string;
+  level: number;
+};
+
 export type UserDetails = {
   id: number;
   name: string;
@@ -53,7 +58,7 @@ export type UserDetails = {
   role: string;
   access_role: string[];
   created_at: string;
-  skills: string[];
+  skills: Skill[];
   additional_info: AdditionalInfo;
   contributors: Contributor[];
   projects: {

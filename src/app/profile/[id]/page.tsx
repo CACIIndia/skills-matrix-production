@@ -13,6 +13,7 @@ import ProfileGeneralInfo from "@/components/views/profile/GeneralInfo";
 import ProfileProjectHistory from "@/components/views/profile/ProjectHistory";
 
 import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
+import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
 import useGetProfileDetails from "@/lib/hooks/profile/useGetProfileDetails";
 
 const ProfilePage = () => {
@@ -31,7 +32,7 @@ const ProfilePage = () => {
 
       <div className='container-fixed'>
         <div className='mb-5 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:mb-10 lg:items-end'>
-          <Menu />
+          <Menu items={PROFILE_HEADER_ITEMS} />
           <ProfileActions />
         </div>
       </div>

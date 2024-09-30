@@ -1,21 +1,14 @@
-// components/Menu.tsx
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FC } from "react";
 
-// Define the type for the items prop
-interface MenuItem {
-  name: string;
-  path: string;
-}
+type MenuProps = {
+  items: {
+    name: string;
+    path: string;
+  }[];
+};
 
-// Define the props for the Menu component
-interface MenuProps {
-  items: MenuItem[]; // An array of menu items
-}
-
-// Update the Menu component to accept props
-const Menu: FC<MenuProps> = ({ items = [] }) => {
+const Menu = ({ items = [] }: MenuProps) => {
   const pathname = usePathname();
 
   return (

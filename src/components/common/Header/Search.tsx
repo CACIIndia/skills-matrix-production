@@ -43,19 +43,20 @@ const ProfileSearch: React.FC = () => {
   }, []);
 
   return (
-    <div className='relative inline-block' ref={dropdownRef}>
-      <Button onClick={toggleDropdown} className='btn-2' size='9'>
-        <i className='ki-filled ki-magnifier'></i>
-      </Button>
-      {isModalOpen && (
-        <Modal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          users={users}
-          searchQuery={searchQuery}
-        />
-      )}
-    </div>
+    <></>
+    // <div className='relative inline-block' ref={dropdownRef}>
+    //   <Button onClick={toggleDropdown} className='btn-2' size='9'>
+    //     <i className='ki-filled ki-magnifier'></i>
+    //   </Button>
+    //   {isModalOpen && (
+    //     <Modal
+    //       isOpen={isModalOpen}
+    //       onClose={closeModal}
+    //       users={users}
+    //       searchQuery={searchQuery}
+    //     />
+    //   )}
+    // </div>
   );
 };
 
