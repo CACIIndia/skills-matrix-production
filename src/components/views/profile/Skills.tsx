@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Legend from "./Legendcard";
+import Legend from "@/app/components/Legendcard";
 import { dummySkillData } from "@/lib/constants/dummydata";
 import {
   Dialog,
@@ -9,16 +9,12 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
+import { Skill } from "@/lib/types/profile";
 
-interface Skill {
-  name: string;
-  level: number;
-}
-
-interface SkillCardProps {
+type ProfileSkillsProps = {
   skills: Skill[];
   showEditButton?: boolean;
-}
+};
 
 const skillLevels: Record<number, { name: string; color: string }> = {
   0: { name: "None", color: "badge-outline" },
@@ -28,7 +24,9 @@ const skillLevels: Record<number, { name: string; color: string }> = {
   4: { name: "Specialist", color: "badge-success" },
 };
 
-const SkillCard: React.FC<SkillCardProps> = ({
+// @TODO Refactor this component
+
+const ProfileSkills: React.FC<ProfileSkillsProps> = ({
   skills = [],
   showEditButton,
 }) => {
@@ -176,4 +174,4 @@ const SkillCard: React.FC<SkillCardProps> = ({
   );
 };
 
-export default SkillCard;
+export default ProfileSkills;

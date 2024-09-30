@@ -9,6 +9,10 @@
   /* BUTTONS */
 
   .btn-1 {
+    @apply btn btn-sm btn-primary;
+  }
+
+  .btn-2 {
     @apply btn btn-icon btn-icon-lg hover:bg-primary-light hover:text-primary rounded-full text-gray-500;
   }
 }

@@ -32,11 +32,11 @@ const Header = () => {
           <div className='flex items-start gap-2 lg:gap-3.5'>
             <HeaderSearch />
 
-            <Button className='btn-1' size='9'>
+            <Button className='btn-2' size='9'>
               <i className='ki-filled ki-element-11'></i>
             </Button>
 
-            <Button variant='btn-1' size='9'>
+            <Button variant='btn-2' size='9'>
               <i className='ki-filled ki-notification-on'></i>
             </Button>
 

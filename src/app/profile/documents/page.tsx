@@ -1,17 +1,17 @@
 "use client";
 import Menu from "@/app/components/Menu";
-import ProfileActions from "@/app/components/ProfileActions";
+import ProfileActions from "@/components/views/profile/Actions";
 import ProfileHeader from "@/app/components/ProfileHeader";
 import FileItem from "@/components/views/account/FileItem";
 import ResumeCard from "@/components/views/account/ResumeCard";
-import { PROFILE_HEADER_ITEMS } from "@/constants/header";
+import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
 import { useProfile } from "@/context/profileContext";
 
 const DocumentPage = () => {
-	const { data, loading, error } = useProfile();
-	if (loading) {
-		return "...loading";
-	  }
+  const { data, loading, error } = useProfile();
+  if (loading) {
+    return "...loading";
+  }
   return (
     <div>
       <ProfileHeader />
