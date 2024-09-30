@@ -4,8 +4,7 @@ import classNames from "classnames";
 type ButtonProps = {
   className?: string;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
-  // @TODO Create and implement all btn variants
-  variant?: "btn-1";
+  variant?: string;
   size?: string;
   children: React.ReactNode;
   disabled?: boolean;
@@ -17,7 +16,7 @@ const Button = ({
   onClick,
   size,
   disabled = false,
-  variant = "btn-1",
+  variant,
 }: ButtonProps) => {
   return (
     <button

@@ -1,4 +1,3 @@
-
 "use client";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -28,7 +27,6 @@ const ProfileSearch: React.FC = () => {
   const toggleModal = () => setModalOpen((prev) => !prev);
   const closeModal = () => setModalOpen(false);
 
- 
   // Fetch users from API on component mount
   useEffect(() => {
     const fetchUsers = async () => {
@@ -45,96 +43,105 @@ const ProfileSearch: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative inline-block">
-      <Button onClick={toggleModal} className="btn-1" size="9">
-        <i className="ki-filled ki-magnifier"></i>
-      </Button>
-      {isModalOpen && (
-        <Modal
-          isOpen={isModalOpen}
-          onClose={closeModal}
-          users={users}
-          searchQuery={searchQuery}
-        />
-      )}
-    </div>
+    <></>
+    // <div className='relative inline-block' ref={dropdownRef}>
+    //   <Button onClick={toggleDropdown} className='btn-2' size='9'>
+    //     <i className='ki-filled ki-magnifier'></i>
+    //   </Button>
+    //   {isModalOpen && (
+    //     <Modal
+    //       isOpen={isModalOpen}
+    //       onClose={closeModal}
+    //       users={users}
+    //       searchQuery={searchQuery}
+    //     />
+    //   )}
+    // </div>
   );
 };
 
 export default ProfileSearch;
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, users, searchQuery }) => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  users,
+  searchQuery,
+}) => {
   const [query, setQuery] = useState<string>("");
 
   const filteredUsers = users.filter(
     (user) =>
       user.name.toLowerCase().includes(query.toLowerCase()) ||
-      user.email.toLowerCase().includes(query.toLowerCase())
+      user.email.toLowerCase().includes(query.toLowerCase()),
   );
 
   return (
     <div
-      className={`fixed text-start w-full inset-0  flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300 ${
+      className={`fixed inset-0 flex w-full items-center justify-center bg-gray-800 bg-opacity-75 text-start transition-opacity duration-300 ${
         isOpen ? "visible opacity-100" : "invisible opacity-0"
       }`}
-      style={{ zIndex: 2  }}
+      style={{ zIndex: 2 }}
     >
-      <div className="relative w-[90%] max-w-[550px] bg-white rounded-lg p-4 shadow-lg">
+      <div className='relative w-[90%] max-w-[550px] rounded-lg bg-white p-4 shadow-lg'>
         {/* Modal Header */}
-        <div className="modal-header flex items-center justify-between px-5 py-4 border-b border-gray-200">
-          <i className="ki-filled ki-magnifier text-xl text-gray-700"></i>
+        <div className='modal-header flex items-center justify-between border-b border-gray-200 px-5 py-4'>
+          <i className='ki-filled ki-magnifier text-xl text-gray-700'></i>
           <input
-            className="input ml-2.5 w-full border-none bg-transparent px-0 shadow-none"
-            name="query"
-            placeholder="Tap to start search"
-            type="text"
+            className='input ml-2.5 w-full border-none bg-transparent px-0 shadow-none'
+            name='query'
+            placeholder='Tap to start search'
+            type='text'
             value={query}
             onChange={(e) => setQuery(e.target.value)} // Update search query
           />
           <button
-            className="btn btn-sm btn-icon btn-light btn-clear shrink-0"
+            className='btn btn-sm btn-icon btn-light btn-clear shrink-0'
             onClick={onClose}
           >
-            <i className="ki-filled ki-cross"></i>
+            <i className='ki-filled ki-cross'></i>
           </button>
         </div>
 
         {/* Modal Body */}
-        <div className="modal-body p-0 pb-5">
-          <div className="scrollable-y-auto" style={{ maxHeight: "300px", overflowY: "auto" }}>
-            <div className="flex flex-col gap-2.5">
-              <div className="border-b border-b-gray-200"></div>
+        <div className='modal-body p-0 pb-5'>
+          <div
+            className='scrollable-y-auto'
+            style={{ maxHeight: "300px", overflowY: "auto" }}
+          >
+            <div className='flex flex-col gap-2.5'>
+              <div className='border-b border-b-gray-200'></div>
               <div>
-                <div className="pb-1.5 pl-5 pt-2.5 text-start text-xs font-medium text-gray-600">
+                <div className='pb-1.5 pl-5 pt-2.5 text-start text-xs font-medium text-gray-600'>
                   Users
                 </div>
-                <div className="menu menu-default flex-col p-0">
-                  <div className="grid gap-1">
+                <div className='menu menu-default flex-col p-0'>
+                  <div className='grid gap-1'>
                     {filteredUsers.length > 0 ? (
                       filteredUsers.map((user, index) => (
                         <Link
                           href={`/profile/overview/${String(user.id)}`}
                           key={index}
-                          className="menu-item"
+                          className='menu-item'
                           onClick={onClose}
                         >
-                          <div className="menu-link flex justify-between gap-2">
-                            <div className="flex items-center gap-2.5">
+                          <div className='menu-link flex justify-between gap-2'>
+                            <div className='flex items-center gap-2.5'>
                               <img
-                                alt=""
-                                className="size-9 shrink-0 rounded-full"
+                                alt=''
+                                className='size-9 shrink-0 rounded-full'
                                 src={user.profilePic}
                               />
-                              <div className="flex flex-col">
-                                <span className="hover:text-primary-active mb-px text-sm font-semibold text-gray-900">
+                              <div className='flex flex-col'>
+                                <span className='hover:text-primary-active mb-px text-sm font-semibold text-gray-900'>
                                   {user.name}
                                 </span>
-                                <span className="text-2sm font-normal text-gray-500">
+                                <span className='text-2sm font-normal text-gray-500'>
                                   {user.email} connections
                                 </span>
                               </div>
                             </div>
-                            <div className="flex items-center gap-2.5">
+                            <div className='flex items-center gap-2.5'>
                               <div
                                 className={`badge badge-pill badge-outline badge-${user.statusColor} gap-1.5`}
                               >
@@ -143,15 +150,17 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, users, searchQuery }) =>
                                 ></span>
                                 {user.status}
                               </div>
-                              <button className="btn btn-icon btn-light btn-clear btn-sm">
-                                <i className="ki-filled ki-dots-vertical"></i>
+                              <button className='btn btn-icon btn-light btn-clear btn-sm'>
+                                <i className='ki-filled ki-dots-vertical'></i>
                               </button>
                             </div>
                           </div>
                         </Link>
                       ))
                     ) : (
-                      <div className="text-center text-gray-500">No users found</div>
+                      <div className='text-center text-gray-500'>
+                        No users found
+                      </div>
                     )}
                   </div>
                 </div>
