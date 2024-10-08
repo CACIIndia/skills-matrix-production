@@ -1,26 +1,39 @@
 "use client";
 
 import classNames from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import EditSkills from "@/components/views/profile/actions/EditSkills";
 import Modal from "@/components/common/Modal";
 
 import { SKILL_LEVELS } from "@/lib/constants/profile";
-import { Skill } from "@/lib/types/profile";
+import { UserSkill } from "@/lib/types/profile";
+import useGetSkills from "@/lib/hooks/profile/useGetSkills";
+import { updateUserSkills } from "@/app/actions/updateUserSkills";
 
 type ProfileSkillsProps = {
-  skills: Skill[];
+  userSkills: Record<string, UserSkill[]>;
   showEditButton?: boolean;
 };
 
 const ProfileSkills: React.FC<ProfileSkillsProps> = ({
-  skills = [],
+  userSkills = {},
   showEditButton,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { data } = useGetSkills();
 
-  const handleToggle = () => setIsOpen(!isOpen);
+  const [isOpen, setIsOpen] = useState(false);
+  const [skillLevels, setSkillLevels] = useState<Record<string, any[]>>(
+    data || {},
+  );
+
+  useEffect(() => {
+    // Initialize skill levels with data
+    setSkillLevels(data || {});
+  }, [data]);
+
+  // Flatten all skills into a single array
+  const allSkills = Object.values(userSkills).flat();
 
   return (
     <div className=''>
@@ -32,7 +45,7 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
             {showEditButton && (
               <button
                 className='btn btn-sm btn-icon btn-clear btn-primary'
-                onClick={handleToggle}
+                onClick={() => setIsOpen(true)}
               >
                 <i className='ki-filled ki-notepad-edit'></i>
               </button>
@@ -41,20 +54,20 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
 
           <div className='card-body'>
             <div className='mb-2 flex flex-wrap gap-2.5'>
-              {skills.map((skill, index) => {
-                const { name, color } = SKILL_LEVELS[skill.level];
+              {allSkills.map((userSkill) => {
+                const { name, color } = SKILL_LEVELS[userSkill.level];
 
                 if (!name) {
-                  console.error(`Unknown skill level: ${skill.level}`);
+                  console.error(`Unknown skill level: ${userSkill.level}`);
                   return null;
                 }
 
                 return (
                   <span
-                    key={index}
+                    key={userSkill.id}
                     className={classNames("badge badge-sm", color)}
                   >
-                    {skill.name} ({name})
+                    {userSkill.skill.name} ({name})
                   </span>
                 );
               })}
@@ -63,8 +76,26 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
         </div>
       </div>
 
-      <Modal isOpen={isOpen} onClose={handleToggle} title='Edit Skills'>
-        <EditSkills />
+      <Modal
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        title='Edit Skills'
+        primaryButton
+        primaryButtonOnClick={async () => {
+          console.log("This is being called");
+
+          const filteredSkillLevels = Object.values(skillLevels)
+            .flat()
+            .filter((skill: any) => skill.level !== 0);
+
+          // Temporarily pass through fixed id
+          await updateUserSkills(
+            "fd00e148-dea9-4080-8a37-3a55b3c604dd",
+            filteredSkillLevels,
+          );
+        }}
+      >
+        <EditSkills skillLevels={skillLevels} setSkillLevels={setSkillLevels} />
       </Modal>
     </div>
   );

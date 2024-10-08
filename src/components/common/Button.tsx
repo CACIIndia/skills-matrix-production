@@ -5,7 +5,7 @@ type ButtonProps = {
   className?: string;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   variant?: string;
-  size?: string;
+  size?: "sm" | "md" | "lg";
   children: React.ReactNode;
   disabled?: boolean;
 };
@@ -20,7 +20,15 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <button
-      className={classNames(variant, size && `btn-${size}`, className)}
+      className={classNames(
+        variant,
+        size === "sm"
+          ? "h-8 text-sm"
+          : size === "md"
+            ? "text-md h-10"
+            : "h-12 text-lg",
+        className,
+      )}
       onClick={onClick}
       disabled={disabled}
     >

@@ -1,72 +1,54 @@
+export type Skill = {
+  id: string;
+  name: string;
+};
+
+export type UserSkill = {
+  id: string;
+  userId: string;
+  skillId: string;
+  level: number;
+  skill: Skill;
+};
+
+export type Project = {
+  id: string;
+  projectName: string;
+  startDate: string;
+  endDate?: string;
+  role: string;
+  description: string;
+  code: string;
+  isCurrentProject: boolean;
+  userId: string;
+};
+
 export type AdditionalInfo = {
+  id: string;
   discipline: string;
   specialism: string;
-  employee_type: string;
+  employeeType: string;
   location: string;
-  cost_centre: string;
-};
-
-export type ProjectMember = {
-  name: string;
-  image_url?: string;
-  count?: number;
-  placeholder?: string;
-};
-
-export type CurrentProject = {
-  project_name: string;
-  start_date: string;
-  role: string;
-  description: string;
-  code: string;
-  members: ProjectMember[];
-};
-
-export type PreviousProject = {
-  project_name: string;
-  start_date: string;
-  end_date: string;
-  role: string;
-  description: string;
-  code: string;
-  members: ProjectMember[];
-};
-
-export type Contributor = {
-  name: string;
-  contributors: number;
-  image: string;
-};
-
-export type Skill = {
-  name: string;
-  level: number;
+  costCentre: string;
+  userId: string;
 };
 
 export type UserDetails = {
-  id: number;
+  id: string;
   name: string;
-  image: string;
   email: string;
+  emailVerified: null | string;
+  image: string;
   phone: string;
   location: string;
   status: string;
-  startdate: string;
-  current_project: string;
-  sfia_level: string;
-  reported_to: string;
+  sfiaLevel: string;
+  reportedTo: string;
+  reportedToId: string;
   role: string;
-  access_role: string[];
-  created_at: string;
-  skills: Skill[];
-  additional_info: AdditionalInfo;
-  contributors: Contributor[];
-  projects: {
-    current_project: CurrentProject;
-    previous_projects: PreviousProject[];
-    employment_history: {
-      company: string;
-      joined_date: string;
-    };
-  };
+  createdAt: string;
+  joiningDate: string;
+  additionalInfo: AdditionalInfo;
+  userSkills: UserSkill[];
+  projects: Project[];
 };

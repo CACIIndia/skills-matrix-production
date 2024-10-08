@@ -1,18 +1,31 @@
+import { Dispatch, SetStateAction } from "react";
 import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
+import Button from "@/components/common/Button";
 
 type ModalProps = {
   isOpen: boolean;
-  onClose: () => void;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   title?: string;
   children: React.ReactNode;
+  primaryButton?: boolean;
+  primaryButtonOnClick?: () => void;
 };
 
-const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
+const Modal = ({
+  isOpen,
+  setIsOpen,
+  title,
+  children,
+  primaryButton,
+  primaryButtonOnClick,
+}: ModalProps) => {
+  const onClose = () => setIsOpen(!isOpen);
+
   return (
     <Dialog
       open={isOpen}
@@ -38,6 +51,21 @@ const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
               </button>
             </div>
             {children}
+
+            {primaryButton && (
+              <div className='mx-4 mt-10 flex justify-end space-x-3'>
+                <Button
+                  variant='btn-1'
+                  size='md'
+                  onClick={() => {
+                    primaryButtonOnClick && primaryButtonOnClick();
+                    onClose();
+                  }}
+                >
+                  Update
+                </Button>
+              </div>
+            )}
           </DialogPanel>
         </div>
       </div>

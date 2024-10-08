@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect } from "react";
+
 import Menu from "@/components/common/Menu";
 import Spinner from "@/components/common/Spinner";
 
