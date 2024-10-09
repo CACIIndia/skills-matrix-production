@@ -9,7 +9,7 @@
   /* BUTTONS */
 
   .btn-1 {
-    @apply btn btn-sm btn-primary;
+    @apply btn btn-primary;
   }
 
   .btn-2 {

@@ -1,7 +1,5 @@
 import React, { ReactNode } from "react";
 
-// @TODO Refactor this component
-
 const skillLevels = [
   {
     level: 0,
@@ -43,6 +41,8 @@ interface LegendProps {
   hideCardHeader?: boolean;
   optionalComponent?: ReactNode;
 }
+
+// @TODO Refactor this component
 
 const Legend: React.FC<LegendProps> = ({
   layout,

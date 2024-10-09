@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 
-import axiosInstance from "@/lib/api";
+import axiosInstance from "@/lib/axios";
 import { UserDetails } from "@/lib/types/profile";
 
 const getProfileDetails = async (
   userId: string,
 ): Promise<UserDetails | undefined> => {
   try {
-    const response = await axiosInstance.get(`/userdetails/${userId}`);
+    const response = await axiosInstance.get(`user/${userId}`);
 
-    return response.data.data;
+    return response?.data;
   } catch (error) {
     console.error("Error fetching profile details:", error);
     throw error;

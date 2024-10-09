@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(uuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id             String          @id @default(uuid())
+  name           String?
+  email          String?         @unique
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  phone          String?
+  location       String?
+  status         String?
+  sfiaLevel      String?
+  reportedTo     String?
+  reportedToId   String?
+  role           String?
+  createdAt      DateTime        @default(now())
+  additionalInfo AdditionalInfo?
+  projects       Project[]
+  joiningDate    DateTime?
+  userSkills     UserSkill[]
+}
+
+model Skill {
+  id         String      @id @default(uuid())
+  name       String
+  category   String      @default("")
+  userSkills UserSkill[]
+}
+
+model UserSkill {
+  id      String @id @default(uuid())
+  user    User   @relation(fields: [userId], references: [id])
+  userId  String
+  skill   Skill  @relation(fields: [skillId], references: [id])
+  skillId String
+  level   Int
+}
+
+model AdditionalInfo {
+  id           String  @id @default(uuid())
+  discipline   String?
+  specialism   String?
+  employeeType String?
+  location     String?
+  costCentre   String?
+  user         User    @relation(fields: [userId], references: [id])
+  userId       String  @unique
+}
+
+model Project {
+  id               String   @id @default(uuid())
+  projectName      String
+  startDate        DateTime
+  endDate          DateTime
+  role             String
+  description      String
+  code             String
+  isCurrentProject Boolean
+  user             User     @relation(fields: [userId], references: [id])
+  userId           String
+}

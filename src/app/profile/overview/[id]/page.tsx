@@ -2,15 +2,15 @@
 
 import { useParams } from "next/navigation";
 
-import Menu from "@/app/components/Menu";
-import ProfileActions from "@/components/views/profile/Actions";
-import ProfileHeader from "@/components/views/profile/Header";
+import Menu from "@/components/common/Menu";
 import Spinner from "@/components/common/Spinner";
 
+import ProfileActions from "@/components/views/profile/Actions";
 import ProfileAdditionalInfo from "@/components/views/profile/AdditionalInfo";
-import ProfileSkills from "@/components/views/profile/Skills";
 import ProfileGeneralInfo from "@/components/views/profile/GeneralInfo";
+import ProfileHeader from "@/components/views/profile/Header";
 import ProfileProjectHistory from "@/components/views/profile/ProjectHistory";
+import ProfileSkills from "@/components/views/profile/Skills";
 
 import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
 import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
@@ -42,15 +42,13 @@ const OverviewPage = () => {
           <div className='col-span-1 grid gap-5'>
             <ProfileGeneralInfo data={data} />
 
-            <ProfileAdditionalInfo additional_info={data?.additional_info} />
+            <ProfileAdditionalInfo additionalInfo={data?.additionalInfo} />
           </div>
 
           <div className='col-span-2 grid gap-5'>
-            <ProfileSkills skills={data?.skills || []} />
+            <ProfileSkills userSkills={data?.userSkills || []} />
 
-            <ProfileProjectHistory
-              projects={data?.projects || DEFAULT_USER_DETAILS.projects}
-            />
+            <ProfileProjectHistory projects={data?.projects || []} />
           </div>
         </div>
       </div>

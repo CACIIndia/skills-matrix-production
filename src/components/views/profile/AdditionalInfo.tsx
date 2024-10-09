@@ -1,10 +1,10 @@
 import { AdditionalInfo } from "@/lib/types/profile";
 
 type AdditionalInfoCardProps = {
-  additional_info?: AdditionalInfo;
+  additionalInfo?: AdditionalInfo;
 };
 
-const AdditionalInfoCard = ({ additional_info }: AdditionalInfoCardProps) => {
+const AdditionalInfoCard = ({ additionalInfo }: AdditionalInfoCardProps) => {
   return (
     <div className='card'>
       <div className='card-header'>
@@ -18,7 +18,7 @@ const AdditionalInfoCard = ({ additional_info }: AdditionalInfoCardProps) => {
                 Discipline:
               </td>
               <td className='pb-3 text-sm font-medium text-gray-800'>
-                {additional_info?.discipline || "N/A"}
+                {additionalInfo?.discipline || "N/A"}
               </td>
             </tr>
             <tr>
@@ -26,7 +26,7 @@ const AdditionalInfoCard = ({ additional_info }: AdditionalInfoCardProps) => {
                 Specialism:
               </td>
               <td className='pb-3 text-sm font-medium text-gray-800'>
-                {additional_info?.specialism || "N/A"}
+                {additionalInfo?.specialism || "N/A"}
               </td>
             </tr>
             <tr>
@@ -34,7 +34,7 @@ const AdditionalInfoCard = ({ additional_info }: AdditionalInfoCardProps) => {
                 Employee Type:
               </td>
               <td className='pb-3 text-sm font-medium text-gray-800'>
-                {additional_info?.employee_type || "N/A"}
+                {additionalInfo?.employeeType || "N/A"}
               </td>
             </tr>
             <tr>
@@ -42,7 +42,7 @@ const AdditionalInfoCard = ({ additional_info }: AdditionalInfoCardProps) => {
                 Location:
               </td>
               <td className='pb-3 text-sm font-medium text-gray-800'>
-                {additional_info?.location || "N/A"}
+                {additionalInfo?.location || "N/A"}
               </td>
             </tr>
             <tr>
@@ -50,12 +50,13 @@ const AdditionalInfoCard = ({ additional_info }: AdditionalInfoCardProps) => {
                 Cost Centre:
               </td>
               <td className='pb-3 text-sm font-medium text-gray-800'>
-                {additional_info?.cost_centre || "N/A"}
+                {additionalInfo?.costCentre || "N/A"}
               </td>
             </tr>
           </tbody>
         </table>
       </div>
+
       <div className='card-footer flex justify-center'>
         <a
           className='btn btn-link'
