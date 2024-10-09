@@ -9,12 +9,19 @@ import ProfileSkills from "@/components/views/profile/Skills";
 import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
 import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
 import { getProfileDetails } from "@/lib/api/getProfileDetails";
+import { options } from "@/lib/auth";
+import { getServerSession } from "next-auth";
 
 const SkillsPage = async () => {
   // For quick testing
-  const userId = "fd00e148-dea9-4080-8a37-3a55b3c604dd";
+  const session = await getServerSession(options);
+ 
+  const userId = session?.user?.id;
+  console.log(session,"session",userId);
+  // const userId = "724c1713-6f31-407b-9d31-7718472c4f2d";
 
   const profile = await getProfileDetails(userId);
+ 
 
   if (!profile) {
     return <Spinner className='mx-auto mt-24 !items-start' size='large' />;

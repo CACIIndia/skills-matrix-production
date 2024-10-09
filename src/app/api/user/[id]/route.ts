@@ -6,7 +6,7 @@ export async function GET(
   { params }: { params: { id: string } },
 ) {
   const { id } = params;
-
+   console.log(id,"iddddddddddd");
   const user = await db.user.findUnique({
     where: {
       id,
@@ -21,6 +21,7 @@ export async function GET(
       projects: true,
     },
   });
+  
 
   if (!user) {
     return NextResponse.json({ message: "User not found" }, { status: 404 });

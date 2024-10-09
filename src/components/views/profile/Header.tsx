@@ -6,7 +6,7 @@ type ProfileHeaderProps = {
 };
 
 const ProfileHeader = ({
-  data: { name, image, email, role },
+  data: { name, image, email, role ,location},
 }: ProfileHeaderProps) => {
   return (
     <div className='hero-bg bg-cover bg-center bg-no-repeat'>
@@ -48,7 +48,7 @@ const ProfileHeader = ({
                 style={{ zIndex: -10 }}
                 className='ki-filled ki-geolocation text-sm text-gray-500'
               ></i>
-              {/* <span className='text-gray-600'>{additional_info?.location}</span> */}
+              <span className='text-gray-600'>{location}</span>
             </div>
             <div className='gap-1.25 flex items-center'>
               <i

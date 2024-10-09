@@ -21,6 +21,8 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
   showEditButton,
 }) => {
   const { data } = useGetSkills();
+  console.log(userSkills,"userSkills");
+  
 
   const [isOpen, setIsOpen] = useState(false);
   const [skillLevels, setSkillLevels] = useState<Record<string, any[]>>(
