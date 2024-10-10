@@ -51,4 +51,5 @@ export type UserDetails = {
   additionalInfo: AdditionalInfo;
   userSkills: UserSkill[];
   projects: Project[];
+  currentProject? : Project
 };

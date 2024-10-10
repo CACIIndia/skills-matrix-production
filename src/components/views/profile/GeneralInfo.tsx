@@ -38,7 +38,7 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({ data }) => {
             </tr>
             <tr>
               <td className="text-sm font-medium text-gray-500 pb-3 pr-4 lg:pr-8">Start Date:</td>
-              <td className="text-sm font-medium text-gray-800 pb-3">{data?.startdate || "N/A"}</td>
+              <td className="text-sm font-medium text-gray-800 pb-3">{data?.startdate ? new Date(data.startdate).toLocaleDateString() : "N/A"}</td>
             </tr>
             <tr>
               <td className="text-sm font-medium text-gray-500 pb-3 pr-4 lg:pr-8">Current Project:</td>

@@ -3,12 +3,14 @@ import { signIn } from "next-auth/react";
 
 const SignInButton = () => {
   return (
-    <button
-      onClick={() => signIn("azure-ad")}
-      className="bg-zinc-900 py-2 text-zinc-100 shadow hover:bg-zinc/90 w-full inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors"
-    >
-      Sign in with Azure AD
-    </button>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <button
+        onClick={() => signIn("azure-ad")}
+        className="bg-blue-600 py-3 px-6 text-white shadow-lg hover:bg-blue-700 w-64 rounded-md text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105"
+      >
+        Sign in with Azure AD
+      </button>
+    </div>
   );
 };
 

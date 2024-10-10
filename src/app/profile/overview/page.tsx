@@ -10,18 +10,21 @@ import ProfileGeneralInfo from "@/components/views/profile/GeneralInfo";
 import ProfileHeader from "@/components/views/profile/Header";
 import ProfileProjectHistory from "@/components/views/profile/ProjectHistory";
 import ProfileSkills from "@/components/views/profile/Skills";
-
 import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
 import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
 import useGetProfileDetails from "@/lib/hooks/profile/useGetProfileDetails";
+import { redirect } from "next/navigation";
+
 
 const OverviewPage = () => {
-  const { data: session, status } = useSession(); // Get session data
-  const userId = session?.user?.id; // Access user ID from session
+  const { data: session, status } = useSession(); // Get session data and status
 
+ 
+  if(status ==="unauthenticated"){
+      redirect("/auth/signin");
+      return
+  }
   
-  const { data, isLoading } = useGetProfileDetails(userId); // Use userId in the hook
-  console.log(data, "data");
 
   const [general_info, setGeneralInfo] = useState({
     email: "",
@@ -33,9 +36,13 @@ const OverviewPage = () => {
     reported_to: "",
   });
 
-  const currentProject = data?.currentProject ?? null;
-
+  // Access user ID from session once it is available
+  const userId = session?.user?.id;
+  // Use userId in the hook
+  const { data } = useGetProfileDetails(userId || "");
+  const currentProject=  data?.currentProject ?? {};
   useEffect(() => {
+    
     if (data) {
       setGeneralInfo({
         email: data?.email || "",
@@ -49,9 +56,12 @@ const OverviewPage = () => {
     }
   }, [data]);
 
-  if (isLoading) {
-    return <Spinner className="mx-auto mt-24 !items-start" size="large" />;
-  }
+ 
+  if(status == "loading" || !data)
+     return <Spinner className="mx-auto mt-24 !items-start" size="large" />;
+  
+
+
 
   return (
     <div className="w-full">
@@ -68,10 +78,11 @@ const OverviewPage = () => {
         <div className="lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3">
           <div className="col-span-1 grid gap-5">
             <ProfileGeneralInfo data={general_info} />
-            {data?.additionalInfo? 
-            <ProfileAdditionalInfo additionalInfo={data?.additionalInfo} />:<></>
-            }
-            
+            {data?.additionalInfo ? (
+              <ProfileAdditionalInfo additionalInfo={data?.additionalInfo} />
+            ) : (
+              <></>
+            )}
           </div>
 
           <div className="col-span-2 grid gap-5">

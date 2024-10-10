@@ -17,69 +17,72 @@ export const options: AuthOptions = {
   ],
   session: {
     strategy: "jwt",
-    maxAge: 1000,
+    maxAge: 1000
   },
-  secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    error: "/auth/error", // Custom error page URL
+    error: '/auth/error', // Redirect to custom error page
   },
   callbacks: {
     async jwt({ token, account, profile }) {
+  
+      // Check if this is the first time the user is signing in
       if (account && profile) {
-        console.log(profile, "profile");
-
-        const email = profile.email;
-        const name = profile.name || '';
-       
-        const azureAdId = profile.oid;
-
-        if (!azureAdId || !email) {
-          throw new Error("Azure AD did not return the required information.");
+        console.log(account,profile,"profileprofile");
+        const email = profile.email; // Get the email from the profile
+        const name = profile.name || ''; // Get the user's name
+  
+        if (!email) {
+          throw new Error("Azure AD did not return an email address.");
         }
 
         try {
+          // Check if the user already exists in the database using the email
           let user = await db.user.findUnique({
-            where: { id: azureAdId },
+            where: { email }, // Query by email
           });
 
-          console.log(user, "user");
 
+
+          // If the user doesn't exist, create a new one
           if (!user) {
             user = await db.user.create({
               data: {
-                id: azureAdId,
-                email,
-                name,
-                emailVerified: new Date(),
+                email, // Store email from Azure AD
+                name,  // Store name from Azure AD
+                emailVerified: new Date(), // Assume email is verified on login
               },
             });
           }
-
-          token.id = user.id;
+          console.log(token,"token");
+          // Attach the user's id and additional details to the token
+          token.sub = user.id; 
           token.email = user.email;
           token.name = user.name;
+          token.image = user.image;
+          return token;
+        
         } catch (error) {
-          console.error("Error during JWT callback:", error);
-          throw new Error("User creation or retrieval failed.");
+          console.error("Error checking/creating user in JWT callback:", error);
         }
       }
 
       return token;
     },
     async session({ session, token }) {
+      // Attach user details to the session
       if (token) {
         session.user = {
-          id: token.id,
-          email: token.email || "",
-          name: token.name || "",
-        
+          id:token?.sub,
+          email: token.email || "", 
+          name: token.name || "", 
+          image :token.image || "",
         };
       }
+
       return session;
     },
     async redirect({ url, baseUrl }) {
       return baseUrl; // Redirect to base URL after sign-in
     },
   },
-  
 };

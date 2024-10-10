@@ -13,11 +13,11 @@ export function currentUser() {
 
 						if (!session?.user?.email) return null;
 
-						// const user = await client.user.findUnique({
-						// 	where: { email: session.user.email }
-						// });
+						const user = await client.user.findUnique({
+							where: { email: session.user.email }
+						});
 
-						// return user;
+						return user;
 					}
 				}
 			}

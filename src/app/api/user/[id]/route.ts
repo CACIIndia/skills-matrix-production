@@ -6,7 +6,7 @@ export async function GET(
   { params }: { params: { id: string } },
 ) {
   const { id } = params;
-   console.log(id,"iddddddddddd");
+
   const user = await db.user.findUnique({
     where: {
       id,
@@ -39,6 +39,8 @@ export async function GET(
     },
     {} as Record<string, typeof user.userSkills>,
   );
+
+  
 
   const transformedUser = {
     ...user,

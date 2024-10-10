@@ -4,7 +4,7 @@ import { options } from '@/lib/auth';
 
 export default async function Page() {
   const session = await getServerSession(options);
-  console.log(session,"sessionmaggi");
+  
 
   // If no session exists, redirect to the sign-in page
   if (!session) {

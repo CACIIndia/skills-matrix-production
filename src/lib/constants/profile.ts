@@ -39,6 +39,16 @@ export const DEFAULT_USER_DETAILS: UserDetails = {
       joined_date: "",
     },
   },
+  currentProject: {
+    id: "",
+    projectName: "",
+    startDate: "",
+    role: "",
+    description: "",
+    code: "",
+    isCurrentProject: false,
+    userId: ""
+  }
 };
 
 export const SKILL_LEVELS = [
