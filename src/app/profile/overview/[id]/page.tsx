@@ -48,7 +48,11 @@ const OverviewPage = () => {
           <div className='col-span-2 grid gap-5'>
             <ProfileSkills userSkills={data?.userSkills || []} />
 
-            <ProfileProjectHistory projects={data?.projects || []} />
+            {data?.projects?.length && (
+              <ProfileProjectHistory
+                projects={data?.projects || DEFAULT_USER_DETAILS.projects}
+              />
+            )}
           </div>
         </div>
       </div>

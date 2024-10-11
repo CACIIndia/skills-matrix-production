@@ -9,23 +9,18 @@ import ProfileSkills from "@/components/views/profile/Skills";
 import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
 import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
 import { getProfileDetails } from "@/lib/api/getProfileDetails";
-import { options } from "@/lib/auth";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import { getSession } from "@/lib/auth";
 
 const SkillsPage = async () => {
-  const session = await getServerSession(options);
+  const session = await getSession();
 
-   
-  if(!session){
-    redirect("/auth/signin");
-    return
-}
   const userId = session?.user?.id;
   const profile = await getProfileDetails(userId || "");
-  if (!profile || !userId ) {
+
+  if (!profile || !userId) {
     return <Spinner className='mx-auto mt-24 !items-start' size='large' />;
   }
+
   return (
     <div className='w-full'>
       <ProfileHeader data={profile || DEFAULT_USER_DETAILS} />
@@ -40,6 +35,7 @@ const SkillsPage = async () => {
         <div className='lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3'>
           <div className='col-span-2'>
             <ProfileSkills
+              userId={userId}
               userSkills={profile?.userSkills || []}
               showEditButton={true}
             />

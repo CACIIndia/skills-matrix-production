@@ -22,7 +22,7 @@ const Menu = ({ items = [] }: MenuProps) => {
               <div
                 key={path}
                 className={`${
-                 path === pathname ? "active" : ""
+                  path === pathname ? "active" : ""
                 } menu-item menu-item-active:border-b-primary menu-item-here:border-b-primary border-b-2 border-b-transparent`}
               >
                 <Link

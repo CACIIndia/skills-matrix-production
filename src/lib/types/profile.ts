@@ -1,6 +1,8 @@
 export type Skill = {
   id: string;
   name: string;
+  category: string;
+  level?: number;
 };
 
 export type UserSkill = {
@@ -51,5 +53,5 @@ export type UserDetails = {
   additionalInfo: AdditionalInfo;
   userSkills: UserSkill[];
   projects: Project[];
-  currentProject? : Project
+  currentProject?: Project;
 };
