@@ -1,4 +1,6 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type MenuProps = {
   items: {
@@ -8,6 +10,7 @@ type MenuProps = {
 };
 
 const Menu = ({ items = [] }: MenuProps) => {
+  const pathname = usePathname();
   return (
     <div className='grid'>
       <div className='scrollable-x-auto static'>
@@ -19,7 +22,7 @@ const Menu = ({ items = [] }: MenuProps) => {
               <div
                 key={path}
                 className={`${
-                  false ? "active" : ""
+                  path === pathname ? "active" : ""
                 } menu-item menu-item-active:border-b-primary menu-item-here:border-b-primary border-b-2 border-b-transparent`}
               >
                 <Link

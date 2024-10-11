@@ -26,23 +26,5 @@ export async function GET(
     return NextResponse.json({ message: "User not found" }, { status: 404 });
   }
 
-  // Transform userSkills into an object with arrays for each skill category
-  const categorizedSkills = user.userSkills.reduce(
-    (acc, userSkill) => {
-      const { category } = userSkill.skill;
-      if (!acc[category]) {
-        acc[category] = [];
-      }
-      acc[category].push(userSkill);
-      return acc;
-    },
-    {} as Record<string, typeof user.userSkills>,
-  );
-
-  const transformedUser = {
-    ...user,
-    userSkills: categorizedSkills,
-  };
-
-  return NextResponse.json(transformedUser);
+  return NextResponse.json(user);
 }

@@ -12,12 +12,14 @@ import useGetSkills from "@/lib/hooks/profile/useGetSkills";
 import { updateUserSkills } from "@/app/actions/updateUserSkills";
 
 type ProfileSkillsProps = {
-  userSkills: Record<string, UserSkill[]>;
+  userId?: string;
+  userSkills?: UserSkill[];
   showEditButton?: boolean;
 };
 
 const ProfileSkills: React.FC<ProfileSkillsProps> = ({
-  userSkills = {},
+  userId,
+  userSkills,
   showEditButton,
 }) => {
   const { data } = useGetSkills();
@@ -27,16 +29,32 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
     data || {},
   );
 
+  // @TODO This should be refactored and moved out of the component
   useEffect(() => {
-    // Initialize skill levels with data
-    setSkillLevels(data || {});
+    if (data && userSkills) {
+      const updatedSkillLevels = { ...data };
+
+      userSkills.forEach((userSkill) => {
+        const category = userSkill.skill.category;
+        const skillId = userSkill.skillId;
+        const level = userSkill.level;
+
+        if (updatedSkillLevels[category]) {
+          const skill = updatedSkillLevels[category].find(
+            (skill) => skill.id === skillId,
+          );
+          if (skill) {
+            skill.level = level;
+          }
+        }
+      });
+
+      setSkillLevels(updatedSkillLevels);
+    }
   }, [data]);
 
-  // Flatten all skills into a single array
-  const allSkills = Object.values(userSkills).flat();
-
   return (
-    <div className=''>
+    <div>
       <div className='lg:gap-7.5 flex flex-col gap-5'>
         <div className='card'>
           <div className='card-header flex items-center justify-between'>
@@ -54,23 +72,38 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
 
           <div className='card-body'>
             <div className='mb-2 flex flex-wrap gap-2.5'>
-              {allSkills.map((userSkill) => {
-                const { name, color } = SKILL_LEVELS[userSkill.level];
+              {userSkills && userSkills?.length > 0 ? (
+                <div className='mb-2 flex flex-wrap gap-2.5'>
+                  {userSkills?.map((userSkill) => {
+                    const { name, color } = SKILL_LEVELS[userSkill.level];
 
-                if (!name) {
-                  console.error(`Unknown skill level: ${userSkill.level}`);
-                  return null;
-                }
+                    if (!name) {
+                      return null;
+                    }
 
-                return (
-                  <span
-                    key={userSkill.id}
-                    className={classNames("badge badge-sm", color)}
-                  >
-                    {userSkill.skill.name} ({name})
-                  </span>
-                );
-              })}
+                    return (
+                      <span
+                        key={userSkill.id}
+                        className={classNames("badge badge-sm", color)}
+                      >
+                        {userSkill.skill.name} ({name})
+                      </span>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className='text-center text-gray-600'>
+                  <p>No skills found</p>
+                  {showEditButton && (
+                    <button
+                      className='btn btn-primary mt-4'
+                      onClick={() => setIsOpen(true)}
+                    >
+                      Add Skills
+                    </button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -82,17 +115,11 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
         title='Edit Skills'
         primaryButton
         primaryButtonOnClick={async () => {
-          console.log("This is being called");
-
           const filteredSkillLevels = Object.values(skillLevels)
             .flat()
             .filter((skill: any) => skill.level !== 0);
 
-          // Temporarily pass through fixed id
-          await updateUserSkills(
-            "fd00e148-dea9-4080-8a37-3a55b3c604dd",
-            filteredSkillLevels,
-          );
+          userId && (await updateUserSkills(userId, filteredSkillLevels));
         }}
       >
         <EditSkills skillLevels={skillLevels} setSkillLevels={setSkillLevels} />

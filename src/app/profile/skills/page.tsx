@@ -9,21 +9,21 @@ import ProfileSkills from "@/components/views/profile/Skills";
 import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
 import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
 import { getProfileDetails } from "@/lib/api/getProfileDetails";
+import { getSession } from "@/lib/auth";
 
 const SkillsPage = async () => {
-  // For quick testing
-  const userId = "fd00e148-dea9-4080-8a37-3a55b3c604dd";
+  const session = await getSession();
 
-  const profile = await getProfileDetails(userId);
+  const userId = session?.user?.id;
+  const profile = await getProfileDetails(userId || "");
 
-  if (!profile) {
+  if (!profile || !userId) {
     return <Spinner className='mx-auto mt-24 !items-start' size='large' />;
   }
 
   return (
     <div className='w-full'>
       <ProfileHeader data={profile || DEFAULT_USER_DETAILS} />
-
       <div className='container-fixed'>
         <div className='mb-5 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:mb-10 lg:items-end'>
           <Menu items={PROFILE_HEADER_ITEMS} />
@@ -35,11 +35,11 @@ const SkillsPage = async () => {
         <div className='lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3'>
           <div className='col-span-2'>
             <ProfileSkills
+              userId={userId}
               userSkills={profile?.userSkills || []}
               showEditButton={true}
             />
           </div>
-
           <Legend layout='grid' />
         </div>
       </div>

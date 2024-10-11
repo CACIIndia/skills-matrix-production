@@ -1,12 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react"; // Import useSession hook
+import default_image from "../../../../public/assets/media/avatars/default-image.png";
+import Button from "../Button";
 
-type HeaderDropdown = {
+type HeaderDropdownProps = {
   isOpen: boolean;
   onClose: () => void;
 };
 
-const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdown) => {
+const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
+  const { data: session } = useSession(); // Get session data
+
   return (
     <div
       className={`absolute right-0 mt-2 w-[250px] bg-white border border-gray-200 rounded-lg shadow-lg transition-opacity duration-300 ${
@@ -20,19 +25,19 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdown) => {
             <Image
               alt='Profile'
               className='size-9 rounded-full border-2 border-success'
-              src='/assets/media/avatars/profilepic.jpg'
+              src={session?.user?.image ||default_image} // Use user image or default
               width={36}
               height={36}
             />
             <div className='flex flex-col gap-1.5'>
               <span className='text-sm text-gray-800 font-semibold leading-none'>
-                V A Magendran
+                {session?.user?.name || 'User Name'} {/* Display user name */}
               </span>
               <Link
                 className='text-xs text-gray-600 hover:text-primary font-medium leading-none'
                 href='/account/home/get-started'
               >
-                vmagendran@caci.co.uk
+                {session?.user?.email || ''} {/* Display user email */}
               </Link>
             </div>
           </div>
@@ -53,24 +58,15 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdown) => {
         </div>
 
         <div className='flex flex-col'>
-          {/* <div className="menu-item mb-0.5">
-						<div className="menu-link flex items-center gap-1.5">
-							<span className="menu-icon">
-								<i className="ki-filled ki-moon"></i>
-							</span>
-							<span className="menu-title">Dark Mode</span>
-							<label className="switch switch-sm">
-								<input name="check" type="checkbox" value="1" />
-							</label>
-						</div>
-					</div> */}
           <div className='menu-item px-4 py-1.5'>
-            <Link
+            <Button
+            size="sm"
               className='btn btn-sm btn-light justify-center'
-              href='/authentication/classic/sign-in'
+             
+              onClick={()=>{signOut()}} // Close dropdown on logout
             >
               Log out
-            </Link>
+            </Button>
           </div>
         </div>
       </div>

@@ -1,7 +1,10 @@
 "use client";
-import Menu from "@/app/components/Menu";
+
+import Menu from "@/components/common/Menu";
+
 import ProfileActions from "@/components/views/profile/Actions";
-import ProfileHeader from "@/app/components/ProfileHeader";
+import ProfileHeader from "@/components/views/profile/Header";
+
 import FileItem from "@/components/views/account/FileItem";
 import ResumeCard from "@/components/views/account/ResumeCard";
 import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
@@ -14,7 +17,7 @@ const DocumentPage = () => {
   }
   return (
     <div>
-      <ProfileHeader />
+      {/* <ProfileHeader /> */}
       {/* Profile Actions and Menu */}
       <div className='container-fixed'>
         <div className='dark:border-b-coal-100 mb-5 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:mb-10 lg:items-end'>
