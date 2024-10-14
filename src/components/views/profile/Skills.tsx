@@ -1,57 +1,41 @@
 "use client";
 
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import EditSkills from "@/components/views/profile/actions/EditSkills";
 import Modal from "@/components/common/Modal";
 
 import { SKILL_LEVELS } from "@/lib/constants/profile";
 import { UserSkill } from "@/lib/types/profile";
-import useGetSkills from "@/lib/hooks/profile/useGetSkills";
 import { updateUserSkills } from "@/app/actions/updateUserSkills";
+import userSkillsMapper from "@/lib/mappers/userSkillsMapper";
+
+export type SelectedSkill = {
+  userId: string;
+  skillId: string;
+  level: number;
+};
 
 type ProfileSkillsProps = {
-  userId?: string;
+  userId: string;
   userSkills?: UserSkill[];
   showEditButton?: boolean;
 };
 
 const ProfileSkills: React.FC<ProfileSkillsProps> = ({
   userId,
-  userSkills,
+  userSkills = [],
   showEditButton,
 }) => {
-  const { data } = useGetSkills();
+  const mappedUserSkills = userSkillsMapper(userSkills);
 
   const [isOpen, setIsOpen] = useState(false);
-  const [skillLevels, setSkillLevels] = useState<Record<string, any[]>>(
-    data || {},
-  );
+  const [selectedSkills, setSelectedSkills] = useState(mappedUserSkills);
 
-  // @TODO This should be refactored and moved out of the component
-  useEffect(() => {
-    if (data && userSkills) {
-      const updatedSkillLevels = { ...data };
-
-      userSkills.forEach((userSkill) => {
-        const category = userSkill.skill.category;
-        const skillId = userSkill.skillId;
-        const level = userSkill.level;
-
-        if (updatedSkillLevels[category]) {
-          const skill = updatedSkillLevels[category].find(
-            (skill) => skill.id === skillId,
-          );
-          if (skill) {
-            skill.level = level;
-          }
-        }
-      });
-
-      setSkillLevels(updatedSkillLevels);
-    }
-  }, [data]);
+  const handleEdit = async () => {
+    updateUserSkills(userId, selectedSkills);
+  };
 
   return (
     <div>
@@ -113,16 +97,14 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         title='Edit Skills'
-        primaryButton
-        primaryButtonOnClick={async () => {
-          const filteredSkillLevels = Object.values(skillLevels)
-            .flat()
-            .filter((skill: any) => skill.level !== 0);
-
-          userId && (await updateUserSkills(userId, filteredSkillLevels));
-        }}
+        primaryButton={true}
+        primaryButtonOnClick={handleEdit}
       >
-        <EditSkills skillLevels={skillLevels} setSkillLevels={setSkillLevels} />
+        <EditSkills
+          userId={userId}
+          selectedSkills={selectedSkills}
+          setSelectedSkills={setSelectedSkills}
+        />
       </Modal>
     </div>
   );

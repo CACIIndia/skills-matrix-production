@@ -1,30 +1,26 @@
 "use client";
 
-import { useSession } from "next-auth/react"; // Import useSession for client-side session
+import { useSession } from "next-auth/react";
+
 import Menu from "@/components/common/Menu";
 import Spinner from "@/components/common/Spinner";
+
 import ProfileActions from "@/components/views/profile/Actions";
 import ProfileAdditionalInfo from "@/components/views/profile/AdditionalInfo";
 import ProfileGeneralInfo from "@/components/views/profile/GeneralInfo";
 import ProfileHeader from "@/components/views/profile/Header";
 import ProfileProjectHistory from "@/components/views/profile/ProjectHistory";
 import ProfileSkills from "@/components/views/profile/Skills";
+
 import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
 import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
 import useGetProfileDetails from "@/lib/hooks/profile/useGetProfileDetails";
-import { redirect } from "next/navigation";
-import { useEffect } from "react";
 
 const OverviewPage = () => {
-  const { data: session, status } = useSession(); // Get session data and status
+  const { data: session, status } = useSession();
 
-  if (status === "unauthenticated") {
-    redirect("/auth/signin");
-  }
-
-  // Access user ID from session once it is available
   const userId = session?.user?.id;
-  // Use userId in the hook
+
   const { data } = useGetProfileDetails(userId || "");
 
   if (status == "loading" || !data)

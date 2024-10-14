@@ -10,11 +10,7 @@ export async function updateUserSkills(userId: string, userSkills: any[]) {
 
     // Create new user skills
     const updatedSkills = await db.userSkill.createMany({
-      data: userSkills.map((skill: any) => ({
-        userId,
-        skillId: skill.id,
-        level: skill.level,
-      })),
+      data: userSkills,
     });
 
     revalidateTag("user-details");

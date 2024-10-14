@@ -20,7 +20,7 @@ export const options: AuthOptions = {
     maxAge: 1000,
   },
   pages: {
-    error: "/auth/error", // Redirect to custom error page
+    signIn: "/auth/signin",
   },
   callbacks: {
     async jwt({ token, account, profile }) {

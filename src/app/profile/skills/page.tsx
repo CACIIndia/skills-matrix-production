@@ -6,16 +6,16 @@ import ProfileActions from "@/components/views/profile/Actions";
 import ProfileHeader from "@/components/views/profile/Header";
 import ProfileSkills from "@/components/views/profile/Skills";
 
+import { getSession } from "@/lib/auth";
+import { getProfileDetails } from "@/lib/api/getProfileDetails";
 import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
 import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
-import { getProfileDetails } from "@/lib/api/getProfileDetails";
-import { getSession } from "@/lib/auth";
 
 const SkillsPage = async () => {
   const session = await getSession();
 
-  const userId = session?.user?.id;
-  const profile = await getProfileDetails(userId || "");
+  const userId = session?.user?.id || "";
+  const profile = await getProfileDetails(userId);
 
   if (!profile || !userId) {
     return <Spinner className='mx-auto mt-24 !items-start' size='large' />;
@@ -36,10 +36,11 @@ const SkillsPage = async () => {
           <div className='col-span-2'>
             <ProfileSkills
               userId={userId}
-              userSkills={profile?.userSkills || []}
+              userSkills={profile?.userSkills}
               showEditButton={true}
             />
           </div>
+
           <Legend layout='grid' />
         </div>
       </div>

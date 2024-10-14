@@ -14,6 +14,11 @@ export async function GET(
     include: {
       additionalInfo: true,
       userSkills: {
+        where: {
+          level: {
+            gt: 0,
+          },
+        },
         include: {
           skill: true,
         },
