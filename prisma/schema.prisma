@@ -20,7 +20,8 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -39,6 +40,8 @@ model User {
   email          String?         @unique
   emailVerified  DateTime?
   image          String?
+  accounts       Account[]
+  sessions       Session[]
   phone          String?
   location       String?
   status         String?
@@ -47,11 +50,9 @@ model User {
   reportedToId   String?
   role           String?
   createdAt      DateTime        @default(now())
-  joiningDate    DateTime?
-  accounts       Account[]
   additionalInfo AdditionalInfo?
   projects       Project[]
-  sessions       Session[]
+  joiningDate    DateTime?
   userSkills     UserSkill[]
 }
 
@@ -64,11 +65,11 @@ model Skill {
 
 model UserSkill {
   id      String @id @default(uuid())
+  user    User   @relation(fields: [userId], references: [id])
   userId  String
+  skill   Skill  @relation(fields: [skillId], references: [id])
   skillId String
   level   Int
-  skill   Skill  @relation(fields: [skillId], references: [id])
-  user    User   @relation(fields: [userId], references: [id])
 }
 
 model AdditionalInfo {
@@ -78,8 +79,8 @@ model AdditionalInfo {
   employeeType String?
   location     String?
   costCentre   String?
-  userId       String  @unique
   user         User    @relation(fields: [userId], references: [id])
+  userId       String  @unique
 }
 
 model Project {
@@ -91,8 +92,8 @@ model Project {
   description      String
   code             String
   isCurrentProject Boolean
-  userId           String
   user             User     @relation(fields: [userId], references: [id])
+  userId           String
 }
 
 model Discipline {
@@ -100,14 +101,12 @@ model Discipline {
   status String?
   id     String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 }
-
 model Location {
   id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name       String?
   costCentre String?
   status     String?
 }
-
 model Specialism {
   id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   discipline Int?
