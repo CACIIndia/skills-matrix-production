@@ -22,7 +22,11 @@ const OverviewPage = () => {
   const userId = session?.user?.id;
 
   const { data } = useGetProfileDetails(userId || "");
-
+  console.log(data,"datadatadata");
+ 
+  const currentProject = data?.projects.find(
+    (project: any) => project.isCurrentProject
+  );
   if (status == "loading" || !data)
     return <Spinner className='mx-auto mt-24 !items-start' size='large' />;
 
@@ -43,13 +47,14 @@ const OverviewPage = () => {
             {/*  @ TODO This should come from the endpoint  */}
             <ProfileGeneralInfo
               data={{
-                email: data?.email,
-                phone: "",
-                status: "",
-                startdate: "",
-                current_project: "",
-                sfia_level: "",
-                reported_to: "",
+                id :data?.id || "",
+                email: data?.email || "",
+                phone: data?.phone || "",
+                status: data?.status || "",
+                startdate: currentProject?.startDate || "",
+                current_project: currentProject?.projectName || "",
+                sfia_level: data?.sfiaLevel || "",
+                reported_to: data?.reportedTo || "",
               }}
             />
 
