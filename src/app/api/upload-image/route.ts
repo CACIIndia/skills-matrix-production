@@ -12,10 +12,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'No image provided' }, { status: 400 });
     }
 
-    // Azure storage connection string and other details
-    const storageAccount = 'smempprofile'; // Storage account name
-    const containerName = 'profileimage';  // Replace with your actual container name
-    const connectionString = `DefaultEndpointsProtocol=https;AccountName=${storageAccount};AccountKey=uDuP7qbD8FqrHCDDJGUTKbLxepfumKRsR3JeESe3tGT2eJNbEP7RlQP79vm8iFsSrybfownR3XDk+AStERctwQ==;EndpointSuffix=core.windows.net`;
+    // Read Azure storage account details from environment variables
+    const storageAccount = process.env.AZURE_STORAGE_ACCOUNT_NAME;
+    const containerName = process.env.AZURE_STORAGE_CONTAINER_NAME;
+    const connectionString = process.env.AZURE_STORAGE_CONNECTION_STRING;
+
+    if (!storageAccount || !containerName || !connectionString) {
+      return NextResponse.json({ error: 'Azure storage configuration is missing' }, { status: 500 });
+    }
 
     // Create BlobServiceClient
     const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);

@@ -15,6 +15,7 @@ interface GeneralInfo {
   current_project: string;
   sfia_level: string;
   reported_to: string;
+  reported_to_id :string;
 }
 
 interface GeneralInfoCardProps {
@@ -25,6 +26,8 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [editableData, setEditableData] = useState<GeneralInfo>(data);
   const router = useRouter();
+
+
 
   // Fetch SFIA Levels and Reported To Options
   const { data: sfiaLevels, isLoading: sfiaLoading, error: sfiaError } = useGetSfiaLevels();
@@ -42,7 +45,7 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({ data }) => {
       {
         onError: (error) => {
           console.error("Error occurred:", error);
-          // router.push("/500");
+          router.push("/500");
         },
       }
     );

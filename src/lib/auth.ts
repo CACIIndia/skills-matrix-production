@@ -49,7 +49,7 @@ export const options: AuthOptions = {
               },
             });
           }
-          console.log(token, "token");
+   
           // Attach the user's id and additional details to the token
           token.sub = user.id;
           token.email = user.email;

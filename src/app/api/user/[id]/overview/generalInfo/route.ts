@@ -7,11 +7,11 @@ export async function PUT(
 ) {
   try {
     const { id } = params;
-    console.log(id,"idddddddddddd");
+  
 
     const { phone, sfia_level, reported_to,reported_to_id } = await request.json();
 
-    console.log(phone ,"phopne", sfia_level, "sfia_level", reported_to,"reported_to",reported_to_id,"reported_to_id");
+
 
     // Update the user's general info
     const updatedGeneralInfo = await db.user.update({

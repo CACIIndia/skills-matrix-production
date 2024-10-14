@@ -7,7 +7,7 @@ const updateAdditionalInfo = async (
   userId: string,
   updatedData: Omit<AdditionalInfo, '_id'> // Exclude '_id' if it's not needed
 ): Promise<AdditionalInfo> => {
-    console.log(updatedData,"updatedDataupdatedData");
+
   const response = await axiosInstance.put(`/user/${userId}/overview/additionalInfo`, updatedData);
   return response.data; // Return the updated additional info data
 };

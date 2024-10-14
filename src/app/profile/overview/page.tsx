@@ -22,7 +22,7 @@ const OverviewPage = () => {
   const userId = session?.user?.id;
 
   const { data } = useGetProfileDetails(userId || "");
-  console.log(data,"datadatadata");
+ 
  
   const currentProject = data?.projects.find(
     (project: any) => project.isCurrentProject
@@ -55,6 +55,7 @@ const OverviewPage = () => {
                 current_project: currentProject?.projectName || "",
                 sfia_level: data?.sfiaLevel || "",
                 reported_to: data?.reportedTo || "",
+                reported_to_id :data?.reportedToId || "",
               }}
             />
 

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import db from "@/lib/db"; // Comment out the db import for now
 
 export async function GET() {
-  // Temporarily use dummy data or an empty array for sfiaLevels
+
 
   const sfiaLevels = await db.sfiaLevel.findMany({});
   

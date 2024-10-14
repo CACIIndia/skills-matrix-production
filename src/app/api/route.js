@@ -16,7 +16,7 @@ export async function POST(request) {
 
     // Here, you can process the received data, save it to a database, etc.
     // For this example, we'll just log it and send it back in the response
-    console.log('Received data:', data);
+  
 
     return NextResponse.json({
       message: 'Product received successfully!',
