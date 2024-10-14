@@ -14,6 +14,7 @@ type ModalProps = {
   children: React.ReactNode;
   primaryButton?: boolean;
   primaryButtonOnClick?: () => void;
+  customWidth?: string;
 };
 
 const Modal = ({

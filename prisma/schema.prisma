@@ -95,3 +95,25 @@ model Project {
   user             User     @relation(fields: [userId], references: [id])
   userId           String
 }
+
+model Discipline {
+  name   String?
+  status String?
+  id     String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+}
+model Location {
+  id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String?
+  costCentre String?
+  status     String?
+}
+model Specialism {
+  id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  discipline Int?
+  name       String?
+  status     String?
+}
+model SfiaLevel {
+  id    String @id @default(uuid())
+  level String
+}
