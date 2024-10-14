@@ -31,7 +31,7 @@ const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
     const selectedPerson = reportedToOptions.find(
       (person) => person.id === initialData.reported_to_id
     );
-    c
+    
     
     if (selectedPerson) {
       setEditableData({
