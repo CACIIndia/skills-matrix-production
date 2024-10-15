@@ -12,6 +12,8 @@ type HeaderDropdownProps = {
 const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
   const { data: session } = useSession(); // Get session data
 
+  console.log(session,"lgout");
+
   return (
     <div
       className={`absolute right-0 mt-2 w-[250px] bg-white border border-gray-200 rounded-lg shadow-lg transition-opacity duration-300 ${
@@ -22,13 +24,14 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
       <div className='bg-white menu-default '>
         <div className='flex items-center justify-between px-5 py-1.5 gap-1.5'>
           <div className='flex items-center gap-2'>
-            <Image
+            <img
               alt='Profile'
-              className='size-9 rounded-full border-2 border-success'
-              src={session?.user?.image ||default_image} // Use user image or default
-              width={36}
-              height={36}
+              className='profile_image size-9 rounded-full border-2 border-success'
+              src={session?.user?.image || ""  } // Use user image or default
+             
+              style={{width:36,height:36}}
             />
+           
             <div className='flex flex-col gap-1.5'>
               <span className='text-sm text-gray-800 font-semibold leading-none'>
                 {session?.user?.name || 'User Name'} {/* Display user name */}

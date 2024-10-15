@@ -2,10 +2,23 @@
 import { BlobServiceClient } from '@azure/storage-blob';
 import { NextResponse } from 'next/server';
 
+import db from '@/lib/db';
+import { getSession } from '@/lib/auth';
+
+
 export async function POST(request: Request) {
   try {
+    // Get the current session
+    const session = await getSession();
+
+    // Check if the user is authenticated
+    if (!session || !session.user) {
+      return NextResponse.json({ error: 'User is not authenticated' }, { status: 401 });
+    }
+
     // Parse the incoming request body
     const { base64Image } = await request.json();
+    const userId = session.user.id; // Extract userId from the session
 
     // If no base64Image is provided in the request
     if (!base64Image) {
@@ -27,8 +40,8 @@ export async function POST(request: Request) {
     // Get the container client
     const containerClient = blobServiceClient.getContainerClient(containerName);
 
-    // Generate a unique filename using the current timestamp
-    const filename = `${Date.now()}.png`;
+    // Generate a unique filename using the userId
+    const filename = `${Date.now()}${userId}.png`;
 
     // Convert the base64 string to a Buffer
     const imageBuffer = Buffer.from(base64Image, 'base64');
@@ -43,8 +56,18 @@ export async function POST(request: Request) {
       },
     });
 
+    // Update the user's image in the database
+    const updatedUser = await db.user.update({
+      where: { id: userId },  // User's unique identifier
+      data: { image: `https://smempprofile.blob.core.windows.net/profileimage/${filename}` }, // Set the image field
+    });
+
+    // Update the image in the session
+    session.user.image = `https://smempprofile.blob.core.windows.net/profileimage/${filename}`;
+  
+
     // Respond with a success message
-    return NextResponse.json({ message: 'Image uploaded successfully', filename }, { status: 200 });
+    return NextResponse.json({ message: 'Image uploaded successfully', image_url: session.user.image }, { status: 200 });
 
   } catch (error) {
     console.error('Error during image upload:', error);
