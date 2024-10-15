@@ -1,14 +1,15 @@
 // app/api/upload-image/route.ts
 import { BlobServiceClient } from '@azure/storage-blob';
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth'; // Import to access the session
+
 import db from '@/lib/db';
-import { options } from '@/lib/auth';// Adjust the import path for your authOptions
+import { getSession } from '@/lib/auth';
+
 
 export async function POST(request: Request) {
   try {
     // Get the current session
-    const session = await getServerSession(options);
+    const session = await getSession();
 
     // Check if the user is authenticated
     if (!session || !session.user) {
