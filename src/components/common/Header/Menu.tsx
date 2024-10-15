@@ -39,13 +39,20 @@ const HeaderMenu = () => {
         onClick={toggleDropdown}
         className="flex items-center space-x-2 p-1 rounded-full hover:bg-gray-300"
       >
-        <Image
+        {/* <Image
           alt="Profile"
-          className="size-9 rounded-full border-2 border-success"
+          className="profile_image size-9 rounded-full border-2 border-success"
           src={session?.user?.image ||  default_image} // Use user's image or default
           width={36}
           height={36}
-        />
+        /> */}
+          <img
+              alt='Profile'
+              className='profile_image size-9 rounded-full border-2 border-success'
+              src={session?.user?.image || ""  } // Use user image or default
+             
+              style={{width:36,height:36}}
+            />
         <span className="sr-only">Profile Menu</span>
       </button>
 
