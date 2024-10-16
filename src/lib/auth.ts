@@ -59,15 +59,10 @@ export const options: AuthOptions = {
           token.image = user.image;
           return token;
         } catch (error: unknown) { 
-
-          console.error("Error checking/creating user in JWT callback:", error);
-        
-          // Check if the error is actually an instance of Error
           if (error instanceof Error) {
             // If it's an instance of Error, throw it with a custom message
-            throw new Error("Database connection failed. Redirecting to sign-in.",error);
+            throw new Error("Error checking/creating user in JWT callback:", error);
           }
-        
           // If the error is not an instance of Error, handle it differently
           throw new Error("An unknown error occurred.");
         }
