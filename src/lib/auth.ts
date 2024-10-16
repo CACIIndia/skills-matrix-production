@@ -3,6 +3,7 @@ import { AuthOptions, getServerSession } from "next-auth";
 import db from "./db";
 
 export const options: AuthOptions = {
+
   providers: [
     AzureADProvider({
       clientId: process.env.AZURE_AD_CLIENT_ID!,
@@ -20,14 +21,15 @@ export const options: AuthOptions = {
     maxAge: 1000,
   },
   pages: {
+
     signIn: "/auth/signin",
+    error: "/auth/error",
   },
   callbacks: {
     async jwt({ token, account, profile }) {
-      // Check if this is the first time the user is signing in
       if (account && profile) {
-        const email = profile.email; // Get the email from the profile
-        const name = profile.name || ""; // Get the user's name
+        const email = profile.email;
+        const name = profile.name || "";
 
         if (!email) {
           throw new Error("Azure AD did not return an email address.");
@@ -36,28 +38,33 @@ export const options: AuthOptions = {
         try {
           // Check if the user already exists in the database using the email
           let user = await db.user.findUnique({
-            where: { email }, // Query by email
+            where: { email },
           });
 
           // If the user doesn't exist, create a new one
           if (!user) {
             user = await db.user.create({
               data: {
-                email, // Store email from Azure AD
-                name, // Store name from Azure AD
-                emailVerified: new Date(), // Assume email is verified on login
+                email,
+                name,
+                emailVerified: new Date(),
               },
             });
           }
-   
+
           // Attach the user's id and additional details to the token
           token.sub = user.id;
           token.email = user.email;
           token.name = user.name;
           token.image = user.image;
           return token;
-        } catch (error) {
-          console.error("Error checking/creating user in JWT callback:", error);
+        } catch (error: unknown) { 
+          if (error instanceof Error) {
+            // If it's an instance of Error, throw it with a custom message
+            throw new Error("Error checking/creating user in JWT callback:", error);
+          }
+          // If the error is not an instance of Error, handle it differently
+          throw new Error("An unknown error occurred.");
         }
       }
 
