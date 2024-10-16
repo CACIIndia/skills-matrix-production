@@ -42,7 +42,7 @@ const HeaderMenu = () => {
            <img
               alt='Profile'
               className='profile_image size-9 rounded-full border-2 border-success'
-              src={ loading ? "/assets/media/avatars/default-image.png" : profile?.image  } // Use user image or default
+              src={ loading ? "/assets/media/avatars/default-image.png" : profile?.image || "/assets/media/avatars/default-image.png"  } // Use user image or default
              
               style={{width:36,height:36}}
             />

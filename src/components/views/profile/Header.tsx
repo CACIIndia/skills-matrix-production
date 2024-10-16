@@ -7,6 +7,7 @@ import default_image from "../../../../public/assets/media/avatars/default-image
 import { FaEdit } from "react-icons/fa"; // Optional: Use an edit icon from react-icons
 import { updateProfileImage, uploadImage } from "@/app/utils/imageUpload";
 import { useAppContext } from "@/app/context/AppContext";
+import image_spinner from "../../../../public/assets/media/misc/spinner.gif";
 
 type ProfileHeaderProps = {
   data: UserDetails;
@@ -16,7 +17,7 @@ const ProfileHeader = ({ data: { name, image, email, role, location ,id} }: Prof
   const [profileImage, setProfileImage] = useState<string>(image || "");
   const [uploading, setUploading] = useState(false);
   const { profile ,setProfile} = useAppContext();
-
+  
   const fileInputRef = useRef<HTMLInputElement | null>(null); // Create a ref for the file input
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,11 +30,12 @@ const ProfileHeader = ({ data: { name, image, email, role, location ,id} }: Prof
 
     try {
       setUploading(true);
+    
       const uploadedImage = await uploadImage(file,id);
       setProfileImage(uploadedImage.image_url);
       updateProfileImage(uploadedImage.image_url);
       setProfile({...profile,image_url:uploadedImage.url});
-      alert("updated successfully");
+      
     } catch (uploadError: unknown) {
       if (uploadError instanceof Error) {
         console.error("Error uploading image:", uploadError);
@@ -59,7 +61,7 @@ const ProfileHeader = ({ data: { name, image, email, role, location ,id} }: Prof
           <div className="relative flex flex-col items-center gap-2">
             <Image
               className="profile_image border-3 border-success size-[100px] shrink-0 rounded-full"
-              src={profileImage || default_image}
+              src={ uploading?image_spinner:  profileImage || default_image}
               alt={name}
               width={100}
               height={100}
