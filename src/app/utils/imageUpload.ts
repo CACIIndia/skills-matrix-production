@@ -1,11 +1,11 @@
 import axios from 'axios';
 
- const uploadImage = async (file: File, id:string): Promise<string> => {
+ const uploadImage = async (file: File, id:string): Promise<{ image_url: string }> => {
   try {
     const reader = new FileReader();
     reader.readAsDataURL(file);
 
-    return new Promise<string>((resolve, reject) => {
+    return new Promise<{ image_url: string }>((resolve, reject) => {
       reader.onloadend = async () => {
         const base64Image = reader.result?.toString().split(',')[1];
 

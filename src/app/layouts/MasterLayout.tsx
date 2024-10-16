@@ -3,8 +3,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React, { useState, useEffect } from "react";
 
-import Sidebar from "../../components/common/Sidebar";
+import Sidebar from "@/components/common/Sidebar";
 import Header from "@/components/common/Header/index";
+import { AppProvider } from "@/app/context/AppContext";
 
 // @TODO This component should be refactored and simplified
 export default function MasterLayout({
@@ -40,6 +41,7 @@ export default function MasterLayout({
 
   return (
     <QueryClientProvider client={client}>
+      <AppProvider>
       {/* Sidebar */}
       <div
         style={{ zIndex: 1 ,isolation:"inherit"}}
@@ -86,6 +88,7 @@ export default function MasterLayout({
       >
         {children}
       </div>
+      </AppProvider>
     </QueryClientProvider>
   );
 }

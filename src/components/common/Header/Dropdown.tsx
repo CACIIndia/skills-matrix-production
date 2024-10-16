@@ -3,6 +3,7 @@ import Link from "next/link";
 import { signOut, useSession } from "next-auth/react"; // Import useSession hook
 import default_image from "../../../../public/assets/media/avatars/default-image.png";
 import Button from "../Button";
+import { useAppContext } from "@/app/context/AppContext";
 
 type HeaderDropdownProps = {
   isOpen: boolean;
@@ -10,9 +11,7 @@ type HeaderDropdownProps = {
 };
 
 const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
-  const { data: session } = useSession(); // Get session data
-
-  console.log(session,"lgout");
+  const { profile } = useAppContext();
 
   return (
     <div
@@ -27,20 +26,20 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
             <img
               alt='Profile'
               className='profile_image size-9 rounded-full border-2 border-success'
-              src={session?.user?.image || ""  } // Use user image or default
+              src={profile?.image || ""  } // Use user image or default
              
               style={{width:36,height:36}}
             />
            
             <div className='flex flex-col gap-1.5'>
               <span className='text-sm text-gray-800 font-semibold leading-none'>
-                {session?.user?.name || 'User Name'} {/* Display user name */}
+                {profile?.name || 'User Name'} {/* Display user name */}
               </span>
               <Link
                 className='text-xs text-gray-600 hover:text-primary font-medium leading-none'
                 href='/account/home/get-started'
               >
-                {session?.user?.email || ''} {/* Display user email */}
+                {profile?.email || ''} {/* Display user email */}
               </Link>
             </div>
           </div>

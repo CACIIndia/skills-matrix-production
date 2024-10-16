@@ -24,6 +24,7 @@ const Modal = ({
   children,
   primaryButton,
   primaryButtonOnClick,
+  customWidth
 }: ModalProps) => {
   const onClose = () => setIsOpen(!isOpen);
 
@@ -37,7 +38,7 @@ const Modal = ({
 
       <div className='fixed inset-0 z-10 w-screen overflow-y-auto'>
         <div className='flex min-h-full items-center justify-center p-4'>
-          <DialogPanel className='w-full max-w-6xl rounded bg-white p-6'>
+        <DialogPanel className={` ${customWidth ? customWidth : 'w-full max-w-6xl'} rounded bg-white p-6`}>
             <div className='mb-4 flex items-center justify-between'>
               {title && (
                 <DialogTitle className='text-2xl font-bold'>
