@@ -1,56 +1,55 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useSession } from 'next-auth/react'; // Import useSession for client-side session management
+import { useSession } from 'next-auth/react'; 
 import { getProfileDetails } from '@/lib/api/getProfileDetails';
 
-// Define a type for the context value
+
 interface AppContextType {
   user: string | null;
   userId: string;
-  profile: any | null; // Adjust type as per your profile structure
+  profile: any | null; 
   setUser: (user: string | null) => void;
   setProfile: (profile: any | null) => void;
   loading: boolean;
 }
 
-// Create the context with default value
+
 const AppContext = createContext<AppContextType | undefined>(undefined);
 
-// Create a provider component
+
 interface AppProviderProps {
   children: ReactNode;
 }
 
 export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-  const { data: session, status } = useSession(); // useSession from next-auth/react
+  const { data: session, status } = useSession(); 
   const [user, setUser] = useState<string | null>(null);
   const [userId, setUserId] = useState<string>('');
   const [profile, setProfile] = useState<any | null>(null);
-  const [loading, setLoading] = useState<boolean>(true); // Add loading state
+  const [loading, setLoading] = useState<boolean>(true); 
 
-  // Fetch session and profile details
   useEffect(() => {
     const fetchUserDetails = async () => {
-      if (status === 'authenticated' && session?.user?.id && !userId) { // Ensure we fetch data only once
+      if (status === 'authenticated' && session?.user?.id && !userId) { 
         try {
-          setLoading(true); // Start loading when fetching data
+          setLoading(true);
           const fetchedUserId = session.user.id;
-          setUserId(fetchedUserId); // Set userId in state
+          setUserId(fetchedUserId); 
           
-          const profileData = await getProfileDetails(fetchedUserId); // Fetch profile details
+          const profileData = await getProfileDetails(fetchedUserId);
           setProfile(profileData);
-          setUser(session.user.name || ''); // Optionally set the user's name
+          setUser(session.user.name || ''); 
         } catch (error) {
           console.error('Failed to fetch session or profile details', error);
         } finally {
-          setLoading(false); // End loading after data is fetched
+          setLoading(false);
         }
       }
     };
 
     if (!profile) {
-      fetchUserDetails(); // Fetch data only when the profile is null
+      fetchUserDetails(); 
     }
-  }, [session, status, userId, profile]); // Rerun when session or status changes, but only once after fetching
+  }, [session, status, userId, profile]); 
 
   return (
     <AppContext.Provider value={{ user, userId, profile, setUser, setProfile, loading }}>
@@ -59,7 +58,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   );
 };
 
-// Custom hook to use the AppContext
+
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (context === undefined) {
