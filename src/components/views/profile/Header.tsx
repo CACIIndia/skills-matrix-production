@@ -6,6 +6,7 @@ import Image from "next/image";
 import default_image from "../../../../public/assets/media/avatars/default-image.png";
 import { FaEdit } from "react-icons/fa"; // Optional: Use an edit icon from react-icons
 import { updateProfileImage, uploadImage } from "@/app/utils/imageUpload";
+import { useAppContext } from "@/app/context/AppContext";
 
 type ProfileHeaderProps = {
   data: UserDetails;
@@ -14,6 +15,7 @@ type ProfileHeaderProps = {
 const ProfileHeader = ({ data: { name, image, email, role, location ,id} }: ProfileHeaderProps) => {
   const [profileImage, setProfileImage] = useState<string>(image || "");
   const [uploading, setUploading] = useState(false);
+  const { profile ,setProfile} = useAppContext();
 
   const fileInputRef = useRef<HTMLInputElement | null>(null); // Create a ref for the file input
 
@@ -29,7 +31,8 @@ const ProfileHeader = ({ data: { name, image, email, role, location ,id} }: Prof
       setUploading(true);
       const uploadedImage = await uploadImage(file,id);
       setProfileImage(uploadedImage.image_url);
-      updateProfileImage(uploadedImage.image_url); // Assuming the response has the image URL
+      updateProfileImage(uploadedImage.image_url);
+      setProfile({...profile,image_url:uploadedImage.url});
       alert("updated successfully");
     } catch (uploadError: unknown) {
       if (uploadError instanceof Error) {

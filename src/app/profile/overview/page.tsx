@@ -1,38 +1,38 @@
 "use client";
-
-import { useSession } from "next-auth/react";
-
 import Menu from "@/components/common/Menu";
 import Spinner from "@/components/common/Spinner";
-
 import ProfileActions from "@/components/views/profile/Actions";
 import ProfileAdditionalInfo from "@/components/views/profile/AdditionalInfo";
 import ProfileGeneralInfo from "@/components/views/profile/GeneralInfo";
 import ProfileHeader from "@/components/views/profile/Header";
 import ProfileProjectHistory from "@/components/views/profile/ProjectHistory";
 import ProfileSkills from "@/components/views/profile/Skills";
-
 import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
 import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
-import useGetProfileDetails from "@/lib/hooks/profile/useGetProfileDetails";
+import { useAppContext } from "@/app/context/AppContext";
+
 
 const OverviewPage = () => {
-  const { data: session, status } = useSession();
+ 
+  const { profile,userId ,loading} = useAppContext();
+  
+  
+  const projects = profile?.projects || [];
 
-  const userId = session?.user?.id;
 
-  const { data } = useGetProfileDetails(userId || "");
+
+
  
  
-  const currentProject = data?.projects.find(
+  const currentProject = projects.find(
     (project: any) => project.isCurrentProject
   );
-  if (status == "loading" || !data)
+  if (loading|| !profile)
     return <Spinner className='mx-auto mt-24 !items-start' size='large' />;
 
   return (
     <div className='w-full'>
-      <ProfileHeader data={data || DEFAULT_USER_DETAILS} />
+      <ProfileHeader data={profile || DEFAULT_USER_DETAILS} />
 
       <div className='container-fixed'>
         <div className='mb-5 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:mb-10 lg:items-end'>
@@ -47,29 +47,29 @@ const OverviewPage = () => {
             {/*  @ TODO This should come from the endpoint  */}
             <ProfileGeneralInfo
               data={{
-                id :data?.id || "",
-                email: data?.email || "",
-                phone: data?.phone || "",
-                status: data?.status || "",
+                id :profile?.id || "",
+                email: profile?.email || "",
+                phone: profile?.phone || "",
+                status: profile?.status || "",
                 startdate: currentProject?.startDate || "",
                 current_project: currentProject?.projectName || "",
-                sfia_level: data?.sfiaLevel || "",
-                reported_to: data?.reportedTo || "",
-                reported_to_id :data?.reportedToId || "",
+                sfia_level: profile?.sfiaLevel || "",
+                reported_to: profile?.reportedTo || "",
+                reported_to_id :profile?.reportedToId || "",
               }}
             />
 
-            {data?.additionalInfo && (
-              <ProfileAdditionalInfo additionalInfo={data?.additionalInfo} />
+            {profile?.additionalInfo && (
+              <ProfileAdditionalInfo additionalInfo={profile?.additionalInfo} />
             )}
           </div>
 
           <div className='col-span-2 grid gap-5'>
-            <ProfileSkills userId={data?.id} userSkills={data?.userSkills} />
+            <ProfileSkills userId={profile?.id} userSkills={profile?.userSkills} />
 
-            {data?.projects?.length > 0 && (
+            {profile?.projects?.length > 0 && (
               <ProfileProjectHistory
-                projects={data?.projects || DEFAULT_USER_DETAILS.projects}
+                projects={profile?.projects || DEFAULT_USER_DETAILS.projects}
               />
             )}
           </div>
