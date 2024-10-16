@@ -17,24 +17,18 @@ const ProfileHeader = ({ data: { name, image, email, role, location ,id} }: Prof
   const [profileImage, setProfileImage] = useState<string>(image || "");
   const [uploading, setUploading] = useState(false);
   const { profile ,setProfile} = useAppContext();
-  
   const fileInputRef = useRef<HTMLInputElement | null>(null); // Create a ref for the file input
-
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
     if (!file) {
       alert("No file selected!");
       return;
     }
-
     try {
       setUploading(true);
-    
       const uploadedImage = await uploadImage(file,id);
       setProfileImage(uploadedImage.image_url);
-      updateProfileImage(uploadedImage.image_url);
-      setProfile({...profile,image_url:uploadedImage.url});
+      setProfile({...profile,image:uploadedImage.image_url});
       
     } catch (uploadError: unknown) {
       if (uploadError instanceof Error) {
