@@ -138,8 +138,8 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({ data }) => {
           <EditGeneralInfo
             initialData={editableData}
             onSave={handleSaveChanges}
-            sfiaLevels={sfiaLevels || []} // Pass fetched SFIA levels
-            reportedToOptions={usersData ||[]} // Pass fetched Reported To options
+            sfiaLevels={sfiaLevels || []} 
+            reportedToOptions={usersData ||[]} 
           />
         )}
       </Modal>
