@@ -56,7 +56,7 @@ export const options: AuthOptions = {
           token.sub = user.id;
           token.email = user.email;
           token.name = user.name;
-          token.image = user.image;
+          token.image = user.image || "";
           return token;
         } catch (error: unknown) { 
           if (error instanceof Error) {
@@ -77,7 +77,7 @@ export const options: AuthOptions = {
           id: token?.sub,
           email: token.email || "",
           name: token.name || "",
-          image: token.image || "",
+          image: typeof token.image === "string" ? token.image : "", 
         };
       }
 

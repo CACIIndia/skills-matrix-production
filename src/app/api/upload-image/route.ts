@@ -58,7 +58,7 @@ export async function POST(request: Request) {
 
     // Update the user's image in the database
     const updatedUser = await db.user.update({
-      where: { id: userId },  // User's unique identifier
+      where: { id:<string> userId },  // User's unique identifier
       data: { image: `https://smempprofile.blob.core.windows.net/profileimage/${filename}` }, // Set the image field
     });
 

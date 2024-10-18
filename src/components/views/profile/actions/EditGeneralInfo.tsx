@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import Button from "@/components/common/Button";
 
 type GeneralInfo = {
+  id?: string;
+  email: string;
   phone: string;
+  status: string;
+  startdate: string;
+  current_project: string;
   sfia_level: string;
-  reported_to: string; // Name of the person reported to
-  reported_to_id: string; // ID of the person reported to
+  reported_to: string;
+  reported_to_id: string;
 };
 
 type EditGeneralInfoProps = {

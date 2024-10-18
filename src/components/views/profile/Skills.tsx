@@ -18,13 +18,13 @@ export type SelectedSkill = {
 };
 
 type ProfileSkillsProps = {
-  userId: string;
+  userId?: string;
   userSkills?: UserSkill[];
   showEditButton?: boolean;
 };
 
 const ProfileSkills: React.FC<ProfileSkillsProps> = ({
-  userId,
+  userId ="",
   userSkills = [],
   showEditButton,
 }) => {

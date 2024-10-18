@@ -44,6 +44,7 @@ export type UserDetails = {
   phone: string;
   location: string;
   status: string;
+  startdate?:string;
   sfiaLevel: string;
   reportedTo: string;
   reportedToId: string;
@@ -55,3 +56,15 @@ export type UserDetails = {
   projects: Project[];
   currentProject?: Project;
 };
+
+export interface GeneralInfo {
+  id?: string;
+  email: string;
+  phone: string;
+  status: string;
+  startdate: string;
+  current_project: string;
+  sfia_level: string;
+  reported_to: string;
+  reported_to_id :string;
+}

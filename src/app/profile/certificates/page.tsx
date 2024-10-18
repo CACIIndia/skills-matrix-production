@@ -1,5 +1,5 @@
-"use client";
 
+"use client";
 import Menu from "@/components/common/Menu";
 
 import ProfileActions from "@/components/views/profile/Actions";
@@ -9,15 +9,18 @@ import FileItem from "@/components/views/account/FileItem";
 import ResumeCard from "@/components/views/account/ResumeCard";
 import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
 import { useProfile } from "@/context/profileContext";
+import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
+import { useAppContext } from "@/app/context/AppContext";
+import Spinner from "@/components/common/Spinner";
 
-const DocumentPage = () => {
-  const { data, loading, error } = useProfile();
-  if (loading) {
-    return "...loading";
-  }
+const CertificatePage = () => {
+    const { profile ,loading} = useAppContext();
+    console.log(profile,"profile");
+    if (loading|| !profile)
+        return <Spinner className='mx-auto mt-24 !items-start' size='large' />;
   return (
     <div>
-      {/* <ProfileHeader /> */}
+       <ProfileHeader data={profile || DEFAULT_USER_DETAILS} />
       {/* Profile Actions and Menu */}
       <div className='container-fixed'>
         <div className='dark:border-b-coal-100 mb-5 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:mb-10 lg:items-end'>
@@ -75,4 +78,4 @@ const DocumentPage = () => {
   );
 };
 
-export default DocumentPage;
+export default CertificatePage;
