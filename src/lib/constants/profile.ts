@@ -1,7 +1,7 @@
 import { UserDetails } from "@/lib/types/profile";
 
 export const DEFAULT_USER_DETAILS: UserDetails = {
-  id: 0,
+  id: "",
   name: "",
   image: "/default-avatar.png",
   email: "",
@@ -9,36 +9,22 @@ export const DEFAULT_USER_DETAILS: UserDetails = {
   location: "",
   status: "",
   startdate: "",
-  current_project: "",
-  sfia_level: "",
-  reported_to: "",
+  sfiaLevel: "",
+  reportedTo: "",
+  reportedToId:"",
   role: "",
-  access_role: [],
-  created_at: "",
-  skills: [],
-  additional_info: {
+  createdAt: "",
+  userSkills: [],
+  additionalInfo: {
+    id:"",
+    userId:"",
     discipline: "",
     specialism: "",
-    employee_type: "",
+    employeeType: "",
     location: "",
-    cost_centre: "",
+    costCentre: "",
   },
-  contributors: [],
-  projects: {
-    current_project: {
-      project_name: "",
-      start_date: "",
-      role: "",
-      description: "",
-      code: "",
-      members: [],
-    },
-    previous_projects: [],
-    employment_history: {
-      company: "",
-      joined_date: "",
-    },
-  },
+  projects: [],
   currentProject: {
     id: "",
     projectName: "",
@@ -48,7 +34,10 @@ export const DEFAULT_USER_DETAILS: UserDetails = {
     code: "",
     isCurrentProject: false,
     userId: ""
-  }
+  },
+  emailVerified:"",
+  joiningDate :"",
+
 };
 
 export const SKILL_LEVELS = [

@@ -5,18 +5,9 @@ import useUpdateGeneralInfo from "@/lib/hooks/profile/overview/useUpdateGeneralI
 import useGetSfiaLevels from "@/lib/hooks/profile/overview/useSfiaLevel";
 import { useRouter } from "next/navigation";
 import useGetUsers from "@/lib/hooks/common/useGetUsers";
+import { GeneralInfo } from "@/lib/types/profile";
 
-interface GeneralInfo {
-  id?: string;
-  email: string;
-  phone: string;
-  status: string;
-  startdate: string;
-  current_project: string;
-  sfia_level: string;
-  reported_to: string;
-  reported_to_id :string;
-}
+
 
 interface GeneralInfoCardProps {
   data: GeneralInfo;
@@ -41,7 +32,7 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({ data }) => {
     setEditableData(updatedData);
 
     mutation.mutate(
-      { userId: data.id!, updatedData },
+      { userId: data.id!, updatedData  },
       {
         onError: (error) => {
           console.error("Error occurred:", error);
@@ -147,8 +138,8 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({ data }) => {
           <EditGeneralInfo
             initialData={editableData}
             onSave={handleSaveChanges}
-            sfiaLevels={sfiaLevels} // Pass fetched SFIA levels
-            reportedToOptions={usersData} // Pass fetched Reported To options
+            sfiaLevels={sfiaLevels || []} 
+            reportedToOptions={usersData ||[]} 
           />
         )}
       </Modal>

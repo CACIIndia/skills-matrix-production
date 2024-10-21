@@ -11,6 +11,6 @@ export const PROFILE_HEADER_ITEMS = [
 	{name: "Overview", path: "/profile/overview"},
 	{name: "Skills", path: "/profile/skills"},
 	// {name:"Project",path:"/my-accounts/project"},
-	{name: "Documents", path: "/profile/documents"},
+	{name: "Certificates", path: "/profile/certificates"},
 ];
 
