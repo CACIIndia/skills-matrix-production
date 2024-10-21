@@ -3,7 +3,7 @@ import { UserSkill } from "@prisma/client";
 
 const userSkillsMapper = (userSkills: UserSkill[]): SelectedSkill[] => {
   return userSkills.map((userSkill) => ({
-    userId: userSkill.userId,
+    createdById: userSkill.createdById,
     skillId: userSkill.skillId,
     level: userSkill.level,
   }));

@@ -12,19 +12,19 @@ import { updateUserSkills } from "@/app/actions/updateUserSkills";
 import userSkillsMapper from "@/lib/mappers/userSkillsMapper";
 
 export type SelectedSkill = {
-  userId: string;
+  createdById: string;
   skillId: string;
   level: number;
 };
 
 type ProfileSkillsProps = {
-  userId?: string;
+  createdById?: string;
   userSkills?: UserSkill[];
   showEditButton?: boolean;
 };
 
 const ProfileSkills: React.FC<ProfileSkillsProps> = ({
-  userId ="",
+  createdById = "",
   userSkills = [],
   showEditButton,
 }) => {
@@ -34,7 +34,7 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
   const [selectedSkills, setSelectedSkills] = useState(mappedUserSkills);
 
   const handleEdit = async () => {
-    updateUserSkills(userId, selectedSkills);
+    updateUserSkills(createdById, selectedSkills);
   };
 
   return (
@@ -101,7 +101,7 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
         primaryButtonOnClick={handleEdit}
       >
         <EditSkills
-          userId={userId}
+          createdById={createdById}
           selectedSkills={selectedSkills}
           setSelectedSkills={setSelectedSkills}
         />

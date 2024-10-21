@@ -12,13 +12,13 @@ import useGetSkills from "@/lib/hooks/profile/useGetSkills";
 type EditSkillsProps = {
   selectedSkills: SelectedSkill[];
   setSelectedSkills: Dispatch<SetStateAction<SelectedSkill[]>>;
-  userId: string;
+  createdById: string;
 };
 
 const EditSkills = ({
   selectedSkills,
   setSelectedSkills,
-  userId,
+  createdById,
 }: EditSkillsProps) => {
   const { data: categorySkills, isLoading } = useGetSkills();
 
@@ -38,7 +38,7 @@ const EditSkills = ({
             : skill,
         );
       } else {
-        return [...prev, { userId, skillId, level: 1 }];
+        return [...prev, { createdById, skillId, level: 1 }];
       }
     });
   };

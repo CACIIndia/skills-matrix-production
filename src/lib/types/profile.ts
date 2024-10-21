@@ -7,11 +7,14 @@ export type Skill = {
 
 export type UserSkill = {
   id: string;
-  userId: string;
+  createdById: string;
   skillId: string;
   level: number;
   skill: Skill;
-};
+  status: string | null; 
+  createdAt: Date;         
+  updatedAt: Date;         
+}
 
 export type Project = {
   id: string;
