@@ -62,7 +62,7 @@ const OverviewPage = () => {
           </div>
 
           <div className='col-span-2 grid gap-5'>
-            <ProfileSkills userId={profile?.id} userSkills={profile?.userSkills} />
+            <ProfileSkills createdById={profile?.id} userSkills={profile?.userSkills} />
 
             {profile?.projects?.length > 0 && (
               <ProfileProjectHistory

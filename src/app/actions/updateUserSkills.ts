@@ -3,10 +3,10 @@
 import db from "@/lib/db";
 import { revalidateTag } from "next/cache";
 
-export async function updateUserSkills(userId: string, userSkills: any[]) {
+export async function updateUserSkills(createdById: string, userSkills: any[]) {
   try {
     // Delete existing user skills for the user
-    await db.userSkill.deleteMany({ where: { userId } });
+    await db.userSkill.deleteMany({ where: { createdById } });
 
     // Create new user skills
     const updatedSkills = await db.userSkill.createMany({

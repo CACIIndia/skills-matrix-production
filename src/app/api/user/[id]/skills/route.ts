@@ -11,12 +11,12 @@ export async function PUT(
     const { userSkills } = await request.json();
 
     // Delete existing user skills for the user
-    await db.userSkill.deleteMany({ where: { userId: id } });
+    await db.userSkill.deleteMany({ where: { createdById: id } });
 
     // Create new user skills
     const updatedSkills = await db.userSkill.createMany({
       data: userSkills.map((skill: any) => ({
-        userId: id,
+        createdById: id,
         skillId: skill.id,
         level: skill.level,
       })),

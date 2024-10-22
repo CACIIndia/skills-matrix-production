@@ -35,7 +35,7 @@ const SkillsPage = async () => {
         <div className='lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3'>
           <div className='col-span-2'>
             <ProfileSkills
-              userId={userId}
+              createdById={userId}
               userSkills={profile?.userSkills}
               showEditButton={true}
             />
