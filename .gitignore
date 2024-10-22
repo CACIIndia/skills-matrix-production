@@ -34,3 +34,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+/.vs/CACI-Skill-Matrix/config
+/.vs/CACI-Skill-Matrix/FileContentIndex
+/.vs/CACI-Skill-Matrix/v17
+/.vs
