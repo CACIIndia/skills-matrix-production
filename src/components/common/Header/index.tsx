@@ -3,7 +3,11 @@ import HeaderMenu from "@/components/common/Header/Menu";
 import HeaderSearch from "@/components/common/Header/Search";
 import MegaMenu from "@/components/common/Header/MegaMenu";
 
-const Header = () => {
+interface HeaderProps {
+  onClick: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ onClick }) => {
   return (
     <header className='flex h-full w-full items-center justify-between'>
       <div className='h-full w-full' id='header_container'>
@@ -29,8 +33,8 @@ const Header = () => {
             </div>
           </div>
 
-          <div className='flex items-start gap-2 lg:gap-3.5'>
-            <HeaderSearch />
+          <div className='flex  gap-2 lg:gap-3.5 items-start '>
+            <HeaderSearch  onClick={onClick} />
 
             <Button className='btn-2' size='sm'>
               <i className='ki-filled ki-element-11'></i>

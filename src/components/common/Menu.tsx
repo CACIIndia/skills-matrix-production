@@ -6,6 +6,7 @@ type MenuProps = {
   items: {
     name: string;
     path: string;
+    default_active?:boolean;
   }[];
 };
 
@@ -15,14 +16,14 @@ const Menu = ({ items = [] }: MenuProps) => {
     <div className='grid'>
       <div className='scrollable-x-auto static'>
         <div className='menu gap-3'>
-          {items.map(({ name, path }) => {
+          {items.map(({ name, path,default_active }) => {
             // const isActive = pathname.startsWith(path.replace(/\[.*?\]/, ""));
 
             return (
               <div
                 key={path}
                 className={`${
-                  path === pathname ? "active" : ""
+                  path === pathname || default_active ? "active" : ""
                 } menu-item menu-item-active:border-b-primary menu-item-here:border-b-primary border-b-2 border-b-transparent`}
               >
                 <Link

@@ -28,27 +28,24 @@ const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
 }) => {
   const [editableData, setEditableData] = useState<GeneralInfo>(initialData);
 
-
   // Effect to initialize state with reportedToId
   useEffect(() => {
-    
     // Set the reported_to field using the initialData
     const selectedPerson = reportedToOptions.find(
-      (person) => person.id === initialData.reported_to_id
+      (person) => person.id === initialData.reported_to_id,
     );
-    
-    
+
     if (selectedPerson) {
       setEditableData({
         ...initialData,
         reported_to: selectedPerson.name, // Set the name based on the ID
-        reported_to_id:selectedPerson.id,
+        reported_to_id: selectedPerson.id,
       });
     }
   }, [initialData, reportedToOptions]);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setEditableData({
@@ -57,12 +54,10 @@ const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
     });
   };
 
-  const handleReportedToChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleReportedToChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedPersonId = e.target.value;
     const selectedPerson = reportedToOptions.find(
-      (person) => person.id == selectedPersonId
+      (person) => person.id == selectedPersonId,
     );
 
     if (selectedPerson) {
@@ -76,7 +71,7 @@ const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
 
   const handleSave = () => {
     const { reported_to, reported_to_id, ...restData } = editableData;
-    
+
     onSave({
       ...restData,
       reported_to: reported_to,
@@ -85,16 +80,16 @@ const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
   };
 
   return (
-    <div className="grid grid-cols-1 gap-4">
+    <div className='grid grid-cols-1 gap-4'>
       {/* Phone Field */}
       <label>
         Phone:
         <input
-          type="text"
-          name="phone"
+          type='text'
+          name='phone'
           value={editableData.phone}
           onChange={handleInputChange}
-          className="input"
+          className='input'
         />
       </label>
 
@@ -102,12 +97,12 @@ const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
       <label>
         SFIA Level:
         <select
-          name="sfia_level"
+          name='sfia_level'
           value={editableData.sfia_level}
           onChange={handleInputChange}
-          className="input"
+          className='input'
         >
-          <option value="">Select SFIA Level</option>
+          <option value=''>Select SFIA Level</option>
           {sfiaLevels.map((level) => (
             <option key={level.id} value={level.level}>
               {level.level}
@@ -120,24 +115,26 @@ const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
       <label>
         Reported To:
         <select
-          name="reported_to"
+          name='reported_to'
           value={editableData.reported_to_id} // Use the ID as the value
           onChange={handleReportedToChange} // Handle selection by ID
-          className="input"
+          className='input'
         >
-          <option value="">Select Person</option>
-          {reportedToOptions.map((person) => (
-            <option key={person.id} value={person.id}>
-              {person.name}
-            </option>
-          ))}
+          <option value=''>Select Person</option>
+          {reportedToOptions
+            .filter((person) => person.id !== editableData.id) // Exclude the current user
+            .map((person) => (
+              <option key={person.id} value={person.id}>
+                {person.name}
+              </option>
+            ))}
         </select>
       </label>
 
       {/* Save Button */}
       <Button
         onClick={handleSave}
-        className="btn btn-primary mt-4 flex w-[100px] items-center justify-center"
+        className='btn btn-primary mt-4 flex w-[100px] items-center justify-center'
       >
         Save
       </Button>

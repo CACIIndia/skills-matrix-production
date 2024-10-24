@@ -32,7 +32,7 @@ const OverviewPage = () => {
 
       <div className='container-fixed'>
         <div className='mb-5 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:mb-10 lg:items-end'>
-          <Menu items={PROFILE_HEADER_ITEMS} />
+          <Menu items={	[{name: "Overview", path: "#", default_active:true}] } />
           <ProfileActions />
         </div>
       </div>

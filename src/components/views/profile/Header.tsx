@@ -1,11 +1,10 @@
 "use client";
 import React, { useState, useRef } from "react";
-import Button from "@/components/common/Button";
 import { UserDetails } from "@/lib/types/profile";
 import Image from "next/image";
 import default_image from "../../../../public/assets/media/avatars/default-image.png";
 import { FaEdit } from "react-icons/fa"; // Optional: Use an edit icon from react-icons
-import { updateProfileImage, uploadImage } from "@/app/utils/imageUpload";
+import {  uploadImage } from "@/app/utils/imageUpload";
 import { useAppContext } from "@/app/context/AppContext";
 import image_spinner from "../../../../public/assets/media/misc/spinner.gif";
 

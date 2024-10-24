@@ -15,7 +15,6 @@ import { useAppContext } from "@/app/context/AppContext";
 const OverviewPage = () => {
  
   const { profile ,loading} = useAppContext();
-  console.log(profile,"profile");
   
   
   const projects = profile?.projects || [];
