@@ -3,6 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import default_image from "../../../../public/assets/media/avatars/default-image.png";
+import { useAppContext } from "@/app/context/AppContext";
 
 interface User {
   id: string;
@@ -22,12 +23,13 @@ interface ModalProps {
 
 const SearchModal: React.FC<ModalProps> = ({ isOpen, onClose, users }) => {
   const [query, setQuery] = useState<string>("");
-
+  const { profile ,loading} = useAppContext();
 
   const filteredUsers = users.filter(
     (user) =>
-      user.name.toLowerCase().includes(query.toLowerCase()) ||
-      user.email.toLowerCase().includes(query.toLowerCase())
+      user.id !== profile.id && // Exclude the current user's profile
+      (user.name.toLowerCase().includes(query.toLowerCase()) ||
+        user.email.toLowerCase().includes(query.toLowerCase()))
   );
 
   return (
@@ -35,7 +37,7 @@ const SearchModal: React.FC<ModalProps> = ({ isOpen, onClose, users }) => {
       className={`fixed text-start w-full inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300 `}
       style={{ zIndex: 10 }}
     >
-      <div className="relative w-[90%] max-w-[550px] bg-white rounded-lg p-4 shadow-lg">
+      <div className="relative w-[90%] max-w-[550px] max-h-[400px] h-[400px] bg-white rounded-lg p-4 shadow-lg ">
         <div className="modal-header flex items-center justify-between px-5 py-4 border-b border-gray-200">
           <i className="ki-filled ki-magnifier text-xl text-gray-700"></i>
           <input

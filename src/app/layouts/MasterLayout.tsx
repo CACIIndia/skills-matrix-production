@@ -26,21 +26,20 @@ export default function MasterLayout({
     setIsExpanded(!isExpanded);
   };
 
-  
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await fetch("/api/users/list");
         const data = await response.json();
-        console.log(data, "data.usersss");
-        setUsers(data); 
+        // const repeatedData = [...data, ...data, ...data]; 
+        setUsers(data);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
 
     fetchUsers();
-  }, []); 
+  }, []);
 
   useEffect(() => {
     if (isExpanded) {
@@ -108,17 +107,17 @@ export default function MasterLayout({
         >
           {children}
         </div>
+
+        {/* Search Modal */}
+
+        {isSearchModalOpen && (
+          <SearchModal
+            isOpen={isSearchModalOpen}
+            onClose={closeSearchModal}
+            users={users || []}
+          />
+        )}
       </AppProvider>
-
-      {/* Search Modal */}
-
-      {isSearchModalOpen&& 
-      <SearchModal
-        isOpen={isSearchModalOpen}
-        onClose={closeSearchModal}
-        users={users || []}
-        />
-      }
     </QueryClientProvider>
   );
 }

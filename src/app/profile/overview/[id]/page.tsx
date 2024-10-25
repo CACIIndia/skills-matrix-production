@@ -40,7 +40,7 @@ const OverviewPage = () => {
       <div className='container mx-auto p-4'>
         <div className='lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3'>
           <div className='col-span-1 grid gap-5'>
-            <ProfileGeneralInfo data={data} />
+            <ProfileGeneralInfo data={data} disableEdit ={true} />
 
             <ProfileAdditionalInfo additionalInfo={data?.additionalInfo} />
           </div>
