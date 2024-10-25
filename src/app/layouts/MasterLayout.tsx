@@ -7,6 +7,7 @@ import Sidebar from "@/components/common/Sidebar";
 import Header from "@/components/common/Header/index";
 import { AppProvider } from "@/app/context/AppContext";
 import SearchModal from "@/components/common/Header/SearchModal";
+import { getUsersList } from "@/lib/api/getUserList";
 
 // @TODO This component should be refactored and simplified
 export default function MasterLayout({
@@ -29,17 +30,17 @@ export default function MasterLayout({
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await fetch("/api/users/list");
-        const data = await response.json();
-        // const repeatedData = [...data, ...data, ...data]; 
+        const data = await getUsersList();
         setUsers(data);
       } catch (error) {
         console.error("Error fetching users:", error);
+        
       }
     };
 
     fetchUsers();
   }, []);
+
 
   useEffect(() => {
     if (isExpanded) {
