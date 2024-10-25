@@ -32,7 +32,7 @@ const OverviewPage = () => {
 
       <div className='container-fixed'>
         <div className='mb-5 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:mb-10 lg:items-end'>
-          <Menu items={PROFILE_HEADER_ITEMS} />
+          <Menu items={	[{name: "Overview", path: "#", default_active:true}] } />
           <ProfileActions />
         </div>
       </div>
@@ -40,7 +40,7 @@ const OverviewPage = () => {
       <div className='container mx-auto p-4'>
         <div className='lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3'>
           <div className='col-span-1 grid gap-5'>
-            <ProfileGeneralInfo data={data} />
+            <ProfileGeneralInfo data={data} disableEdit ={true} />
 
             <ProfileAdditionalInfo additionalInfo={data?.additionalInfo} />
           </div>
