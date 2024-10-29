@@ -1,10 +1,11 @@
 "use client";
 
 import { Dispatch, SetStateAction } from "react";
+import classNames from "classnames";
 
-import Spinner from "@/components/common/Spinner";
 import Legend from "@/components/views/profile/Legend";
 import { SelectedSkill } from "@/components/views/profile/Skills";
+import SkeletonLoader from "@/components/skeletons/EditSkills";
 
 import { SKILL_LEVELS } from "@/lib/constants/profile";
 import useGetSkills from "@/lib/hooks/profile/useGetSkills";
@@ -44,46 +45,53 @@ const EditSkills = ({
   };
 
   return (
-    <>
-      <Legend layout='flex' hideCardHeader={true} />
+    <div className='space-y-6'>
+      <Legend layout='horizontal' hideCardHeader={true} />
 
-      <div className='my-4 text-start'>
-        <h5 className='text-lg font-semibold'>
+      <div className='text-start'>
+        <h5 className='text-lg font-semibold text-gray-800'>
           Click on the Skills below to cycle through the competency levels
         </h5>
       </div>
 
-      <hr />
+      <hr className='border-gray-200' />
 
-      <div className='mt-4 space-y-4'>
+      <div className='space-y-6'>
         {isLoading ? (
-          <Spinner className='mx-auto mt-24' />
+          <SkeletonLoader />
         ) : (
           categorySkills?.map(({ category, skills }) => (
-            <div key={category}>
-              <h6 className='mb-2 text-lg font-semibold'>{category}</h6>
+            <div key={category} className='space-y-3'>
+              <h6 className='text-lg font-semibold text-gray-700'>
+                {category}
+              </h6>
 
-              <div className='mb-4 flex flex-wrap gap-3'>
+              <div className='flex flex-wrap gap-3'>
                 {skills.map((skill) => {
                   const selectedSkill = selectedSkills.find(
                     (selectedSkill) => selectedSkill.skillId === skill.id,
                   );
 
                   const level = selectedSkill ? selectedSkill.level : 0;
-                  const levelInfo = SKILL_LEVELS[level];
 
                   return (
-                    <div
+                    <button
                       key={skill.id}
                       onClick={() => handleSkillClick(skill.id)}
-                      className='cursor-pointer'
+                      className={classNames(
+                        "badge badge-sm select-none rounded-full px-3 py-1.5 text-sm font-medium transition-colors duration-200",
+                        {
+                          "!bg-gray-200 !text-gray-600": level === 0,
+                          "!bg-red-100 !text-red-600": level === 1,
+                          "!bg-yellow-100 !text-yellow-600": level === 2,
+                          "!bg-blue-100 !text-blue-600": level === 3,
+                          "!bg-green-100 !text-green-600": level === 4,
+                        },
+                      )}
                     >
-                      <span
-                        className={`badge badge-sm select-none rounded-full p-3 text-sm ${levelInfo.color}`}
-                      >
-                        {level === 0 ? "" : `${level} |`} {skill.name}
-                      </span>
-                    </div>
+                      {level > 0 && <span className='mr-1'>{level} |</span>}
+                      {skill.name}
+                    </button>
                   );
                 })}
               </div>
@@ -91,7 +99,7 @@ const EditSkills = ({
           ))
         )}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,30 +1,43 @@
-"use client"; // Ensure the client-side behavior is clear.
+"use client";
 
-import MasterLayout from "@/app/layouts/MasterLayout";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SessionProvider } from "next-auth/react";
+import { Toaster } from "react-hot-toast";
+import { usePathname } from "next/navigation";
+
 import "@/app/globals.css";
 import "../../public/assets/vendors/keenicons/styles.bundle.css";
-import { SessionProvider } from "next-auth/react"; // Use 'next-auth/react' to properly access session.
-import { usePathname } from "next/navigation"; // To get the current path
+import { AppProvider } from "@/app/context/AppContext";
+import MasterLayout from "@/layouts/Master";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname(); // Get the current path
+  const pathname = usePathname();
+
+  const client = new QueryClient({
+    defaultOptions: {
+      queries: { refetchOnWindowFocus: false },
+    },
+  });
 
   return (
     <html lang='en'>
-
       <body className='relative min-h-screen'>
         <SessionProvider>
-          {/* Conditionally render MasterLayout if path is NOT /auth/signin */}
           {pathname === "/auth/signin" ? (
-            <>{children}</> // No layout for /auth/signin
+            <>{children}</>
           ) : (
-            <MasterLayout>{children}</MasterLayout> // Layout for other routes
+            <QueryClientProvider client={client}>
+              <AppProvider>
+                <MasterLayout>{children}</MasterLayout>
+              </AppProvider>
+            </QueryClientProvider>
           )}
         </SessionProvider>
+        <Toaster />
       </body>
     </html>
   );

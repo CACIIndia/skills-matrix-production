@@ -1,61 +1,66 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useSession } from 'next-auth/react'; 
-import { getProfileDetails } from '@/lib/api/getProfileDetails';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+} from "react";
+import { Session } from "next-auth";
+import { useSession } from "next-auth/react";
+import useGetProfile from "@/lib/hooks/profile/useGetProfile";
 
+type State = {
+  profile: any;
+  setProfile: Dispatch<SetStateAction<any>>;
+  viewedProfile: any;
+  setViewedProfile: Dispatch<SetStateAction<any>>;
+  isLoading: boolean;
+  user?: Session["user"];
+};
 
-interface AppContextType {
-  profile: any | null; 
-  setProfile: (profile: any | null) => void;
-  loading: boolean;
-}
+const AppContext = createContext<State | undefined>(undefined);
 
-
-const AppContext = createContext<AppContextType | undefined>(undefined);
-
-
-interface AppProviderProps {
+type AppProviderProps = {
   children: ReactNode;
-}
+};
 
-export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
-  const { data: session, status } = useSession(); 
-  const [profile, setProfile] = useState<any | null>(null);
-  const [loading, setLoading] = useState<boolean>(true); 
-  const userId = session?.user?.id || "";
+export const AppProvider = ({ children }: AppProviderProps) => {
+  const { data: session } = useSession();
+  const { data: profileData, isLoading } = useGetProfile(
+    session?.user?.id ?? "",
+  );
+
+  const [profile, setProfile] = useState();
+  const [viewedProfile, setViewedProfile] = useState();
+
+  const user = session?.user;
 
   useEffect(() => {
-    const fetchUserDetails = async () => {
-      if (status === 'authenticated' && userId) { 
-        try {
-          
-          setLoading(true);
-          const profileData = await getProfileDetails(userId);
-          setProfile(profileData);
-        } catch (error) {
-          console.error('Failed to fetch session or profile details', error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-
-    if (!profile) {
-      fetchUserDetails(); 
-    }
-  }, [session, status, userId, profile]); 
+    profileData && setProfile(profileData);
+  }, [profileData]);
 
   return (
-    <AppContext.Provider value={{ profile, setProfile, loading }}>
+    <AppContext.Provider
+      value={{
+        profile,
+        setProfile,
+        viewedProfile,
+        setViewedProfile,
+        user,
+        isLoading,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );
 };
 
-
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (context === undefined) {
-    throw new Error('useAppContext must be used within an AppProvider');
+    throw new Error("useAppContext must be used within an AppProvider");
   }
   return context;
 };

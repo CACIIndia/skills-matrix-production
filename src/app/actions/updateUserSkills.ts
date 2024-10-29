@@ -1,7 +1,7 @@
 "use server";
 
 import db from "@/lib/db";
-import { revalidateTag } from "next/cache";
+import { getFullUser } from "@/lib/prismaQueries";
 
 export async function updateUserSkills(createdById: string, userSkills: any[]) {
   try {
@@ -9,15 +9,15 @@ export async function updateUserSkills(createdById: string, userSkills: any[]) {
     await db.userSkill.deleteMany({ where: { createdById } });
 
     // Create new user skills
-    const updatedSkills = await db.userSkill.createMany({
+    await db.userSkill.createMany({
       data: userSkills,
     });
 
-    revalidateTag("user-details");
+    const updatedUser = await db.user.findUnique(getFullUser(createdById));
 
     return {
       message: "Skills updated successfully",
-      count: updatedSkills.count,
+      updatedUser,
     };
   } catch (error) {
     console.error("Error updating skills:", error);

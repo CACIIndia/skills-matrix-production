@@ -1,22 +1,20 @@
 "use client";
-import Button from "@/components/common/Button";
 
+type ProfileSearchProps = {
+  onClick: () => void;
+};
 
-
-interface ProfileSearchProps {
-  onClick: () => void; 
-}
-
-const ProfileSearch: React.FC<ProfileSearchProps> = ({ onClick }) => {
+const ProfileSearch = ({ onClick }: ProfileSearchProps) => {
   return (
-   
-    <div className='relative inline-block' >
-      <Button  onClick={onClick} className='btn-2' size='sm'>
+    <div className='relative inline-block'>
+      <button
+        className='btn btn-icon btn-icon-lg size-9 rounded-full text-gray-500 hover:bg-primary-light hover:text-primary'
+        onClick={onClick}
+      >
         <i className='ki-filled ki-magnifier'></i>
-      </Button>
+      </button>
     </div>
   );
 };
 
 export default ProfileSearch;
-

@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -6,24 +7,27 @@ type MenuProps = {
   items: {
     name: string;
     path: string;
-    default_active?:boolean;
+    defaultActive?: boolean;
   }[];
 };
 
 const Menu = ({ items = [] }: MenuProps) => {
   const pathname = usePathname();
+
   return (
     <div className='grid'>
       <div className='scrollable-x-auto static'>
         <div className='menu gap-3'>
-          {items.map(({ name, path,default_active }) => {
-            // const isActive = pathname.startsWith(path.replace(/\[.*?\]/, ""));
+          {items.map(({ name, path, defaultActive }) => {
+            // Determine if the item is active
+            const isActive =
+              pathname.startsWith(path.replace(/\[.*?\]/, "")) || defaultActive;
 
             return (
               <div
                 key={path}
                 className={`${
-                  path === pathname || default_active ? "active" : ""
+                  isActive ? "active" : ""
                 } menu-item menu-item-active:border-b-primary menu-item-here:border-b-primary border-b-2 border-b-transparent`}
               >
                 <Link

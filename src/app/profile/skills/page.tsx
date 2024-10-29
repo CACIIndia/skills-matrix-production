@@ -1,49 +1,25 @@
-import Legend from "@/components/views/profile/Legend";
-import Menu from "@/components/common/Menu";
-import Spinner from "@/components/common/Spinner";
+"use client";
 
-import ProfileActions from "@/components/views/profile/Actions";
-import ProfileHeader from "@/components/views/profile/Header";
+import Legend from "@/components/views/profile/Legend";
+
 import ProfileSkills from "@/components/views/profile/Skills";
 
-import { getSession } from "@/lib/auth";
-import { getProfileDetails } from "@/lib/api/getProfileDetails";
-import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
-import { PROFILE_HEADER_ITEMS } from "@/lib/constants/header";
+import { useAppContext } from "@/app/context/AppContext";
 
-const SkillsPage = async () => {
-  const session = await getSession();
-
-  const userId = session?.user?.id || "";
-  const profile = await getProfileDetails(userId);
-
-  if (!profile || !userId) {
-    return <Spinner className='mx-auto mt-24 !items-start' size='large' />;
-  }
+const SkillsPage = () => {
+  const { profile, user } = useAppContext();
 
   return (
-    <div className='w-full'>
-      <ProfileHeader data={profile || DEFAULT_USER_DETAILS} />
-      <div className='container-fixed'>
-        <div className='mb-5 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:mb-10 lg:items-end'>
-          <Menu items={PROFILE_HEADER_ITEMS} />
-          <ProfileActions />
-        </div>
+    <div className='lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3'>
+      <div className='col-span-2'>
+        <ProfileSkills
+          createdById={user?.id ?? ""}
+          userSkills={profile?.userSkills}
+          showEditButton={true}
+        />
       </div>
 
-      <div className='container-fixed'>
-        <div className='lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3'>
-          <div className='col-span-2'>
-            <ProfileSkills
-              createdById={userId}
-              userSkills={profile?.userSkills}
-              showEditButton={true}
-            />
-          </div>
-
-          <Legend layout='grid' />
-        </div>
-      </div>
+      <Legend layout='vertical' />
     </div>
   );
 };

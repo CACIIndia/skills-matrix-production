@@ -1,10 +1,8 @@
 import { BASE_URL } from "@/lib/api";
 
-export const getUsersList = async () => {
+export const getUsers = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/users/list`, {
-      next: { tags: ["user-list"] },
-    });
+    const response = await fetch(`${BASE_URL}/users/list`);
 
     const data = await response.json();
 

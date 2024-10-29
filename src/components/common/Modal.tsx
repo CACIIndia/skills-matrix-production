@@ -5,15 +5,14 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import Button from "@/components/common/Button";
 
 type ModalProps = {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   title?: string;
   children: React.ReactNode;
-  primaryButton?: boolean;
-  primaryButtonOnClick?: () => void;
+  buttonText?: string;
+  handler?: () => void;
   customWidth?: string;
 };
 
@@ -22,9 +21,9 @@ const Modal = ({
   setIsOpen,
   title,
   children,
-  primaryButton,
-  primaryButtonOnClick,
-  customWidth
+  buttonText,
+  handler,
+  customWidth,
 }: ModalProps) => {
   const onClose = () => setIsOpen(!isOpen);
 
@@ -38,10 +37,12 @@ const Modal = ({
 
       <div className='fixed inset-0 z-10 w-screen overflow-y-auto'>
         <div className='flex min-h-full items-center justify-center p-4'>
-        <DialogPanel className={` ${customWidth ? customWidth : 'w-full max-w-6xl'} rounded bg-white p-6`}>
+          <DialogPanel
+            className={` ${customWidth ? customWidth : "w-full max-w-4xl"} rounded bg-white p-6`}
+          >
             <div className='mb-4 flex items-center justify-between'>
               {title && (
-                <DialogTitle className='text-2xl font-bold'>
+                <DialogTitle className='text-2xl font-medium'>
                   {title}
                 </DialogTitle>
               )}
@@ -52,22 +53,26 @@ const Modal = ({
                 <i className='ki-filled ki-cross'></i>
               </button>
             </div>
+
             {children}
 
-            {primaryButton && (
-              <div className='mx-4 mt-10 flex justify-end space-x-3'>
-                <Button
-                  variant='btn-1'
-                  size='md'
+            <div className='mx-4 mt-10 flex justify-end space-x-3'>
+              <button onClick={onClose} className='btn btn-md btn-light'>
+                Close
+              </button>
+
+              {buttonText && handler && (
+                <button
+                  className='btn btn-md btn-primary'
                   onClick={() => {
-                    primaryButtonOnClick && primaryButtonOnClick();
+                    handler && handler();
                     onClose();
                   }}
                 >
                   Update
-                </Button>
-              </div>
-            )}
+                </button>
+              )}
+            </div>
           </DialogPanel>
         </div>
       </div>
