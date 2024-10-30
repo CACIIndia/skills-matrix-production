@@ -15,31 +15,30 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
 
   return (
     <div
-      className={`absolute right-0 mt-2 w-[250px] bg-white border border-gray-200 rounded-lg shadow-lg transition-opacity duration-300 ${
+      className={`absolute right-0 mt-2 w-[250px] rounded-lg border border-gray-200 bg-white shadow-lg transition-opacity duration-300 ${
         isOpen ? "opacity-100" : "opacity-0"
       }`}
       style={{ display: isOpen ? "block" : "none", zIndex: 1000 }}
     >
-      <div className='bg-white menu-default '>
-        <div className='flex items-center justify-between px-5 py-1.5 gap-1.5'>
+      <div className='menu-default bg-white'>
+        <div className='flex items-center justify-between gap-1.5 px-5 py-1.5'>
           <div className='flex items-center gap-2'>
             <img
               alt='Profile'
-              className='profile_image size-9 rounded-full border-2 border-success'
-              src={profile?.image || ""  } // Use user image or default
-             
-              style={{width:36,height:36}}
+              className='profile_image border-success size-9 rounded-full border-2'
+              src={profile?.image || ""} // Use user image or default
+              style={{ width: 36, height: 36 }}
             />
-           
+
             <div className='flex flex-col gap-1.5'>
-              <span className='text-sm text-gray-800 font-semibold leading-none'>
-                {profile?.name || 'User Name'} {/* Display user name */}
+              <span className='text-sm font-semibold leading-none text-gray-800'>
+                {profile?.name || "User Name"} {/* Display user name */}
               </span>
               <Link
-                className='text-xs text-gray-600 hover:text-primary font-medium leading-none'
+                className='text-xs font-medium leading-none text-gray-600 hover:text-primary'
                 href='/account/home/get-started'
               >
-                {profile?.email || ''} {/* Display user email */}
+                {profile?.email || ""} {/* Display user email */}
               </Link>
             </div>
           </div>
@@ -61,14 +60,14 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
 
         <div className='flex flex-col'>
           <div className='menu-item px-4 py-1.5'>
-            <Button
-            size="sm"
+            <button
               className='btn btn-sm btn-light justify-center'
-             
-              onClick={()=>{signOut()}} // Close dropdown on logout
+              onClick={() => {
+                signOut();
+              }} // Close dropdown on logout
             >
               Log out
-            </Button>
+            </button>
           </div>
         </div>
       </div>

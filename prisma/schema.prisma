@@ -37,6 +37,7 @@ model User {
   userSkills     UserSkill[]
   SkillCategory  SkillCategory[]
   SfiaLevel      SfiaLevel[]
+  Certification  Certification[]
 }
 
 model Skill {
@@ -126,4 +127,18 @@ model SfiaLevel {
   createdById String
   status      String?
   createdBy   User     @relation(fields: [createdById], references: [id])
+}
+
+model Certification {
+  id           String   @id @default(uuid()) @db.Uuid
+  name         String
+  url          String
+  obtainedDate DateTime
+  expiryDate   DateTime
+  description  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+  createdById  String
+  status       String
+  createdBy    User     @relation(fields: [createdById], references: [id])
 }

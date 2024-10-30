@@ -10,6 +10,8 @@ import { SKILL_LEVELS } from "@/lib/constants/profile";
 import { UserSkill } from "@/lib/types/profile";
 import { updateUserSkills } from "@/app/actions/updateUserSkills";
 import userSkillsMapper from "@/lib/mappers/userSkillsMapper";
+import { useAppContext } from "@/app/context/AppContext";
+import toast from "react-hot-toast";
 
 export type SelectedSkill = {
   createdById: string;
@@ -23,18 +25,23 @@ type ProfileSkillsProps = {
   showEditButton?: boolean;
 };
 
-const ProfileSkills: React.FC<ProfileSkillsProps> = ({
+const ProfileSkills = ({
   createdById = "",
   userSkills = [],
   showEditButton,
-}) => {
+}: ProfileSkillsProps) => {
   const mappedUserSkills = userSkillsMapper(userSkills);
 
+  const { setProfile } = useAppContext();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState(mappedUserSkills);
 
   const handleEdit = async () => {
-    updateUserSkills(createdById, selectedSkills);
+    const toastId = toast.loading("Updating Skills...");
+    const result = await updateUserSkills(createdById, selectedSkills);
+
+    setProfile(result.updatedUser);
+    toast.success(result.message, { id: toastId });
   };
 
   return (
@@ -59,7 +66,8 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
               {userSkills && userSkills?.length > 0 ? (
                 <div className='mb-2 flex flex-wrap gap-2.5'>
                   {userSkills?.map((userSkill) => {
-                    const { name, color } = SKILL_LEVELS[userSkill.level];
+                    const level = userSkill.level;
+                    const { name } = SKILL_LEVELS[level];
 
                     if (!name) {
                       return null;
@@ -68,7 +76,13 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
                     return (
                       <span
                         key={userSkill.id}
-                        className={classNames("badge badge-sm", color)}
+                        className={classNames("badge badge-sm", {
+                          "!bg-gray-200 !text-gray-600": level === 0,
+                          "!bg-red-100 !text-red-600": level === 1,
+                          "!bg-yellow-100 !text-yellow-600": level === 2,
+                          "!bg-blue-100 !text-blue-600": level === 3,
+                          "!bg-green-100 !text-green-600": level === 4,
+                        })}
                       >
                         {userSkill.skill.name} ({name})
                       </span>
@@ -97,8 +111,8 @@ const ProfileSkills: React.FC<ProfileSkillsProps> = ({
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         title='Edit Skills'
-        primaryButton={true}
-        primaryButtonOnClick={handleEdit}
+        buttonText='Update'
+        handler={handleEdit}
       >
         <EditSkills
           createdById={createdById}

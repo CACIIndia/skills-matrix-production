@@ -11,13 +11,13 @@ export const DEFAULT_USER_DETAILS: UserDetails = {
   startdate: "",
   sfiaLevel: "",
   reportedTo: "",
-  reportedToId:"",
+  reportedToId: "",
   role: "",
   createdAt: "",
   userSkills: [],
   additionalInfo: {
-    id:"",
-    userId:"",
+    id: "",
+    userId: "",
     discipline: "",
     specialism: "",
     employeeType: "",
@@ -33,17 +33,39 @@ export const DEFAULT_USER_DETAILS: UserDetails = {
     description: "",
     code: "",
     isCurrentProject: false,
-    userId: ""
+    userId: "",
   },
-  emailVerified:"",
-  joiningDate :"",
-
+  emailVerified: "",
+  joiningDate: "",
 };
 
 export const SKILL_LEVELS = [
-  { name: "None", color: "badge-outline" },
-  { name: "Novice", color: "badge-danger" },
-  { name: "Proficient", color: "badge-warning" },
-  { name: "Expert", color: "badge-primary" },
-  { name: "Specialist", color: "badge-success" },
+  {
+    level: 0,
+    name: "None",
+    description: "No knowledge of the skill",
+  },
+  {
+    level: 1,
+    name: "Basic",
+    description: "General understanding, can perform tasks with supervision",
+  },
+  {
+    level: 2,
+    name: "Proficient",
+    description:
+      "Independent task completion with quality that exceeds the basics",
+  },
+  {
+    level: 3,
+    name: "Expert",
+    description:
+      "Independent, high-quality task completion and ability to share knowledge with peers",
+  },
+  {
+    level: 4,
+    name: "Specialist",
+    description:
+      "Independent, high-quality task completion, ability to optimise processes, and design solutions",
+  },
 ];

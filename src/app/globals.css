@@ -8,12 +8,12 @@
 @layer components {
   /* BUTTONS */
 
-  .btn-1 {
-    @apply btn btn-primary;
-  }
+  /* .btn-sm {
+    @apply !px-2 !py-1 !text-sm;
+  } */
 
-  .btn-2 {
-    @apply btn btn-icon btn-icon-lg hover:bg-primary-light hover:text-primary rounded-full text-gray-500;
+  .btn-md {
+    @apply !px-8 !py-4;
   }
 }
 
