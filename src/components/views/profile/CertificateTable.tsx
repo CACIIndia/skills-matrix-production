@@ -13,9 +13,9 @@ interface Certificate {
 
 interface CertificateTableProps {
   certificates: Certificate[];
-  onEdit: (id: number, updatedCertificate: Omit<Certificate, "id">) => void; 
+  onEdit: (id: number, updatedCertificate: Omit<Certificate, "id">) => void;
   onDelete: (id: number) => void;
-  onDownload: (url: string) => void; 
+  onDownload: (url: string) => void;
   onAddCertificate: (newCertificate: Omit<Certificate, "id">) => void;
 }
 
@@ -58,7 +58,6 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
     setIsEditModalOpen((prev) => !prev);
   };
 
- 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (isEditModalOpen) {
@@ -90,16 +89,20 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
   // Handle certificate edit
   const handleEditCertificate = (id: number, cert: Certificate) => {
-  
     const obtainedDateObj = new Date(cert.obtainedDate);
     const expiryDateObj = new Date(cert.expiryDate);
-    
+
     // Format the dates to 'YYYY-MM-DD'
-    const formattedObtainedDate = obtainedDateObj.toISOString().split('T')[0];
-    const formattedExpiryDate = expiryDateObj.toISOString().split('T')[0];
-  
-    console.log(cert.expiryDate, formattedExpiryDate, "formattedObtainedDate", formattedObtainedDate);
-  
+    const formattedObtainedDate = obtainedDateObj.toISOString().split("T")[0];
+    const formattedExpiryDate = expiryDateObj.toISOString().split("T")[0];
+
+    console.log(
+      cert.expiryDate,
+      formattedExpiryDate,
+      "formattedObtainedDate",
+      formattedObtainedDate,
+    );
+
     setEditingId(id);
     setEditingCertificate({
       ...cert,
@@ -108,7 +111,6 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
     });
     handleToggleEditModal();
   };
-  
 
   const handleUpdateCertificate = () => {
     if (editingId !== null) {
@@ -151,14 +153,14 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
                 </tr>
               </thead>
               <tbody>
-                {certificates.length === 0 ? (
+                {certificates?.length === 0 ? (
                   <tr>
                     <td colSpan={5} className='text-center'>
                       No Records
                     </td>
                   </tr>
                 ) : (
-                  certificates.map((cert, index) => (
+                  certificates?.map((cert, index) => (
                     <tr key={cert.id}>
                       <td>{index + 1}</td>
                       <td>
@@ -310,7 +312,6 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
             <input
               type='file'
               name='certificateFile'
-              
               accept='application/pdf'
               onChange={handleFileChange}
               className='mb-4 w-full border p-2'
