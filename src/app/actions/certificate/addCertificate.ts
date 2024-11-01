@@ -41,8 +41,12 @@ export async function addCertificate(
       const containerClient =
         blobServiceClient.getContainerClient(containerName);
 
+      // Convert the name to lowercase and replace spaces with hyphens
+      const formattedName = data.name.toLowerCase().replace(/\s+/g, "-");
       // Generate unique filename
-      const filename = `${Date.now()}-${data.name.replace(/\s+/g, "-").toLowerCase()}.pdf`;
+      const filename = `${formattedName}-${data.createdBy}-certificate.pdf`;
+
+      console.log(filename, "filename");
 
       // Upload to blob storage
       certificateUrl = await uploadCertificateToBlob(
@@ -50,7 +54,11 @@ export async function addCertificate(
         filename,
         data.base64Certificate,
       );
+      certificateUrl = filename;
     }
+  
+
+    console.log(certificateUrl, "certificateUrlcertificateUrlcertificateUrl");
 
     // Create certificate in database
     const newCertificate = await db.certification.create({

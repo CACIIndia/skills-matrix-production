@@ -23,8 +23,11 @@ export const useCertificateHandlers = (userId: string) => {
       });
       invalidate();
     } catch (error) {
-      console.error("Error uploading certificate:", error);
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+      console.error("Error uploading certificate:", errorMessage);
+      alert(errorMessage);
     }
+    
   };
 
   const handleEdit = async (id: number, updatedData: any) => {
@@ -35,47 +38,58 @@ export const useCertificateHandlers = (userId: string) => {
       });
       invalidate();
     } catch (error) {
-      console.error("Error updating certificate:", error);
-    }
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+      console.error("Error updating certificate:", errorMessage);
+      alert(errorMessage);
+    }    
   };
 
   const handleDelete = async (id: number) => {
     try {
       await deleteCertificate(String(id));
       invalidate();
-    } catch (error) {
-      console.error("Error deleting certificate:", error);
+    }catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+      console.error("Error deleting certificate:", errorMessage);
+      alert(errorMessage);
     }
   };
 
-  // const handleDownload = async (url: string) => {
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: "GET",
-  //       headers: { "Content-Type": "application/pdf" },
-  //     });
-  //
-  //     if (!response.ok) throw new Error("Failed to download the certificate.");
-  //
-  //     const blob = await response.blob();
-  //     const downloadUrl = window.URL.createObjectURL(blob);
-  //     const fileName = url.split("/").pop() || "certificate.pdf";
-  //
-  //     const link = document.createElement("a");
-  //     link.href = downloadUrl;
-  //     link.download = fileName;
-  //     link.click();
-  //
-  //     window.URL.revokeObjectURL(downloadUrl);
-  //   } catch (error) {
-  //     console.error("Error downloading certificate:", error);
-  //   }
-  // };
+  const handleDownload = async (fileUrl: string, createdById: string, fileName: string) => {
+    try {
+      const response = await fetch(`https://smempprofile.blob.core.windows.net/certificatestorage/${fileUrl}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/pdf" },
+      });
+     
+  
+      if (!response.ok) throw new Error("Failed to download the certificate.");
+  
+      const fileBlob = await response.blob();
+      const downloadLink = window.URL.createObjectURL(fileBlob);
+      const formattedFileName = `${fileName.toLowerCase().replace(/\s+/g, "-")}-${createdById}-certificate.pdf`;
+  
+      const link = document.createElement("a");
+      link.href = downloadLink;
+      link.download = formattedFileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+  
+      window.URL.revokeObjectURL(downloadLink);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+      console.error("Error downloading certificate:", errorMessage);
+      alert(errorMessage);
+    }
+  };
+  
+  
 
   return {
     handleUpload,
     handleEdit,
     handleDelete,
-    // handleDownload, // Uncomment when implemented
+    handleDownload, 
   };
 };

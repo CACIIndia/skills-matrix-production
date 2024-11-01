@@ -27,7 +27,7 @@ export async function updateCertificate(
   try {
     // Validate session
     const session = await getSession();
-
+   
     if (!session?.user) {
       throw new Error("User is not authenticated");
     }
@@ -51,13 +51,19 @@ export async function updateCertificate(
       const containerClient =
         blobServiceClient.getContainerClient(containerName);
 
-      const filename = existingCertificate.url.split("/").pop()!;
+       // Convert the name to lowercase and replace spaces with hyphens
+      const formattedName = data.name.toLowerCase().replace(/\s+/g, "-");
+      // Generate unique filename
+      const filename = `${formattedName}-${data.createdBy}-certificate.pdf`;
+
+      console.log(filename,'updateFilenam');
       await uploadCertificateToBlob(
         containerClient,
         filename,
         data.base64Certificate,
       );
-    }
+      certificateUrl = filename;
+    } 
 
     // Update certificate in database
     const updated = await db.certification.update({

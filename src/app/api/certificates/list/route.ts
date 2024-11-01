@@ -22,9 +22,13 @@ export async function GET(request: Request) {
         createdAt: true,
         updatedAt: true,
         status: true,
+        createdById:true,
+      },
+      orderBy: {
+        createdAt: 'asc', 
       },
     });
-
+          console.log(certificates,"certificates");
     return NextResponse.json(certificates, { status: 200 });
   } catch (error) {
     console.error("Error fetching certificates:", error);

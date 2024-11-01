@@ -9,13 +9,14 @@ interface Certificate {
   expiryDate: string;
   url: string;
   description: string;
+  createdById:string;
 }
 
 interface CertificateTableProps {
   certificates: Certificate[];
   onEdit: (id: number, updatedCertificate: Omit<Certificate, "id">) => void;
   onDelete: (id: number) => void;
-  onDownload: (url: string) => void;
+  onDownload: (url: string,createdById:string,name:string) => void;
   onAddCertificate: (newCertificate: Omit<Certificate, "id">) => void;
 }
 
@@ -35,6 +36,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
       expiryDate: "",
       url: "",
       description: "",
+      createdById:""
     },
   );
 
@@ -46,6 +48,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
     expiryDate: "",
     url: "",
     description: "",
+    createdById:""
   });
   const [editingId, setEditingId] = useState<number | null>(null);
 
@@ -84,6 +87,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
       expiryDate: "",
       url: "",
       description: "",
+      createdById:""
     });
   };
 
@@ -122,6 +126,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
         expiryDate: "",
         url: "",
         description: "",
+        createdById:""
       });
       setEditingId(null);
     }
@@ -131,7 +136,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
     <div className='min-h-[400px]'>
       <div className='card card-grid max-h-[400px] min-w-full'>
         <div className='card-header flex items-center justify-between'>
-          <h3 className='card-title'>Certificates</h3>
+          <h3 className='card-title'>Certifications</h3>
           <button
             className='btn btn-sm btn-icon btn-clear btn-primary'
             onClick={handleToggleAddModal}
@@ -142,10 +147,10 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
         <div className='card-body'>
           <div className='scrollable-x-auto max-h-[300px] overflow-y-auto'>
-            <table className='table-border table min-h-[200px] min-w-full'>
+            <table className='table-border table min-w-full'>
               <thead className='sticky top-0 z-10 bg-white'>
                 <tr>
-                  <th className='w-[60px]'>S.No</th>
+                  <th className='w-[60px]'>#</th>
                   <th className='w-[280px]'>Name</th>
                   <th className='min-w-[135px]'>Obtained Date</th>
                   <th className='min-w-[135px]'>Valid Until</th>
@@ -168,8 +173,10 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
                           {cert.name}
                         </span>
                       </td>
-                      <td>{cert.obtainedDate}</td>
-                      <td>{cert.expiryDate}</td>
+                      <td>
+                        {new Date(cert.obtainedDate).toLocaleDateString()}
+                      </td>
+                      <td>{new Date(cert.expiryDate).toLocaleDateString()}</td>
                       <td className='flex gap-3 text-xl'>
                         <button
                           className='text-primary'
@@ -187,7 +194,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
                         </button>
                         <button
                           className='text-success'
-                          onClick={() => onDownload(cert.url)}
+                          onClick={() => onDownload(cert.url,cert.createdById,cert.name)}
                           title='Download'
                         >
                           <i className='ki-filled ki-folder-down' />

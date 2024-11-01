@@ -47,10 +47,16 @@ export async function POST(request: Request) {
     let certificateUrl;
     let filename;
 
-    // Generate a unique filename using the userId and timestamp
+  
     if (!certificateId) {
-      // Create new certificate
-      filename = `${Date.now()}-${createdBy}-certificate.pdf`;
+     
+
+      // Convert the name to lowercase and replace spaces with hyphens
+   const formattedName = name.toLowerCase().replace(/\s+/g, '-');
+    
+
+      // Generate the filename
+   const filename = `${formattedName}-${createdBy}-certificate.pdf`;
 
       // Get the block blob client for uploading the certificate
       const blockBlobClient = containerClient.getBlockBlobClient(filename);
@@ -63,7 +69,8 @@ export async function POST(request: Request) {
       });
 
       // Construct the certificate URL
-      certificateUrl = `https://${storageAccount}.blob.core.windows.net/${containerName}/${filename}`;
+      certificateUrl = filename;
+      console.log(certificateUrl,"certificateUrlcertificateUrlcertificateUrl");
     } else {
       // Update existing certificate
       const existingCertificate = await db.Certification.findUnique({
@@ -120,7 +127,7 @@ export async function POST(request: Request) {
     }
 
     // Respond with a success message and certificate URL
-    return NextResponse.json({ message: certificateId ? 'Certificate updated successfully' : 'Certificate uploaded successfully', certificate_url: certificateUrl }, { status: 200 });
+    return NextResponse.json({ message: certificateId ? 'Certificate updated successfully' : 'Certificate uploaded successfully', certificate_url: `${process.env.AZURE_CERTIFICATE_END_POINT}${certificateUrl}` }, { status: 200 });
 
   } catch (error) {
     console.error('Error during certificate upload:', error);

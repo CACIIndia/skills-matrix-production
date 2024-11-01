@@ -10,19 +10,19 @@ const CertificatePage = () => {
   const { profile } = useAppContext();
 
   const { data: certificates } = useGetCertificates(profile.id);
-  const { handleDelete, handleEdit, handleUpload } = useCertificateHandlers(
+  const { handleDelete, handleEdit, handleUpload,handleDownload } = useCertificateHandlers(
     profile.id,
   );
 
   return (
     <div>
-      <div className='container-fixed text-start'>
-        <div className='grid grid-cols-1 justify-between gap-4 lg:grid-cols-2'>
+      <div className=' text-start'>
+        <div className='grid grid-cols-1 justify-between gap-4 lg:grid-cols-1'>
           <CertificateTable
             certificates={certificates}
             onEdit={handleEdit}
             onDelete={handleDelete}
-            onDownload={() => {}}
+            onDownload={handleDownload}
             onAddCertificate={handleUpload}
           />
 
