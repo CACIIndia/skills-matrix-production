@@ -56,9 +56,6 @@ export async function addCertificate(
       );
       certificateUrl = filename;
     }
-  
-
-    console.log(certificateUrl, "certificateUrlcertificateUrlcertificateUrl");
 
     // Create certificate in database
     const newCertificate = await db.certification.create({
