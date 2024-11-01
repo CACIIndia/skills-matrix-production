@@ -37,6 +37,7 @@ export const useCertificateHandlers = (userId: string) => {
         createdBy: userId,
       });
       invalidate();
+      alert("Edited Successfully");
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
       console.error("Error updating certificate:", errorMessage);
