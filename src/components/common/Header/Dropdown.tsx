@@ -4,6 +4,10 @@ import { signOut, useSession } from "next-auth/react"; // Import useSession hook
 import default_image from "../../../../public/assets/media/avatars/default-image.png";
 import Button from "../Button";
 import { useAppContext } from "@/app/context/AppContext";
+import { SiMicrosoftazure } from "react-icons/si";
+import { useState } from "react";
+import toast from "react-hot-toast";
+import { useUpdateMicrosoftProfile } from "@/lib/hooks/useUpdateMicroSoftProfile";
 
 type HeaderDropdownProps = {
   isOpen: boolean;
@@ -12,6 +16,41 @@ type HeaderDropdownProps = {
 
 const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
   const { profile } = useAppContext();
+  const { data: session } = useSession();
+  const [toastId ,setToastId] = useState("");
+  const { setProfile } = useAppContext();
+  
+  const { mutate,mutateAsync, isError, error } = useUpdateMicrosoftProfile((error) => {
+    
+ 
+    toast.error(error.message,{ id: toastId });
+   
+  });
+  if(!session){
+    return null
+  } 
+ 
+ 
+
+  const handleAzureConnect = async () => {
+   
+
+    const toastId = toast.loading("Connecting To Azure, Please Wait...");
+
+
+    setToastId(toastId)
+    
+    const response = await mutateAsync({ 
+      accessToken: session.azure_access_token || "", 
+      user: profile 
+    });
+    setProfile(response);
+  
+  
+    toast.success("done",{ id: toastId });
+  
+
+  };
 
   return (
     <div
@@ -29,7 +68,6 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
               src={profile?.image || ""} // Use user image or default
               style={{ width: 36, height: 36 }}
             />
-
             <div className='flex flex-col gap-1.5'>
               <span className='text-sm font-semibold leading-none text-gray-800'>
                 {profile?.name || "User Name"} {/* Display user name */}
@@ -56,15 +94,27 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
               <span className='menu-title'>My Profile</span>
             </Link>
           </div>
+          <div className='menu-item'>
+            <Button
+              className='btn flex items-center justify-center btn-primary'
+              onClick={handleAzureConnect}
+           
+            >
+              <span className='menu-icon'>
+                <SiMicrosoftazure />
+              </span>
+              <span className='menu-title'>{ "Azure AD Connect"}</span>
+            </Button>
+          </div>
         </div>
-
         <div className='flex flex-col'>
           <div className='menu-item px-4 py-1.5'>
             <button
               className='btn btn-sm btn-light justify-center'
               onClick={() => {
                 signOut();
-              }} // Close dropdown on logout
+                onClose(); // Close dropdown on logout
+              }}
             >
               Log out
             </button>

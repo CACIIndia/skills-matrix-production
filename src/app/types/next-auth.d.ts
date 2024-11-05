@@ -9,6 +9,7 @@ declare module "next-auth" {
       name?: string | null;
       image?: string | null;
     };
+    azure_access_token:string|null;
   }
 
   interface User {
