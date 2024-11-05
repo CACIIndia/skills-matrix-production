@@ -33,7 +33,7 @@ import axios from 'axios';
 function updateProfileImage(imageUrl: string): void {
   // Select all elements with class 'profile_image' and cast them to HTMLImageElement[]
   const profileImages: NodeListOf<HTMLImageElement> = document.querySelectorAll('.profile_image');
-  console.log(profileImages,"profileImages");
+
 
   // Loop through each element and update the 'src' attribute with the new image URL
   profileImages.forEach((imageElement: HTMLImageElement) => {

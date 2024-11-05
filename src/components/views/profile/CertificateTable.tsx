@@ -10,7 +10,8 @@ interface Certificate {
   url: string;
   description: string;
   createdById:string;
-}
+  certificateFile?: File
+};
 
 interface CertificateTableProps {
   certificates: Certificate[];
@@ -36,7 +37,8 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
       expiryDate: "",
       url: "",
       description: "",
-      createdById:""
+      createdById:"",
+      certificateFile:"",
     },
   );
 
@@ -72,6 +74,8 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+   
+  
     if (file) {
       setNewCertificate((prev) => ({ ...prev, certificateFile: file }));
     }
@@ -95,7 +99,6 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
   const handleEditCertificate = (id: number, cert: Certificate) => {
     const obtainedDateObj = new Date(cert.obtainedDate);
     const expiryDateObj = new Date(cert.expiryDate);
-
     // Format the dates to 'YYYY-MM-DD'
     const formattedObtainedDate = obtainedDateObj.toISOString().split("T")[0];
     const formattedExpiryDate = expiryDateObj.toISOString().split("T")[0];
@@ -118,7 +121,8 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
   const handleUpdateCertificate = () => {
     if (editingId !== null) {
-      onEdit(editingId, editingCertificate);
+       const editing_certificate = {...editingCertificate,certificateFile:newCertificate.certificateFile}
+      onEdit(editingId, editing_certificate);
       handleToggleEditModal();
       setEditingCertificate({
         name: "",
@@ -180,7 +184,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
                       <td className='flex gap-3 text-xl'>
                         <button
                           className='text-primary'
-                          onClick={() => handleEditCertificate(cert.id, cert)} // Trigger edit modal
+                          onClick={() => handleEditCertificate(cert.id, cert)} 
                           title='Edit'
                         >
                           <i className='ki-filled ki-notepad-edit' />
