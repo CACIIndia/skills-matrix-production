@@ -9,15 +9,14 @@ interface Certificate {
   expiryDate: string;
   url: string;
   description: string;
-  createdById:string;
-  certificateFile?: File
-};
+  createdById: string;
+}
 
 interface CertificateTableProps {
   certificates: Certificate[];
   onEdit: (id: number, updatedCertificate: Omit<Certificate, "id">) => void;
   onDelete: (id: number) => void;
-  onDownload: (url: string,createdById:string,name:string) => void;
+  onDownload: (url: string, createdById: string, name: string) => void;
   onAddCertificate: (newCertificate: Omit<Certificate, "id">) => void;
 }
 
@@ -37,8 +36,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
       expiryDate: "",
       url: "",
       description: "",
-      createdById:"",
-      certificateFile:"",
+      createdById: "",
     },
   );
 
@@ -50,8 +48,10 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
     expiryDate: "",
     url: "",
     description: "",
-    createdById:""
+    createdById: "",
   });
+
+  const [editingFile, setEditingFile] = useState<File | undefined>();
   const [editingId, setEditingId] = useState<number | null>(null);
 
   // Toggle modal visibility
@@ -74,10 +74,12 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-   
-  
-    if (file) {
-      setNewCertificate((prev) => ({ ...prev, certificateFile: file }));
+    if (file && isEditModalOpen) {
+      setEditingFile(file);
+    } else {
+      if (file) {
+        setNewCertificate((prev) => ({ ...prev, certificateFile: file }));
+      }
     }
   };
 
@@ -91,7 +93,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
       expiryDate: "",
       url: "",
       description: "",
-      createdById:""
+      createdById: "",
     });
   };
 
@@ -121,7 +123,11 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
   const handleUpdateCertificate = () => {
     if (editingId !== null) {
-       const editing_certificate = {...editingCertificate,certificateFile:newCertificate.certificateFile}
+      const editing_certificate = {
+        ...editingCertificate,
+        certificateFile: editingFile,
+      };
+      console.log(editingFile,"editingFile");
       onEdit(editingId, editing_certificate);
       handleToggleEditModal();
       setEditingCertificate({
@@ -130,7 +136,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
         expiryDate: "",
         url: "",
         description: "",
-        createdById:""
+        createdById: "",
       });
       setEditingId(null);
     }
@@ -184,7 +190,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
                       <td className='flex gap-3 text-xl'>
                         <button
                           className='text-primary'
-                          onClick={() => handleEditCertificate(cert.id, cert)} 
+                          onClick={() => handleEditCertificate(cert.id, cert)}
                           title='Edit'
                         >
                           <i className='ki-filled ki-notepad-edit' />
@@ -198,7 +204,9 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
                         </button>
                         <button
                           className='text-success'
-                          onClick={() => onDownload(cert.url,cert.createdById,cert.name)}
+                          onClick={() =>
+                            onDownload(cert.url, cert.createdById, cert.name)
+                          }
                           title='Download'
                         >
                           <i className='ki-filled ki-folder-down' />

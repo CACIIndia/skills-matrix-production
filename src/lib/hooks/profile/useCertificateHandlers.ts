@@ -43,6 +43,8 @@ export const useCertificateHandlers = (userId: string) => {
     try {
     
       const { certificateFile, ...rest } = updatedData;
+
+      console.log(certificateFile,"certificateFilecertificateFilecertificateFile");
   
    
       const base64Certificate = certificateFile
