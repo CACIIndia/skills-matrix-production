@@ -63,7 +63,9 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
     setIsEditModalOpen((prev) => !prev);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     if (isEditModalOpen) {
       setEditingCertificate((prev) => ({ ...prev, [name]: value }));
@@ -127,7 +129,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
         ...editingCertificate,
         certificateFile: editingFile,
       };
-      console.log(editingFile,"editingFile");
+      console.log(editingFile, "editingFile");
       onEdit(editingId, editing_certificate);
       handleToggleEditModal();
       setEditingCertificate({
@@ -279,13 +281,13 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
             <label className='mb-1 block text-sm font-medium text-gray-700'>
               Description
             </label>
-            <input
-              type='text'
+            <textarea
               name='description'
               placeholder='Enter certificate description'
               value={newCertificate.description}
               onChange={handleInputChange}
               className='mb-4 w-full border p-2'
+              rows={4} // Set the number of rows for height
             />
 
             <div className='flex justify-end gap-4'>
@@ -364,15 +366,14 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
             <label className='mb-1 block text-sm font-medium text-gray-700'>
               Description
             </label>
-            <input
-              type='text'
+            <textarea
               name='description'
               placeholder='Enter certificate description'
               value={editingCertificate.description}
               onChange={handleInputChange}
               className='mb-4 w-full border p-2'
+              rows={4} 
             />
-
             <div className='flex justify-end gap-4'>
               <button
                 className='btn btn-secondary'
