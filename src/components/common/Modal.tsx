@@ -38,9 +38,11 @@ const Modal = ({
       <div className='fixed inset-0 z-10 w-screen overflow-y-auto'>
         <div className='flex min-h-full items-center justify-center p-4'>
           <DialogPanel
-            className={` ${customWidth ? customWidth : "w-full max-w-4xl"} rounded bg-white p-6`}
+            className={`${
+              customWidth ? customWidth : "w-full max-w-4xl"
+            } flex max-h-[90vh] flex-col rounded bg-white`}
           >
-            <div className='mb-4 flex items-center justify-between'>
+            <div className='mb-4 flex items-center justify-between p-6 pb-0'>
               {title && (
                 <DialogTitle className='text-2xl font-medium'>
                   {title}
@@ -53,10 +55,8 @@ const Modal = ({
                 <i className='ki-filled ki-cross'></i>
               </button>
             </div>
-
-            {children}
-
-            <div className='mx-4 mt-10 flex justify-end space-x-3'>
+            <div className='flex-1 overflow-y-auto px-6'>{children}</div>{" "}
+            <div className='mt-10 flex justify-end space-x-3 p-6 pt-0'>
               <button onClick={onClose} className='btn btn-md btn-light'>
                 Close
               </button>
@@ -69,7 +69,7 @@ const Modal = ({
                     onClose();
                   }}
                 >
-                  Update
+                  {buttonText}
                 </button>
               )}
             </div>
