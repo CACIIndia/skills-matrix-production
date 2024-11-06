@@ -26,7 +26,7 @@ const ErrorPage = ({ error, reset }: ErrorPageProps) => {
 
         <p className='mb-8 text-xl text-gray-700'>{errorMessage}</p>
 
-        <div className='flex flex-col space-y-4'>
+        {/* <div className='flex flex-col space-y-4'>
           <Button
             onClick={reset}
             className='btn-1 flex justify-center text-base'
@@ -40,7 +40,7 @@ const ErrorPage = ({ error, reset }: ErrorPageProps) => {
           >
             Go back to homepage
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );
