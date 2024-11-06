@@ -11,7 +11,7 @@ export const options: AuthOptions = {
       tenantId: process.env.AZURE_AD_TENANT_ID!,
       authorization: {
         params: {
-            scope: "openid email profile",
+           scope: "openid email profile",
         },
       },
     }),

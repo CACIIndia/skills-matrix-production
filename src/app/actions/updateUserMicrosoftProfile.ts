@@ -1,5 +1,6 @@
 import db from "@/lib/db";
 import { UserDetails } from "@/lib/types/profile";
+import { uploadUserImageBuffer } from "./utils/uploadUserImageBuffer";
 const GRAPH_API_BASE_URL = "https://graph.microsoft.com/v1.0";
 
 const updateUserMicrosoftProfile = async (
@@ -30,12 +31,12 @@ async function updateProfilePhoto(
     const imageBuffer = await fetchUserProfilePicture(accessToken);
     console.log(imageBuffer,"imageBufferimageBuffer");
 
-    // if (imageBuffer) {
-    //   const profileImage = await uploadUserImageBuffer(imageBuffer, user.id);
-    //   user.image = profileImage;
-    // } else {
-    //   console.log("No profile picture found for the user.");
-    // }
+    if (imageBuffer) {
+      const profileImage = await uploadUserImageBuffer(imageBuffer, user.id);
+      user.image = profileImage;
+    } else {
+      console.log("No profile picture found for the user.");
+    }
     return user;
   } catch (error) {
     console.error("Error processing profile image:", error);
@@ -161,5 +162,8 @@ export async function fetchUserProfilePicture(
     );
   }
 }
+
+
+
 // Exporting main function
 export { updateUserMicrosoftProfile };

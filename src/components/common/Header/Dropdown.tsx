@@ -47,7 +47,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
     setProfile(response);
   
   
-    toast.success("done",{ id: toastId });
+    toast.success("Updated Successfully",{ id: toastId });
   
 
   };
@@ -62,21 +62,22 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
       <div className='menu-default bg-white'>
         <div className='flex items-center justify-between gap-1.5 px-5 py-1.5'>
           <div className='flex items-center gap-2'>
-            <img
+            <Image
               alt='Profile'
               className='profile_image border-success size-9 rounded-full border-2'
-              src={profile?.image || ""} // Use user image or default
-              style={{ width: 36, height: 36 }}
+              src={profile?.image || default_image} 
+              width={36}
+              height={36}
             />
             <div className='flex flex-col gap-1.5'>
               <span className='text-sm font-semibold leading-none text-gray-800'>
-                {profile?.name || "User Name"} {/* Display user name */}
+                {profile?.name || "User Name"} 
               </span>
               <Link
                 className='text-xs font-medium leading-none text-gray-600 hover:text-primary'
                 href='/account/home/get-started'
               >
-                {profile?.email || ""} {/* Display user email */}
+                {profile?.email || ""}
               </Link>
             </div>
           </div>
