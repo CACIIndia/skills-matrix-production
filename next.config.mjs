@@ -6,6 +6,11 @@ const nextConfig = {
   env: {
     API_BASE_URL: process.env.API_BASE_URL,
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '2mb',
+    },
+  },
 };
 
 export default nextConfig;

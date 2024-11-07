@@ -14,6 +14,7 @@ export const useCertificateHandlers = (userId: string) => {
   };
 
   const handleUpload = async (certificate: any) => {
+ 
     const { certificateFile, ...rest } = certificate;
 
     const toastId = toast.loading("Uploading certificate...");
@@ -39,23 +40,40 @@ export const useCertificateHandlers = (userId: string) => {
 
   const handleEdit = async (id: number, updatedData: any) => {
     const toastId = toast.loading("Updating certificate...");
-
     try {
-      const result = await updateCertificate(String(id), {
-        ...updatedData,
-        createdBy: userId,
-      });
+    
+      const { certificateFile, ...rest } = updatedData;
 
+      console.log(certificateFile,"certificateFilecertificateFilecertificateFile");
+  
+   
+      const base64Certificate = certificateFile
+        ? await fileToBase64(certificateFile)
+        : undefined;
+  
+    
+      const payload = {
+        ...rest,
+        base64Certificate, 
+        createdBy: userId,   
+      };
+  
+    
+      const result = await updateCertificate(String(id), payload);
+  
+     
       invalidate();
+  
       toast.success(result.message, { id: toastId });
     } catch (error) {
+      // Error handling and feedback
       const errorMessage =
         error instanceof Error ? error.message : "An unknown error occurred.";
       console.error("Error updating certificate:", errorMessage);
       toast.error(errorMessage, { id: toastId });
     }
   };
-
+  
   const handleDelete = async (id: number) => {
     const toastId = toast.loading("Deleting certificate...");
 

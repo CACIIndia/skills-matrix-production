@@ -46,7 +46,7 @@ export async function addCertificate(
       // Generate unique filename
       const filename = `${formattedName}-${data.createdBy}-certificate.pdf`;
 
-      console.log(filename, "filename");
+   
 
       // Upload to blob storage
       certificateUrl = await uploadCertificateToBlob(

@@ -37,12 +37,15 @@ export async function updateCertificate(
       where: { id: certificateId },
     });
 
+   
+
     if (!existingCertificate) {
       throw new Error("Certificate not found");
     }
 
     // Handle certificate file upload if provided
     let certificateUrl = existingCertificate.url;
+   
 
     if (data.base64Certificate) {
       const { containerName, connectionString } = getAzureConfig();
@@ -56,7 +59,6 @@ export async function updateCertificate(
       // Generate unique filename
       const filename = `${formattedName}-${data.createdBy}-certificate.pdf`;
 
-      console.log(filename,'updateFilenam');
       await uploadCertificateToBlob(
         containerClient,
         filename,

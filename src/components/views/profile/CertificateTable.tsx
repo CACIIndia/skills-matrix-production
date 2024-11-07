@@ -9,14 +9,14 @@ interface Certificate {
   expiryDate: string;
   url: string;
   description: string;
-  createdById:string;
+  createdById: string;
 }
 
 interface CertificateTableProps {
   certificates: Certificate[];
   onEdit: (id: number, updatedCertificate: Omit<Certificate, "id">) => void;
   onDelete: (id: number) => void;
-  onDownload: (url: string,createdById:string,name:string) => void;
+  onDownload: (url: string, createdById: string, name: string) => void;
   onAddCertificate: (newCertificate: Omit<Certificate, "id">) => void;
 }
 
@@ -36,7 +36,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
       expiryDate: "",
       url: "",
       description: "",
-      createdById:""
+      createdById: "",
     },
   );
 
@@ -48,8 +48,10 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
     expiryDate: "",
     url: "",
     description: "",
-    createdById:""
+    createdById: "",
   });
+
+  const [editingFile, setEditingFile] = useState<File | undefined>();
   const [editingId, setEditingId] = useState<number | null>(null);
 
   // Toggle modal visibility
@@ -61,7 +63,9 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
     setIsEditModalOpen((prev) => !prev);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
     const { name, value } = e.target;
     if (isEditModalOpen) {
       setEditingCertificate((prev) => ({ ...prev, [name]: value }));
@@ -72,8 +76,12 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      setNewCertificate((prev) => ({ ...prev, certificateFile: file }));
+    if (file && isEditModalOpen) {
+      setEditingFile(file);
+    } else {
+      if (file) {
+        setNewCertificate((prev) => ({ ...prev, certificateFile: file }));
+      }
     }
   };
 
@@ -87,7 +95,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
       expiryDate: "",
       url: "",
       description: "",
-      createdById:""
+      createdById: "",
     });
   };
 
@@ -95,7 +103,6 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
   const handleEditCertificate = (id: number, cert: Certificate) => {
     const obtainedDateObj = new Date(cert.obtainedDate);
     const expiryDateObj = new Date(cert.expiryDate);
-
     // Format the dates to 'YYYY-MM-DD'
     const formattedObtainedDate = obtainedDateObj.toISOString().split("T")[0];
     const formattedExpiryDate = expiryDateObj.toISOString().split("T")[0];
@@ -118,7 +125,12 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
   const handleUpdateCertificate = () => {
     if (editingId !== null) {
-      onEdit(editingId, editingCertificate);
+      const editing_certificate = {
+        ...editingCertificate,
+        certificateFile: editingFile,
+      };
+      console.log(editingFile, "editingFile");
+      onEdit(editingId, editing_certificate);
       handleToggleEditModal();
       setEditingCertificate({
         name: "",
@@ -126,7 +138,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
         expiryDate: "",
         url: "",
         description: "",
-        createdById:""
+        createdById: "",
       });
       setEditingId(null);
     }
@@ -180,7 +192,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
                       <td className='flex gap-3 text-xl'>
                         <button
                           className='text-primary'
-                          onClick={() => handleEditCertificate(cert.id, cert)} // Trigger edit modal
+                          onClick={() => handleEditCertificate(cert.id, cert)}
                           title='Edit'
                         >
                           <i className='ki-filled ki-notepad-edit' />
@@ -194,7 +206,9 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
                         </button>
                         <button
                           className='text-success'
-                          onClick={() => onDownload(cert.url,cert.createdById,cert.name)}
+                          onClick={() =>
+                            onDownload(cert.url, cert.createdById, cert.name)
+                          }
                           title='Download'
                         >
                           <i className='ki-filled ki-folder-down' />
@@ -267,13 +281,13 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
             <label className='mb-1 block text-sm font-medium text-gray-700'>
               Description
             </label>
-            <input
-              type='text'
+            <textarea
               name='description'
               placeholder='Enter certificate description'
               value={newCertificate.description}
               onChange={handleInputChange}
               className='mb-4 w-full border p-2'
+              rows={4} // Set the number of rows for height
             />
 
             <div className='flex justify-end gap-4'>
@@ -352,15 +366,14 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
             <label className='mb-1 block text-sm font-medium text-gray-700'>
               Description
             </label>
-            <input
-              type='text'
+            <textarea
               name='description'
               placeholder='Enter certificate description'
               value={editingCertificate.description}
               onChange={handleInputChange}
               className='mb-4 w-full border p-2'
+              rows={4} 
             />
-
             <div className='flex justify-end gap-4'>
               <button
                 className='btn btn-secondary'
