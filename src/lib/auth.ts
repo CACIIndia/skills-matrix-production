@@ -11,7 +11,7 @@ export const options: AuthOptions = {
       tenantId: process.env.AZURE_AD_TENANT_ID!,
       authorization: {
         params: {
-           scope: "openid email profile",
+          scope: "openid email User.Read User.ReadBasic.All User.Read.All User.ReadWrite User.ReadWrite.All",
         },
       },
     }),
@@ -31,7 +31,7 @@ export const options: AuthOptions = {
         const email = profile.email;
         const name = profile.name || "";
 
-        console.log(account,"accountaccount");
+        
 
         if (!email) {
           throw new Error("Azure AD did not return an email address.");
@@ -59,8 +59,7 @@ export const options: AuthOptions = {
           token.email = user.email;
           token.name = user.name;
           token.image = user.image || "";
-          // token.azure_access_token = typeof account.access_token === "string" ? account.access_token  : null ;
-          token.azure_access_token = process.env.TEMP_ACCESS_TOKEN;
+          token.azure_access_token = typeof account.access_token === "string" ? account.access_token  : null ;
           return token;
         } catch (error: unknown) { 
           if (error instanceof Error) {
