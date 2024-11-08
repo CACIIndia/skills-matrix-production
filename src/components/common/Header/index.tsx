@@ -2,17 +2,38 @@ import Button from "@/components/common/Button";
 import HeaderMenu from "@/components/common/Header/Menu";
 import HeaderSearch from "@/components/common/Header/Search";
 import MegaMenu from "@/components/common/Header/MegaMenu";
+import { useEffect, useRef, useState } from "react";
 
 type HeaderProps = {
   onClick: () => void;
 };
 
 const Header = ({ onClick }: HeaderProps) => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <header className='flex h-fit w-full items-center justify-between'>
-      <div className='h-full w-full' id='header_container'>
+    <header
+     style={{paddingLeft:"3%",paddingRight:"3%"}}
+      className={`flex h-fit w-full items-center justify-between  bg-[#fefefe] transition-all duration-300 ${
+        isScrolled ? 'shadow-sm border-b border-b-coal-100' : ''
+      }`}
+    >
+      <div className='h-full w-full' id='header_container'> 
         <div
-          className='hidden h-full items-stretch justify-between p-5 lg:flex'
+          className='hidden h-full items-stretch p-5 justify-between lg:flex  '
           id='megamenu_container'
         >
           <div className='flex items-stretch pl-10'>
