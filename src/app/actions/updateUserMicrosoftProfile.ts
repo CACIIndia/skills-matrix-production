@@ -9,7 +9,7 @@ const updateUserMicrosoftProfile = async (
 ): Promise<UserDetails> => {
   try {
     let updatedUser = await updateProfilePhoto(accessToken, user);
-    console.log(updatedUser, "updatedUserupdatedUser");
+    
     updatedUser.id = user.id;
     updatedUser = await updateProfile(accessToken, user);
     updatedUser = await updateManager(accessToken, updatedUser);
@@ -30,6 +30,7 @@ async function updateProfilePhoto(
     console.log("Updating profile photo for user:", user);
     const imageBuffer = await fetchUserProfilePicture(accessToken);
     console.log(imageBuffer,"imageBufferimageBuffer");
+    
 
     if (imageBuffer) {
       const profileImage = await uploadUserImageBuffer(imageBuffer, user.id);
@@ -115,14 +116,6 @@ async function makeGraphRequest(
     body: body ? JSON.stringify(body) : undefined,
   });
  
-
-
-  if (!response.ok) {
-    throw new Error(
-      `Error ${method} ${endpoint}: ${response.status} - ${response.statusText}`,
-    );
-  }
-
   return response;
 }
 

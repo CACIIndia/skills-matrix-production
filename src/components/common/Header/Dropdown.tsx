@@ -17,39 +17,30 @@ type HeaderDropdownProps = {
 const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
   const { profile } = useAppContext();
   const { data: session } = useSession();
-  const [toastId ,setToastId] = useState("");
+  const [toastId, setToastId] = useState("");
   const { setProfile } = useAppContext();
-  
-  const { mutate,mutateAsync, isError, error } = useUpdateMicrosoftProfile((error) => {
-    
- 
-    toast.error(error.message,{ id: toastId });
-   
-  });
-  if(!session){
-    return null
-  } 
- 
- 
+
+  const { mutate, mutateAsync, isError, error } = useUpdateMicrosoftProfile(
+    (error) => {
+      toast.error(error.message, { id: toastId });
+    },
+  );
+  if (!session) {
+    return null;
+  }
 
   const handleAzureConnect = async () => {
-   
-
     const toastId = toast.loading("Connecting To Azure, Please Wait...");
 
+    setToastId(toastId);
 
-    setToastId(toastId)
-    
-    const response = await mutateAsync({ 
-      accessToken: session.azure_access_token || "", 
-      user: profile 
+    const response = await mutateAsync({
+      accessToken: session.azure_access_token || "",
+      user: profile,
     });
     setProfile(response);
-  
-  
-    toast.success("Updated Successfully",{ id: toastId });
-  
 
+    toast.success("Updated Successfully", { id: toastId });
   };
 
   return (
@@ -65,13 +56,13 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
             <Image
               alt='Profile'
               className='profile_image border-success size-9 rounded-full border-2'
-              src={profile?.image || default_image} 
+              src={profile?.image || default_image}
               width={36}
               height={36}
             />
             <div className='flex flex-col gap-1.5'>
               <span className='text-sm font-semibold leading-none text-gray-800'>
-                {profile?.name || "User Name"} 
+                {profile?.name || "User Name"}
               </span>
               <Link
                 className='text-xs font-medium leading-none text-gray-600 hover:text-primary'
@@ -96,7 +87,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
             </Link>
           </div>
           <div className='menu-item'>
-            <Button
+            {/* <Button
               className='btn flex items-center justify-center btn-primary'
               onClick={handleAzureConnect}
            
@@ -105,7 +96,13 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
                 <SiMicrosoftazure />
               </span>
               <span className='menu-title'>{ "Azure AD Connect"}</span>
-            </Button>
+            </Button> */}
+            <Link className='menu-link' href={"#"}   onClick={handleAzureConnect}>
+              <span className='menu-icon'>
+              <SiMicrosoftazure />
+              </span>
+              <span className='menu-title'>Azure AD Connect</span>
+            </Link>
           </div>
         </div>
         <div className='flex flex-col'>
