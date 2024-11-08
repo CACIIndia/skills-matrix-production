@@ -11,14 +11,15 @@ export const options: AuthOptions = {
       tenantId: process.env.AZURE_AD_TENANT_ID!,
       authorization: {
         params: {
-          scope: "openid profile email",
+          scope: "openid email User.Read User.ReadBasic.All User.Read.All User.ReadWrite User.ReadWrite.All",
+       
         },
       },
     }),
   ],
   session: {
     strategy: "jwt",
-    maxAge: 1000,
+    maxAge: 1000 *100,
   },
   pages: {
 
@@ -31,17 +32,19 @@ export const options: AuthOptions = {
         const email = profile.email;
         const name = profile.name || "";
 
+        
+
         if (!email) {
           throw new Error("Azure AD did not return an email address.");
         }
 
         try {
-          // Check if the user already exists in the database using the email
+    
           let user = await db.user.findUnique({
             where: { email },
           });
 
-          // If the user doesn't exist, create a new one
+        
           if (!user) {
             user = await db.user.create({
               data: {
@@ -52,18 +55,20 @@ export const options: AuthOptions = {
             });
           }
 
-          // Attach the user's id and additional details to the token
+ 
           token.sub = user.id;
           token.email = user.email;
           token.name = user.name;
           token.image = user.image || "";
+          token.azure_access_token = typeof account.access_token === "string" ? account.access_token  : null ;
+        //  token.azure_access_token = process.env.TEMP_ACCESS_TOKEN;
           return token;
         } catch (error: unknown) { 
           if (error instanceof Error) {
-            // If it's an instance of Error, throw it with a custom message
+         
             throw new Error("Error checking/creating user in JWT callback:", error);
           }
-          // If the error is not an instance of Error, handle it differently
+        
           throw new Error("An unknown error occurred.");
         }
       }
@@ -71,20 +76,23 @@ export const options: AuthOptions = {
       return token;
     },
     async session({ session, token }) {
-      // Attach user details to the session
+    
       if (token) {
         session.user = {
           id: token?.sub,
           email: token.email || "",
           name: token.name || "",
           image: typeof token.image === "string" ? token.image : "", 
+          
         };
+        session.azure_access_token = typeof token.azure_access_token === "string" ? token.azure_access_token : null;
+
       }
 
       return session;
     },
     async redirect({ url, baseUrl }) {
-      return baseUrl; // Redirect to base URL after sign-in
+      return baseUrl; 
     },
   },
 };

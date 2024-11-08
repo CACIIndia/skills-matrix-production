@@ -121,22 +121,22 @@ const ProfileHeader = ({ data, isLoading }: ProfileHeaderProps) => {
             </div>
           )}
           <div className='lg:gap-4.5 flex flex-wrap justify-center gap-1 text-sm'>
-            {!data?.role && (
+            {data?.role && (
               <div className='gap-1.25 flex items-center'>
                 <i
                   className='ki-filled ki-geolocation text-sm text-gray-500'
                   style={{ zIndex: -10 }}
                 ></i>
-                <span className='text-gray-600'>{"Software Developer"}</span>
+                <span className='text-gray-600'>{data?.role}</span>
               </div>
             )}
-            {!data?.location && (
+            {data?.location && (
               <div className='gap-1.25 flex items-center'>
                 <i
                   className='ki-filled ki-geolocation text-sm text-gray-500'
                   style={{ zIndex: -10 }}
                 ></i>
-                <span className='text-gray-600'>{"CACI India"}</span>
+                <span className='text-gray-600'>{data?.location}</span>
               </div>
             )}
             {data?.email && (
