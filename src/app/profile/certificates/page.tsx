@@ -16,7 +16,7 @@ const CertificatePage = () => {
 
   return (
     <div>
-      <div className=' text-start'>
+      <div className='container-fixed text-start'>
         <div className='grid grid-cols-1 justify-between gap-4 lg:grid-cols-1'>
           <CertificateTable
             certificates={certificates}
