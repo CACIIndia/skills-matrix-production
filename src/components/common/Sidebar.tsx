@@ -35,7 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isExpanded, toggleSidebar }) => {
 
   return (
     <div
-      className={`bg-light h-full border-r border-gray-200 transition-all duration-300 z-20`}
+      className={`bg-light h-full border-r border-gray-200 transition-all duration-300 `}
     >
       <div className='flex items-center justify-between p-4'>
         {isExpanded && (
@@ -70,12 +70,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isExpanded, toggleSidebar }) => {
         
         <button
           onClick={toggleSidebar}
-          className='btn btn-icon btn-icon-md bg-light toggle absolute left-full top-8 z-50 size-[30px] -translate-x-2/4 -translate-y-2/4 rounded-lg border border-gray-200 text-gray-500 hover:text-gray-700'
+          className='btn btn-icon btn-icon-md bg-light toggle absolute left-full top-8  size-[30px] -translate-x-2/4 -translate-y-2/4 rounded-lg border border-gray-200 text-gray-500 hover:text-gray-700'
         >
           <i
             className={`ki-filled ${isExpanded ? "ki-black-left-line" : "ki-black-right-line"} rotate-180`}
           ></i>
         </button>
+
+       
       </div>
 
       <nav className='mt-6'>

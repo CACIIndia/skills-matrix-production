@@ -57,6 +57,7 @@ export default function MasterLayout({
 
   return (
     <>
+    
       <div className="flex">
         {/* Desktop Sidebar */}
         <div
@@ -72,7 +73,7 @@ export default function MasterLayout({
 
         {/* Main Content Area */}
         <div
-          className={`wrapper flex grow flex-col`}
+          className={`wrapper flex grow flex-col z-1 `}
           style={{
             marginLeft:
               screenSize === "lg" || screenSize === "xl" || screenSize === "2xl"

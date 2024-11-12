@@ -13,9 +13,10 @@ import ProfileHeaderSkeleton from "@/components/skeletons/ProfileHeader";
 type ProfileHeaderProps = {
   data?: UserDetails;
   isLoading?: boolean;
+  editProfile?: boolean;
 };
 
-const ProfileHeader = ({ data, isLoading }: ProfileHeaderProps) => {
+const ProfileHeader = ({ data, isLoading,editProfile }: ProfileHeaderProps) => {
   const { profile, setProfile } = useAppContext();
 
   const [profileImage, setProfileImage] = useState("");
@@ -80,13 +81,15 @@ const ProfileHeader = ({ data, isLoading }: ProfileHeaderProps) => {
             />
 
             {/* Edit Icon */}
-            <button
-              type='button'
-              onClick={handleEditClick}
-              className='absolute bottom-0 right-0 rounded-full bg-gray-700 p-1 text-white hover:bg-gray-500'
-            >
-              <FaEdit size={20} />
-            </button>
+            {editProfile && (
+              <button
+                type='button'
+                onClick={handleEditClick}
+                className='absolute bottom-0 right-0 rounded-full bg-gray-700 p-1 text-white hover:bg-gray-500'
+              >
+                <FaEdit size={20} />
+              </button>
+            )}
           </div>
 
           {/* File Input for Uploading Image (hidden but triggered on button click) */}

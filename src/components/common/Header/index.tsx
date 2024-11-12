@@ -52,19 +52,6 @@ const Header = ({ onClick,mobileSideBarClick,isSidebarVisible }: HeaderProps) =>
           </div>
 
           <div className="flex gap-1 lg:hidden items-center -ml-1">
-            {/* Your Logo here */}
-            <svg
-              version="1.0"
-              id="CACI_Logo"
-              width="40"
-              height="40"
-              viewBox="0 0 140 60"
-              overflow="visible"
-              enableBackground="new 0 0 100 65"
-            >
-              {/* Logo Path */}
-            </svg>
-
             <div className="flex items-center">
               <button
                 className="btn btn-icon btn-light btn-clear btn-sm"

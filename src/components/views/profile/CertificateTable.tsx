@@ -160,7 +160,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
         <div className='card-body'>
           <div className='scrollable-x-auto max-h-[300px] overflow-y-auto'>
             <table className='table-border table min-w-full'>
-              <thead className='sticky top-0 z-10 bg-white'>
+              <thead className='sticky top-0 z-0 bg-white'>
                 <tr>
                   <th className='w-[60px]'>#</th>
                   <th className='w-[280px]'>Name</th>

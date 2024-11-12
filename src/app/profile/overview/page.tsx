@@ -19,7 +19,7 @@ const OverviewPage = () => {
   );
 
   return (
-    <div className="container-fixed ">
+    <div className=" ">
     <div className='lg:gap-7.5 grid grid-cols-1 lg:grid-cols-3'>
       <div className='col-span-1 grid gap-5'>
         {/*  @ TODO This should come from the endpoint  */}
