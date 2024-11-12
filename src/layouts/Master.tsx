@@ -16,7 +16,7 @@ export default function MasterLayout({
   const [isExpanded, setIsExpanded] = useState(true);
   const [isSearchModalOpen, setSearchModalOpen] = useState(false);
   const [isSidebarModalOpen, setSidebarModalOpen] = useState(false); // Add state for sidebar modal visibility
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(1024);
   const { data: users } = useGetUsers();
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
   const toggleMobileSidebar = () => {
@@ -24,13 +24,13 @@ export default function MasterLayout({
   };
 
   // Set dynamic sidebar width and main content margin
-  const sidebarWidth = isExpanded ? "17%" : "5%";
-  const contentMarginLeft = isExpanded ? "17%" : "5%";
+  const sidebarWidth = isExpanded ? "14%" : "5%";
+  const contentMarginLeft = isExpanded ? "14%" : "5%";
 
   const toggleSearchModal = () => setSearchModalOpen((prev) => !prev);
   const closeSearchModal = () => setSearchModalOpen(false);
   const toggleSidebar = () => setIsExpanded((prev) => !prev);
-  const toggleSidebarModal = () => setSidebarModalOpen((prev) => !prev); // Toggle sidebar modal visibility
+  
 
   useEffect(() => {
     setScreenWidth(window.innerWidth);
