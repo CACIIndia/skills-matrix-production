@@ -59,6 +59,7 @@ model SkillCategory {
   status      String?
   createdBy   User     @relation(fields: [createdById], references: [id])
   skills      Skill[]
+  certifications Certification[]
 }
 
 model UserSkill {
@@ -141,4 +142,7 @@ model Certification {
   createdById  String
   status       String
   createdBy    User     @relation(fields: [createdById], references: [id])
+  categoryId    String?
+  categoryName  String?
+  skillCategory SkillCategory? @relation(fields: [categoryId], references: [id])
 }

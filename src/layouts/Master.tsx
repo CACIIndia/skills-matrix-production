@@ -61,7 +61,7 @@ export default function MasterLayout({
       <div className="flex">
         {/* Desktop Sidebar */}
         <div
-          className="fixed z-2 hidden lg:block"
+          className="fixed z-10 hidden lg:block"
           style={{
             width: sidebarWidth,
             height: "100vh",

@@ -1,23 +1,18 @@
 import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import { CiSquarePlus } from "react-icons/ci";
-
-interface Certificate {
-  id: number;
-  name: string;
-  obtainedDate: string;
-  expiryDate: string;
-  url: string;
-  description: string;
-  createdById: string;
-}
+import AddCertificateModal from "./AddCertificate";
+import EditCertificateModal from "./EditCertificateModal";
+import { Certificate, SkillCategory } from "@/lib/types/profile";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface CertificateTableProps {
   certificates: Certificate[];
-  onEdit: (id: number, updatedCertificate: Omit<Certificate, "id">) => void;
-  onDelete: (id: number) => void;
+  onEdit: (id: string, updatedCertificate: Omit<Certificate, "id">) => void;
+  onDelete: (id: string) => void;
   onDownload: (url: string, createdById: string, name: string) => void;
   onAddCertificate: (newCertificate: Omit<Certificate, "id">) => void;
+  categoryskills: SkillCategory[];
 }
 
 const CertificateTable: React.FC<CertificateTableProps> = ({
@@ -26,122 +21,65 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
   onDelete,
   onDownload,
   onAddCertificate,
+  categoryskills,
 }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [newCertificate, setNewCertificate] = useState<Omit<Certificate, "id">>(
-    {
-      name: "",
-      obtainedDate: "",
-      expiryDate: "",
-      url: "",
-      description: "",
-      createdById: "",
-    },
-  );
 
-  const [editingCertificate, setEditingCertificate] = useState<
-    Omit<Certificate, "id">
-  >({
+  const [editingCertificate, setEditingCertificate] = useState<Omit<Certificate, "id">>({
     name: "",
-    obtainedDate: "",
-    expiryDate: "",
+    obtainedDate: null,  
+    expiryDate: null, 
     url: "",
     description: "",
     createdById: "",
+    certificateFile:  null,
+  categoryId:"",
+  categoryName:  ""
   });
 
   const [editingFile, setEditingFile] = useState<File | undefined>();
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   // Toggle modal visibility
-  const handleToggleAddModal = () => {
-    setIsAddModalOpen((prev) => !prev);
-  };
+  const toggleAddModal = () => setIsAddModalOpen(prev => !prev);
+  const toggleEditModal = () => setIsEditModalOpen(prev => !prev);
 
-  const handleToggleEditModal = () => {
-    setIsEditModalOpen((prev) => !prev);
-  };
-
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
-    if (isEditModalOpen) {
-      setEditingCertificate((prev) => ({ ...prev, [name]: value }));
-    } else {
-      setNewCertificate((prev) => ({ ...prev, [name]: value }));
-    }
-  };
-
+  
+  // Handle file changes for both adding and editing certificates
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file && isEditModalOpen) {
-      setEditingFile(file);
-    } else {
-      if (file) {
-        setNewCertificate((prev) => ({ ...prev, certificateFile: file }));
-      }
-    }
+    setEditingFile(file);
   };
 
-  // Handle certificate upload
-  const handleUploadCertificate = () => {
+  // Handle certificate addition
+  const handleAddCertificate = (newCertificate:Certificate) => {
+    
     onAddCertificate(newCertificate);
-    handleToggleAddModal();
-    setNewCertificate({
-      name: "",
-      obtainedDate: "",
-      expiryDate: "",
-      url: "",
-      description: "",
-      createdById: "",
-    });
+    toggleAddModal();
+    resetEditingCertificate();
   };
 
-  // Handle certificate edit
-  const handleEditCertificate = (id: number, cert: Certificate) => {
-    const obtainedDateObj = new Date(cert.obtainedDate);
-    const expiryDateObj = new Date(cert.expiryDate);
-    // Format the dates to 'YYYY-MM-DD'
-    const formattedObtainedDate = obtainedDateObj.toISOString().split("T")[0];
-    const formattedExpiryDate = expiryDateObj.toISOString().split("T")[0];
-
-    console.log(
-      cert.expiryDate,
-      formattedExpiryDate,
-      "formattedObtainedDate",
-      formattedObtainedDate,
-    );
-
+  const handleEditCertificate = (id: string, cert: Certificate) => {
     setEditingId(id);
-    setEditingCertificate({
-      ...cert,
-      expiryDate: formattedExpiryDate,
-      obtainedDate: formattedObtainedDate,
-    });
-    handleToggleEditModal();
+    setEditingCertificate(cert);
+    toggleEditModal();
+  };
+  
+
+  const handleUpdateCertificate = (values:Certificate) => {
+    if (editingId !== null) {
+      onEdit(editingId, {...values,certificateFile:editingFile || null});
+      toggleEditModal();
+      resetEditingCertificate();
+    }
+
+    
   };
 
-  const handleUpdateCertificate = () => {
-    if (editingId !== null) {
-      const editing_certificate = {
-        ...editingCertificate,
-        certificateFile: editingFile,
-      };
-      console.log(editingFile, "editingFile");
-      onEdit(editingId, editing_certificate);
-      handleToggleEditModal();
-      setEditingCertificate({
-        name: "",
-        obtainedDate: "",
-        expiryDate: "",
-        url: "",
-        description: "",
-        createdById: "",
-      });
-      setEditingId(null);
-    }
+  const resetEditingCertificate = () => {
+    setEditingFile(undefined);
+    setEditingId(null);
   };
 
   return (
@@ -149,10 +87,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
       <div className='card card-grid max-h-[400px] min-w-full'>
         <div className='card-header flex items-center justify-between'>
           <h3 className='card-title'>Certifications</h3>
-          <button
-            className='btn btn-sm btn-icon btn-clear btn-primary'
-            onClick={handleToggleAddModal}
-          >
+          <button className='btn btn-sm btn-icon btn-clear btn-primary' onClick={toggleAddModal}>
             <CiSquarePlus size={32} />
           </button>
         </div>
@@ -163,6 +98,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
               <thead className='sticky top-0 z-0 bg-white'>
                 <tr>
                   <th className='w-[60px]'>#</th>
+                  <th className='w-[150px]'>Category</th>
                   <th className='w-[280px]'>Name</th>
                   <th className='min-w-[135px]'>Obtained Date</th>
                   <th className='min-w-[135px]'>Valid Until</th>
@@ -172,7 +108,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
               <tbody>
                 {certificates?.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className='text-center'>
+                    <td colSpan={6} className='text-center'>
                       No Records
                     </td>
                   </tr>
@@ -180,35 +116,32 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
                   certificates?.map((cert, index) => (
                     <tr key={cert.id}>
                       <td>{index + 1}</td>
+                      <td>{cert.categoryName}</td>
                       <td>
-                        <span className='text-sm font-semibold text-gray-900'>
-                          {cert.name}
-                        </span>
+                        <span className='text-sm font-semibold text-gray-900'>{cert.name}</span>
                       </td>
-                      <td>
-                        {new Date(cert.obtainedDate).toLocaleDateString()}
-                      </td>
-                      <td>{new Date(cert.expiryDate).toLocaleDateString()}</td>
+                      <td>{cert.obtainedDate ? new Date(cert.obtainedDate).toLocaleDateString() : "N/A"}</td>
+
+                      <td>{cert.expiryDate ? new Date(cert.expiryDate).toLocaleDateString() : "N/A"}</td>
+
                       <td className='flex gap-3 text-xl'>
                         <button
                           className='text-primary'
-                          onClick={() => handleEditCertificate(cert.id, cert)}
+                          onClick={() => handleEditCertificate(cert.id || "", cert)}
                           title='Edit'
                         >
                           <i className='ki-filled ki-notepad-edit' />
                         </button>
                         <button
                           className='text-danger'
-                          onClick={() => onDelete(cert.id)}
+                          onClick={() => onDelete(cert.id || "")}
                           title='Delete'
                         >
                           <FaTrash />
                         </button>
                         <button
                           className='text-success'
-                          onClick={() =>
-                            onDownload(cert.url, cert.createdById, cert.name)
-                          }
+                          onClick={() => onDownload(cert.url || "", cert.createdById||"", cert.name)}
                           title='Download'
                         >
                           <i className='ki-filled ki-folder-down' />
@@ -225,171 +158,25 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
       {/* Add Certificate Modal */}
       {isAddModalOpen && (
-        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
-          <div className='w-[600px] rounded-md bg-white p-6 shadow-lg'>
-            <h3 className='mb-4 text-lg font-semibold'>Add New Certificate</h3>
-
-            {/* Certificate Name */}
-            <label className='mb-1 block text-sm font-medium text-gray-700'>
-              Certificate Name
-            </label>
-            <input
-              type='text'
-              name='name'
-              placeholder='Enter certificate name'
-              value={newCertificate.name}
-              onChange={handleInputChange}
-              className='mb-4 w-full border p-2'
-            />
-
-            {/* Certificate File */}
-            <label className='mb-1 block text-sm font-medium text-gray-700'>
-              Upload Certificate File
-            </label>
-            <input
-              type='file'
-              name='certificateFile'
-              accept='application/pdf'
-              onChange={handleFileChange}
-              className='mb-4 w-full border p-2'
-            />
-
-            {/* Obtained Date */}
-            <label className='mb-1 block text-sm font-medium text-gray-700'>
-              Obtained Date
-            </label>
-            <input
-              type='date'
-              name='obtainedDate'
-              value={newCertificate.obtainedDate}
-              onChange={handleInputChange}
-              className='mb-4 w-full border p-2'
-            />
-
-            {/* Valid Until */}
-            <label className='mb-1 block text-sm font-medium text-gray-700'>
-              Valid Until
-            </label>
-            <input
-              type='date'
-              name='expiryDate'
-              value={newCertificate.expiryDate}
-              onChange={handleInputChange}
-              className='mb-4 w-full border p-2'
-            />
-
-            <label className='mb-1 block text-sm font-medium text-gray-700'>
-              Description
-            </label>
-            <textarea
-              name='description'
-              placeholder='Enter certificate description'
-              value={newCertificate.description}
-              onChange={handleInputChange}
-              className='mb-4 w-full border p-2'
-              rows={4} // Set the number of rows for height
-            />
-
-            <div className='flex justify-end gap-4'>
-              <button
-                className='btn btn-secondary'
-                onClick={handleToggleAddModal}
-              >
-                Cancel
-              </button>
-              <button
-                className='btn btn-primary'
-                onClick={handleUploadCertificate}
-              >
-                Upload
-              </button>
-            </div>
-          </div>
-        </div>
+        <AddCertificateModal
+         isAddModalOpen={isAddModalOpen}
+         handleToggleAddModal={toggleAddModal}
+         handleUploadCertificate={handleAddCertificate}
+          categoryskills={categoryskills}
+        />
       )}
 
       {/* Edit Certificate Modal */}
       {isEditModalOpen && (
-        <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
-          <div className='w-[600px] rounded-md bg-white p-6 shadow-lg'>
-            <h3 className='mb-4 text-lg font-semibold'>Edit Certificate</h3>
-
-            {/* Certificate Name */}
-            <label className='mb-1 block text-sm font-medium text-gray-700'>
-              Certificate Name
-            </label>
-            <input
-              type='text'
-              name='name'
-              placeholder='Enter certificate name'
-              value={editingCertificate.name}
-              onChange={handleInputChange}
-              className='mb-4 w-full border p-2'
-            />
-
-            <label className='mb-1 block text-sm font-medium text-gray-700'>
-              Edit Certificate File
-            </label>
-            <input
-              type='file'
-              name='certificateFile'
-              accept='application/pdf'
-              onChange={handleFileChange}
-              className='mb-4 w-full border p-2'
-            />
-
-            {/* Obtained Date */}
-            <label className='mb-1 block text-sm font-medium text-gray-700'>
-              Obtained Date
-            </label>
-            <input
-              type='date'
-              name='obtainedDate'
-              value={editingCertificate.obtainedDate}
-              onChange={handleInputChange}
-              className='mb-4 w-full border p-2'
-            />
-
-            {/* Valid Until */}
-            <label className='mb-1 block text-sm font-medium text-gray-700'>
-              Valid Until
-            </label>
-            <input
-              type='date'
-              name='expiryDate'
-              value={editingCertificate.expiryDate}
-              onChange={handleInputChange}
-              className='mb-4 w-full border p-2'
-            />
-
-            {/* Description */}
-            <label className='mb-1 block text-sm font-medium text-gray-700'>
-              Description
-            </label>
-            <textarea
-              name='description'
-              placeholder='Enter certificate description'
-              value={editingCertificate.description}
-              onChange={handleInputChange}
-              className='mb-4 w-full border p-2'
-              rows={4} 
-            />
-            <div className='flex justify-end gap-4'>
-              <button
-                className='btn btn-secondary'
-                onClick={handleToggleEditModal}
-              >
-                Cancel
-              </button>
-              <button
-                className='btn btn-primary'
-                onClick={handleUpdateCertificate}
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
+        <EditCertificateModal
+        isEditModalOpen={isEditModalOpen}
+        handleToggleEditModal={toggleEditModal}
+          handleUpdateCertificate={handleUpdateCertificate}
+          categoryskills={categoryskills}
+          editingCertificate={editingCertificate}
+          handleFileChange={handleFileChange}
+       
+        />
       )}
     </div>
   );

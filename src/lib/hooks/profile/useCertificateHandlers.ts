@@ -17,6 +17,8 @@ export const useCertificateHandlers = (userId: string) => {
  
     const { certificateFile, ...rest } = certificate;
 
+    console.log(certificateFile,certificate,"magggiiiiii");
+
     const toastId = toast.loading("Uploading certificate...");
 
     try {
@@ -44,9 +46,7 @@ export const useCertificateHandlers = (userId: string) => {
     
       const { certificateFile, ...rest } = updatedData;
 
-      console.log(certificateFile,"certificateFilecertificateFilecertificateFile");
   
-   
       const base64Certificate = certificateFile
         ? await fileToBase64(certificateFile)
         : undefined;
@@ -76,6 +76,7 @@ export const useCertificateHandlers = (userId: string) => {
   
   const handleDelete = async (id: number) => {
     const toastId = toast.loading("Deleting certificate...");
+    alert(id)
 
     try {
       const result = await deleteCertificate(String(id));

@@ -5,11 +5,14 @@ import { useCertificateHandlers } from "@/lib/hooks/profile/useCertificateHandle
 import useGetCertificates from "@/lib/hooks/profile/useGetCertificates";
 import ResumeCard from "@/components/views/account/ResumeCard";
 import CertificateTable from "@/components/views/profile/CertificateTable";
+import useGetSkillCategory from "@/lib/hooks/profile/useGetSkillCategory";
 
 const CertificatePage = () => {
   const { profile } = useAppContext();
 
   const { data: certificates } = useGetCertificates(profile.id);
+  const {data: categoryskills} = useGetSkillCategory();
+  console.log(categoryskills,"categoryskills");
   const { handleDelete, handleEdit, handleUpload,handleDownload } = useCertificateHandlers(
     profile.id,
   );
@@ -20,6 +23,7 @@ const CertificatePage = () => {
         <div className='grid grid-cols-1 justify-between gap-4 lg:grid-cols-1'>
           <CertificateTable
             certificates={certificates}
+            categoryskills={categoryskills || []}
             onEdit={handleEdit}
             onDelete={handleDelete}
             onDownload={handleDownload}

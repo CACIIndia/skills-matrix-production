@@ -23,6 +23,8 @@ export async function GET(request: Request) {
         updatedAt: true,
         status: true,
         createdById:true,
+        categoryId:true,
+        categoryName:true
       },
       orderBy: {
         createdAt: 'asc', 

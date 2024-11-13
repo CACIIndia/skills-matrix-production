@@ -8947,3 +8947,9 @@ html.dark .\[html\.dark_\&\]\:block {
 html.dark .\[html\.dark_\&\]\:hidden {
   display: none;
 }
+
+/* custom css */
+
+ .react-datepicker-wrapper {
+  width: 100%;
+}
