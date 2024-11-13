@@ -40,7 +40,7 @@ export const useCertificateHandlers = (userId: string) => {
     }
   };
 
-  const handleEdit = async (id: number, updatedData: any) => {
+  const handleEdit = async (id: string, updatedData: any) => {
     const toastId = toast.loading("Updating certificate...");
     try {
     
@@ -74,7 +74,7 @@ export const useCertificateHandlers = (userId: string) => {
     }
   };
   
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (id: string) => {
     const toastId = toast.loading("Deleting certificate...");
     alert(id)
 

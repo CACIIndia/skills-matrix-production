@@ -89,8 +89,8 @@ export interface Certificate  {
 export interface SkillCategory {
   id: string;
   name: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt:Date| string;
+  updatedAt:Date| string;
   createdById: string;
-  status: string;
+  status: string | null
 };
