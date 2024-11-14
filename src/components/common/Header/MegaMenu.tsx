@@ -2,11 +2,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { MENU_ITEMS } from "@/lib/constants/header";
+import LineManager from "./LineManager";
+import { useAppContext } from "@/app/context/AppContext";
 
 type MegaMenuProps = {};
 
 const MegaMenu = ({}: MegaMenuProps) => {
   const pathname = usePathname();
+  const { isLineManager } = useAppContext();
+
 
   return (
     <div
@@ -33,9 +37,13 @@ const MegaMenu = ({}: MegaMenuProps) => {
                 {name}
               </span>
             </Link>
+
+         
           </div>
         );
       })}
+
+      {isLineManager && <LineManager/>}
     </div>
   );
 };

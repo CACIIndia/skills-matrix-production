@@ -2,6 +2,10 @@ import AzureADProvider from "next-auth/providers/azure-ad";
 import { AuthOptions, getServerSession } from "next-auth";
 import db from "./db";
 
+interface ProfileWithId {
+  tid: string;  
+ 
+}
 export const options: AuthOptions = {
 
   providers: [
@@ -26,14 +30,15 @@ export const options: AuthOptions = {
     signIn: "/auth/signin",
     error: "/auth/error",
   },
+  
   callbacks: {
     async jwt({ token, account, profile }) {
+     
       if (account && profile) {
         const email = profile.email;
         const name = profile.name || "";
-
-        
-
+        const userProfile = profile as ProfileWithId;
+        const userId = userProfile.tid;
         if (!email) {
           throw new Error("Azure AD did not return an email address.");
         }
@@ -48,6 +53,7 @@ export const options: AuthOptions = {
           if (!user) {
             user = await db.user.create({
               data: {
+                id:userId,
                 email,
                 name,
                 emailVerified: new Date(),

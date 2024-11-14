@@ -8,17 +8,24 @@ const updateUserMicrosoftProfile = async (
   user: UserDetails,
 ): Promise<UserDetails> => {
   try {
+    console.log("Starting user profile update for:", user.id);
     let updatedUser = await updateProfilePhoto(accessToken, user);
     
+    console.log("User profile photo update complete. Proceeding with profile details update...");
     updatedUser.id = user.id;
     updatedUser = await updateProfile(accessToken, user);
+    
+    console.log("Profile details update complete. Proceeding with manager information update...");
     updatedUser = await updateManager(accessToken, updatedUser);
+    
+    console.log("User profile update process completed for:", updatedUser);
     return updatedUser;
   } catch (error) {
-    throw new Error(
-      "Unexpected error during updating profile: " +
-        (error instanceof Error ? error.message : "Unknown error"),
+    console.error(
+      "Unexpected error during updating profile: ",
+      error instanceof Error ? error.message : "Unknown error"
     );
+    throw error;
   }
 };
 
@@ -27,20 +34,20 @@ async function updateProfilePhoto(
   user: UserDetails,
 ): Promise<UserDetails> {
   try {
-    console.log("Updating profile photo for user:", user);
+    console.log("Attempting to update profile photo for user:", user.id);
     const imageBuffer = await fetchUserProfilePicture(accessToken);
-    console.log(imageBuffer,"imageBufferimageBuffer");
-    
 
     if (imageBuffer) {
+      console.log("Profile photo fetched successfully. Uploading photo...");
       const profileImage = await uploadUserImageBuffer(imageBuffer, user.id);
       user.image = profileImage;
+      console.log("Profile photo uploaded successfully.");
     } else {
-      console.log("No profile picture found for the user.");
+      console.log("No profile picture found for the user:", user.id);
     }
     return user;
   } catch (error) {
-    console.error("Error processing profile image:", error);
+    console.error("Error processing profile image for user:", user.id, error);
     throw error;
   }
 }
@@ -50,8 +57,11 @@ async function updateProfile(
   user: UserDetails,
 ): Promise<UserDetails> {
   try {
+    console.log("Fetching user profile data from Microsoft Graph API...");
     const userProfile = await fetchUserProfile(accessToken);
+
     if (userProfile) {
+      console.log("Updating user profile details in the database...");
       await db.user.update({
         where: { id: user.id },
         data: {
@@ -60,16 +70,17 @@ async function updateProfile(
           phone: userProfile.mobilePhone,
         },
       });
+      console.log("Database update successful for user:", user.id);
 
       user.location = userProfile.officeLocation;
       user.role = userProfile.jobTitle;
       user.phone = userProfile.mobilePhone;
     } else {
-      console.log("User profile data not found.");
+      console.log("User profile data not found for user:", user.id);
     }
     return user;
   } catch (error) {
-    console.error("Error updating profile:", error);
+    console.error("Error updating profile for user:", user.id, error);
     throw error;
   }
 }
@@ -79,8 +90,11 @@ async function updateManager(
   user: UserDetails,
 ): Promise<UserDetails> {
   try {
+    console.log("Fetching manager information for user:", user.id);
     const manager = await fetchUserManager(accessToken);
+
     if (manager) {
+      console.log("Updating manager information in the database...");
       await db.user.update({
         where: { id: user.id },
         data: {
@@ -88,15 +102,16 @@ async function updateManager(
           reportedToId: manager.id,
         },
       });
+      console.log("Manager information updated successfully for user:", user.id);
 
       user.reportedTo = manager.displayName;
       user.reportedToId = manager.id;
     } else {
-      console.log("No manager data found for the user.");
+      console.log("No manager data found for the user:", user.id);
     }
     return user;
   } catch (error) {
-    console.error("Error updating manager information:", error);
+    console.error("Error updating manager information for user:", user.id, error);
     throw error;
   }
 }
@@ -107,6 +122,7 @@ async function makeGraphRequest(
   method: string = "GET",
   body?: any,
 ): Promise<Response> {
+  console.log(`Making ${method} request to ${endpoint} on Microsoft Graph API...`);
   const response = await fetch(`${GRAPH_API_BASE_URL}${endpoint}`, {
     method,
     headers: {
@@ -115,16 +131,19 @@ async function makeGraphRequest(
     },
     body: body ? JSON.stringify(body) : undefined,
   });
- 
+
+  console.log(`Response from Microsoft Graph API: ${response.status} ${response.statusText}`);
   return response;
 }
 
 export async function fetchUserProfile(accessToken: string): Promise<any> {
+  console.log("Fetching user profile...");
   const response = await makeGraphRequest(accessToken, "/me");
   return response.json();
 }
 
 export async function fetchUserManager(accessToken: string): Promise<any> {
+  console.log("Fetching user manager data...");
   const response = await makeGraphRequest(accessToken, "/me/manager");
   return response.json();
 }
@@ -132,31 +151,32 @@ export async function fetchUserManager(accessToken: string): Promise<any> {
 export async function fetchUserProfilePicture(
   accessToken: string,
 ): Promise<Buffer | null> {
+  console.log("Fetching user profile photo...");
   const response = await makeGraphRequest(accessToken, "/me/photo/$value");
-  console.log(response,"response");
 
   if (response.status === 404) {
-    return null; // No photo found
+    console.log("No profile photo found for user.");
+    return null;
   }
 
   if (!response.ok) {
     throw new Error(
-      `Error fetching profile photo: ${response.status} - ${response.statusText}`,
+      `Error fetching profile photo: ${response.status} - ${response.statusText}`
     );
   }
 
   try {
     const arrayBuffer = await response.arrayBuffer();
+    console.log("Profile photo fetched successfully as an array buffer.");
     return Buffer.from(arrayBuffer);
   } catch (error) {
-    throw new Error(
-      "Unexpected error during fetching profile photo: " +
-        (error instanceof Error ? error.message : "Unknown error"),
+    console.error(
+      "Unexpected error during fetching profile photo:",
+      error instanceof Error ? error.message : "Unknown error"
     );
+    throw error;
   }
 }
-
-
 
 // Exporting main function
 export { updateUserMicrosoftProfile };

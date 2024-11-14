@@ -10,7 +10,12 @@ import React, {
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import useGetProfile from "@/lib/hooks/profile/useGetProfile";
+import {  useIsLineManager } from "@/lib/hooks/common/useLineManager";
+import { getLineManager } from "../actions/user/getLineManager";
 
+
+
+// Define the state for the context
 type State = {
   profile: any;
   setProfile: Dispatch<SetStateAction<any>>;
@@ -18,8 +23,11 @@ type State = {
   setViewedProfile: Dispatch<SetStateAction<any>>;
   isLoading: boolean;
   user?: Session["user"];
+  isLineManager: boolean | null; // Line manager status
+  setIsLineManager: Dispatch<SetStateAction<boolean | null>>; // Set function for line manager status
 };
 
+// Create the context
 const AppContext = createContext<State | undefined>(undefined);
 
 type AppProviderProps = {
@@ -28,18 +36,32 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   const { data: session } = useSession();
-  const { data: profileData, isLoading } = useGetProfile(
-    session?.user?.id ?? "",
-  );
+  const { data: profileData, isLoading } = useGetProfile(session?.user?.id ?? "");
+  const { data:line_manager } = useIsLineManager(session?.user?.id ?? "");
 
-  const [profile, setProfile] = useState();
-  const [viewedProfile, setViewedProfile] = useState();
+
+
+  // console.log(line_manager,"line_manager");
+  
+  // State variables
+  const [profile, setProfile] = useState<any>();
+  const [viewedProfile, setViewedProfile] = useState<any>();
+  const [isLineManager, setIsLineManager] = useState<boolean | null>(null);
 
   const user = session?.user;
 
+
+  
+  
   useEffect(() => {
-    profileData && setProfile(profileData);
-  }, [profileData]);
+    if (profileData) {
+      setProfile(profileData);
+      setIsLineManager(line_manager || false);
+    }
+  }, [profileData,line_manager]);
+
+
+
 
   return (
     <AppContext.Provider
@@ -50,13 +72,17 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         setViewedProfile,
         user,
         isLoading,
+        isLineManager, 
+        setIsLineManager, 
       }}
     >
       {children}
+      
     </AppContext.Provider>
   );
 };
 
+// Custom hook to access the context
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (context === undefined) {
