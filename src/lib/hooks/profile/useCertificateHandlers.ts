@@ -76,7 +76,7 @@ export const useCertificateHandlers = (userId: string) => {
   
   const handleDelete = async (id: string) => {
     const toastId = toast.loading("Deleting certificate...");
-    alert(id)
+   
 
     try {
       const result = await deleteCertificate(String(id));
