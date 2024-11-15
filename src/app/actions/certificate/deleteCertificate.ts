@@ -31,7 +31,7 @@ export async function deleteCertificate(
       throw new Error("Certificate not found");
     }
 
-    // Delete the file from Azure Blob Storage if URL exists
+   // Delete the file from Azure Blob Storage if URL exists
     if (certificate.url) {
       const { containerName, connectionString } = getAzureConfig();
       const blobServiceClient =
@@ -48,8 +48,9 @@ export async function deleteCertificate(
     }
 
     // Delete the certificate from the database
-    await db.certification.delete({
+    await db.certification.update({
       where: { id },
+      data: { status: "Inactive" },
     });
 
     return {

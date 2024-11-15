@@ -17,6 +17,7 @@ type ProfileLayoutProps = {
 const ProfileLayout = ({ children }: ProfileLayoutProps) => {
   const params = useParams();
   const userId = params.id ? String(params.id) : "";
+  const editProfile = userId?false:true;
 
   const { profile, viewedProfile, setViewedProfile, isLoading } =
     useAppContext();
@@ -35,11 +36,11 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
 
   return (
     <div className='w-full'>
-      <ProfileHeader data={data} isLoading={isLoading} />
+      <ProfileHeader data={data} isLoading={isLoading} editProfile={editProfile}/>
 
       <ProfileMenu />
 
-      <div className='container mx-auto p-8'>
+      <div className='container-fixed mx-auto p-8'>
         {isLoading || !data ? <ProfileSkeleton /> : children}
       </div>
     </div>

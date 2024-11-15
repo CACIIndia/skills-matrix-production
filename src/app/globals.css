@@ -2310,7 +2310,7 @@ video {
     margin-right: auto;
     padding-left: 2.5rem;
     padding-right: 2.5rem;
-    /* max-width: 1280px; */
+    max-width: 1280px;
   }
 }
 
@@ -8946,4 +8946,10 @@ html.dark .\[html\.dark_\&\]\:block {
 
 html.dark .\[html\.dark_\&\]\:hidden {
   display: none;
+}
+
+/* custom css */
+
+ .react-datepicker-wrapper {
+  width: 100%;
 }

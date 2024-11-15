@@ -57,7 +57,7 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
   }, [data]);
 
   return (
-    <div className='card'>
+    <div className='card border border-red-100' >
       <div className='card-header'>
         <h3 className='card-title'>General Info</h3>
         {!disableEdit && (

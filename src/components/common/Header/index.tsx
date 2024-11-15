@@ -1,66 +1,84 @@
+import { useEffect, useState } from "react";
 import Button from "@/components/common/Button";
 import HeaderMenu from "@/components/common/Header/Menu";
 import HeaderSearch from "@/components/common/Header/Search";
 import MegaMenu from "@/components/common/Header/MegaMenu";
-import { useEffect, useRef, useState } from "react";
 
 type HeaderProps = {
   onClick: () => void;
+  mobileSideBarClick:()=>void;
+  isSidebarVisible:boolean;
 };
 
-const Header = ({ onClick }: HeaderProps) => {
+const Header = ({ onClick,mobileSideBarClick,isSidebarVisible }: HeaderProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
+
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     handleScroll();
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
+  
   return (
     <header
-     style={{paddingLeft:"3%",paddingRight:"3%"}}
-      className={`flex h-fit w-full items-center justify-between  bg-[#fefefe] transition-all duration-300 ${
-        isScrolled ? 'shadow-sm border-b border-b-coal-100' : ''
+    
+      className={` h-full flex items-center justify-between bg-[#fefefe] transition-all duration-300 ${
+        isScrolled ? "shadow-sm border-b border-b-coal-100" : ""
       }`}
     >
-      <div className='h-full w-full' id='header_container'> 
+      
         <div
-          className='hidden h-full items-stretch p-5 justify-between lg:flex  '
-          id='megamenu_container'
+          className="container-fixed flex justify-between items-stretch lg:gap-4"
+          id="megamenu_container"
+         
         >
-          <div className='flex items-stretch pl-10'>
-            <div className='flex items-stretch' id='megamenu_container'>
-              <div className='flex items-stretch'>
-                <div className='hidden lg:flex lg:items-stretch'>
+          <div className="hidden lg:flex items-stretch ">
+            <div className="flex items-stretch" id="megamenu_container">
+              <div className="flex items-stretch">
+                <div className="hidden lg:flex lg:items-stretch">
                   <MegaMenu />
                 </div>
               </div>
             </div>
           </div>
 
-          <div className='flex items-start gap-2 lg:gap-3.5'>
+          <div className="flex gap-1 lg:hidden items-center -ml-1">
+            <div className="flex items-center">
+              <button
+                className="btn btn-icon btn-light btn-clear btn-sm"
+                onClick={mobileSideBarClick}
+              >
+                <i className="ki-filled ki-menu"></i>
+              </button>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-2 lg:gap-3.5">
             <HeaderSearch onClick={onClick} />
 
-            <button className='btn btn-icon btn-icon-lg size-9 rounded-full text-gray-500 hover:bg-primary-light hover:text-primary'>
-              <i className='ki-filled ki-element-11'></i>
+            <button className="btn btn-icon btn-icon-lg size-9 rounded-full text-gray-500 hover:bg-primary-light hover:text-primary">
+              <i className="ki-filled ki-element-11"></i>
             </button>
 
-            <button className='btn btn-icon btn-icon-lg size-9 rounded-full text-gray-500 hover:bg-primary-light hover:text-primary'>
-              <i className='ki-filled ki-notification-on'></i>
+            <button className="btn btn-icon btn-icon-lg size-9 rounded-full text-gray-500 hover:bg-primary-light hover:text-primary">
+              <i className="ki-filled ki-notification-on"></i>
             </button>
 
             <HeaderMenu />
           </div>
         </div>
-      </div>
+     
+
+      
     </header>
   );
 };

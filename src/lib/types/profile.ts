@@ -71,3 +71,26 @@ export interface GeneralInfo {
   reported_to: string;
   reported_to_id :string;
 }
+
+
+export interface Certificate  {
+  id?:string;
+  name: string;
+  certificateFile: File | null;
+  obtainedDate: Date |null;
+  expiryDate: Date | null;
+  description: string;
+  categoryId: string;
+  categoryName:string;
+  url?:string;
+  createdById?:string
+};
+
+export interface SkillCategory {
+  id: string;
+  name: string;
+  createdAt:Date| string;
+  updatedAt:Date| string;
+  createdById: string;
+  status: string | null
+};

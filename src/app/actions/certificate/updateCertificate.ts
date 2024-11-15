@@ -13,6 +13,8 @@ type CertificateUpdateData = {
   expiryDate: string;
   description: string;
   createdBy: string;
+  categoryId:string;
+  categoryName:string
 };
 
 type UpdateCertificateResponse = {
@@ -77,6 +79,8 @@ export async function updateCertificate(
         expiryDate: new Date(data.expiryDate),
         description: data.description,
         updatedAt: new Date(),
+        categoryId:data.categoryId,
+        categoryName:data.categoryName,
         status: "Active",
       },
     });
