@@ -4,30 +4,26 @@ import DatePicker from "react-datepicker";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-
-
-
-
 type AddCertificateModalProps = {
   isAddModalOpen: boolean;
   handleToggleAddModal: () => void;
   handleUploadCertificate: (certificate: Certificate) => void;
-  categoryskills:SkillCategory[];
+  categoryskills: SkillCategory[];
 };
 
 const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
   isAddModalOpen,
   handleToggleAddModal,
   handleUploadCertificate,
-  categoryskills
+  categoryskills,
 }) => {
   // Formik form handling
   const formik = useFormik({
     initialValues: {
       name: "",
       certificateFile: null as File | null,
-      obtainedDate: new Date(),
-      expiryDate: new Date(),
+      obtainedDate: null,
+      expiryDate: null,
       description: "",
       categoryId: "",
       categoryName: "", // Add categoryName to the form state
@@ -36,6 +32,8 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
       name: Yup.string().required("Certificate Name is required"),
       certificateFile: Yup.mixed().required("Certificate file is required"),
       categoryId: Yup.string().required("Category is required"),
+      obtainedDate:Yup.date().typeError("Please enter a valid date").required("ObtainedDate is required"),
+      expiryDate:Yup.date().typeError("Please enter a valid date").required("expiryDate is required"),
     }),
     onSubmit: (values) => {
       handleUploadCertificate(values);
@@ -51,9 +49,9 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCategoryId = e.target.value;
-    
+
     const selectedCategory = categoryskills.find(
-      (category) => category.id === selectedCategoryId
+      (category) => category.id === selectedCategoryId,
     );
 
     if (selectedCategory) {
@@ -68,83 +66,7 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
         <div className='w-full rounded-md bg-white p-6 shadow-lg sm:w-[600px]'>
           <h3 className='mb-4 text-lg font-semibold'>Add New Certificate</h3>
 
-          <form
-            onSubmit={formik.handleSubmit}
-            className='space-y-4'
-          >
-            {/* Certificate Name */}
-            <div className='flex flex-col sm:flex-row sm:gap-4'>
-              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
-                Certificate Name
-              </label>
-              <div className='flex-1'>
-                <input
-                  type='text'
-                  name='name'
-                  placeholder='Enter certificate name'
-                  value={formik.values.name}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  className='w-full border p-2'
-                />
-                {formik.touched.name && formik.errors.name && (
-                  <p className='text-red-500 text-sm'>{formik.errors.name}</p>
-                )}
-              </div>
-            </div>
-
-            {/* Certificate File */}
-            <div className='flex flex-col sm:flex-row sm:gap-4'>
-              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
-                Upload Certificate File
-              </label>
-              <div className='flex-1'>
-                <input
-                  type='file'
-                  accept='application/pdf'
-                  onChange={handleFileChange}
-                  className='w-full border p-2'
-                />
-                {formik.touched.certificateFile && formik.errors.certificateFile && (
-                  <p className='text-red-500 text-sm'>{formik.errors.certificateFile}</p>
-                )}
-              </div>
-            </div>
-
-            {/* Obtained Date */}
-            <div className='flex flex-col sm:flex-row sm:gap-4'>
-              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
-                Obtained Date
-              </label>
-              <div className='flex-1'>
-                <DatePicker
-                  selected={formik.values.obtainedDate}
-                  onChange={(date) => formik.setFieldValue("obtainedDate", date)}
-                  className='w-full border p-2'
-                  dateFormat='yyyy-MM-dd'
-                  showYearDropdown
-                  showMonthDropdown
-                />
-              </div>
-            </div>
-
-            {/* Valid Until */}
-            <div className='flex flex-col sm:flex-row sm:gap-4'>
-              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
-                Valid Until
-              </label>
-              <div className='flex-1'>
-                <DatePicker
-                  selected={formik.values.expiryDate}
-                  onChange={(date) => formik.setFieldValue("expiryDate", date)}
-                  className='w-full border p-2'
-                  dateFormat='yyyy-MM-dd'
-                  showYearDropdown
-                  showMonthDropdown
-                />
-              </div>
-            </div>
-
+          <form onSubmit={formik.handleSubmit} className='space-y-4'>
             {/* Category Dropdown */}
             <div className='flex flex-col sm:flex-row sm:gap-4'>
               <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
@@ -168,7 +90,93 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                   ))}
                 </select>
                 {formik.touched.categoryId && formik.errors.categoryId && (
-                  <p className='text-red-500 text-sm'>{formik.errors.categoryId}</p>
+                  <p className='text-sm text-red-500'>
+                    {formik.errors.categoryId}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Certificate Name */}
+            <div className='flex flex-col sm:flex-row sm:gap-4'>
+              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
+                Certificate Name
+              </label>
+              <div className='flex-1'>
+                <input
+                  type='text'
+                  name='name'
+                  placeholder='Enter certificate name'
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className='w-full border p-2'
+                />
+                {formik.touched.name && formik.errors.name && (
+                  <p className='text-sm text-red-500'>{formik.errors.name}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Certificate File */}
+            <div className='flex flex-col sm:flex-row sm:gap-4'>
+              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
+                Upload Certificate File
+              </label>
+              <div className='flex-1'>
+                <input
+                  type='file'
+                  accept='application/pdf'
+                  onChange={handleFileChange}
+                  className='w-full border p-2'
+                />
+                {formik.touched.certificateFile &&
+                  formik.errors.certificateFile && (
+                    <p className='text-sm text-red-500'>
+                      {formik.errors.certificateFile}
+                    </p>
+                  )}
+              </div>
+            </div>
+
+            {/* Obtained Date */}
+            <div className='flex flex-col sm:flex-row sm:gap-4'>
+              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
+                Obtained Date
+              </label>
+              <div className='flex-1'>
+                <DatePicker
+                  selected={formik.values.obtainedDate}
+                  onChange={(date) =>
+                    formik.setFieldValue("obtainedDate", date)
+                  }
+                  className='w-full border p-2'
+                  dateFormat='yyyy-MM-dd'
+                  showYearDropdown
+                  showMonthDropdown
+                />
+                 {formik.touched.obtainedDate && formik.errors.obtainedDate && (
+                  <p className='text-sm text-red-500'>{formik.errors.obtainedDate}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Valid Until */}
+            <div className='flex flex-col sm:flex-row sm:gap-4'>
+              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
+                Valid Until
+              </label>
+              <div className='flex-1'>
+                <DatePicker
+                  selected={formik.values.expiryDate}
+                  onChange={(date) => formik.setFieldValue("expiryDate", date)}
+                  className='w-full border p-2'
+                  dateFormat='yyyy-MM-dd'
+                  showYearDropdown
+                  showMonthDropdown
+                />
+                 {formik.touched.expiryDate && formik.errors.expiryDate && (
+                  <p className='text-sm text-red-500'>{formik.errors.expiryDate}</p>
                 )}
               </div>
             </div>
