@@ -20,13 +20,13 @@ const LineManager: React.FC = () => {
 
       {/* Dropdown Menu */}
       <div
-        className={`absolute top-full left-0 mt-1 w-48 py-2.5 border border-gray-300 bg-white shadow-md rounded-md transition-all duration-200 ${
+        className={`absolute top-full left-0 mt-1 top-5 w-48 py-2.5 border border-gray-300 bg-white shadow-md rounded-md transition-all duration-200 ${
           isDropdownOpen ? "block" : "hidden"
         }`}
       >
         <div className="menu-item">
           <Link
-            href="https://keenthemes.com/metronic/tailwind/docs/getting-started/installation"
+            href="/training"
             className="menu-link px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
           >
             <span className="menu-icon mr-2">
