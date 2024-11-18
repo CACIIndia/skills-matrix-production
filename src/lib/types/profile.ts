@@ -94,3 +94,20 @@ export interface SkillCategory {
   createdById: string;
   status: string | null
 };
+
+export interface Training {
+  id: string;
+  categoryId: string;
+  categoryName: string;
+  skillId: string;
+  skillName: string;
+  fromDate: Date;
+  tentativeEndDate: Date;
+  description: string;
+  createdAt: Date;
+  updatedAt: Date;
+  createdById: string;
+  statusId: string;
+  employeeId: string;
+  employeeName: string;
+}

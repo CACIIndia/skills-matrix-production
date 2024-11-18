@@ -3,8 +3,9 @@ import CreateTraining from "@/components/views/Training/TrainingModal";
 import { useState, useEffect } from "react";
 import { CiSquarePlus } from "react-icons/ci";
 import skillsCategoryData from "@/app/maggi";
-
-
+import useGetTrainingDataByUserId from "@/lib/hooks/Training/useGetTraining";
+import { useAppContext } from "../context/AppContext";
+import { Training } from "@/lib/types/profile";
 
 const apiResponse = skillsCategoryData;
 
@@ -43,20 +44,26 @@ type Employee = {
   name: string;
 };
 
-
 const TrainingTable = () => {
+  const { profile } = useAppContext();
+  const { data: training_data } = useGetTrainingDataByUserId(profile?.id || "");
+  const [trainingData, setTrainingData] = useState<Training[]>([]);
+
+  useEffect(() => {
+    setTrainingData(training_data || []);
+  }, [training_data]);
 
   const [categories, setCategories] = useState<ApiResponse>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
 
-  const [employees, setEmployees] = useState<Employee[]>([]); 
-  const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]); 
+  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>([]);
 
   const [selectedCategory, setselectedCategory] = useState("");
   const [skill, setSkill] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-  const [employeeSearch, setEmployeeSearch] = useState(""); 
+  const [employeeSearch, setEmployeeSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -193,7 +200,7 @@ const TrainingTable = () => {
           <table className='min-w-full bg-white'>
             <thead>
               <tr>
-               <th className='border-b p-4 text-left'>#</th>
+                <th className='border-b p-4 text-left'>#</th>
                 <th className='border-b p-4 text-left'>Employee Name</th>
                 <th className='border-b p-4 text-left'>Category</th>
                 <th className='border-b p-4 text-left'>Skill</th>
@@ -201,26 +208,39 @@ const TrainingTable = () => {
                 <th className='border-b p-4 text-left'>Tentative End Date</th>
               </tr>
             </thead>
-            {/* <tbody>
-              {filteredSkills.length > 0 ? (
-                filteredSkills.map((skill,index) => (
-                  <tr key={skill.id}>
-                    <td className='border-b p-4'>{index+1}</td>
-                    <td className='border-b p-4'>{skill.categoryName}</td>
-                    <td className='border-b p-4'>{skill.C}</td>
-                    <td className='border-b p-4'>{skill.name}</td>
-                    <td className='border-b p-4'>{fromDate || "N/A"}</td>
-                    <td className='border-b p-4'>{toDate || "N/A"}</td>
+            <tbody>
+              {trainingData.length > 0 ? (
+                trainingData.map((training: Training, index: number) => (
+                  <tr key={training.id}>
+                    <td className='border-b p-4'>{index + 1}</td>
+                    <td className='border-b p-4'>{training.employeeName}</td>
+                    <td className='border-b p-4'>{training.categoryName}</td>
+                    <td className='border-b p-4'>{training.skillName}</td>
+                    <td className='border-b p-4'>
+                      {training.fromDate
+                        ? new Date(training.fromDate).toLocaleDateString()
+                        : "N/A"}
+                    </td>
+                    <td className='border-b p-4'>
+                      {training.tentativeEndDate
+                        ? new Date(
+                            training.tentativeEndDate,
+                          ).toLocaleDateString()
+                        : "N/A"}
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td className='border-b p-4 text-center h-[300px]' colSpan={4}>
+                  <td
+                    className='min-h-[300px] border-b p-4 text-center'
+                    colSpan={6}
+                  >
                     No records found
                   </td>
                 </tr>
               )}
-            </tbody> */}
+            </tbody>
           </table>
         </div>
       </div>
