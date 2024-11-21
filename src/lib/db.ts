@@ -1,7 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import { currentUser } from "./extensions/current-user";
 
-const client = new PrismaClient().$extends(currentUser());
+// const client = new PrismaClient({log: ['query']}).$extends(currentUser());
+const client = new PrismaClient({
+    log: ['query'],
+}).$extends(currentUser());
 
 const globalForPrisma = global as unknown as {
 	prisma: typeof client;

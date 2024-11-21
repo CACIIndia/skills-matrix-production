@@ -8,6 +8,8 @@ export async function GET() {
     },
   });
 
+
+
   if (!skills) {
     return NextResponse.json({ message: "Skills not found" }, { status: 404 });
   }

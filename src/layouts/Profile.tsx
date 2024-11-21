@@ -19,14 +19,12 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
   const userId = params.id ? String(params.id) : "";
   const editProfile = userId?false:true;
 
-  const { profile, viewedProfile, setViewedProfile, isLoading } =
-    useAppContext();
+  const { profile, viewedProfile, setViewedProfile, isLoading } =useAppContext();
 
   const data = userId ? viewedProfile : profile;
 
   const handleSetViewedProfile = async () => {
-    setViewedProfile(null); // Reset and fetch new profile
-
+    setViewedProfile(null);
     setViewedProfile(await getProfile(userId));
   };
 

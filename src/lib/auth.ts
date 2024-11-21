@@ -25,6 +25,7 @@ export const options: AuthOptions = {
     strategy: "jwt",
     maxAge: 1000 *100,
   },
+ 
   pages: {
 
     signIn: "/auth/signin",
@@ -48,7 +49,7 @@ export const options: AuthOptions = {
           let user = await db.user.findUnique({
             where: { email },
           });
-
+              
         
           if (!user) {
             user = await db.user.create({

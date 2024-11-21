@@ -1,4 +1,5 @@
 // types/next-auth.d.ts
+import { SkillCategory } from "@/lib/types/profile";
 import NextAuth from "next-auth";
 
 declare module "next-auth" {
@@ -13,9 +14,11 @@ declare module "next-auth" {
   }
 
   interface User {
-    id?: string | null;      // Also extend `User` type with `id` field if needed
+    id?: string | null;      
     email?: string | null;
     name?: string | null;
     image?: string | null;
   }
+
+ 
 }

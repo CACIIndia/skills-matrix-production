@@ -25,7 +25,7 @@ export async function GET(request: Request, { params }: { params: { userId: stri
       },
     });
     return NextResponse.json(
-      { message: "Training data retrieved successfully", data: trainingData },
+      { message: "Training data retrieved successfully", data: trainingData,success:true },
       { status: 200 }
     );
   } catch (error) {

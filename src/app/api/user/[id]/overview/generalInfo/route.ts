@@ -25,7 +25,7 @@ export async function PUT(
     });
 
     return NextResponse.json(
-      { message: "General info updated successfully", data: updatedGeneralInfo },
+      { message: "General info updated successfully", data: updatedGeneralInfo ,success:true},
       { status: 200 },
     );
   } catch (error) {

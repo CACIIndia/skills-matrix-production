@@ -1,9 +1,9 @@
-export type Skill = {
-  id: string;
-  name: string;
-  category: string;
-  level?: number;
-};
+// export type Skill = {
+//   id: string;
+//   name: string;
+//   category: string;
+//   level?: number;
+// };
 
 export type UserSkill = {
   id: string;
@@ -101,13 +101,21 @@ export interface Training {
   categoryName: string;
   skillId: string;
   skillName: string;
-  fromDate: Date;
-  tentativeEndDate: Date;
+  fromDate: Date | null;
+  tentativeEndDate: Date |null;
   description: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date |null;
+  updatedAt: Date |null;
   createdById: string;
   statusId: string;
   employeeId: string;
   employeeName: string;
 }
+export interface Skill  {
+  id: string;
+  name: string;
+  categoryId: string | null; 
+  createdAt: Date | string;
+  updatedAt: Date |string;
+  skillCategory?: SkillCategory;
+};

@@ -9,9 +9,7 @@ type MegaMenuProps = {};
 
 const MegaMenu = ({}: MegaMenuProps) => {
   const pathname = usePathname();
-  const { isLineManager } = useAppContext();
-
-
+  const { profile } = useAppContext();
   return (
     <div
       className='menu lg:gap-7.5 flex-col gap-5 lg:flex-row'
@@ -43,7 +41,7 @@ const MegaMenu = ({}: MegaMenuProps) => {
         );
       })}
 
-      {isLineManager && <LineManager/>}
+      {profile?.isLineManager && <LineManager/>}
     </div>
   );
 };

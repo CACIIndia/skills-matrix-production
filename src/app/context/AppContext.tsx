@@ -23,8 +23,7 @@ type State = {
   setViewedProfile: Dispatch<SetStateAction<any>>;
   isLoading: boolean;
   user?: Session["user"];
-  isLineManager: boolean | null; // Line manager status
-  setIsLineManager: Dispatch<SetStateAction<boolean | null>>; // Set function for line manager status
+
 };
 
 // Create the context
@@ -37,17 +36,12 @@ type AppProviderProps = {
 export const AppProvider = ({ children }: AppProviderProps) => {
   const { data: session } = useSession();
   const { data: profileData, isLoading } = useGetProfile(session?.user?.id ?? "");
-  const { data:line_manager } = useIsLineManager(session?.user?.id ?? "");
+  console.log(isLoading,"firstloading");
+ 
 
-
-
-  // console.log(line_manager,"line_manager");
-  
-  // State variables
   const [profile, setProfile] = useState<any>();
+  console.log(profile,"profileprofileprofile");
   const [viewedProfile, setViewedProfile] = useState<any>();
-  const [isLineManager, setIsLineManager] = useState<boolean | null>(null);
-
   const user = session?.user;
 
 
@@ -55,10 +49,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   
   useEffect(() => {
     if (profileData) {
-      setProfile(profileData);
-      setIsLineManager(line_manager || false);
+      setProfile(profileData?.user);
     }
-  }, [profileData,line_manager]);
+  }, [profileData]);
 
 
 
@@ -71,9 +64,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         viewedProfile,
         setViewedProfile,
         user,
-        isLoading,
-        isLineManager, 
-        setIsLineManager, 
+        isLoading
       }}
     >
       {children}

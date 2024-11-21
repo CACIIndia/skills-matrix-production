@@ -12,7 +12,7 @@ const CertificatePage = () => {
 
   const { data: certificates } = useGetCertificates(profile.id);
   const {data: categoryskills} = useGetSkillCategory();
-  console.log(categoryskills,"categoryskills");
+ 
   const { handleDelete, handleEdit, handleUpload,handleDownload } = useCertificateHandlers(
     profile.id,
   );
