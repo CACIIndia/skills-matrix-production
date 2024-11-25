@@ -30,10 +30,14 @@ type Employee = {
 };
 
 const TrainingTable = () => {
-  const { profile } = useAppContext();
-  const { data: training_data, refetch } = useGetTrainingDataByUserId(
+  const { profile, isLoading } = useAppContext();
+  if (isLoading || !profile) {
+    return <div></div>;
+  }
+  const { data: training_data, refetch,isFetched, } = useGetTrainingDataByUserId(
     profile?.id || "",
   );
+
   const handleError = (error: Error) => {
     console.error("Error fetching training records:", error);
     alert("Failed to fetch training records. Please try again.");
@@ -87,13 +91,6 @@ const TrainingTable = () => {
   const [trainingStatus, setTrainingStatus] = useState([]);
   const [editingId, setEditingId] = useState<string>("");
 
-  const convertToUTC = (localDate: string): string => {
-    const [year, month, day] = localDate.split("-");
-    const localDateObject = new Date(Date.UTC(Number(year), Number(month) - 1, Number(day))); 
-    return localDateObject.toISOString(); 
-  };
-
-
   useEffect(() => {
     setCategories(categoryskills || []);
     setSkills([]);
@@ -125,12 +122,47 @@ const TrainingTable = () => {
     setEditTrainingData(Training);
   };
 
+  const resetFilter = async() => {
+    setselectedCategory("");
+    setselectedSkill("");
+    setFilterFromDate("");
+    setFilterToDate("");
+    setFilterEmployeeId("");
+
+   await refetch();
+  
+    setTrainingData(training_data || []);
+  };
+
   return (
     <div className='container-fixed'>
       <div className='mb-6 rounded-md bg-white py-6'>
-        <h2 className='mb-4 text-lg font-semibold'>Filters</h2>
+        <div className='flex gap-2'>
+          <h2 className='mb-4 text-lg font-semibold'>Filters</h2>
+          <div className='cursor-pointer text-xl' onClick={resetFilter}>
+            <BiReset />
+          </div>
+        </div>
 
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-6'>
+          <div>
+            <label className='block text-sm font-medium'>Select Employee</label>
+            <select
+              className='mt-1 w-full rounded-md border border-gray-300 p-2 shadow-sm'
+              onChange={(e) => {
+                setFilterEmployeeId(e.target.value);
+              }}
+              value={filterEmployeeID}
+            >
+              <option value="">Select an Employee</option>
+              {employees?.map((emp) => (
+                <option key={emp.id} value={emp.id}>
+                  {emp.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
           {/* Category Dropdown */}
           <div>
             <label className='block text-sm font-medium'>Category</label>
@@ -189,23 +221,6 @@ const TrainingTable = () => {
           </div>
 
           <div>
-            <label className='block text-sm font-medium'>Select Employee</label>
-            <select
-              className='mt-1 w-full rounded-md border border-gray-300 p-2 shadow-sm'
-              onChange={(e) => {
-                setFilterEmployeeId(e.target.value);
-              }}
-            >
-              <option value=''>Select an Employee</option>
-              {employees?.map((emp) => (
-                <option key={emp.id} value={emp.id}>
-                  {emp.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
             <Button
               onClick={handleSubmit}
               className='btn btn-primary aligin-center mt-4 flex w-[100px] items-center justify-center'
@@ -225,8 +240,8 @@ const TrainingTable = () => {
               <CiSquarePlus size={32} />
             </button>
           </div>
-
-          <table className='min-w-full bg-white'>
+          
+          {isFetched ?  <table className='min-w-full bg-white'>
             <thead>
               <tr>
                 <th className='border-b p-4 text-left'>#</th>
@@ -289,7 +304,8 @@ const TrainingTable = () => {
                 </tr>
               )}
             </tbody>
-          </table>
+          </table> :""}
+         
         </div>
       </div>
 

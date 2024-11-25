@@ -13,6 +13,7 @@ interface CertificateTableProps {
   onDownload: (url: string, createdById: string, name: string) => void;
   onAddCertificate: (newCertificate: Omit<Certificate, "id">) => void;
   categoryskills: SkillCategory[];
+  refetch:()=>void
 }
 
 const CertificateTable: React.FC<CertificateTableProps> = ({
@@ -22,6 +23,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
   onDownload,
   onAddCertificate,
   categoryskills,
+  refetch
 }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -134,7 +136,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
                         </button>
                         <button
                           className='text-danger'
-                          onClick={() => onDelete(cert.id || "")}
+                          onClick={() => onDelete(cert.id || "",refetch)}
                           title='Delete'
                         >
                           <FaTrash />

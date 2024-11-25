@@ -16,7 +16,7 @@ export async function deleteTraining(trainingId: string): Promise<DeleteTraining
 
   try {
     // Check if the training exists
-    const training = await db.Training.findUnique({
+    const training = await db.training.findUnique({
       where: {
         id: trainingId,
       },
@@ -31,7 +31,7 @@ export async function deleteTraining(trainingId: string): Promise<DeleteTraining
       throw new Error("User is not authorized to delete this training");
     }
 
-    await db.Training.delete({
+    await db.training.delete({
       where: {
         id: trainingId,
       },

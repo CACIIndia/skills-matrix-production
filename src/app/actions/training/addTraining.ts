@@ -21,7 +21,7 @@ type AddTrainingResponse = {
     id: string;
     categoryId: string;
     categoryName: string;
-    skillId: string;
+    skillId: string |null;
     skillName: string;
     fromDate: Date;
     tentativeEndDate: Date;
@@ -41,7 +41,7 @@ export async function addTraining(data: TrainingAddData): Promise<AddTrainingRes
   }
 
   try {
-    const newTraining = await db.Training.create({
+    const newTraining = await db.training.create({
       data: {
         categoryId: data.categoryId,
         categoryName: data.categoryName,
@@ -52,7 +52,7 @@ export async function addTraining(data: TrainingAddData): Promise<AddTrainingRes
         description: data.description,
         employeeId: data.employeeId,
         employeeName: data.employeeName,
-        createdById: session.user.id, // Use session.user.id here
+        createdById: session.user.id || "", 
         statusId: data.statusId,
       },
     });

@@ -6,7 +6,7 @@ type TrainingEditData = {
   id: string; 
   categoryId: string;
   categoryName: string;
-  skillId: string;
+  skillId: string | null;
   skillName: string;
   fromDate: string;
   toDate: string;
@@ -44,7 +44,7 @@ export async function editTraining(trainingId :string,data: TrainingEditData): P
   console.log(data,"editdataaa");
   try {
     // Find the training record to edit
-    const existingTraining = await db.Training.findUnique({
+    const existingTraining = await db.training.findUnique({
       where: {
         id: trainingId,
       },
@@ -55,7 +55,7 @@ export async function editTraining(trainingId :string,data: TrainingEditData): P
     }
 
     // Update the training record
-    const updatedTraining = await db.Training.update({
+    const updatedTraining = await db.training.update({
       where: {
         id: trainingId,
       },

@@ -13,19 +13,14 @@ export async function POST(request: Request) {
       createdById
     } = await request.json();
 
-    let fromDateQuery = undefined;
-    if (fromDate) {
-      const fromDateAdjusted = new Date(fromDate as string);
-      fromDateAdjusted.setDate(fromDateAdjusted.getDate() - 1); 
-      fromDateQuery = { gte: fromDateAdjusted.toISOString() };
-    }
-    console.log(new Date(fromDate as string),new Date(fromDate as string).toISOString(),new Date(tentativeEndDate as string).toISOString(),"ccheeeeeeeee");
+   
 
     const trainings = await db.training.findMany({
       where: {
         ...(categoryName && { categoryName }),
         ...(skillId && { skillId }),
-        ...(fromDate && { fromDate: fromDateQuery}),
+       
+        ...(fromDate && {fromDate: { gte: new Date(fromDate as string).toISOString()}}),
         ...(tentativeEndDate && {tentativeEndDate: { lte: new Date(tentativeEndDate as string).toISOString()}}),
         ...(employeeId && { employeeId }),
         createdById,

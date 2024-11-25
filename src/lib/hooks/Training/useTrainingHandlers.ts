@@ -43,8 +43,9 @@ export const useTrainingHandlers = (userId: string, refetch: () => void) => {
       console.log(result, "Delete result");
 
       invalidate();
+      await refetch();
       toast.success("Training deleted successfully", { id: toastId });
-      refetch();
+     
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "An unknown error occurred.";

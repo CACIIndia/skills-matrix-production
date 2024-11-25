@@ -45,11 +45,7 @@ const EditTraining = ({
   initialTrainingData,
 }: EditTrainingProps) => {
   const [skills, setSkills] = useState<Skill[]>([]);
-  console.log(
-    initialTrainingData,
-    "initialTrainingDatainitialTrainingDatainitialTrainingData",
-  );
-
+  
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -93,7 +89,7 @@ const EditTraining = ({
     },
   });
 
-  console.log(formik, "formikformik");
+ 
 
   useEffect(() => {
     if (isOpen) {

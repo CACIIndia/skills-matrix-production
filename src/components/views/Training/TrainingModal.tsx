@@ -77,13 +77,31 @@ const CreateTraining = ({
     onSubmit: (values) => {
       const selectedSkill = skills.find((sk) => sk.id === values.skillId);
       const selectedEmployee = employeeData.find((emp) => emp.id === values.employeeId);
+      
+      const fromDate: any = values.fromDate;
+      const toDate: any = values.toDate;
+const adjustedFromDate = new Date(
+                fromDate.getTime() - fromDate.getTimezoneOffset() * 60000,
+              );
+              const adjustedToDate = new Date(
+                toDate.getTime() - toDate.getTimezoneOffset() * 60000,
+              );
+
+
+              console.log(adjustedFromDate,"adjustedFromDate");
+              console.log(adjustedToDate,"adjustedToDate");
+              
    
       const updatedValues = {
         ...values,
         skillName: selectedSkill ? selectedSkill.name : "",
         categoryId: selectedSkill ? selectedSkill.categoryId : "",
         employeeName: selectedEmployee ? selectedEmployee.name : "",
+        fromDate:adjustedFromDate,
+        toDate:adjustedToDate
+
       };
+      
       onSave(updatedValues);
      },
     

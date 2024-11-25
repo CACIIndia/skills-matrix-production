@@ -74,15 +74,15 @@ export const useCertificateHandlers = (userId: string) => {
     }
   };
   
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: string,refetch:()=>void) => {
     const toastId = toast.loading("Deleting certificate...");
    
 
     try {
       const result = await deleteCertificate(String(id));
-
       invalidate();
       toast.success(result.message, { id: toastId });
+      refetch();
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "An unknown error occurred.";

@@ -36,11 +36,9 @@ type AppProviderProps = {
 export const AppProvider = ({ children }: AppProviderProps) => {
   const { data: session } = useSession();
   const { data: profileData, isLoading } = useGetProfile(session?.user?.id ?? "");
-  console.log(isLoading,"firstloading");
- 
+  
 
   const [profile, setProfile] = useState<any>();
-  console.log(profile,"profileprofileprofile");
   const [viewedProfile, setViewedProfile] = useState<any>();
   const user = session?.user;
 
