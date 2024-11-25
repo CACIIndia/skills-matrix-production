@@ -29,7 +29,7 @@ type Employee = {
   image: string;
 };
 
-const TrainingTable = () => {
+const LineManager = () => {
   const { profile, isLoading } = useAppContext();
   if (isLoading || !profile) {
     return <div></div>;
@@ -355,4 +355,4 @@ const TrainingTable = () => {
   );
 };
 
-export default TrainingTable;
+export default LineManager;

@@ -96,12 +96,12 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
             </Link>
           </div>
           {profile?.isLineManager && <div className="menu-item">
-            <Link className="menu-link hover:text-primary" href="/training">
+            <Link className="menu-link hover:text-primary" href="/line-manager">
              <span className="menu-icon">
              <i className="ki-filled ki-setting-2 text-lg">
              </i>
              </span>
-             <span className="menu-title">Training</span>
+             <span className="menu-title">Line Manager</span>
             </Link>
           </div>}
           
@@ -113,7 +113,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
               className='btn btn-sm btn-light justify-center'
               onClick={() => {
                 signOut();
-                onClose(); // Close dropdown on logout
+                onClose(); 
               }}
             >
               Log out

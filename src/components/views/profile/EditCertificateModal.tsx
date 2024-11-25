@@ -36,9 +36,10 @@ const EditCertificateModal: React.FC<EditCertificateModalProps> = ({
       name: Yup.string().required("Certificate Name is required"),
       certificateFile: Yup.mixed().nullable().notRequired(),
       categoryId: Yup.string().required("Category is required"),
+      obtainedDate: Yup.date().required("obtainedDate is required"),
+      expiryDate: Yup.date().required("expiryDate is required"),
     }),
     onSubmit: (values) => {
-        
       handleUpdateCertificate(values);
     },
   });
@@ -47,7 +48,7 @@ const EditCertificateModal: React.FC<EditCertificateModalProps> = ({
     const selectedCategoryId = e.target.value;
 
     const selectedCategory = categoryskills.find(
-      (category) => category.id === selectedCategoryId
+      (category) => category.id === selectedCategoryId,
     );
 
     if (selectedCategory) {
@@ -63,78 +64,6 @@ const EditCertificateModal: React.FC<EditCertificateModalProps> = ({
           <h3 className='mb-4 text-lg font-semibold'>Edit Certificate</h3>
 
           <form onSubmit={formik.handleSubmit} className='space-y-4'>
-            {/* Certificate Name */}
-            <div className='flex flex-col sm:flex-row sm:gap-4'>
-              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
-                Certificate Name
-              </label>
-              <div className='flex-1'>
-                <input
-                  type='text'
-                  name='name'
-                  value={formik.values.name}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  className='w-full border p-2'
-                />
-                {formik.touched.name && formik.errors.name && (
-                  <p className='text-red-500 text-sm'>{formik.errors.name}</p>
-                )}
-              </div>
-            </div>
-
-            {/* Certificate File */}
-            <div className='flex flex-col sm:flex-row sm:gap-4'>
-              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
-                Upload New Certificate File (Optional)
-              </label>
-              <div className='flex-1'>
-                <input
-                  type='file'
-                  accept='application/pdf'
-                  onChange={handleFileChange}
-                  className='w-full border p-2'
-                />
-                {formik.touched.certificateFile && formik.errors.certificateFile && (
-                  <p className='text-red-500 text-sm'>{formik.errors.certificateFile}</p>
-                )}
-              </div>
-            </div>
-
-            {/* Obtained Date */}
-            <div className='flex flex-col sm:flex-row sm:gap-4'>
-              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
-                Obtained Date
-              </label>
-              <div className='flex-1'>
-                <DatePicker
-                  selected={formik.values.obtainedDate}
-                  onChange={(date) => formik.setFieldValue("obtainedDate", date)}
-                  className='w-full border p-2'
-                  dateFormat='yyyy-MM-dd'
-                  showYearDropdown
-                  showMonthDropdown
-                />
-              </div>
-            </div>
-
-            {/* Valid Until */}
-            <div className='flex flex-col sm:flex-row sm:gap-4'>
-              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
-                Valid Until
-              </label>
-              <div className='flex-1'>
-                <DatePicker
-                  selected={formik.values.expiryDate}
-                  onChange={(date) => formik.setFieldValue("expiryDate", date)}
-                  className='w-full border p-2'
-                  dateFormat='yyyy-MM-dd'
-                  showYearDropdown
-                  showMonthDropdown
-                />
-              </div>
-            </div>
-
             {/* Category Dropdown */}
             <div className='flex flex-col sm:flex-row sm:gap-4'>
               <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
@@ -157,7 +86,96 @@ const EditCertificateModal: React.FC<EditCertificateModalProps> = ({
                   ))}
                 </select>
                 {formik.touched.categoryId && formik.errors.categoryId && (
-                  <p className='text-red-500 text-sm'>{formik.errors.categoryId}</p>
+                  <p className='text-sm text-red-500'>
+                    {formik.errors.categoryId}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Certificate Name */}
+            <div className='flex flex-col sm:flex-row sm:gap-4'>
+              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
+                Certificate Name
+              </label>
+              <div className='flex-1'>
+                <input
+                  type='text'
+                  name='name'
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className='w-full border p-2'
+                />
+                {formik.touched.name && formik.errors.name && (
+                  <p className='text-sm text-red-500'>{formik.errors.name}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Certificate File */}
+            <div className='flex flex-col sm:flex-row sm:gap-4'>
+              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
+                Upload New Certificate File (Optional)
+              </label>
+              <div className='flex-1'>
+                <input
+                  type='file'
+                  accept='application/pdf'
+                  onChange={handleFileChange}
+                  className='w-full border p-2'
+                />
+                {formik.touched.certificateFile &&
+                  formik.errors.certificateFile && (
+                    <p className='text-sm text-red-500'>
+                      {formik.errors.certificateFile}
+                    </p>
+                  )}
+              </div>
+            </div>
+
+            {/* Obtained Date */}
+            <div className='flex flex-col sm:flex-row sm:gap-4'>
+              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
+                Obtained Date
+              </label>
+              <div className='flex-1'>
+                <DatePicker
+                  selected={formik.values.obtainedDate}
+                  onChange={(date) =>
+                    formik.setFieldValue("obtainedDate", date)
+                  }
+                  className='w-full border p-2'
+                  dateFormat='yyyy-MM-dd'
+                  showYearDropdown
+                  showMonthDropdown
+                />
+                {formik.touched.obtainedDate && formik.errors.obtainedDate && (
+                  <p className='text-sm text-red-500'>
+                    {formik.errors.obtainedDate}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Valid Until */}
+            <div className='flex flex-col sm:flex-row sm:gap-4'>
+              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
+                Valid Until
+              </label>
+              <div className='flex-1'>
+                <DatePicker
+                  selected={formik.values.expiryDate}
+                  onChange={(date) => formik.setFieldValue("expiryDate", date)}
+                  className='w-full border p-2'
+                  dateFormat='yyyy-MM-dd'
+                  showYearDropdown
+                  showMonthDropdown
+                />
+                {formik.touched.expiryDate && formik.errors.expiryDate && (
+                  <p className='text-sm text-red-500'>
+                    {formik.errors.expiryDate}
+                  </p>
                 )}
               </div>
             </div>
