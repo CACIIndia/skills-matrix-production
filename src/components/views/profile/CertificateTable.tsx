@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 interface CertificateTableProps {
   certificates: Certificate[];
   onEdit: (id: string, updatedCertificate: Omit<Certificate, "id">) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: string,refetch:()=>void) => void;
   onDownload: (url: string, createdById: string, name: string) => void;
   onAddCertificate: (newCertificate: Omit<Certificate, "id">) => void;
   categoryskills: SkillCategory[];
@@ -126,13 +126,13 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
                       <td>{cert.expiryDate ? new Date(cert.expiryDate).toLocaleDateString() : "N/A"}</td>
 
-                      <td className='flex gap-3 text-xl'>
+                      <td className='flex gap-3 text-xl '>
                         <button
                           className='text-primary'
                           onClick={() => handleEditCertificate(cert.id || "", cert)}
                           title='Edit'
                         >
-                          <i className='ki-filled ki-notepad-edit' />
+                          <i className='ki-filled ki-notepad-edit  border border-red-100' />
                         </button>
                         <button
                           className='text-danger'

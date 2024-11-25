@@ -14,8 +14,6 @@ import {  useIsLineManager } from "@/lib/hooks/common/useLineManager";
 import { getLineManager } from "../actions/user/getLineManager";
 
 
-
-// Define the state for the context
 type State = {
   profile: any;
   setProfile: Dispatch<SetStateAction<any>>;

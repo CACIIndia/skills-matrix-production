@@ -97,7 +97,6 @@ const TrainingTable = () => {
     setEmployees(employeeData || []);
     setTrainingData(training_data || []);
     setTrainingStatus(training_status || []);
-    console.log(training_status, "training_status");
   }, [categoryskills, employeeData, training_data, training_status]);
 
   const handleCategorySelect = (category: string) => {
@@ -106,9 +105,7 @@ const TrainingTable = () => {
       return item.category === category;
     });
 
-    console.log(selectedSkills, "selectedSkills");
     if (selectedSkills) {
-      console.log("Matched skills:", selectedSkills.skills);
       setSkills(selectedSkills.skills);
       setselectedSkill("");
     } else {
@@ -250,13 +247,13 @@ const TrainingTable = () => {
                 <th className='border-b p-4 text-left'>Skill</th>
                 <th className='border-b p-4 text-left'>From Date</th>
                 <th className='border-b p-4 text-left'>Tentative End Date</th>
-                <th className='border-b p-4 text-left'>Actions</th>
+                <th className='border-b p-4 text-left z-1'>Actions</th>
               </tr>
             </thead>
             <tbody>
               {trainingData.length > 0 ? (
                 trainingData.map((training: Training, index: number) => (
-                  <tr key={training.id}>
+                  <tr key={training.id} >
                     <td className='border-b p-4'>{index + 1}</td>
                     <td className='border-b p-4'>{training.employeeName}</td>
                     <td className='border-b p-4'>{training.categoryName}</td>

@@ -1157,6 +1157,13 @@ video {
   color: var(--tw-primary);
 }
 
+.menu-default .menu-item .menu-link:hover .menu-icon .menu-custom-icon {
+  color: var(--tw-primary);
+}
+
+
+
+
 .menu-default .menu-item.active > .menu-link .menu-title,
 .menu-default .menu-item.show > .menu-link .menu-title,
 .menu-default .menu-item.here > .menu-link .menu-title,

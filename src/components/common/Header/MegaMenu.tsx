@@ -41,7 +41,7 @@ const MegaMenu = ({}: MegaMenuProps) => {
         );
       })}
 
-      {profile?.isLineManager && <LineManager/>}
+      {/* {profile?.isLineManager && <LineManager/>} */}
     </div>
   );
 };
