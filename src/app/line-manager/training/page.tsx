@@ -1,0 +1,291 @@
+"use client";
+import { useState, useEffect } from "react";
+import useGetTrainingDataByUserId from "@/lib/hooks/Training/useGetTraining";
+import { useAppContext } from "@/app/context/AppContext";
+import { Skill, Training } from "@/lib/types/profile";
+import useGetSkills from "@/lib/hooks/profile/useGetSkills";
+import useGetUsersByLineManager from "@/lib/hooks/common/useGetUsersByLineManager";
+import useGetTrainingStatus from "@/lib/hooks/Training/useGetTrainingStatus";
+import { useTrainingHandlers } from "@/lib/hooks/Training/useTrainingHandlers";
+import { useFetchTrainingRecords } from "@/lib/hooks/Training/useFilterTraining";
+import { FaTrash } from "react-icons/fa";
+import { CiSquarePlus } from "react-icons/ci";
+import CreateTraining from "@/components/views/Training/TrainingModal";
+import EditTraining from "@/components/views/Training/EditTrainingModal";
+
+type CategoryResponse = {
+  category: string;
+  skills: Skill[];
+  categoryId?: string;
+}[];
+
+type Employee = {
+  id: string;
+  name: string;
+  email: string;
+  image: string;
+};
+
+const TrainingSchedule: React.FC = () => {
+  const { profile, isLoading } = useAppContext();
+
+  if (isLoading || !profile) {
+    return <div>Loading...</div>;
+  }
+
+  const handleError = (error: Error) => {
+    console.error("Error fetching training records:", error);
+    alert("Failed to fetch training records. Please try again.");
+  };
+
+  const {
+    data: training_data,
+    refetch,
+    isFetched,
+  } = useGetTrainingDataByUserId(profile?.id || "");
+  const { mutate: fetchTrainingRecords } = useFetchTrainingRecords(handleError);
+  const { data: training_status } = useGetTrainingStatus();
+  const {
+    addTrainingData,
+    handleDelete,
+    handleEdit: handleTrainingEdit,
+  } = useTrainingHandlers(profile?.id || "", refetch);
+
+  const { data: employeeData } = useGetUsersByLineManager(profile?.id);
+  const { data: categoryskills } = useGetSkills();
+
+
+  const [trainingData, setTrainingData] = useState<Training[]>([]);
+  const [categories, setCategories] = useState<CategoryResponse>([]);
+  const [skills, setSkills] = useState<Skill[]>([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [selectedCategory, setselectedCategory] = useState("");
+  const [selectedSkill, setselectedSkill] = useState("");
+  const [filterFromDate, setFilterFromDate] = useState("");
+  const [filterToDate, setFilterToDate] = useState("");
+  const [filterEmployeeID, setFilterEmployeeId] = useState("");
+
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editTrainingData, setEditTrainingData] = useState<Training | null>(null);
+  const [trainingStatus, setTrainingStatus] = useState([]);
+  const [editingId, setEditingId] = useState<string>("");
+
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
+
+  useEffect(() => {
+    setCategories(categoryskills || []);
+    setSkills([]);
+    setEmployees(employeeData || []);
+    setTrainingData(training_data || []);
+    setTrainingStatus(training_status || []);
+  }, [categoryskills, employeeData, training_data, training_status]);
+
+  const handleCategorySelect = (category: string) => {
+    setselectedCategory(category);
+    const selectedSkills = categoryskills?.find((item) => item.category === category);
+    if (selectedSkills) {
+      setSkills(selectedSkills.skills);
+      setselectedSkill("");
+    } else {
+      setSkills([]);
+    }
+  };
+
+  const handleEdit = (training: Training) => {
+    setEditingId(training.id);
+    setIsEditModalOpen(true);
+    setEditTrainingData(training);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const filteredData = training_data?.filter((training) => {
+      const matchesCategory = selectedCategory ? training.categoryName === selectedCategory : true;
+      const matchesSkill = selectedSkill ? training.skillId === selectedSkill : true;
+      const matchesEmployee = filterEmployeeID ? training.employeeId === filterEmployeeID : true;
+      const matchesFromDate = filterFromDate && training.fromDate
+        ? new Date(training.fromDate) >= new Date(filterFromDate)
+        : true;
+      const matchesToDate = filterToDate && training.tentativeEndDate
+        ? new Date(training.tentativeEndDate) <= new Date(filterToDate)
+        : true;
+      return matchesCategory && matchesSkill && matchesEmployee && matchesFromDate && matchesToDate;
+    });
+    setTrainingData(filteredData || []);
+  };
+
+  const resetFilter = async () => {
+    setselectedCategory("");
+    setselectedSkill("");
+    setFilterFromDate("");
+    setFilterToDate("");
+    setFilterEmployeeId("");
+    setTrainingData(training_data || []);
+  };
+
+  const paginatedData = trainingData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const totalPages = Math.ceil(trainingData.length / itemsPerPage);
+
+  return (
+    <div>
+      <div className="container-fixed">
+        <div className="pb-7.5 flex flex-wrap items-center justify-between gap-5 lg:items-end">
+          <div className="flex flex-col justify-center gap-2">
+            <h1 className="text-xl font-semibold leading-none text-gray-900">Training - Schedule</h1>
+            <div className="flex items-center gap-2 text-sm font-medium text-gray-600">Some content goes here..</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid container-fixed">
+        <div className="card card-grid h-full min-w-full">
+          <div className="card-header flex items-center justify-between">
+            <div className="input input-sm flex max-w-48 items-center">
+              <i className="ki-filled ki-magnifier" />
+              <input placeholder="Search.." type="text" className="ml-2" />
+            </div>
+            <h3 className="card-title">
+              <button onClick={() => setIsAddModalOpen(true)} className="btn btn-sm btn-icon btn-clear btn-primary">
+                <CiSquarePlus size={32} />
+              </button>
+            </h3>
+          </div>
+
+          <div className="card-body">
+            <div data-datatable="true" data-datatable-page-size="5">
+              <div className="scrollable-x-auto">
+                <table className="table-border table" data-datatable-table="true">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th className="w-[280px]">Team</th>
+                      <th className="min-w-[135px]">Category</th>
+                      <th className="min-w-[135px]">Skill</th>
+                      <th className="min-w-[135px]">From Date</th>
+                      <th className="min-w-[135px]">Tentative End Date</th>
+                      <th className="min-w-[135px]">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {paginatedData.map((training, index) => (
+                      <tr key={training.id}>
+                        <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
+                        <td>
+                          <div className="flex flex-col gap-2">
+                            <a className="text-sm font-semibold leading-none text-gray-900 hover:text-primary" href="#">
+                              {training.employeeName}
+                            </a>
+                            <span className="text-2sm leading-3 text-gray-600">Software Developer</span>
+                          </div>
+                        </td>
+                        <td>{training.categoryName}</td>
+                        <td>{training.skillName}</td>
+                        <td>{training.fromDate ? new Date(training.fromDate).toLocaleDateString() : "N/A"}</td>
+                        <td>
+                          {training.tentativeEndDate
+                            ? new Date(training.tentativeEndDate).toLocaleDateString()
+                            : "N/A"}
+                        </td>
+                        <td>
+                          <div className="flex gap-3">
+                            <button className="text-primary" onClick={() => handleEdit(training)} title="Edit">
+                              <i className="ki-filled ki-notepad-edit" />
+                            </button>
+                            <button className="text-danger" onClick={() => handleDelete(training.id)} title="Delete">
+                              <FaTrash />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div className="card-footer text-2sm flex-col justify-center gap-5 font-medium text-gray-600 md:flex-row md:justify-between">
+                <div className="order-2 flex items-center gap-5 md:order-1">
+                  <span>Rows per page:</span>
+                  <select value={itemsPerPage} onChange={(e) => setItemsPerPage(Number(e.target.value))}>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                  </select>
+                </div>
+                <div className="order-1 flex items-center justify-between gap-6 md:order-2">
+                  <span>
+                    {`${(currentPage - 1) * itemsPerPage + 1}-${Math.min(
+                      currentPage * itemsPerPage,
+                      trainingData.length
+                    )} of ${trainingData.length}`}
+                  </span>
+                  <div className="flex gap-3">
+                    <button
+                      className="btn btn-sm btn-icon btn-clear btn-primary"
+                      onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                      disabled={currentPage === 1}
+                    >
+                      &lt;
+                    </button>
+                    <button
+                      className="btn btn-sm btn-icon btn-clear btn-primary"
+                      onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                      disabled={currentPage === totalPages}
+                    >
+                      &gt;
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Modals */}
+      <CreateTraining
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onSave={(newTrainingData) =>
+          addTrainingData(newTrainingData, () => setIsAddModalOpen(false))
+        }
+        employeeData={employees}
+        trainingStatus={trainingStatus}
+        categoriesData={categories}
+      />
+
+      <EditTraining
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        onSave={(editTrainingData) => {
+          handleTrainingEdit(editingId, editTrainingData);
+        }}
+        categoriesData={categories}
+        initialTrainingData={
+          editTrainingData || {
+            id: "",
+            categoryId: "",
+            categoryName: "",
+            skillId: "",
+            skillName: "",
+            fromDate: null,
+            tentativeEndDate: null,
+            description: "",
+            createdAt: null,
+            updatedAt: null,
+            createdById: "",
+            statusId: "",
+            employeeId: "",
+            employeeName: "",
+          }
+        }
+        trainingStatus={trainingStatus}
+        employeeData={employees}
+      />
+    </div>
+  );
+};
+
+export default TrainingSchedule;

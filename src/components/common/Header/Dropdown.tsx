@@ -96,7 +96,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
             </Link>
           </div>
           {profile?.isLineManager && <div className="menu-item">
-            <Link className="menu-link hover:text-primary" href="/line-manager">
+            <Link className="menu-link hover:text-primary" href="/line-manager/training">
              <span className="menu-icon">
              <i className="ki-filled ki-setting-2 text-lg">
              </i>

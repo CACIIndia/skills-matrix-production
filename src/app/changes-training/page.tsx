@@ -1,3 +1,4 @@
+import Menu from "@/components/common/Menu";
 import React from "react";
 
 // Define the types for props and data
@@ -30,26 +31,12 @@ const TrainingSchedule: React.FC = () => {
         <div className="flex flex-nowrap items-center lg:items-end justify-between border-b border-b-gray-200 dark:border-b-coal-100 gap-6 mb-5 lg:mb-10">
           <div className="grid container-fixed">
             <div className="scrollable-x-auto">
-              <div className="menu gap-3">
-                {["My Team", "Certifications", "Training"].map((title, index) => (
-                  <div
-                    key={index}
-                    className={`menu-item border-b-2 border-b-transparent ${
-                      title === "Training" ? "border-b-primary" : ""
-                    }`}
-                  >
-                    <div className="menu-link gap-1.5 pb-2 lg:pb-4 px-2" tabIndex={0}>
-                      <span className={`menu-title text-nowrap font-medium text-sm text-gray-700`}>
-                        {title}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <Menu items={[{name:"My Team",path:"/line-manager/my-team"},
+                {name:"Certifications",path:"/line-manager/certifications"},
+                {name:"Training",path:"/line-manager/training"}]} />
             </div>
           </div>
         </div>
- 
 
       {/* Header container */}
       <div className="container-fixed">
