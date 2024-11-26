@@ -117,152 +117,159 @@ const EditTraining = ({
           onSubmit={formik.handleSubmit}
           className='max-h-[500px] overflow-y-auto'
         >
-          <div>
-            <label className='mb-1 block text-sm font-medium'>Category</label>
-            <select
-              name='categoryName'
-              value={formik.values.categoryName}
-              onChange={formik.handleChange}
-              className='w-full rounded-md border border-gray-300 p-2'
-            >
-              <option value=''>Select Category</option>
-              {categoriesData.map((cat) => (
-                <option key={cat.category} value={cat.category}>
-                  {cat.category}
-                </option>
-              ))}
-            </select>
-            {formik.touched.categoryName && formik.errors.categoryName ? (
-              <div className='text-sm text-red-500'>
-                {formik.errors.categoryName}
-              </div>
-            ) : null}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className='mb-1 block text-sm font-medium'>Category</label>
+              <select
+                name='categoryName'
+                value={formik.values.categoryName}
+                onChange={formik.handleChange}
+                className='w-full rounded-md border border-gray-300 p-2'
+              >
+                <option value=''>Select Category</option>
+                {categoriesData.map((cat) => (
+                  <option key={cat.category} value={cat.category}>
+                    {cat.category}
+                  </option>
+                ))}
+              </select>
+              {formik.touched.categoryName && formik.errors.categoryName ? (
+                <div className='text-sm text-red-500'>
+                  {formik.errors.categoryName}
+                </div>
+              ) : null}
+            </div>
+
+            <div>
+              <label className='mb-1 block text-sm font-medium'>Skill</label>
+              <select
+                name='skillId'
+                value={formik.values.skillId}
+                onChange={formik.handleChange}
+                className='w-full rounded-md border border-gray-300 p-2'
+                disabled={!formik.values.categoryName}
+              >
+                <option value=''>Select Skill</option>
+                {skills.map((sk) => (
+                  <option key={sk.id} value={sk.id}>
+                    {sk.name}
+                  </option>
+                ))}
+              </select>
+              {formik.touched.skillId && formik.errors.skillId ? (
+                <div className='text-sm text-red-500'>
+                  {formik.errors.skillId}
+                </div>
+              ) : null}
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            <div>
+              <label className='mb-1 block text-sm font-medium'>From Date</label>
+              <DatePicker
+                selected={formik.values.fromDate}
+                onChange={(date) => formik.setFieldValue("fromDate", date)}
+                className='w-full rounded-md border border-gray-300 p-2'
+                dateFormat='yyyy/MM/dd'
+                placeholderText='Select date'
+              />
+              {formik.touched.fromDate && formik.errors.fromDate ? (
+                <div className='text-sm text-red-500'>
+                  {typeof formik.errors.fromDate === "string"
+                    ? formik.errors.fromDate
+                    : ""}
+                </div>
+              ) : null}
+            </div>
+
+            <div>
+              <label className='mb-1 block text-sm font-medium'>To Date</label>
+              <DatePicker
+                selected={formik.values.toDate}
+                onChange={(date) => formik.setFieldValue("toDate", date)}
+                className='w-full rounded-md border border-gray-300 p-2'
+                dateFormat='yyyy/MM/dd'
+                placeholderText='Select date'
+              />
+              {formik.touched.toDate && formik.errors.toDate ? (
+                <div className='text-sm text-red-500'>
+                  {typeof formik.errors.toDate === "string"
+                    ? formik.errors.toDate
+                    : ""}
+                </div>
+              ) : null}
+            </div>
+          </div>
+          
+
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            <div>
+              <label className='mb-1 block text-sm font-medium'>
+                Select Employee
+              </label>
+              <select
+                name='employeeId'
+                value={formik.values.employeeId}
+                onChange={formik.handleChange}
+                className='w-full rounded-md border border-gray-300 p-2'
+              >
+                <option value=''>Select Employee</option>
+                {employeeData.map((emp) => (
+                  <option key={emp.id} value={emp.id}>
+                    {emp.name}
+                  </option>
+                ))}
+              </select>
+              {formik.touched.employeeId && formik.errors.employeeId ? (
+                <div className='text-sm text-red-500'>
+                  {formik.errors.employeeId}
+                </div>
+              ) : null}
+            </div>
+
+            <div>
+              <label className='mb-1 block text-sm font-medium'>
+                Training Status
+              </label>
+              <select
+                name='statusId'
+                value={formik.values.statusId}
+                onChange={formik.handleChange}
+                className='w-full rounded-md border border-gray-300 p-2'
+              >
+                <option value=''>Select Status</option>
+                {trainingStatus.map((status) => (
+                  <option key={status.id} value={status.id}>
+                    {status.name}
+                  </option>
+                ))}
+              </select>
+              {formik.touched.statusId && formik.errors.statusId ? (
+                <div className='text-sm text-red-500'>
+                  {formik.errors.statusId}
+                </div>
+              ) : null}
+            </div>
           </div>
 
-          <div className='mt-4'>
-            <label className='mb-1 block text-sm font-medium'>Skill</label>
-            <select
-              name='skillId'
-              value={formik.values.skillId}
-              onChange={formik.handleChange}
-              className='w-full rounded-md border border-gray-300 p-2'
-              disabled={!formik.values.categoryName}
-            >
-              <option value=''>Select Skill</option>
-              {skills.map((sk) => (
-                <option key={sk.id} value={sk.id}>
-                  {sk.name}
-                </option>
-              ))}
-            </select>
-            {formik.touched.skillId && formik.errors.skillId ? (
-              <div className='text-sm text-red-500'>
-                {formik.errors.skillId}
-              </div>
-            ) : null}
-          </div>
-
-          <div className='mt-4'>
-            <label className='mb-1 block text-sm font-medium'>From Date</label>
-            <DatePicker
-              selected={formik.values.fromDate}
-              onChange={(date) => formik.setFieldValue("fromDate", date)}
-              className='w-full rounded-md border border-gray-300 p-2'
-              dateFormat='yyyy/MM/dd'
-              placeholderText='Select date'
-            />
-            {formik.touched.fromDate && formik.errors.fromDate ? (
-              <div className='text-sm text-red-500'>
-                {typeof formik.errors.fromDate === "string"
-                  ? formik.errors.fromDate
-                  : ""}
-              </div>
-            ) : null}
-          </div>
-
-          <div className='mt-4'>
-            <label className='mb-1 block text-sm font-medium'>To Date</label>
-            <DatePicker
-              selected={formik.values.toDate}
-              onChange={(date) => formik.setFieldValue("toDate", date)}
-              className='w-full rounded-md border border-gray-300 p-2'
-              dateFormat='yyyy/MM/dd'
-              placeholderText='Select date'
-            />
-            {formik.touched.toDate && formik.errors.toDate ? (
-              <div className='text-sm text-red-500'>
-                {typeof formik.errors.toDate === "string"
-                  ? formik.errors.toDate
-                  : ""}
-              </div>
-            ) : null}
-          </div>
-
-          <div className='mt-4'>
-            <label className='mb-1 block text-sm font-medium'>
-              Description
-            </label>
-            <textarea
-              name='description'
-              value={formik.values.description}
-              onChange={formik.handleChange}
-              className='w-full rounded-md border border-gray-300 p-2'
-              rows={3}
-            />
-            {formik.touched.description && formik.errors.description ? (
-              <div className='text-sm text-red-500'>
-                {formik.errors.description}
-              </div>
-            ) : null}
-          </div>
-
-          <div className='mt-4'>
-            <label className='mb-1 block text-sm font-medium'>
-              Select Employee
-            </label>
-            <select
-              name='employeeId'
-              value={formik.values.employeeId}
-              onChange={formik.handleChange}
-              className='mt-2 w-full rounded-md border border-gray-300 p-2'
-            >
-              <option value=''>Select Employee</option>
-              {employeeData.map((emp) => (
-                <option key={emp.id} value={emp.id}>
-                  {emp.name}
-                </option>
-              ))}
-            </select>
-            {formik.touched.employeeId && formik.errors.employeeId ? (
-              <div className='text-sm text-red-500'>
-                {formik.errors.employeeId}
-              </div>
-            ) : null}
-          </div>
-
-          {/* New dropdown for Status */}
-          <div className='mt-4'>
-            <label className='mb-1 block text-sm font-medium'>
-              Training Status
-            </label>
-            <select
-              name='statusId'
-              value={formik.values.statusId}
-              onChange={formik.handleChange}
-              className='w-full rounded-md border border-gray-300 p-2'
-            >
-              <option value=''>Select Status</option>
-              {trainingStatus.map((status) => (
-                <option key={status.id} value={status.id}>
-                  {status.name}
-                </option>
-              ))}
-            </select>
-            {formik.touched.statusId && formik.errors.statusId ? (
-              <div className='text-sm text-red-500'>
-                {formik.errors.statusId}
-              </div>
-            ) : null}
+          <div className="grid grid-cols-1">
+            <div className='mt-4'>
+              <label className='mb-1 block text-sm font-medium'>
+                Description
+              </label>
+              <textarea
+                name='description'
+                value={formik.values.description}
+                onChange={formik.handleChange}
+                className='w-full rounded-md border border-gray-300 p-2'
+                rows={3}
+              />
+              {formik.touched.description && formik.errors.description ? (
+                <div className='text-sm text-red-500'>
+                  {formik.errors.description}
+                </div>
+              ) : null}
+            </div>
           </div>
 
           <div className='mt-6 flex justify-between'>

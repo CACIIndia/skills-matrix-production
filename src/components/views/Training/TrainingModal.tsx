@@ -131,6 +131,7 @@ const adjustedFromDate = new Date(
       <div className="relative w-full max-w-lg rounded-lg bg-white p-6 shadow-xl">
         <h2 className="mb-4 text-xl font-semibold">Create Training Data</h2>
         <form onSubmit={formik.handleSubmit} className="max-h-[500px] overflow-y-auto">
+        <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="mb-1 block text-sm font-medium">Category</label>
             <select
@@ -151,7 +152,7 @@ const adjustedFromDate = new Date(
             ) : null}
           </div>
 
-          <div className="mt-4">
+          <div>
             <label className="mb-1 block text-sm font-medium">Skill</label>
             <select
               name="skillId"
@@ -171,8 +172,10 @@ const adjustedFromDate = new Date(
               <div className="text-red-500 text-sm">{formik.errors.skillName}</div>
             ) : null}
           </div>
-
-          <div className="mt-4">
+        </div>
+          
+        <div className="grid grid-cols-2 gap-4 mt-4">
+          <div className="">
             <label className="mb-1 block text-sm font-medium">From Date</label>
             <DatePicker
               selected={formik.values.fromDate}
@@ -185,8 +188,7 @@ const adjustedFromDate = new Date(
               <div className="text-red-500 text-sm">{formik.errors.fromDate}</div>
             ) : null}
           </div>
-
-          <div className="mt-4">
+          <div className="">
             <label className="mb-1 block text-sm font-medium">To Date</label>
             <DatePicker
               selected={formik.values.toDate}
@@ -199,28 +201,17 @@ const adjustedFromDate = new Date(
               <div className="text-red-500 text-sm">{formik.errors.toDate}</div>
             ) : null}
           </div>
+        </div>
+        
 
-          <div className="mt-4">
-            <label className="mb-1 block text-sm font-medium">Description</label>
-            <textarea
-              name="description"
-              value={formik.values.description}
-              onChange={formik.handleChange}
-              className="w-full rounded-md border border-gray-300 p-2"
-              rows={3}
-            />
-            {formik.touched.description && formik.errors.description ? (
-              <div className="text-red-500 text-sm">{formik.errors.description}</div>
-            ) : null}
-          </div>
-
-          <div className="mt-4">
+        <div className="grid grid-cols-2 gap-4 mt-4">
+          <div>
             <label className="mb-1 block text-sm font-medium">Select Employee</label>
             <select
               name="employeeId"
               value={formik.values.employeeId}
               onChange={formik.handleChange}
-              className="mt-2 w-full rounded-md border border-gray-300 p-2"
+              className="w-full rounded-md border border-gray-300 p-2"
             >
               <option value="">Select Employee</option>
               {employeeData.map((emp) => (
@@ -234,8 +225,7 @@ const adjustedFromDate = new Date(
             ) : null}
           </div>
 
-          {/* New dropdown for Status */}
-          <div className="mt-4">
+          <div className="">
             <label className="mb-1 block text-sm font-medium">Training Status</label>
             <select
               name="statusId"
@@ -254,23 +244,40 @@ const adjustedFromDate = new Date(
               <div className="text-red-500 text-sm">{formik.errors.statusId}</div>
             ) : null}
           </div>
+        </div>
 
-          <div className="mt-6 flex justify-between">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-6 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-             
-              className="px-6 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300"
-            >
-              Save
-            </button>
+        <div className="grid grid-cols-1 mt-4">
+          <div>
+            <label className="mb-1 block text-sm font-medium">Description</label>
+            <textarea
+              name="description"
+              value={formik.values.description}
+              onChange={formik.handleChange}
+              className="w-full rounded-md border border-gray-300 p-2"
+              rows={3}
+            />
+            {formik.touched.description && formik.errors.description ? (
+              <div className="text-red-500 text-sm">{formik.errors.description}</div>
+            ) : null}
           </div>
+        </div>
+
+        <div className="flex justify-between mt-4">
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-6 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            
+            className="px-6 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300"
+          >
+            Save
+          </button>
+        </div>
         </form>
       </div>
     </div>
