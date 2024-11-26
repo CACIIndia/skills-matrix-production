@@ -16,7 +16,7 @@ const updateUserMicrosoftProfile = async (
   } catch (error) {
     console.error(
       "Unexpected error during updating profile: ",
-      error instanceof Error ? error.message : "Unknown error"
+      error instanceof Error ? error.message : "Unknown error",
     );
     throw error;
   }
@@ -54,11 +54,13 @@ async function updateProfile(
       await db.user.update({
         where: { id: user.id },
         data: {
+          name: userProfile.displayName,
           location: userProfile.officeLocation,
           role: userProfile.jobTitle,
           phone: userProfile.mobilePhone,
         },
       });
+      user.name = userProfile.displayName;  
       user.location = userProfile.officeLocation;
       user.role = userProfile.jobTitle;
       user.phone = userProfile.mobilePhone;
@@ -95,7 +97,11 @@ async function updateManager(
     }
     return user;
   } catch (error) {
-    console.error("Error updating manager information for user:", user.id, error);
+    console.error(
+      "Error updating manager information for user:",
+      user.id,
+      error,
+    );
     throw error;
   }
 }
@@ -114,7 +120,6 @@ async function makeGraphRequest(
     },
     body: body ? JSON.stringify(body) : undefined,
   });
-
 
   return response;
 }
@@ -142,7 +147,7 @@ export async function fetchUserProfilePicture(
 
   if (!response.ok) {
     throw new Error(
-      `Error fetching profile photo: ${response.status} - ${response.statusText}`
+      `Error fetching profile photo: ${response.status} - ${response.statusText}`,
     );
   }
 
@@ -153,7 +158,7 @@ export async function fetchUserProfilePicture(
   } catch (error) {
     console.error(
       "Unexpected error during fetching profile photo:",
-      error instanceof Error ? error.message : "Unknown error"
+      error instanceof Error ? error.message : "Unknown error",
     );
     throw error;
   }

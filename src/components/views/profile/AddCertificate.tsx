@@ -26,7 +26,7 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
       expiryDate: null,
       description: "",
       categoryId: "",
-      categoryName: "", // Add categoryName to the form state
+      categoryName: "", 
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Certificate Name is required"),
