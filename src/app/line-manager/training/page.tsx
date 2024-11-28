@@ -12,6 +12,7 @@ import { FaTrash } from "react-icons/fa";
 import { CiSquarePlus } from "react-icons/ci";
 import CreateTraining from "@/components/views/Training/TrainingModal";
 import EditTraining from "@/components/views/Training/EditTrainingModal";
+import { tableSearch } from "@/lib/utils/tableSearch";
 
 type CategoryResponse = {
   category: string;
@@ -56,6 +57,7 @@ const TrainingSchedule: React.FC = () => {
 
 
   const [trainingData, setTrainingData] = useState<Training[]>([]);
+  const [initialTrainingData, setInitialTrainingData] = useState<Training[]>([]);
   const [categories, setCategories] = useState<CategoryResponse>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -74,12 +76,15 @@ const TrainingSchedule: React.FC = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
 
   useEffect(() => {
     setCategories(categoryskills || []);
     setSkills([]);
     setEmployees(employeeData || []);
     setTrainingData(training_data || []);
+    setInitialTrainingData(training_data || []);
     setTrainingStatus(training_status || []);
   }, [categoryskills, employeeData, training_data, training_status]);
 
@@ -129,6 +134,17 @@ const TrainingSchedule: React.FC = () => {
   const paginatedData = trainingData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   const totalPages = Math.ceil(trainingData.length / itemsPerPage);
 
+  const handleTrainingSearch = (query: string) => {
+    const filteredData = tableSearch(query, initialTrainingData, [
+      'employeeName',
+      'categoryName', 
+      'skillName',    
+      'fromDate',     
+      'tentativeEndDate'
+    ]);
+    setTrainingData(filteredData);
+  };
+
   return (
     <div>
       <div className="container-fixed">
@@ -145,7 +161,14 @@ const TrainingSchedule: React.FC = () => {
           <div className="card-header flex items-center justify-between">
             <div className="input input-sm flex max-w-48 items-center">
               <i className="ki-filled ki-magnifier" />
-              <input placeholder="Search.." type="text" className="ml-2" />
+              <input
+              placeholder="Search.."
+              type="text"
+              className="ml-2" value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                handleTrainingSearch (e.target.value);
+              }}/>
             </div>
             <h3 className="card-title">
               <button onClick={() => setIsAddModalOpen(true)} className="btn btn-sm btn-icon btn-clear btn-primary">
