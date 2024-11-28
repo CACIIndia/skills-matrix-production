@@ -52,7 +52,6 @@ const TrainingSchedule: React.FC = () => {
     [],
   );
   const [categories, setCategories] = useState<CategoryResponse>([]);
-  const [skills, setSkills] = useState<Skill[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
@@ -105,7 +104,6 @@ const TrainingSchedule: React.FC = () => {
 
   useEffect(() => {
     setCategories(categoryskills || []);
-    setSkills([]);
     setEmployees(employeeData || []);
     setTrainingData(training_data || []);
     setInitialTrainingData(training_data || []);
