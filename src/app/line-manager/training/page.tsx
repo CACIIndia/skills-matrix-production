@@ -29,9 +29,9 @@ type Employee = {
 const TrainingSchedule: React.FC = () => {
   const { profile, isLoading } = useAppContext();
 
-  if (isLoading || !profile) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading || !profile) {
+  //   return <div>Loading...</div>;
+  // }
 
   const { data: training_data, refetch } = useGetTrainingDataByUserId(
     profile?.id || "",

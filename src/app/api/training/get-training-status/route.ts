@@ -4,7 +4,7 @@ import db from "@/lib/db";
 
 export async function GET(request: Request) {
   try {
-    const trainingStatus = await db.TrainingStatus.findMany({
+    const trainingStatus = await db.trainingStatus.findMany({
       select: {
         id: true,
         name: true,

@@ -1,10 +1,3 @@
-// export type Skill = {
-//   id: string;
-//   name: string;
-//   category: string;
-//   level?: number;
-// };
-
 export type UserSkill = {
   id: string;
   createdById: string;

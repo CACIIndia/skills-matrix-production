@@ -97,7 +97,7 @@ export default function MasterLayout({
        
             }}
           >
-            <Header onClick={toggleSearchModal} mobileSideBarClick ={toggleMobileSidebar} isSidebarVisible={isSidebarVisible} />
+            <Header onClick={toggleSearchModal} mobileSideBarClick ={toggleMobileSidebar}  />
            
           </div>
 

@@ -22,7 +22,7 @@ type EditTrainingResponse = {
     id: string;
     categoryId: string;
     categoryName: string;
-    skillId: string;
+    skillId: string | null;
     skillName: string;
     fromDate: Date;
     tentativeEndDate: Date;

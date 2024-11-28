@@ -5,7 +5,7 @@ import Dropdown from "@/components/common/Header/Dropdown";
 import { useAppContext } from "@/app/context/AppContext";
 import Image from "next/image";
 const HeaderMenu = () => {
-  const { profile,loading } = useAppContext();
+  const { profile ,isLoading} = useAppContext();
   const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -43,7 +43,7 @@ const HeaderMenu = () => {
            <Image
               alt='Profile'
               className='profile_image size-9 rounded-full border-2 border-success'
-              src={ loading ? "/assets/media/avatars/default-image.png" : profile?.image || "/assets/media/avatars/default-image.png"  } // Use user image or default
+              src={ isLoading ? "/assets/media/avatars/default-image.png" : profile?.image || "/assets/media/avatars/default-image.png"  } // Use user image or default
               height={36}
               width={36}
             />

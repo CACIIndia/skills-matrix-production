@@ -5,7 +5,7 @@ export async function GET(request: Request, { params }: { params: { userId: stri
   const { userId } = params;
 
   try {
-    const trainingData = await db.Training.findMany({
+    const trainingData = await db.training.findMany({
       where: { createdById: userId },
       select: {
         id: true,
