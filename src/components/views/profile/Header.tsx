@@ -81,7 +81,7 @@ const ProfileHeader = ({ data, isLoading,editProfile }: ProfileHeaderProps) => {
             />
 
             {/* Edit Icon */}
-            {editProfile && (
+            {/* {editProfile && (
               <button
                 type='button'
                 onClick={handleEditClick}
@@ -89,7 +89,7 @@ const ProfileHeader = ({ data, isLoading,editProfile }: ProfileHeaderProps) => {
               >
                 <FaEdit size={20} />
               </button>
-            )}
+            )} */}
           </div>
 
           {/* File Input for Uploading Image (hidden but triggered on button click) */}

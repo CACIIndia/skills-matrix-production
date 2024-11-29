@@ -28,7 +28,7 @@ type Employee = {
 
 const TrainingSchedule: React.FC = () => {
   const { profile, isLoading } = useAppContext();
-
+   console.log(profile,"profile");
   // if (isLoading || !profile) {
   //   return <div>Loading...</div>;
   // }
@@ -265,7 +265,7 @@ const TrainingSchedule: React.FC = () => {
                               {training.employeeName}
                             </a>
                             <span className='text-2sm leading-3 text-gray-600'>
-                              Software Developer
+                            {training.employee.role}
                             </span>
                           </div>
                         </td>
@@ -389,6 +389,9 @@ const TrainingSchedule: React.FC = () => {
             statusId: "",
             employeeId: "",
             employeeName: "",
+            employee: {
+              role: "",
+            }
           }
         }
         trainingStatus={trainingStatus}

@@ -103,6 +103,9 @@ export interface Training {
   statusId: string;
   employeeId: string;
   employeeName: string;
+  employee:{
+    role:string;
+  }
 }
 export interface Skill  {
   id: string;

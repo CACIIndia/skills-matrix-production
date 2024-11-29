@@ -90,9 +90,9 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
           <div className='menu-item'>
             <Link className='menu-link hover:text-primary' href={"#"}   onClick={handleAzureConnect}>
               <span className='menu-icon'>
-              <FiRefreshCcw className="menu-custom-icon"/>
+              <FiRefreshCcw className="menu-custom-icon "/>
               </span>
-              <span className='menu-title'>Sync Azure AD</span>
+              <span className='menu-title '>Sync Azure AD</span>
             </Link>
           </div>
           {profile?.isLineManager && <div className="menu-item">

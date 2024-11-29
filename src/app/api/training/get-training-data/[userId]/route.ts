@@ -22,6 +22,12 @@ export async function GET(request: Request, { params }: { params: { userId: stri
         statusId: true,
         employeeId: true,
         employeeName: true,
+        employee: {
+          select: {
+            role: true, 
+          },
+        },
+        
       },
     });
     return NextResponse.json(

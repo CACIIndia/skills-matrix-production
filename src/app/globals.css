@@ -1141,7 +1141,7 @@ video {
   color: var(--tw-gray-800);
 }
 
-.menu-default .menu-item .menu-icon i {
+.menu-default .menu-item .menu-icon i,.menu-custom-icon {
   color: var(--tw-gray-500);
 }
 
