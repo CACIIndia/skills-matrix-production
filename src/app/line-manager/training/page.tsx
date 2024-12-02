@@ -352,7 +352,11 @@ const TrainingSchedule: React.FC = () => {
             </div>
           </div>
         </div>
+
+      
       </div>
+
+     
 
       {/* Modals */}
       <CreateTraining

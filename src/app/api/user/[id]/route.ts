@@ -12,27 +12,42 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    const isLineManager = await db.user.findFirst({
-      where: {
-        reportedToId: id,
-      },
-    });
+    const [isLineManager, trainingEmployees] = await Promise.all([
+      db.user.findFirst({
+        where: {
+          reportedToId: id,
+        },
+      }),
+      db.training.findMany({
+        where: {
+          employeeId: id,
+        },
+        include: {
+          status: {
+            select: {
+              name: true, 
+            },
+          },
+        },
+      }),
+    ]);
 
-    const userWithLineManagerStatus = {
+    const userWithLineManagerAndTrainingStatus = {
       ...user,
       isLineManager: !!isLineManager,
+      trainingEmployees,
     };
 
     return NextResponse.json(
       { 
-        user: userWithLineManagerStatus, 
+        user: userWithLineManagerAndTrainingStatus, 
         success: true 
       },
       { status: 200 }
     );
 
   } catch (error) {
-    console.error("Error fetching user or checking line manager status:", error);
+    console.error("Error fetching user or checking line manager/training status:", error);
     return NextResponse.json(
       { error: "Internal Server Error" }, 
       { status: 500 }

@@ -40,6 +40,7 @@ model User {
   Certification  Certification[]
   trainingCreatedByIds Training[] @relation("trainingCreatedByIds")
   trainingEmployees    Training[] @relation("trainingEmployees")
+
  
 }
 
