@@ -102,8 +102,6 @@ const EditTraining = ({
       (cat) => cat.category === formik.values.categoryName,
     );
     setSkills(selectedCategory ? selectedCategory.skills : []);
-    formik.setFieldValue("skillId", "");
-    formik.setFieldValue("skillName", "");
   }, [formik.values.categoryName, categoriesData]);
 
   return isOpen ? (
@@ -144,6 +142,7 @@ const EditTraining = ({
               <label className='mb-1 block text-sm font-medium'>Skill</label>
               <select
                 name='skillId'
+                id="formik-skillId"
                 value={formik.values.skillId}
                 onChange={formik.handleChange}
                 className='w-full rounded-md border border-gray-300 p-2'
