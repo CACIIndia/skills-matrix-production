@@ -10,6 +10,9 @@ import React, {
 import { Session } from "next-auth";
 import { useSession } from "next-auth/react";
 import useGetProfile from "@/lib/hooks/profile/useGetProfile";
+import {  useIsLineManager } from "@/lib/hooks/common/useLineManager";
+import { getLineManager } from "../actions/user/getLineManager";
+
 
 type State = {
   profile: any;
@@ -18,8 +21,10 @@ type State = {
   setViewedProfile: Dispatch<SetStateAction<any>>;
   isLoading: boolean;
   user?: Session["user"];
+
 };
 
+// Create the context
 const AppContext = createContext<State | undefined>(undefined);
 
 type AppProviderProps = {
@@ -28,18 +33,24 @@ type AppProviderProps = {
 
 export const AppProvider = ({ children }: AppProviderProps) => {
   const { data: session } = useSession();
-  const { data: profileData, isLoading } = useGetProfile(
-    session?.user?.id ?? "",
-  );
+  const { data: profileData, isLoading } = useGetProfile(session?.user?.id ?? "");
+  
 
-  const [profile, setProfile] = useState();
-  const [viewedProfile, setViewedProfile] = useState();
-
+  const [profile, setProfile] = useState<any>();
+  const [viewedProfile, setViewedProfile] = useState<any>();
   const user = session?.user;
 
+
+  
+  
   useEffect(() => {
-    profileData && setProfile(profileData);
+    if (profileData) {
+      setProfile(profileData?.user);
+    }
   }, [profileData]);
+
+
+
 
   return (
     <AppContext.Provider
@@ -49,14 +60,16 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         viewedProfile,
         setViewedProfile,
         user,
-        isLoading,
+        isLoading
       }}
     >
       {children}
+      
     </AppContext.Provider>
   );
 };
 
+// Custom hook to access the context
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (context === undefined) {

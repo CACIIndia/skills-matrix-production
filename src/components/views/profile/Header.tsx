@@ -53,8 +53,10 @@ const ProfileHeader = ({ data, isLoading,editProfile }: ProfileHeaderProps) => {
   };
 
   useEffect(() => {
-    data && setProfileImage(data.image);
-  }, [data?.image]);
+    if (data) {
+      setProfileImage(data.image);
+    }
+  }, [data]);
 
   if (isLoading || !data) {
     return (
@@ -81,7 +83,7 @@ const ProfileHeader = ({ data, isLoading,editProfile }: ProfileHeaderProps) => {
             />
 
             {/* Edit Icon */}
-            {editProfile && (
+            {/* {editProfile && (
               <button
                 type='button'
                 onClick={handleEditClick}
@@ -89,7 +91,7 @@ const ProfileHeader = ({ data, isLoading,editProfile }: ProfileHeaderProps) => {
               >
                 <FaEdit size={20} />
               </button>
-            )}
+            )} */}
           </div>
 
           {/* File Input for Uploading Image (hidden but triggered on button click) */}

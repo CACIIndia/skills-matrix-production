@@ -9,10 +9,11 @@ import "react-datepicker/dist/react-datepicker.css";
 interface CertificateTableProps {
   certificates: Certificate[];
   onEdit: (id: string, updatedCertificate: Omit<Certificate, "id">) => void;
-  onDelete: (id: string) => void;
+  onDelete: (id: string,refetch:()=>void) => void;
   onDownload: (url: string, createdById: string, name: string) => void;
   onAddCertificate: (newCertificate: Omit<Certificate, "id">) => void;
   categoryskills: SkillCategory[];
+  refetch:()=>void
 }
 
 const CertificateTable: React.FC<CertificateTableProps> = ({
@@ -22,6 +23,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
   onDownload,
   onAddCertificate,
   categoryskills,
+  refetch
 }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -93,19 +95,19 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
         </div>
 
         <div className='card-body'>
-          <div className='scrollable-x-auto max-h-[300px] overflow-y-auto'>
+          <div className='scrollable-x-auto max-h-[300px] overflow-y-auto  '>
             <table className='table-border table min-w-full'>
-              <thead className='sticky top-0 z-0 bg-white'>
+              <thead className='sticky top-0 z-10 bg-white ' >
                 <tr>
                   <th className='w-[60px]'>#</th>
                   <th className='w-[150px]'>Category</th>
                   <th className='w-[280px]'>Name</th>
                   <th className='min-w-[135px]'>Obtained Date</th>
                   <th className='min-w-[135px]'>Valid Until</th>
-                  <th className='min-w-[135px]'>Actions</th>
+                  <th className='min-w-[135px] overflow-hidden'>Actions</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody >
                 {certificates?.length === 0 ? (
                   <tr>
                     <td colSpan={6} className='text-center'>
@@ -126,15 +128,16 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
                       <td className='flex gap-3 text-xl'>
                         <button
+                          
                           className='text-primary'
                           onClick={() => handleEditCertificate(cert.id || "", cert)}
                           title='Edit'
                         >
-                          <i className='ki-filled ki-notepad-edit' />
+                          <i className='ki-filled ki-notepad-edit ' />
                         </button>
                         <button
                           className='text-danger'
-                          onClick={() => onDelete(cert.id || "")}
+                          onClick={() => onDelete(cert.id || "",refetch)}
                           title='Delete'
                         >
                           <FaTrash />

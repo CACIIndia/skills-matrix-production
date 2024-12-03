@@ -1,15 +1,19 @@
-// /app/api/users/list/route.ts (for the App Router)
+// /app/api/users/list/route.ts
 import { NextResponse } from "next/server";
-import db from "@/lib/db"; // Assuming you have a Prisma or database connection
+import db from "@/lib/db";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const reportedToId = searchParams.get("reportedToId");
+
   try {
     const users = await db.user.findMany({
+      where: reportedToId ? { reportedToId } : undefined,
       select: {
         id: true,
         name: true,
         email: true,
-        image: true, // Assuming 'image' is a field in your User model
+        image: true,
       },
     });
 

@@ -1141,7 +1141,7 @@ video {
   color: var(--tw-gray-800);
 }
 
-.menu-default .menu-item .menu-icon i {
+.menu-default .menu-item .menu-icon i,.menu-custom-icon {
   color: var(--tw-gray-500);
 }
 
@@ -1156,6 +1156,13 @@ video {
 .menu-default .menu-item .menu-link:hover .menu-icon i {
   color: var(--tw-primary);
 }
+
+.menu-default .menu-item .menu-link:hover .menu-icon .menu-custom-icon {
+  color: var(--tw-primary);
+}
+
+
+
 
 .menu-default .menu-item.active > .menu-link .menu-title,
 .menu-default .menu-item.show > .menu-link .menu-title,

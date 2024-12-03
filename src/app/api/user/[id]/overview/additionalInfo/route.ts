@@ -43,7 +43,7 @@ export async function PUT(
     });
 
     return NextResponse.json(
-      { message: "Additional info upserted successfully", data: upsertedAdditionalInfo },
+      { message: "Additional info upserted successfully", data: upsertedAdditionalInfo,success:true },
       { status: 200 },
     );
   } catch (error) {

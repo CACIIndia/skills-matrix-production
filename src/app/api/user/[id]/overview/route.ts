@@ -8,15 +8,15 @@ export async function PUT(
   try {
     const { id } = params;
 
-    const { phone, sfia_level, reported_to } = await request.json();
+    const { phone, sfiaLevel, reportedTo } = await request.json();
 
     // Update the user's general info
     const updatedGeneralInfo = await db.user.update({
       where: { id },
       data: {
         phone,
-        sfiaLevel:sfia_level,
-        reportedTo:reported_to,
+        sfiaLevel:sfiaLevel,
+        reportedTo:reportedTo,
       },
     });
 

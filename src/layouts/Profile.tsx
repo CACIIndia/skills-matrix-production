@@ -19,20 +19,19 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
   const userId = params.id ? String(params.id) : "";
   const editProfile = userId?false:true;
 
-  const { profile, viewedProfile, setViewedProfile, isLoading } =
-    useAppContext();
+  const { profile, viewedProfile, setViewedProfile, isLoading } =useAppContext();
 
   const data = userId ? viewedProfile : profile;
 
-  const handleSetViewedProfile = async () => {
-    setViewedProfile(null); // Reset and fetch new profile
-
-    setViewedProfile(await getProfile(userId));
-  };
-
   useEffect(() => {
-    userId && handleSetViewedProfile();
-  }, [userId]);
+    if (userId) {
+      const fetchData = async () => {
+        let user_data = await getProfile(userId);
+        setViewedProfile(user_data.user);
+      };
+      fetchData();
+    }
+  }, [userId,setViewedProfile]);
 
   return (
     <div className='w-full'>

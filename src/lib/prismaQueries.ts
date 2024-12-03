@@ -16,7 +16,9 @@ export const fullUserInclude = Prisma.validator<Prisma.UserInclude>()({
     },
   },
   projects: true,
+  
 });
+
 
 export const getFullUser = (userId: string) => ({
   where: { id: userId },

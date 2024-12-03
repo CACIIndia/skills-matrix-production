@@ -8,6 +8,7 @@ import { SiMicrosoftazure } from "react-icons/si";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useUpdateMicrosoftProfile } from "@/lib/hooks/useUpdateMicroSoftProfile";
+import { FiRefreshCcw } from "react-icons/fi";
 
 type HeaderDropdownProps = {
   isOpen: boolean;
@@ -87,23 +88,24 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
             </Link>
           </div>
           <div className='menu-item'>
-            {/* <Button
-              className='btn flex items-center justify-center btn-primary'
-              onClick={handleAzureConnect}
-           
-            >
+            <Link className='menu-link hover:text-primary' href={"#"}   onClick={handleAzureConnect}>
               <span className='menu-icon'>
-                <SiMicrosoftazure />
+              <FiRefreshCcw className="menu-custom-icon "/>
               </span>
-              <span className='menu-title'>{ "Azure AD Connect"}</span>
-            </Button> */}
-            <Link className='menu-link' href={"#"}   onClick={handleAzureConnect}>
-              <span className='menu-icon'>
-              <SiMicrosoftazure />
-              </span>
-              <span className='menu-title'>Azure AD Connect</span>
+              <span className='menu-title '>Sync Azure AD</span>
             </Link>
           </div>
+          {profile?.isLineManager && <div className="menu-item">
+            <Link className="menu-link hover:text-primary" href="/line-manager/training">
+             <span className="menu-icon">
+             <i className="ki-filled ki-setting-2 text-lg">
+             </i>
+             </span>
+             <span className="menu-title">Line Manager</span>
+            </Link>
+          </div>}
+          
+
         </div>
         <div className='flex flex-col'>
           <div className='menu-item px-4 py-1.5'>
@@ -111,7 +113,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
               className='btn btn-sm btn-light justify-center'
               onClick={() => {
                 signOut();
-                onClose(); // Close dropdown on logout
+                onClose(); 
               }}
             >
               Log out

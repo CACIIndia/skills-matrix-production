@@ -10,9 +10,9 @@ import useGetSkillCategory from "@/lib/hooks/profile/useGetSkillCategory";
 const CertificatePage = () => {
   const { profile } = useAppContext();
 
-  const { data: certificates } = useGetCertificates(profile.id);
+  const { data: certificates,refetch } = useGetCertificates(profile.id);
   const {data: categoryskills} = useGetSkillCategory();
-  console.log(categoryskills,"categoryskills");
+ 
   const { handleDelete, handleEdit, handleUpload,handleDownload } = useCertificateHandlers(
     profile.id,
   );
@@ -28,6 +28,7 @@ const CertificatePage = () => {
             onDelete={handleDelete}
             onDownload={handleDownload}
             onAddCertificate={handleUpload}
+            refetch={refetch}
           />
 
           <ResumeCard

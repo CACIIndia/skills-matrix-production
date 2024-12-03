@@ -123,7 +123,7 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
                 SFIA Level:
               </td>
               <td className='pb-3 text-sm font-medium text-gray-800'>
-                {editableData?.sfia_level || "N/A"}
+                {editableData?.sfiaLevel || "N/A"}
               </td>
             </tr>
             <tr>
@@ -131,7 +131,7 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
                 Reported To:
               </td>
               <td className='pb-3 text-sm font-medium text-gray-800'>
-                {editableData?.reported_to || "N/A"}
+                {editableData?.reportedTo || "N/A"}
               </td>
             </tr>
           </tbody>

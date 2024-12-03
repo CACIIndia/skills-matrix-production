@@ -1,10 +1,3 @@
-export type Skill = {
-  id: string;
-  name: string;
-  category: string;
-  level?: number;
-};
-
 export type UserSkill = {
   id: string;
   createdById: string;
@@ -67,9 +60,9 @@ export interface GeneralInfo {
   status: string;
   startdate: string;
   current_project: string;
-  sfia_level: string;
-  reported_to: string;
-  reported_to_id :string;
+  sfiaLevel: string;
+  reportedTo: string;
+  reportedToId :string;
 }
 
 
@@ -93,4 +86,32 @@ export interface SkillCategory {
   updatedAt:Date| string;
   createdById: string;
   status: string | null
+};
+
+export interface Training {
+  id: string;
+  categoryId: string;
+  categoryName: string;
+  skillId: string;
+  skillName: string;
+  fromDate: Date | null;
+  tentativeEndDate: Date |null;
+  description: string;
+  createdAt: Date |null;
+  updatedAt: Date |null;
+  createdById: string;
+  statusId: string;
+  employeeId: string;
+  employeeName: string;
+  employee:{
+    role:string;
+  }
+}
+export interface Skill  {
+  id: string;
+  name: string;
+  categoryId: string | null; 
+  createdAt: Date | string;
+  updatedAt: Date |string;
+  skillCategory?: SkillCategory;
 };
