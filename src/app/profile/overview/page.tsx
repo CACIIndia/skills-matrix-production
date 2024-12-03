@@ -31,9 +31,9 @@ const OverviewPage = () => {
             status: profile?.status || "",
             startdate: currentProject?.startDate || "",
             current_project: currentProject?.projectName || "",
-            sfia_level: profile?.sfiaLevel || "",
-            reported_to: profile?.reportedTo || "",
-            reported_to_id: profile?.reportedToId || "",
+            sfiaLevel: profile?.sfiaLevel || "",
+            reportedTo: profile?.reportedTo || "",
+            reportedToId: profile?.reportedToId || "",
           }}
         />
 

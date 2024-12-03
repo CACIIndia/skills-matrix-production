@@ -9,7 +9,7 @@ export async function PUT(
     const { id } = params;
   
 
-    const { phone, sfia_level, reported_to,reported_to_id } = await request.json();
+    const { phone, sfiaLevel, reportedTo,reportedToId } = await request.json();
 
 
 
@@ -18,9 +18,9 @@ export async function PUT(
       where: { id },
       data: {
         phone,
-        sfiaLevel:sfia_level,
-        reportedTo:reported_to,
-        reportedToId:reported_to_id,
+        sfiaLevel:sfiaLevel,
+        reportedTo:reportedTo,
+        reportedToId:reportedToId,
       },
     });
 
