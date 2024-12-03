@@ -77,7 +77,7 @@ const CreateTraining = ({
     onSubmit: (values) => {
       const selectedSkill = skills.find((sk) => sk.id === values.skillId);
       const selectedEmployee = employeeData.find((emp) => emp.id === values.employeeId);
-      
+
       const fromDate: any = values.fromDate;
       const toDate: any = values.toDate;
 const adjustedFromDate = new Date(
@@ -88,17 +88,21 @@ const adjustedFromDate = new Date(
               );
 
 
-              console.log(adjustedFromDate,"adjustedFromDate");
-              console.log(adjustedToDate,"adjustedToDate");
-              
-   
+              const selectedStatus = trainingStatus.find(
+                (status) => status.id === values.statusId
+              );
+
+              const statusInProgress = selectedStatus?.name === "In Progress";
+
+    
       const updatedValues = {
         ...values,
         skillName: selectedSkill ? selectedSkill.name : "",
         categoryId: selectedSkill ? selectedSkill.categoryId : "",
         employeeName: selectedEmployee ? selectedEmployee.name : "",
         fromDate:adjustedFromDate,
-        toDate:adjustedToDate
+        toDate:adjustedToDate,
+        statusInProgress
 
       };
       

@@ -13,6 +13,7 @@ type TrainingAddData = {
   employeeId: string;
   employeeName: string;
   statusId: string;
+  statusInProgress?:boolean;
 };
 
 type AddTrainingResponse = {
@@ -41,6 +42,19 @@ export async function addTraining(data: TrainingAddData): Promise<AddTrainingRes
   }
 
   try {
+    if (data.statusInProgress) {
+      const existingInProgressTraining = await db.training.findFirst({
+        where: {
+          employeeId: data.employeeId,
+          status: {
+            name: "In Progress",
+          },
+        },
+      });
+      if (existingInProgressTraining) {
+        throw new Error("User already has In Progress training. Please complete the existing training first.");
+      }
+    }
     const newTraining = await db.training.create({
       data: {
         categoryId: data.categoryId,
@@ -61,8 +75,12 @@ export async function addTraining(data: TrainingAddData): Promise<AddTrainingRes
       message: "Training added successfully",
       training: newTraining,
     };
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Error adding training:", error);
-    throw new Error("Failed to add training. Please try again.");
+    if (error instanceof Error) {
+      throw new Error(error.message || "Failed to add training");
+    } else {
+      throw new Error("Failed to add training");
+    }
   }
 }
