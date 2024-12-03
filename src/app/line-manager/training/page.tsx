@@ -134,18 +134,12 @@ const TrainingSchedule: React.FC = () => {
     setTrainingData(filteredData);
   };
 
-  useEffect(() => {
-    if (currentPage > totalPages) {
-      setCurrentPage(totalPages > 0 ? totalPages : 1);
-    }
-  }, [trainingData, itemsPerPage]);
-
+ 
   const getSortClass = (key: string) => {
     if (sortConfig.key !== key) return ""; 
     return sortConfig.direction === "asc" ? "asc" : "desc";
   };
   
-
   return (
     <div>
       <div className='container-fixed'>

@@ -53,8 +53,10 @@ const ProfileHeader = ({ data, isLoading,editProfile }: ProfileHeaderProps) => {
   };
 
   useEffect(() => {
-    data && setProfileImage(data.image);
-  }, [data?.image]);
+    if (data) {
+      setProfileImage(data.image);
+    }
+  }, [data]);
 
   if (isLoading || !data) {
     return (

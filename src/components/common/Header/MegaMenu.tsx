@@ -35,7 +35,7 @@ const MegaMenu = ({}: MegaMenuProps) => {
 
       {getCurrentBreadCrumbName && (
         <div className='gap-1.25 mb-2.5 ml-2 flex items-center text-xs font-medium lg:mb-0 lg:text-sm'>
-          <span className='text-gray-600'>Line Manager</span>
+          <span className='text-gray-700'>Line Manager</span>
           <i className='ki-filled ki-right text-3xs text-gray-500'></i>
           <span className='text-gray-700'>{getCurrentBreadCrumbName}</span>
         </div>

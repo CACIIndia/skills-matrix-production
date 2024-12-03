@@ -23,14 +23,15 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
 
   const data = userId ? viewedProfile : profile;
 
-  const handleSetViewedProfile = async () => {
-    setViewedProfile(null);
-    setViewedProfile(await getProfile(userId));
-  };
-
   useEffect(() => {
-    userId && handleSetViewedProfile();
-  }, [userId]);
+    if (userId) {
+      const fetchData = async () => {
+        let user_data = await getProfile(userId);
+        setViewedProfile(user_data.user);
+      };
+      fetchData();
+    }
+  }, [userId,setViewedProfile]);
 
   return (
     <div className='w-full'>

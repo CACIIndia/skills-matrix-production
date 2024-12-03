@@ -1,23 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Button from "@/components/common/Button";
+import { GeneralInfo } from "@/lib/types/profile";
 
-type GeneralInfo = {
-  id?: string;
-  email: string;
-  phone: string;
-  status: string;
-  startdate: string;
-  current_project: string;
-  sfia_level: string;
-  reported_to: string;
-  reported_to_id: string;
-};
+
 
 type EditGeneralInfoProps = {
   initialData: GeneralInfo;
   onSave: (updatedData: GeneralInfo) => void;
-  sfiaLevels: Array<{ id: string; level: string }>; // Add SFIA levels as prop
-  reportedToOptions: Array<{ id: string; name: string }>; // Add Reported To options as prop
+  sfiaLevels: Array<{ id: string; level: string }>; 
+  reportedToOptions: Array<{ id: string; name: string }>; 
 };
 
 const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
@@ -32,14 +23,14 @@ const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
   useEffect(() => {
     // Set the reported_to field using the initialData
     const selectedPerson = reportedToOptions.find(
-      (person) => person.id === initialData.reported_to_id,
+      (person) => person.id === initialData.reportedTo,
     );
 
     if (selectedPerson) {
       setEditableData({
         ...initialData,
-        reported_to: selectedPerson.name, // Set the name based on the ID
-        reported_to_id: selectedPerson.id,
+        reportedTo: selectedPerson.name, // Set the name based on the ID
+        reportedToId: selectedPerson.id,
       });
     }
   }, [initialData, reportedToOptions]);
@@ -63,19 +54,19 @@ const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
     if (selectedPerson) {
       setEditableData({
         ...editableData,
-        reported_to: selectedPerson.name, // Store the name
-        reported_to_id: selectedPerson.id, // Store the ID
+        reportedTo: selectedPerson.name, // Store the name
+        reportedToId: selectedPerson.id, // Store the ID
       });
     }
   };
 
   const handleSave = () => {
-    const { reported_to, reported_to_id, ...restData } = editableData;
+    const { reportedTo, reportedToId, ...restData } = editableData;
 
     onSave({
       ...restData,
-      reported_to: reported_to,
-      reported_to_id: reported_to_id,
+      reportedTo: reportedTo,
+      reportedToId: reportedToId,
     });
   };
 
@@ -97,8 +88,8 @@ const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
       <label>
         SFIA Level:
         <select
-          name='sfia_level'
-          value={editableData.sfia_level}
+          name='sfiaLevel'
+          value={editableData.sfiaLevel}
           onChange={handleInputChange}
           className='input'
         >
@@ -115,14 +106,14 @@ const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
       <label>
         Reported To:
         <select
-          name='reported_to'
-          value={editableData.reported_to_id} // Use the ID as the value
-          onChange={handleReportedToChange} // Handle selection by ID
+          name='reportedTo'
+          value={editableData.reportedToId} 
+          onChange={handleReportedToChange} 
           className='input'
         >
           <option value=''>Select Person</option>
           {reportedToOptions
-            .filter((person) => person.id !== editableData.id) // Exclude the current user
+            .filter((person) => person.id !== editableData.id) 
             .map((person) => (
               <option key={person.id} value={person.id}>
                 {person.name}

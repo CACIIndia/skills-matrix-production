@@ -95,7 +95,7 @@ const EditTraining = ({
     if (isOpen) {
       formik.resetForm();
     }
-  }, [isOpen]);
+  }, [isOpen,formik.resetForm]);
 
   useEffect(() => {
     const selectedCategory = categoriesData.find(
