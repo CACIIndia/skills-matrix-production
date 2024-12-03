@@ -60,9 +60,9 @@ export interface GeneralInfo {
   status: string;
   startdate: string;
   current_project: string;
-  sfia_level: string;
-  reported_to: string;
-  reported_to_id :string;
+  sfiaLevel: string;
+  reportedTo: string;
+  reportedToId :string;
 }
 
 
