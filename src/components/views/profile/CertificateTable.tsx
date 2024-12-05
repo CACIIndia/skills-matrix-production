@@ -33,7 +33,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [editingCertificate, setEditingCertificate] = useState<
+  const [editingCertificate, setEditingCertificate] = useState<
     Omit<Certificate, "id">
   >({
     name: "",
@@ -94,9 +94,8 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
       "obtainedDate",
       "expiryDate",
     ]);
-    
+
     setCertificatesData(filteredData);
-    
   };
 
   const getSortClass = (key: string) => {
@@ -150,99 +149,6 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
   return (
     <div className='min-h-[400px]'>
-      <div className='card card-grid max-h-[400px] min-w-full'>
-        <div className='card-header flex items-center justify-between'>
-          <h3 className='card-title'>Certifications</h3>
-          <button
-            className='btn btn-sm btn-icon btn-clear btn-primary'
-            onClick={toggleAddModal}
-          >
-            <CiSquarePlus size={32} />
-          </button>
-        </div>
-
-        <div className='card-body'>
-          <div className='scrollable-x-auto max-h-[300px] overflow-y-auto'>
-            <table className='table-border table min-w-full'>
-              <thead className='sticky top-0 z-10 bg-white'>
-                <tr>
-                  <th className='w-[60px]'>#</th>
-                  <th className='w-[150px]'>Category</th>
-                  <th className='w-[280px]'>Name</th>
-                  <th className='min-w-[135px]'>Obtained Date</th>
-                  <th className='min-w-[135px]'>Valid Until</th>
-                  <th className='min-w-[135px] overflow-hidden'>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {certificates?.length === 0 ? (
-                  <tr>
-                    <td colSpan={6} className='text-center'>
-                      No Records
-                    </td>
-                  </tr>
-                ) : (
-                  certificates?.map((cert, index) => (
-                    <tr key={cert.id}>
-                      <td>{index + 1}</td>
-                      <td>{cert.categoryName}</td>
-                      <td>
-                        <span className='text-sm font-semibold text-gray-900'>
-                          {cert.name}
-                        </span>
-                      </td>
-                      <td>
-                        {cert.obtainedDate
-                          ? new Date(cert.obtainedDate).toLocaleDateString()
-                          : "N/A"}
-                      </td>
-
-                      <td>
-                        {cert.expiryDate
-                          ? new Date(cert.expiryDate).toLocaleDateString()
-                          : "N/A"}
-                      </td>
-
-                      <td className='flex gap-3 text-xl'>
-                        <button
-                          className='text-primary'
-                          onClick={() =>
-                            handleEditCertificate(cert.id || "", cert)
-                          }
-                          title='Edit'
-                        >
-                          <i className='ki-filled ki-notepad-edit' />
-                        </button>
-                        <button
-                          className='text-danger'
-                          onClick={() => onDelete(cert.id || "", refetch)}
-                          title='Delete'
-                        >
-                          <FaTrash />
-                        </button>
-                        <button
-                          className='text-success'
-                          onClick={() =>
-                            onDownload(
-                              cert.url || "",
-                              cert.createdById || "",
-                              cert.name,
-                            )
-                          }
-                          title='Download'
-                        >
-                          <i className='ki-filled ki-folder-down' />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
       <div className='grid'>
         <div className='card card-grid h-full min-w-full'>
           <div className='card-header flex items-center justify-between'>
@@ -270,119 +176,111 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
           </div>
 
           <div className='card-body'>
-            <div data-datatable='true' data-datatable-page-size='5'>
-              <div className='scrollable-x-auto'>
-                <table
-                  className='table-border table'
-                  data-datatable-table='true'
-                >
-                  <thead>
-                    <tr>
-                      <th className='w-[60px]'>#</th> 
-                      <th
-                        className='w-[150px] cursor-pointer'
-                        onClick={() => handleSort("categoryName")}
-                      >
-                        <span className={`sort ${getSortClass("categoryName")}`}>
-                          <span className='sort-label'>Category</span>
-                          <span className='sort-icon'></span>
-                        </span>
-                      </th>
-                      <th
-                        className='w-[280px] cursor-pointer'
-                        onClick={() => handleSort("name")}
-                      >
-                        <span className={`sort ${getSortClass("name")}`}>
-                          <span className='sort-label'>Name</span>
-                          <span className='sort-icon'></span>
-                        </span>
-                      </th>
-                      <th
-                        className='min-w-[135px] cursor-pointer'
-                        onClick={() => handleSort("obtainedDate")}
-                      >
-                        <span
-                          className={`sort ${getSortClass("obtainedDate")}`}
-                        >
-                          <span className='sort-label'>Obtained Date</span>
-                          <span className='sort-icon'></span>
-                        </span>
-                      </th>
-                      <th
-                        className='min-w-[135px] cursor-pointer'
-                        onClick={() => handleSort("expiryDate")}
-                      >
-                        <span className={`sort ${getSortClass("expiryDate")}`}>
-                          <span className='sort-label'>Valid Until</span>
-                          <span className='sort-icon'></span>
-                        </span>
-                      </th>
-                      <th className='min-w-[135px] overflow-hidden'>Actions</th>
-                    </tr>
-                  </thead>
+            <table className='table-border table' data-datatable-table='true'>
+              <thead>
+                <tr>
+                  <th className='w-[60px]'>#</th>
+                  <th
+                    className='w-[150px] cursor-pointer'
+                    onClick={() => handleSort("categoryName")}
+                  >
+                    <span className={`sort ${getSortClass("categoryName")}`}>
+                      <span className='sort-label'>Category</span>
+                      <span className='sort-icon'></span>
+                    </span>
+                  </th>
+                  <th
+                    className='w-[280px] cursor-pointer'
+                    onClick={() => handleSort("name")}
+                  >
+                    <span className={`sort ${getSortClass("name")}`}>
+                      <span className='sort-label'>Name</span>
+                      <span className='sort-icon'></span>
+                    </span>
+                  </th>
+                  <th
+                    className='min-w-[135px] cursor-pointer'
+                    onClick={() => handleSort("obtainedDate")}
+                  >
+                    <span className={`sort ${getSortClass("obtainedDate")}`}>
+                      <span className='sort-label'>Obtained Date</span>
+                      <span className='sort-icon'></span>
+                    </span>
+                  </th>
+                  <th
+                    className='min-w-[135px] cursor-pointer'
+                    onClick={() => handleSort("expiryDate")}
+                  >
+                    <span className={`sort ${getSortClass("expiryDate")}`}>
+                      <span className='sort-label'>Valid Until</span>
+                      <span className='sort-icon'></span>
+                    </span>
+                  </th>
+                  <th className='min-w-[135px] overflow-hidden'>Actions</th>
+                </tr>
+              </thead>
 
-                  <tbody>
-                    {paginatedData.map((cert, index) => (
-                      <tr key={cert.id}>
-                        <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>{" "}
-                        <td>{cert.categoryName}</td>
-                        <td>{cert.name}</td>
-                        <td>
-                          {cert.obtainedDate
-                            ? new Date(cert.obtainedDate).toLocaleDateString()
-                            : "N/A"}
-                        </td>{" "}
-                        <td>
-                          {cert.expiryDate
-                            ? new Date(cert.expiryDate).toLocaleDateString()
-                            : "N/A"}
-                        </td>{" "}
-                        <td className='flex gap-3 text-xl'>
-                          <button
-                            className='text-primary'
-                            onClick={() =>
-                              handleEditCertificate(cert.id || "", cert)
-                            }
-                            title='Edit'
-                          >
-                            <i className='ki-filled ki-notepad-edit' />
-                          </button>
-                          <button
-                            className='text-danger'
-                            onClick={() => onDelete(cert.id || "", refetch)}
-                            title='Delete'
-                          >
-                            <FaTrash />
-                          </button>
-                          <button
-                            className='text-success'
-                            onClick={() =>
-                              onDownload(
-                                cert.url || "",
-                                cert.createdById || "",
-                                cert.name,
-                              )
-                            }
-                            title='Download'
-                          >
-                            <i className='ki-filled ki-folder-down' />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              <tbody>
+                {paginatedData.map((cert, index) => (
+                  <tr key={cert.id}>
+                    <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>{" "}
+                    <td>{cert.categoryName}</td>
+                    <td>{cert.name}</td>
+                    <td>
+                      {cert.obtainedDate
+                        ? new Date(cert.obtainedDate).toLocaleDateString()
+                        : "N/A"}
+                    </td>{" "}
+                    <td>
+                      {cert.expiryDate
+                        ? new Date(cert.expiryDate).toLocaleDateString()
+                        : "N/A"}
+                    </td>{" "}
+                    <td className='flex gap-3 text-xl'>
+                      <button
+                        className='text-primary'
+                        onClick={() =>
+                          handleEditCertificate(cert.id || "", cert)
+                        }
+                        title='Edit'
+                      >
+                        <i className='ki-filled ki-notepad-edit' />
+                      </button>
+                      <button
+                        className='text-danger'
+                        onClick={() => onDelete(cert.id || "", refetch)}
+                        title='Delete'
+                      >
+                        <FaTrash />
+                      </button>
+                      <button
+                        className='text-success'
+                        onClick={() =>
+                          onDownload(
+                            cert.url || "",
+                            cert.createdById || "",
+                            cert.name,
+                          )
+                        }
+                        title='Download'
+                      >
+                        <i className='ki-filled ki-folder-down' />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
-              <SortingPagination
-                currentPage={currentPage}
-                totalItems={certificates.length}
-                itemsPerPage={itemsPerPage}
-                setCurrentPage={setCurrentPage}
-                setItemsPerPage={setItemsPerPage}
-              />
-            </div>
+            <SortingPagination
+              currentPage={currentPage}
+              totalItems={certificates.length}
+              itemsPerPage={itemsPerPage}
+              setCurrentPage={setCurrentPage}
+              setItemsPerPage={setItemsPerPage}
+            />
           </div>
+          
         </div>
       </div>
 

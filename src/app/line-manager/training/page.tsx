@@ -12,7 +12,7 @@ import { CiSquarePlus } from "react-icons/ci";
 import CreateTraining from "@/components/views/Training/TrainingModal";
 import EditTraining from "@/components/views/Training/EditTrainingModal";
 import { tableSearch } from "@/lib/utils/tableSearch";
-import SortingTable from "@/components/common/Table/SortingTable";
+import SortingPagination from "@/components/common/Table/SortingPagination";
 
 type CategoryResponse = {
   category: string;
@@ -29,7 +29,7 @@ type Employee = {
 
 const TrainingSchedule: React.FC = () => {
   const { profile, isLoading } = useAppContext();
-   console.log(profile,"profile");
+  console.log(profile, "profile");
   // if (isLoading || !profile) {
   //   return <div>Loading...</div>;
   // }
@@ -73,16 +73,15 @@ const TrainingSchedule: React.FC = () => {
 
   const sortData = (data: Training[]) => {
     if (!sortConfig.key || !sortConfig.direction) return data;
-  
+
     return [...data].sort((a, b) => {
       const aValue = a[sortConfig.key as keyof Training] ?? null;
       const bValue = b[sortConfig.key as keyof Training] ?? null;
-  
-     
+
       if (aValue === null && bValue === null) return 0;
       if (aValue === null) return sortConfig.direction === "asc" ? -1 : 1;
       if (bValue === null) return sortConfig.direction === "asc" ? 1 : -1;
-  
+
       const isAscending = sortConfig.direction === "asc";
 
       return isAscending
@@ -90,11 +89,11 @@ const TrainingSchedule: React.FC = () => {
           ? 1
           : -1
         : (aValue as string | number) < (bValue as string | number)
-        ? 1
-        : -1;
+          ? 1
+          : -1;
     });
   };
-  
+
   const handleSort = (key: keyof Training) => {
     let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
@@ -135,12 +134,11 @@ const TrainingSchedule: React.FC = () => {
     setTrainingData(filteredData);
   };
 
- 
   const getSortClass = (key: string) => {
-    if (sortConfig.key !== key) return ""; 
+    if (sortConfig.key !== key) return "";
     return sortConfig.direction === "asc" ? "asc" : "desc";
   };
-  
+
   return (
     <div>
       <div className='container-fixed'>
@@ -260,7 +258,7 @@ const TrainingSchedule: React.FC = () => {
                               {training.employeeName}
                             </a>
                             <span className='text-2sm leading-3 text-gray-600'>
-                            {training.employee.role}
+                              {training.employee.role}
                             </span>
                           </div>
                         </td>
@@ -302,57 +300,17 @@ const TrainingSchedule: React.FC = () => {
                 </table>
               </div>
 
-              <div className='card-footer text-2sm flex-col justify-center gap-5 font-medium text-gray-600 md:flex-row md:justify-between'>
-                <div className='order-2 flex items-center gap-5 md:order-1'>
-                  <span>Rows per page:</span>
-                  <select
-                    value={itemsPerPage}
-                    onChange={(e) => setItemsPerPage(Number(e.target.value))}
-                  >
-                    <option value='2'>2</option>
-                    <option value='5'>5</option>
-                    <option value='10'>10</option>
-                    <option value='15'>15</option>
-                  </select>
-                </div>
-                <div className='order-1 flex items-center justify-between gap-6 md:order-2'>
-                  <span>
-                    {`${(currentPage - 1) * itemsPerPage + 1}-${Math.min(
-                      currentPage * itemsPerPage,
-                      trainingData.length,
-                    )} of ${trainingData.length}`}
-                  </span>
-                  <div className='flex gap-3'>
-                    <button
-                      className='btn btn-sm btn-icon btn-clear btn-primary'
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.max(prev - 1, 1))
-                      }
-                      disabled={currentPage === 1}
-                    >
-                      &lt;
-                    </button>
-                    <button
-                      className='btn btn-sm btn-icon btn-clear btn-primary'
-                      onClick={() =>
-                        setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                      }
-                      disabled={currentPage === totalPages}
-                    >
-                      &gt;
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <SortingPagination
+                currentPage={currentPage}
+                totalItems={trainingData.length}
+                itemsPerPage={itemsPerPage}
+                setCurrentPage={setCurrentPage}
+                setItemsPerPage={setItemsPerPage}
+              />
             </div>
           </div>
         </div>
-
-      
       </div>
-
-
-   
 
       {/* Modals */}
       <CreateTraining
@@ -391,7 +349,7 @@ const TrainingSchedule: React.FC = () => {
             employeeName: "",
             employee: {
               role: "",
-            }
+            },
           }
         }
         trainingStatus={trainingStatus}
