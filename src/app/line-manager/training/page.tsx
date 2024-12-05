@@ -12,6 +12,7 @@ import { CiSquarePlus } from "react-icons/ci";
 import CreateTraining from "@/components/views/Training/TrainingModal";
 import EditTraining from "@/components/views/Training/EditTrainingModal";
 import { tableSearch } from "@/lib/utils/tableSearch";
+import SortingTable from "@/components/common/Table/SortingTable";
 
 type CategoryResponse = {
   category: string;
@@ -350,7 +351,8 @@ const TrainingSchedule: React.FC = () => {
       
       </div>
 
-     
+
+   
 
       {/* Modals */}
       <CreateTraining
