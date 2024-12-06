@@ -8,6 +8,7 @@ import CertificateTable from "@/components/views/profile/CertificateTable";
 import useGetSkillCategory from "@/lib/hooks/profile/useGetSkillCategory";
 import { useEffect, useState } from "react";
 import { Certificate } from "@/lib/types/profile";
+import useGetTrainingDataByUserId from "@/lib/hooks/Training/useGetTraining";
 
 const CertificatePage = () => {
   const { profile } = useAppContext();
@@ -16,6 +17,9 @@ const CertificatePage = () => {
   const {data: categoryskills} = useGetSkillCategory();
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
   const initialcertificates = certificates || [];
+  const { data: training_data,  } = useGetTrainingDataByUserId(
+    profile?.id , "employeeId","Completed"
+  );
 
   useEffect(()=>{
     setCertificatesData(certificates || []);
@@ -39,14 +43,15 @@ const CertificatePage = () => {
             onDownload={handleDownload}
             onAddCertificate={handleUpload}
             refetch={refetch}
+            trainingData ={training_data || []}
           />
 
-          <ResumeCard
+          {/* <ResumeCard
             iconSrc='/assets/media/file-types/pdf.svg'
             iconAlt='PDF file icon'
             title='Resume'
             timestamp='3 days ago'
-          />
+          /> */}
         </div>
       </div>
     </div>

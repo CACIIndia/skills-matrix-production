@@ -121,8 +121,7 @@ const TrainingSchedule: React.FC = () => {
     currentPage * itemsPerPage,
   );
 
-  const totalPages = Math.ceil(trainingData.length / itemsPerPage);
-
+ 
   const handleTrainingSearch = (query: string) => {
     const filteredData = tableSearch(query, initialTrainingData, [
       "employeeName",

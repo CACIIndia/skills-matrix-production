@@ -1,0 +1,19 @@
+[
+  {
+    "id": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+    "name": "Anas Hersi",
+    "email": "ahersi@caci.co.uk",
+    "emailVerified": "2024-10-22T08:10:23.765Z",
+    "image": "https://smempprofile.blob.core.windows.net/profileimage/1731067739230-7cb2c4dd-2482-4145-bd5e-33ca6c56ff11.png",
+    "phone": null,
+    "location": null,
+    "status": null,
+    "sfiaLevel": null,
+    "reportedTo": "mhartland",
+    "reportedToId": "1ecc6aa9-cb04-4f87-8348-aeaa7f4ef19f",
+    "role": null,
+    "createdAt": "2024-10-22T08:10:23.768Z",
+    "updatedAt": "2024-11-08T12:09:00.467Z",
+    "joiningDate": null
+  }
+]

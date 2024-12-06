@@ -3,10 +3,11 @@ import { FaTrash } from "react-icons/fa";
 import { CiSquarePlus } from "react-icons/ci";
 import AddCertificateModal from "./AddCertificate";
 import EditCertificateModal from "./EditCertificateModal";
-import { Certificate, SkillCategory } from "@/lib/types/profile";
+import { Certificate, SkillCategory, Training } from "@/lib/types/profile";
 import "react-datepicker/dist/react-datepicker.css";
 import SortingPagination from "@/components/common/Table/SortingPagination";
 import { tableSearch } from "@/lib/utils/tableSearch";
+import useGetTrainingDataByUserId from "@/lib/hooks/Training/useGetTraining";
 
 interface CertificateTableProps {
   certificates: Certificate[];
@@ -18,6 +19,7 @@ interface CertificateTableProps {
   initialcertificates: Certificate[];
   categoryskills: SkillCategory[];
   refetch: () => void;
+  trainingData: Training[];
 }
 
 const CertificateTable: React.FC<CertificateTableProps> = ({
@@ -30,6 +32,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
   onAddCertificate,
   categoryskills,
   refetch,
+  trainingData =[],
 }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -85,7 +88,9 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
     currentPage * itemsPerPage,
   );
 
-  const totalPages = Math.ceil(certificates.length / itemsPerPage);
+
+
+
 
   const handleTrainingSearch = (query: string) => {
     const filteredData = tableSearch(query, initialcertificates, [
@@ -291,6 +296,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
           handleToggleAddModal={toggleAddModal}
           handleUploadCertificate={handleAddCertificate}
           categoryskills={categoryskills}
+          trainingData ={trainingData}
         />
       )}
 

@@ -1,0 +1,1402 @@
+[
+  {
+    "id": "2a6ffa01-5495-4def-9285-5156560793af",
+    "name": "AWS DynamoDB",
+    "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+    "createdAt": "2024-11-01T16:49:13.518Z",
+    "updatedAt": "2024-11-01T16:49:13.518Z"
+  },
+  {
+    "id": "40320128-3e86-42b1-ae1f-85c44efa9d23",
+    "name": "MariaDB",
+    "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+    "createdAt": "2024-11-01T16:49:13.518Z",
+    "updatedAt": "2024-11-01T16:49:13.518Z"
+  },
+  {
+    "id": "91dd84f8-30d3-41ca-ab4e-135af5834156",
+    "name": "MongoDB",
+    "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+    "createdAt": "2024-11-01T16:49:13.518Z",
+    "updatedAt": "2024-11-01T16:49:13.518Z"
+  },
+  {
+    "id": "a419f961-da98-4355-863c-f33f6ac411cc",
+    "name": "MySQL",
+    "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+    "createdAt": "2024-11-01T16:49:13.518Z",
+    "updatedAt": "2024-11-01T16:49:13.518Z"
+  },
+  {
+    "id": "ce265547-9ac2-48a4-8ad4-479bfbdc966f",
+    "name": "Oracle",
+    "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+    "createdAt": "2024-11-01T16:49:13.518Z",
+    "updatedAt": "2024-11-01T16:49:13.518Z"
+  },
+  {
+    "id": "81a2ab3a-8a1a-4b1c-8291-e5d187742825",
+    "name": "PostgreSQL",
+    "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+    "createdAt": "2024-11-01T16:49:13.518Z",
+    "updatedAt": "2024-11-01T16:49:13.518Z"
+  },
+  {
+    "id": "1f2c1c2d-9366-47be-bf57-1b3db72c56d2",
+    "name": "Redis",
+    "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+    "createdAt": "2024-11-01T16:49:13.518Z",
+    "updatedAt": "2024-11-01T16:49:13.518Z"
+  },
+  {
+    "id": "fdceaa78-4332-4a12-9da5-37a591102b7c",
+    "name": "SQL Server & Scripting",
+    "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+    "createdAt": "2024-11-01T16:49:13.518Z",
+    "updatedAt": "2024-11-01T16:49:13.518Z"
+  },
+  {
+    "id": "1e61ed4e-fa88-4d89-acc5-ee55dbc98da5",
+    "name": "SQL Server - SSAS",
+    "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+    "createdAt": "2024-11-01T16:49:13.518Z",
+    "updatedAt": "2024-11-01T16:49:13.518Z"
+  },
+  {
+    "id": "5b8b0b64-d4cf-41ff-87a5-0e7b0fc142e5",
+    "name": "SQL Server - SSIS",
+    "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+    "createdAt": "2024-11-01T16:49:13.518Z",
+    "updatedAt": "2024-11-01T16:49:13.518Z"
+  },
+  {
+    "id": "93e034ef-569e-4775-9720-dc8bf90ba58c",
+    "name": "Snowflake",
+    "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+    "createdAt": "2024-11-01T16:49:13.518Z",
+    "updatedAt": "2024-11-01T16:49:13.518Z"
+  },
+  {
+    "id": "ef6d3693-f58b-46ea-8224-2424de2e6390",
+    "name": "Cassandra",
+    "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+    "createdAt": "2024-11-01T16:49:13.518Z",
+    "updatedAt": "2024-11-01T16:49:13.518Z"
+  },
+  {
+    "id": "f0ee72d1-a4b8-4c6f-8687-dd4e1c0e60d4",
+    "name": "Solution Design",
+    "categoryId": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+    "createdAt": "2024-11-01T16:49:18.302Z",
+    "updatedAt": "2024-11-01T16:49:18.302Z"
+  },
+  {
+    "id": "733e04ce-723a-41d7-b21f-f450acba0fb3",
+    "name": "Service Reporting and SLA Compliance",
+    "categoryId": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+    "createdAt": "2024-11-01T16:49:18.302Z",
+    "updatedAt": "2024-11-01T16:49:18.302Z"
+  },
+  {
+    "id": "fbbcf921-c7be-43d2-a1c2-b73e320ae0ca",
+    "name": "Vendor Management",
+    "categoryId": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+    "createdAt": "2024-11-01T16:49:18.302Z",
+    "updatedAt": "2024-11-01T16:49:18.302Z"
+  },
+  {
+    "id": "9b807c88-4d7c-4e47-8b24-b036635e60bd",
+    "name": "Communication Skills",
+    "categoryId": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+    "createdAt": "2024-11-01T16:49:18.302Z",
+    "updatedAt": "2024-11-01T16:49:18.302Z"
+  },
+  {
+    "id": "9ed14268-9a9f-4e94-98bc-ee59935c20a7",
+    "name": "Bid Response (Writing)",
+    "categoryId": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+    "createdAt": "2024-11-01T16:49:18.302Z",
+    "updatedAt": "2024-11-01T16:49:18.302Z"
+  },
+  {
+    "id": "b4e70244-bc26-470e-95bb-4a973bde5871",
+    "name": "Containerisation and Virtualisation Principles",
+    "categoryId": "f40415f8-57c3-4713-bdb6-19d2c76389ce",
+    "createdAt": "2024-11-01T16:49:22.832Z",
+    "updatedAt": "2024-11-01T16:49:22.832Z"
+  },
+  {
+    "id": "ffe6893f-bb6d-4945-a12c-4e989c5cec77",
+    "name": "Networking (TCP/IP, DNS, VPN)",
+    "categoryId": "f40415f8-57c3-4713-bdb6-19d2c76389ce",
+    "createdAt": "2024-11-01T16:49:22.832Z",
+    "updatedAt": "2024-11-01T16:49:22.832Z"
+  },
+  {
+    "id": "1b97c692-95bf-4ed9-8cbe-5cb83299e61a",
+    "name": "Security",
+    "categoryId": "f40415f8-57c3-4713-bdb6-19d2c76389ce",
+    "createdAt": "2024-11-01T16:49:22.832Z",
+    "updatedAt": "2024-11-01T16:49:22.832Z"
+  },
+  {
+    "id": "03bf8eac-bc83-4723-bae4-fd7a5e1406fa",
+    "name": "Capacity Planning",
+    "categoryId": "f40415f8-57c3-4713-bdb6-19d2c76389ce",
+    "createdAt": "2024-11-01T16:49:22.832Z",
+    "updatedAt": "2024-11-01T16:49:22.832Z"
+  },
+  {
+    "id": "7a67111d-add9-4a24-a02c-030dfe5e201f",
+    "name": "Backup and Recovery Principles",
+    "categoryId": "f40415f8-57c3-4713-bdb6-19d2c76389ce",
+    "createdAt": "2024-11-01T16:49:22.832Z",
+    "updatedAt": "2024-11-01T16:49:22.832Z"
+  },
+  {
+    "id": "5e6f765e-4c25-4d1b-9d20-c228b0adf9a0",
+    "name": "Docker",
+    "categoryId": "5cefacea-7ae5-4a91-9dff-40f141754e46",
+    "createdAt": "2024-11-01T16:36:20.062Z",
+    "updatedAt": "2024-11-01T16:36:20.062Z"
+  },
+  {
+    "id": "6f684e2d-13bc-46e8-9ea0-389b45a65762",
+    "name": "Disaster Recovery (RPO/RTO)",
+    "categoryId": "f40415f8-57c3-4713-bdb6-19d2c76389ce",
+    "createdAt": "2024-11-01T16:49:22.832Z",
+    "updatedAt": "2024-11-01T16:49:22.832Z"
+  },
+  {
+    "id": "cfefa6eb-c3b6-4c40-afdd-348cd8776fe9",
+    "name": "OpenShift",
+    "categoryId": "5cefacea-7ae5-4a91-9dff-40f141754e46",
+    "createdAt": "2024-11-01T16:36:20.062Z",
+    "updatedAt": "2024-11-01T16:36:20.062Z"
+  },
+  {
+    "id": "d58094ae-c528-4f0d-95e7-cab082476472",
+    "name": "VMWare",
+    "categoryId": "5cefacea-7ae5-4a91-9dff-40f141754e46",
+    "createdAt": "2024-11-01T16:36:20.062Z",
+    "updatedAt": "2024-11-01T16:36:20.062Z"
+  },
+  {
+    "id": "949c03f9-b98b-4b49-982b-da93e61b07c4",
+    "name": "Monitoring and Logging",
+    "categoryId": "f40415f8-57c3-4713-bdb6-19d2c76389ce",
+    "createdAt": "2024-11-01T16:49:22.832Z",
+    "updatedAt": "2024-11-01T16:49:22.832Z"
+  },
+  {
+    "id": "4ec12a66-677c-4488-9073-314ba87c72ba",
+    "name": "Kubernetes",
+    "categoryId": "5cefacea-7ae5-4a91-9dff-40f141754e46",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "87b693f5-6e69-4b75-94f8-f96229dcdf4a",
+    "name": "HyperV",
+    "categoryId": "5cefacea-7ae5-4a91-9dff-40f141754e46",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "3dceec27-c284-4138-ae94-c8747b6076d0",
+    "name": "ActiveMQ / RabbitMQ / IBM MQ",
+    "categoryId": "d34e922c-6751-4381-aadc-cf605f70e24a",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "c2541a52-29ba-447c-86f8-2424b6efe2ee",
+    "name": "Azure LogicApps",
+    "categoryId": "d34e922c-6751-4381-aadc-cf605f70e24a",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "6920279a-a9ec-408a-8faa-612702644f49",
+    "name": "GraphQL",
+    "categoryId": "d34e922c-6751-4381-aadc-cf605f70e24a",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "9848d154-96e5-407a-8ed4-a019795bb002",
+    "name": "Kafka / Pulsar",
+    "categoryId": "d34e922c-6751-4381-aadc-cf605f70e24a",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "5a029d24-8a67-4d42-bd62-85864ad6add0",
+    "name": "Microsoft BizTalk",
+    "categoryId": "d34e922c-6751-4381-aadc-cf605f70e24a",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "d2813f40-cbf6-4ab5-979d-8b3c1ac71f87",
+    "name": "Elastic Search",
+    "categoryId": "d34e922c-6751-4381-aadc-cf605f70e24a",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "1d357abd-56eb-4437-a208-85eeb2bf0801",
+    "name": "Kinesis",
+    "categoryId": "d34e922c-6751-4381-aadc-cf605f70e24a",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "320acd54-54a2-45e8-98be-edf93769b869",
+    "name": "Acquia",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "372b06e5-6700-4756-a6a9-052ab97761db",
+    "name": "AEM (Adobe Experience Manager)",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "b3b22ebf-a52d-4a4b-8f38-3388abcb58d4",
+    "name": "BigCommerce",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "1dbad537-134f-4508-9c53-ed86b809a0da",
+    "name": "CloudFlare",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "18ca39e1-9086-4bdb-85a8-44001fa25eb0",
+    "name": "Drupal",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "e7cc4204-04cf-49db-8a9a-f30bf3eb3d90",
+    "name": "Dynamics CRM (Customer Service)",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "14ba1e4d-abfc-4624-876c-9fb271bac59a",
+    "name": "Dynamics CRM (Field Service OR Operations)",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "ef7eb586-fe31-49f2-9b6b-d62308337955",
+    "name": "Dynamics CRM (Finance)",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "1653805a-f782-4c1c-8c88-7efbaef202a7",
+    "name": "Dynamics CRM (Sales OR Marketing)",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "022639ec-9f42-474f-b01c-150a32f832d4",
+    "name": "Microsoft Fabric OR PowerBI",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "63f77bae-85c0-4b70-98ad-91f01ab36eca",
+    "name": "Microsoft Sharepoint Development",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "e90c10cd-9fa9-47d5-80d4-9c961d23cb3a",
+    "name": "Shopify",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "c61298b7-93f3-4dab-823c-16549e22a942",
+    "name": "Wordpress",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "2b0db4b8-668d-487d-9ad0-d3f4f6e737c4",
+    "name": "Tibco Spotfire Analytics",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "47188e0d-5e25-4693-bd48-04174bb56f58",
+    "name": "DataDog",
+    "categoryId": "c992e285-7a9c-4aa3-9526-66347a45b375",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "9baec879-60e5-4e23-8c83-5dcaa273b318",
+    "name": "AWS Code Pipelines",
+    "categoryId": "1c856efc-44ca-4830-9923-73ca6c3f8bdc",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "ca016873-0f9b-4292-9c05-7088531d8891",
+    "name": "Azure Pipelines",
+    "categoryId": "1c856efc-44ca-4830-9923-73ca6c3f8bdc",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "3abaca35-efcf-481a-9009-fd7d2dce8d7c",
+    "name": "Bamboo",
+    "categoryId": "1c856efc-44ca-4830-9923-73ca6c3f8bdc",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "651533c3-d91c-40cb-ba1b-c2a73cf7d65a",
+    "name": "Bitbucket",
+    "categoryId": "1c856efc-44ca-4830-9923-73ca6c3f8bdc",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "2afd9b4c-57c9-49fc-90cb-3068d2e9ff2f",
+    "name": "Buddy",
+    "categoryId": "1c856efc-44ca-4830-9923-73ca6c3f8bdc",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "a2c92578-a9d4-4a1c-83e5-b9f902ca7cdf",
+    "name": "GitHub",
+    "categoryId": "1c856efc-44ca-4830-9923-73ca6c3f8bdc",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "9154dbf5-73ce-4610-8599-d0ee6d6b5e24",
+    "name": "GitLab",
+    "categoryId": "1c856efc-44ca-4830-9923-73ca6c3f8bdc",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "6baba103-65ab-4506-b785-a20df2bc41a2",
+    "name": "Jenkins",
+    "categoryId": "1c856efc-44ca-4830-9923-73ca6c3f8bdc",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "02a06afa-3d72-4dd7-baff-d34e405c7f42",
+    "name": "Nexus / Artifactory",
+    "categoryId": "1c856efc-44ca-4830-9923-73ca6c3f8bdc",
+    "createdAt": "2024-11-01T16:38:29.095Z",
+    "updatedAt": "2024-11-01T16:38:29.095Z"
+  },
+  {
+    "id": "1beef18a-5bac-43e2-8c9f-e35ab30a28c1",
+    "name": "Continuous Integration/Continuous Delivery Principles",
+    "categoryId": "f40415f8-57c3-4713-bdb6-19d2c76389ce",
+    "createdAt": "2024-11-01T16:49:22.832Z",
+    "updatedAt": "2024-11-01T16:49:22.832Z"
+  },
+  {
+    "id": "e387416a-6b6a-47eb-8653-7149dbc78f0c",
+    "name": "Agile/Scrum/Kanban",
+    "categoryId": "f40415f8-57c3-4713-bdb6-19d2c76389ce",
+    "createdAt": "2024-11-01T16:49:22.832Z",
+    "updatedAt": "2024-11-01T16:49:22.832Z"
+  },
+  {
+    "id": "fe5303d6-9bf1-4de2-a8ce-29e99ff15722",
+    "name": "Linux",
+    "categoryId": "595fec12-0d5f-4887-a5d3-142c15c16cda",
+    "createdAt": "2024-11-01T16:49:27.853Z",
+    "updatedAt": "2024-11-01T16:49:27.853Z"
+  },
+  {
+    "id": "c22f6efd-e169-4e34-9b47-5c53355ad489",
+    "name": "Windows",
+    "categoryId": "595fec12-0d5f-4887-a5d3-142c15c16cda",
+    "createdAt": "2024-11-01T16:49:27.853Z",
+    "updatedAt": "2024-11-01T16:49:27.853Z"
+  },
+  {
+    "id": "9ffea810-a62f-40a5-b992-66a2d3d988ed",
+    "name": "Apache",
+    "categoryId": "16737a53-153e-41dd-9e78-bb587f0adbd8",
+    "createdAt": "2024-11-01T16:49:31.944Z",
+    "updatedAt": "2024-11-01T16:49:31.944Z"
+  },
+  {
+    "id": "d0371033-727e-4df4-88f9-a760dde75ca7",
+    "name": "Nginx",
+    "categoryId": "16737a53-153e-41dd-9e78-bb587f0adbd8",
+    "createdAt": "2024-11-01T16:49:31.944Z",
+    "updatedAt": "2024-11-01T16:49:31.944Z"
+  },
+  {
+    "id": "b791a5af-2d38-4d9a-9add-c390beb5063a",
+    "name": "HAProxy",
+    "categoryId": "16737a53-153e-41dd-9e78-bb587f0adbd8",
+    "createdAt": "2024-11-01T16:49:31.944Z",
+    "updatedAt": "2024-11-01T16:49:31.944Z"
+  },
+  {
+    "id": "a8f8a0aa-59ca-4aa2-8ba2-c4976c2de101",
+    "name": "IIS",
+    "categoryId": "16737a53-153e-41dd-9e78-bb587f0adbd8",
+    "createdAt": "2024-11-01T16:49:31.944Z",
+    "updatedAt": "2024-11-01T16:49:31.944Z"
+  },
+  {
+    "id": "9853f3bf-fdf9-4ca2-a943-54bb65160171",
+    "name": "Bash",
+    "categoryId": "5f02f4cc-f1fe-40e8-9f24-9cefafa879e3",
+    "createdAt": "2024-11-01T16:49:36.448Z",
+    "updatedAt": "2024-11-01T16:49:36.448Z"
+  },
+  {
+    "id": "73673459-a041-4159-8faa-d7bb85740308",
+    "name": "Powershell",
+    "categoryId": "5f02f4cc-f1fe-40e8-9f24-9cefafa879e3",
+    "createdAt": "2024-11-01T16:49:36.448Z",
+    "updatedAt": "2024-11-01T16:49:36.448Z"
+  },
+  {
+    "id": "549b60da-43f2-407a-b1e0-6fd9ba365b48",
+    "name": "Python",
+    "categoryId": "5f02f4cc-f1fe-40e8-9f24-9cefafa879e3",
+    "createdAt": "2024-11-01T16:49:36.448Z",
+    "updatedAt": "2024-11-01T16:49:36.448Z"
+  },
+  {
+    "id": "522d0847-e61b-4589-9988-3912e59bd7ef",
+    "name": "Packer",
+    "categoryId": "335fe3fa-fac0-46a2-8b00-c5caf27b4dd9",
+    "createdAt": "2024-11-01T16:51:38.927Z",
+    "updatedAt": "2024-11-01T16:51:38.927Z"
+  },
+  {
+    "id": "bcb0d659-1db0-42c6-9d62-65ec7181a53e",
+    "name": "Terraform",
+    "categoryId": "335fe3fa-fac0-46a2-8b00-c5caf27b4dd9",
+    "createdAt": "2024-11-01T16:51:38.927Z",
+    "updatedAt": "2024-11-01T16:51:38.927Z"
+  },
+  {
+    "id": "2f12f7b3-9407-432f-a62c-d2b9d57eb258",
+    "name": "Bicep",
+    "categoryId": "335fe3fa-fac0-46a2-8b00-c5caf27b4dd9",
+    "createdAt": "2024-11-01T16:51:38.927Z",
+    "updatedAt": "2024-11-01T16:51:38.927Z"
+  },
+  {
+    "id": "b8b5dbdd-2172-407b-af33-b298718a48f4",
+    "name": "Ansible",
+    "categoryId": "335fe3fa-fac0-46a2-8b00-c5caf27b4dd9",
+    "createdAt": "2024-11-01T16:51:38.927Z",
+    "updatedAt": "2024-11-01T16:51:38.927Z"
+  },
+  {
+    "id": "eb3aa274-b38b-4550-90ef-4a4d2d4cbc95",
+    "name": "AWS Cloud Formation",
+    "categoryId": "335fe3fa-fac0-46a2-8b00-c5caf27b4dd9",
+    "createdAt": "2024-11-01T16:51:38.927Z",
+    "updatedAt": "2024-11-01T16:51:38.927Z"
+  },
+  {
+    "id": "6bf10e20-a8ab-4ed2-a38d-5ac7c4657d05",
+    "name": "AWS SAM",
+    "categoryId": "335fe3fa-fac0-46a2-8b00-c5caf27b4dd9",
+    "createdAt": "2024-11-01T16:51:38.927Z",
+    "updatedAt": "2024-11-01T16:51:38.927Z"
+  },
+  {
+    "id": "bf8ee140-e247-4b98-91f5-ecd26e3b5850",
+    "name": "AWS CDK",
+    "categoryId": "335fe3fa-fac0-46a2-8b00-c5caf27b4dd9",
+    "createdAt": "2024-11-01T16:51:38.927Z",
+    "updatedAt": "2024-11-01T16:51:38.927Z"
+  },
+  {
+    "id": "a3ac8cca-6857-4479-8ca8-216f23b7cfc8",
+    "name": "Azure Resource Manager",
+    "categoryId": "98b169c2-b531-4310-8c9e-08fcaaf37c46",
+    "createdAt": "2024-11-01T16:51:44.351Z",
+    "updatedAt": "2024-11-01T16:51:44.351Z"
+  },
+  {
+    "id": "42e0a5b5-3419-4250-b135-d0fac65a262d",
+    "name": "Azure Functions",
+    "categoryId": "98b169c2-b531-4310-8c9e-08fcaaf37c46",
+    "createdAt": "2024-11-01T16:51:44.351Z",
+    "updatedAt": "2024-11-01T16:51:44.351Z"
+  },
+  {
+    "id": "cb5cd84d-78bb-4307-9afa-7753968ea988",
+    "name": "Azure Virtual Machines",
+    "categoryId": "98b169c2-b531-4310-8c9e-08fcaaf37c46",
+    "createdAt": "2024-11-01T16:51:44.351Z",
+    "updatedAt": "2024-11-01T16:51:44.351Z"
+  },
+  {
+    "id": "92fdd71c-5185-43de-9cac-1196c3202730",
+    "name": "Azure App Service",
+    "categoryId": "98b169c2-b531-4310-8c9e-08fcaaf37c46",
+    "createdAt": "2024-11-01T16:51:44.351Z",
+    "updatedAt": "2024-11-01T16:51:44.351Z"
+  },
+  {
+    "id": "429adf95-8b15-463a-982f-e7382887db3e",
+    "name": "Azure Storage",
+    "categoryId": "98b169c2-b531-4310-8c9e-08fcaaf37c46",
+    "createdAt": "2024-11-01T16:51:44.351Z",
+    "updatedAt": "2024-11-01T16:51:44.351Z"
+  },
+  {
+    "id": "69ec6c4f-b9be-4b88-8b15-6985d518b720",
+    "name": "Azure Data Factory",
+    "categoryId": "98b169c2-b531-4310-8c9e-08fcaaf37c46",
+    "createdAt": "2024-11-01T16:51:44.351Z",
+    "updatedAt": "2024-11-01T16:51:44.351Z"
+  },
+  {
+    "id": "ff54b349-8f97-475f-a5e7-399fc2c272ff",
+    "name": "Azure DevOps Pipelines",
+    "categoryId": "98b169c2-b531-4310-8c9e-08fcaaf37c46",
+    "createdAt": "2024-11-01T16:51:44.351Z",
+    "updatedAt": "2024-11-01T16:51:44.351Z"
+  },
+  {
+    "id": "b5ff6f53-48c5-4e6b-b693-8449d35c3e52",
+    "name": "Azure PowerApps (LC/NC)",
+    "categoryId": "98b169c2-b531-4310-8c9e-08fcaaf37c46",
+    "createdAt": "2024-11-01T16:51:44.351Z",
+    "updatedAt": "2024-11-01T16:51:44.351Z"
+  },
+  {
+    "id": "b5b1fa0a-928d-4785-8abe-cd31644f8774",
+    "name": "Azure B2C or B2B",
+    "categoryId": "98b169c2-b531-4310-8c9e-08fcaaf37c46",
+    "createdAt": "2024-11-01T16:51:44.351Z",
+    "updatedAt": "2024-11-01T16:51:44.351Z"
+  },
+  {
+    "id": "71914418-66e2-4794-bece-cc98cab10471",
+    "name": "Azure Databricks",
+    "categoryId": "98b169c2-b531-4310-8c9e-08fcaaf37c46",
+    "createdAt": "2024-11-01T16:51:44.351Z",
+    "updatedAt": "2024-11-01T16:51:44.351Z"
+  },
+  {
+    "id": "b86824f2-b792-4ca9-9671-5731e9d0b6c8",
+    "name": "AWS Cloudwatch",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "06b871df-e645-485f-b705-dd1c5f88db38",
+    "name": "AWS Elastic Beanstalk",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "122dc389-68f6-4854-b87e-516de2d16ceb",
+    "name": "AWS ECS",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "696c092f-d8c6-4973-9539-3b28429e87c2",
+    "name": "AWS Lambda",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "0db7516b-bb5c-4f60-9b74-b1aa169e4377",
+    "name": "AWS EC2",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "7b96027a-4fcf-4f1d-8880-26ef567d07ce",
+    "name": "AWS RDS",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "2e642abb-9da1-40fe-8d9e-528c1e09d01c",
+    "name": "AWS S3",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "529d89a9-a75b-49d1-ae73-013d23d4d8e4",
+    "name": "AWS SES",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "7b8cebea-d898-4750-9e13-eeb37bb04f0c",
+    "name": "AWS IAM",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "0c38c3f3-0e9d-4382-bb62-b5cdeabda889",
+    "name": "AWS CLI",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "a35ec964-4c9c-4daa-a956-02cb78f13daf",
+    "name": "AWS EKS",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "bcec7739-4915-4037-81d5-2d860d459c49",
+    "name": "AWS Step Functions",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "002bcb42-6a6b-4ff8-aaa7-a35cbfab222a",
+    "name": "AWS Glue",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "d8c189cc-6803-43cd-bbdc-963663e1f450",
+    "name": "AWS Athena",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "ae7a95d5-b43d-44df-9776-4182755e047c",
+    "name": "AWS API Gateway",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "56b3ce52-3b47-48b8-ad79-203953762e67",
+    "name": "AWS SNS",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "035aaa25-78fa-4491-aa49-21933ae2c21e",
+    "name": "AWS SQA",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "7da4bd16-3339-4daf-9e28-009cebc85a28",
+    "name": "AWS SageMaker",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "e880c10e-bf19-417a-8295-0a221844a252",
+    "name": "AWS Event Bridge",
+    "categoryId": "4ba5c957-41c0-4042-a1d4-5422d2883d82",
+    "createdAt": "2024-11-01T16:51:49.880Z",
+    "updatedAt": "2024-11-01T16:51:49.880Z"
+  },
+  {
+    "id": "73699e84-ece3-4357-a882-5e853716a44f",
+    "name": "Angular",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "8b9bf453-6b5f-4b1c-bbd7-04ce60d6d7a5",
+    "name": "CSS",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "2dfeb4e6-bb69-4df1-8dde-4d5263025678",
+    "name": "HTML",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "068a3196-adc3-4c5a-a16f-8f90cf63ca77",
+    "name": "JavaScript",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "e9308a5b-abab-4ac2-a51a-89a287468039",
+    "name": "JQuery",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "8ccd3711-e7fb-4312-9284-e0e8e6def6ab",
+    "name": "Next.JS",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "407f9b60-21b3-40a1-952c-0a58a83bddbb",
+    "name": "Node.JS",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "76771a75-06bc-4bef-8836-ced7c0326ce1",
+    "name": "React",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "c317c57f-b287-4cc8-8374-a4c3eda76724",
+    "name": "StoryBook",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "e2e391cf-7342-450d-b93a-4d0929b5714d",
+    "name": "Typescript",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "0c28c87b-9568-4520-a798-3df616cfa99e",
+    "name": "Vue.JS",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "1cc48b59-bb02-4acc-b000-449ee5d91fe4",
+    "name": "RxJS",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "43a89933-640c-43d9-a3f6-9e175b9ec28e",
+    "name": "NgRx",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "50126b01-7077-4d0f-af79-54033beca7b9",
+    "name": "Other FE Languages",
+    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
+    "createdAt": "2024-11-01T16:55:38.342Z",
+    "updatedAt": "2024-11-01T16:55:38.342Z"
+  },
+  {
+    "id": "bd430fb3-59b7-41ff-931f-bb90a17387be",
+    "name": "ASP.Net",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "afbdc77f-fdb2-438d-a9a3-333d326fde20",
+    "name": "C#",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "6c39734d-8cc8-4687-aa72-fb4362eae0f0",
+    "name": "C++",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "ddabbf68-57d7-4e5d-97a5-2b1997dd43e2",
+    "name": "COBOL",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "7f8dd0fe-5b58-41e9-b01d-77fac6f4160b",
+    "name": "Express.JS",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "cfb27b48-bf99-4cbf-b4e0-4e09a88c99d0",
+    "name": "F#",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "ca9da1ed-48c7-4cae-a390-955c45e895b9",
+    "name": "Java",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "bca65589-8fb5-41ac-a42f-bc58f6acfb33",
+    "name": "Laravel",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "c825120e-ad67-49fd-88d6-29c7855b2115",
+    "name": "PHP",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "709aab30-2949-4c23-b9f3-721170c599ea",
+    "name": "Python",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "34065bbf-3a22-4c3c-a85c-a3ff22f467c0",
+    "name": "Ruby",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "ac3a7855-d06d-4a89-a4ce-3d91b29d3cb0",
+    "name": "Spring",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "5d405071-123d-40a7-9076-fccde4544964",
+    "name": "T-SQL",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "6905e733-970e-4e29-8464-7720d9785526",
+    "name": "Fortran",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "fae31a4b-936b-482f-bd09-171ab7248f2d",
+    "name": "Other BE",
+    "categoryId": "7c629722-1bf2-4037-8c5d-470ef59f87ba",
+    "createdAt": "2024-11-01T16:55:43.533Z",
+    "updatedAt": "2024-11-01T16:55:43.533Z"
+  },
+  {
+    "id": "ec66e90d-8ce0-45b9-8de1-5dc4b257e714",
+    "name": "Spatial data processing",
+    "categoryId": "d1726222-78fd-4fc7-a2e1-7898569d6d24",
+    "createdAt": "2024-11-01T16:56:00.988Z",
+    "updatedAt": "2024-11-01T16:56:00.988Z"
+  },
+  {
+    "id": "57da613e-388b-47a5-9f4b-9906572d4028",
+    "name": "Spatial data querying",
+    "categoryId": "d1726222-78fd-4fc7-a2e1-7898569d6d24",
+    "createdAt": "2024-11-01T16:56:00.988Z",
+    "updatedAt": "2024-11-01T16:56:00.988Z"
+  },
+  {
+    "id": "1f2b0110-1986-42f1-ab96-eae233fcfcf2",
+    "name": "Database Spatial data processing",
+    "categoryId": "d1726222-78fd-4fc7-a2e1-7898569d6d24",
+    "createdAt": "2024-11-01T16:56:00.988Z",
+    "updatedAt": "2024-11-01T16:56:00.988Z"
+  },
+  {
+    "id": "22e2a672-c141-4a83-be1d-af3d2dccaea8",
+    "name": "PostGIS",
+    "categoryId": "d1726222-78fd-4fc7-a2e1-7898569d6d24",
+    "createdAt": "2024-11-01T16:56:00.988Z",
+    "updatedAt": "2024-11-01T16:56:00.988Z"
+  },
+  {
+    "id": "04464bc5-890f-4cd4-80f8-79b1a3458f9d",
+    "name": "QGIS",
+    "categoryId": "d1726222-78fd-4fc7-a2e1-7898569d6d24",
+    "createdAt": "2024-11-01T16:56:00.988Z",
+    "updatedAt": "2024-11-01T16:56:00.988Z"
+  },
+  {
+    "id": "425603d2-0abb-4a8b-8e68-c27ed1f81344",
+    "name": "MapServer",
+    "categoryId": "d1726222-78fd-4fc7-a2e1-7898569d6d24",
+    "createdAt": "2024-11-01T16:56:00.988Z",
+    "updatedAt": "2024-11-01T16:56:00.988Z"
+  },
+  {
+    "id": "1642d01a-13b1-47ec-bf77-684dc97487ae",
+    "name": "Behat",
+    "categoryId": "005d5f79-4159-44c3-a736-d5560a65ee99",
+    "createdAt": "2024-11-01T16:57:47.692Z",
+    "updatedAt": "2024-11-01T16:57:47.692Z"
+  },
+  {
+    "id": "94044b57-13e0-4bb0-86dd-f8a15dd369c7",
+    "name": "Cypress",
+    "categoryId": "005d5f79-4159-44c3-a736-d5560a65ee99",
+    "createdAt": "2024-11-01T16:57:47.692Z",
+    "updatedAt": "2024-11-01T16:57:47.692Z"
+  },
+  {
+    "id": "0d74734b-9c3f-464c-a1df-b6ae3345b64b",
+    "name": "Jest",
+    "categoryId": "005d5f79-4159-44c3-a736-d5560a65ee99",
+    "createdAt": "2024-11-01T16:57:47.692Z",
+    "updatedAt": "2024-11-01T16:57:47.692Z"
+  },
+  {
+    "id": "40bd2ad7-c929-4984-a526-c70d59c13ade",
+    "name": "Junit",
+    "categoryId": "005d5f79-4159-44c3-a736-d5560a65ee99",
+    "createdAt": "2024-11-01T16:57:47.692Z",
+    "updatedAt": "2024-11-01T16:57:47.692Z"
+  },
+  {
+    "id": "08126d6c-f6a3-4940-935a-e543f9ee7df8",
+    "name": "Mocha",
+    "categoryId": "005d5f79-4159-44c3-a736-d5560a65ee99",
+    "createdAt": "2024-11-01T16:57:47.692Z",
+    "updatedAt": "2024-11-01T16:57:47.692Z"
+  },
+  {
+    "id": "1fd2a933-beba-4eb9-ad3d-a1bc70f3f53c",
+    "name": "NUnit",
+    "categoryId": "005d5f79-4159-44c3-a736-d5560a65ee99",
+    "createdAt": "2024-11-01T16:57:47.692Z",
+    "updatedAt": "2024-11-01T16:57:47.692Z"
+  },
+  {
+    "id": "63215c21-1c2d-47aa-b07b-aaf711d63c5d",
+    "name": "PHPUnit",
+    "categoryId": "005d5f79-4159-44c3-a736-d5560a65ee99",
+    "createdAt": "2024-11-01T16:57:47.692Z",
+    "updatedAt": "2024-11-01T16:57:47.692Z"
+  },
+  {
+    "id": "76562eba-e46c-4dd0-9105-de161278bca1",
+    "name": "Xunit",
+    "categoryId": "005d5f79-4159-44c3-a736-d5560a65ee99",
+    "createdAt": "2024-11-01T16:57:47.692Z",
+    "updatedAt": "2024-11-01T16:57:47.692Z"
+  },
+  {
+    "id": "0ea915ce-6607-4d59-8e1a-4dbe81976276",
+    "name": "PyTest",
+    "categoryId": "005d5f79-4159-44c3-a736-d5560a65ee99",
+    "createdAt": "2024-11-01T16:57:47.692Z",
+    "updatedAt": "2024-11-01T16:57:47.692Z"
+  },
+  {
+    "id": "39c5f472-c4ba-4dfd-9b9c-dd2830ca2136",
+    "name": "Dart",
+    "categoryId": "26eb9482-c19b-4d3f-bc79-b9eaf6c3c191",
+    "createdAt": "2024-11-01T16:57:52.084Z",
+    "updatedAt": "2024-11-01T16:57:52.084Z"
+  },
+  {
+    "id": "c8236979-afaa-445d-8d3a-2a0ca7c4b4c8",
+    "name": "Flutter",
+    "categoryId": "26eb9482-c19b-4d3f-bc79-b9eaf6c3c191",
+    "createdAt": "2024-11-01T16:57:52.084Z",
+    "updatedAt": "2024-11-01T16:57:52.084Z"
+  },
+  {
+    "id": "91b7ff45-6358-47d0-afe7-9c1f69996b4b",
+    "name": "Kotlin",
+    "categoryId": "26eb9482-c19b-4d3f-bc79-b9eaf6c3c191",
+    "createdAt": "2024-11-01T16:57:52.084Z",
+    "updatedAt": "2024-11-01T16:57:52.084Z"
+  },
+  {
+    "id": "0cdfd549-e6c7-4802-8da6-0d372bb1890c",
+    "name": "React Native",
+    "categoryId": "26eb9482-c19b-4d3f-bc79-b9eaf6c3c191",
+    "createdAt": "2024-11-01T16:57:52.084Z",
+    "updatedAt": "2024-11-01T16:57:52.084Z"
+  },
+  {
+    "id": "f834fc8b-42ab-4e57-b4a3-978316873bb6",
+    "name": "Xamarin",
+    "categoryId": "26eb9482-c19b-4d3f-bc79-b9eaf6c3c191",
+    "createdAt": "2024-11-01T16:57:52.084Z",
+    "updatedAt": "2024-11-01T16:57:52.084Z"
+  },
+  {
+    "id": "71df8f9c-bac1-414f-9373-95945ecd5b8b",
+    "name": "Other Mobile Languages",
+    "categoryId": "26eb9482-c19b-4d3f-bc79-b9eaf6c3c191",
+    "createdAt": "2024-11-01T16:57:52.084Z",
+    "updatedAt": "2024-11-01T16:57:52.084Z"
+  },
+  {
+    "id": "938d2c5f-e4eb-4f4d-bbdf-64872536c524",
+    "name": "Test Planning & Design",
+    "categoryId": "ab831585-477a-494a-94c6-407bfd98fab8",
+    "createdAt": "2024-11-01T16:57:56.280Z",
+    "updatedAt": "2024-11-01T16:57:56.280Z"
+  },
+  {
+    "id": "0aae895d-cbf2-4266-9229-eca4d637498a",
+    "name": "Test Automation",
+    "categoryId": "ab831585-477a-494a-94c6-407bfd98fab8",
+    "createdAt": "2024-11-01T16:57:56.280Z",
+    "updatedAt": "2024-11-01T16:57:56.280Z"
+  },
+  {
+    "id": "f9dd14ac-cb87-42e4-b1e3-65d63a03572a",
+    "name": "Manual Testing",
+    "categoryId": "ab831585-477a-494a-94c6-407bfd98fab8",
+    "createdAt": "2024-11-01T16:57:56.280Z",
+    "updatedAt": "2024-11-01T16:57:56.280Z"
+  },
+  {
+    "id": "0632e588-369d-48e9-998d-cd6f35fe6ca0",
+    "name": "Performance Testing",
+    "categoryId": "ab831585-477a-494a-94c6-407bfd98fab8",
+    "createdAt": "2024-11-01T16:57:56.280Z",
+    "updatedAt": "2024-11-01T16:57:56.280Z"
+  },
+  {
+    "id": "d7e40268-abbf-400c-a5a4-b731ff3c7e94",
+    "name": "API Testing",
+    "categoryId": "ab831585-477a-494a-94c6-407bfd98fab8",
+    "createdAt": "2024-11-01T16:57:56.280Z",
+    "updatedAt": "2024-11-01T16:57:56.280Z"
+  },
+  {
+    "id": "be69fcf8-e980-4036-876f-c18c46ef7ab0",
+    "name": "Accessbility Testing (WCAG)",
+    "categoryId": "ab831585-477a-494a-94c6-407bfd98fab8",
+    "createdAt": "2024-11-01T16:57:56.280Z",
+    "updatedAt": "2024-11-01T16:57:56.280Z"
+  },
+  {
+    "id": "a8f11513-d4ef-4d05-a7a3-304fed156d3c",
+    "name": "Bug Tracking and Reporting",
+    "categoryId": "ab831585-477a-494a-94c6-407bfd98fab8",
+    "createdAt": "2024-11-01T16:57:56.280Z",
+    "updatedAt": "2024-11-01T16:57:56.280Z"
+  },
+  {
+    "id": "42b001a4-8f45-4c06-a27d-7569896f9842",
+    "name": "BrowserStack",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "7ea21449-b27b-4bc7-8d87-a9bc6847d14e",
+    "name": "Cucumber",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "f733696e-fc43-48b3-a1fa-44a5e713f93e",
+    "name": "Gherkin",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "04852128-b2f2-44f2-a570-8f31d1c05381",
+    "name": "Ghost Inspector",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "52462838-62df-438d-b69c-179461d065b2",
+    "name": "Maven",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "ab4b76ad-0338-4f03-8ceb-2f24c1f008c7",
+    "name": "Playwright",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "618e0d56-7f15-44b4-867d-a1d48ced12a2",
+    "name": "Postman",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "001d37c9-90d2-499d-af55-a0623e2b1dcf",
+    "name": "Ranorex",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "ce99a667-55ac-4cdf-9569-0d310e2cce4a",
+    "name": "Katalon",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "dd44b1c5-5322-4ab5-a3f9-b0f0bb41591b",
+    "name": "Robot Framework",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "c4c74766-6825-45a6-b2da-e42338544ee3",
+    "name": "Selenium",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "0d8fd215-caa4-4b0e-8736-304f944ce06e",
+    "name": "Selenium WebDriver",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "bd941a7b-e060-491c-a1a8-362d6d49c4ad",
+    "name": "SOAPUI",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "2929bc6a-a143-41c4-9fdb-9e091c8bf4dd",
+    "name": "Jmeter & Blazemeter",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "bd7e7311-5ae3-4eab-8009-37d68b3e3c7a",
+    "name": "Newman",
+    "categoryId": "8017842e-59d0-442b-89b4-bdb7567996c8",
+    "createdAt": "2024-11-01T16:58:03.552Z",
+    "updatedAt": "2024-11-01T16:58:03.552Z"
+  },
+  {
+    "id": "07ae0e15-5918-4c6b-9872-0e42b29557c9",
+    "name": "OWASP Standards",
+    "categoryId": "90550e58-1c58-4e55-9825-e19693bdcbcb",
+    "createdAt": "2024-11-01T16:58:08.908Z",
+    "updatedAt": "2024-11-01T16:58:08.908Z"
+  },
+  {
+    "id": "f54deb22-c4c5-43e6-b7be-ff5f8e960ce4",
+    "name": "ALM",
+    "categoryId": "897ded3b-6a55-4ff2-a7a6-74d5fd3761b7",
+    "createdAt": "2024-11-01T16:58:12.353Z",
+    "updatedAt": "2024-11-01T16:58:12.353Z"
+  },
+  {
+    "id": "b415d624-c0d8-4674-a0ff-ac8f9651bc6a",
+    "name": "MTM (Microsoft Test Manager)",
+    "categoryId": "897ded3b-6a55-4ff2-a7a6-74d5fd3761b7",
+    "createdAt": "2024-11-01T16:58:12.353Z",
+    "updatedAt": "2024-11-01T16:58:12.353Z"
+  },
+  {
+    "id": "7673d157-c9db-48fd-817c-7c068332579a",
+    "name": "Qmetry",
+    "categoryId": "897ded3b-6a55-4ff2-a7a6-74d5fd3761b7",
+    "createdAt": "2024-11-01T16:58:12.353Z",
+    "updatedAt": "2024-11-01T16:58:12.353Z"
+  },
+  {
+    "id": "32654fce-d64f-481b-acb1-cc941621b162",
+    "name": "Quick Test Professional",
+    "categoryId": "897ded3b-6a55-4ff2-a7a6-74d5fd3761b7",
+    "createdAt": "2024-11-01T16:58:12.353Z",
+    "updatedAt": "2024-11-01T16:58:12.353Z"
+  },
+  {
+    "id": "34436139-b838-4733-9169-a64b95c76e99",
+    "name": "XRay",
+    "categoryId": "897ded3b-6a55-4ff2-a7a6-74d5fd3761b7",
+    "createdAt": "2024-11-01T16:58:12.353Z",
+    "updatedAt": "2024-11-01T16:58:12.353Z"
+  },
+  {
+    "id": "9c952e10-39b6-4caf-a615-9ff6b91ebed9",
+    "name": "Zephyr",
+    "categoryId": "897ded3b-6a55-4ff2-a7a6-74d5fd3761b7",
+    "createdAt": "2024-11-01T16:58:12.353Z",
+    "updatedAt": "2024-11-01T16:58:12.353Z"
+  },
+  {
+    "id": "d5cb73b5-c017-45f1-be23-0372adba24e9",
+    "name": "ISEB/ISTQB Foundation",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  },
+  {
+    "id": "b2fd4ebe-9d5a-4514-9146-105aa126a903",
+    "name": "ISEB/ISTQB Advanced",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  },
+  {
+    "id": "5ea45111-c92f-4855-92be-806ac360c3d3",
+    "name": "ITIL Foundation",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  },
+  {
+    "id": "bff5c99f-714c-48f7-a1b9-7eaac0244b53",
+    "name": "ITIL Specialist",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  },
+  {
+    "id": "272b0923-ff0f-4afe-b38c-a98af7c65f46",
+    "name": "ITIL Strategist +",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  },
+  {
+    "id": "4bbe9bef-933e-46d2-991a-7fa6f5203a15",
+    "name": "SnowPro Foundation",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  },
+  {
+    "id": "8cc7229c-4775-43d5-99c1-011c2c168dfd",
+    "name": "MS Azure Fundamentals",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  },
+  {
+    "id": "3fdaec27-ed46-48c9-8085-62dd66708887",
+    "name": "MS Azure Associate",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  },
+  {
+    "id": "ab91d06c-9c35-4bb8-841b-1142ae00eb20",
+    "name": "MS Azure Expert",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  },
+  {
+    "id": "f7cf1c0a-e9bd-4466-a9f2-5a6082d3b523",
+    "name": "AWS Cloud Practitioner",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  },
+  {
+    "id": "ed55dc6c-62c7-4572-9c5d-c0a6791f8c3e",
+    "name": "AWS Associate",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  },
+  {
+    "id": "bac3d337-e75b-4ced-aa4f-8b482033259c",
+    "name": "AWS Professional",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  },
+  {
+    "id": "846b880b-becb-404f-824d-50321ebf4893",
+    "name": "NHS Data Security Awareness",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  },
+  {
+    "id": "510830aa-3716-4b1c-85f4-1b96e360675c",
+    "name": "Other Certs",
+    "categoryId": "033c9f07-66f1-414f-b2ce-1b8b8882597f",
+    "createdAt": "2024-11-01T17:02:33.485Z",
+    "updatedAt": "2024-11-01T17:02:33.485Z"
+  }
+]
