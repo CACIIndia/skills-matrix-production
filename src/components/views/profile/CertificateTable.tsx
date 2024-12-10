@@ -14,7 +14,7 @@ interface CertificateTableProps {
   onEdit: (id: string, updatedCertificate: Omit<Certificate, "id">) => void;
   onDelete: (id: string, refetch: () => void) => void;
   onDownload: (url: string, createdById: string, name: string) => void;
-  onAddCertificate: (newCertificate: Omit<Certificate, "id">) => void;
+  onAddCertificate: (newCertificate: Omit<Certificate, "id">,refetch: () => void) => void;
   setCertificatesData: React.Dispatch<React.SetStateAction<Certificate[]>>;
   initialcertificates: Certificate[];
   categoryskills: SkillCategory[];
@@ -128,7 +128,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
   // Handle certificate addition
   const handleAddCertificate = (newCertificate: Certificate) => {
-    onAddCertificate(newCertificate);
+    onAddCertificate(newCertificate,refetch);
     toggleAddModal();
     resetEditingCertificate();
   };
