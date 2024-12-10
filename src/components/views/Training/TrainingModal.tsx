@@ -125,9 +125,12 @@ const adjustedFromDate = new Date(
     const selectedCategory = categoriesData.find(
       (cat) => cat.category === formik.values.categoryName
     );
+   let statusId = trainingStatus.find((status) => status.name === "In Progress")?.id || ""
     setSkills(selectedCategory ? selectedCategory.skills : []);
     formik.setFieldValue("skillId", "");
     formik.setFieldValue("skillName", "");
+    formik.setFieldValue("statusId", statusId);
+    
   }, [formik.values.categoryName, categoriesData]);
 
   return isOpen ? (
@@ -229,7 +232,7 @@ const adjustedFromDate = new Date(
             ) : null}
           </div>
 
-          <div className="">
+          {/* <div className="">
             <label className="mb-1 block text-sm font-medium">Training Status</label>
             <select
               name="statusId"
@@ -247,7 +250,7 @@ const adjustedFromDate = new Date(
             {formik.touched.statusId && formik.errors.statusId ? (
               <div className="text-red-500 text-sm">{formik.errors.statusId}</div>
             ) : null}
-          </div>
+          </div> */}
         </div>
 
         <div className="grid grid-cols-1 mt-4">

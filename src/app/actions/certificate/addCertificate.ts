@@ -90,6 +90,20 @@ export async function addCertificate(
     const newCertificate = await db.certification.create({
       data: certificateData,
     });
+
+   
+    if (data.isTrainingLinked) {
+      await db.training.update({
+        where: {
+          id: data.trainingRecordId,
+        },
+        data: {
+          certificationId: newCertificate.id,
+        },
+      });
+    }
+
+
     return {
       message: "Certificate added successfully",
       certificate: newCertificate,
