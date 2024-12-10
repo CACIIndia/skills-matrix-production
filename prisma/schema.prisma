@@ -23,7 +23,7 @@ model User {
   image                String?
   phone                String?
   location             String?
-  status               String?
+  status               Int             @default(1)
   sfiaLevel            String?
   reportedTo           String?
   reportedToId         String?
@@ -50,6 +50,7 @@ model Skill {
   updatedAt     DateTime       @updatedAt
   skillCategory SkillCategory? @relation(fields: [categoryId], references: [id])
   userSkills    UserSkill[]
+  status               Int             @default(1)
 }
 
 model SkillCategory {
@@ -58,7 +59,7 @@ model SkillCategory {
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   createdById    String
-  status         String?
+  status               Int             @default(1)
   certifications Certification[]
   skills         Skill[]
   createdBy      User            @relation(fields: [createdById], references: [id])
@@ -70,7 +71,7 @@ model UserSkill {
   level       Int
   createdAt   DateTime @default(now())
   createdById String
-  status      String?
+  status               Int             @default(1)
   updatedAt   DateTime @updatedAt
   user        User     @relation(fields: [createdById], references: [id])
   skill       Skill    @relation(fields: [skillId], references: [id])
@@ -87,6 +88,7 @@ model AdditionalInfo {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [id])
+  status               Int             @default(1)
 }
 
 model Project {
@@ -100,25 +102,26 @@ model Project {
   isCurrentProject Boolean
   userId           String
   user             User     @relation(fields: [userId], references: [id])
+  status               Int             @default(1)
 }
 
 model Discipline {
   id     String  @id @default(uuid())
   name   String?
-  status String?
+  status               Int             @default(1)
 }
 
 model Location {
   id         String  @id @default(uuid())
   name       String?
   costCentre String?
-  status     String?
+  status               Int             @default(1)
 }
 
 model Specialism {
   id         String  @id @default(uuid())
   name       String?
-  status     String?
+  status               Int             @default(1)
   discipline Int?
 }
 
@@ -128,7 +131,7 @@ model SfiaLevel {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   createdById String
-  status      String?
+  status               Int             @default(1)
   createdBy   User     @relation(fields: [createdById], references: [id])
 }
 
@@ -141,7 +144,7 @@ model Certification {
   description                String
   createdAt                  DateTime       @default(now())
   updatedAt                  DateTime       @default(now()) @updatedAt
-  status                     String
+  status                     Int            @default(1)
   createdById                String
   categoryId                 String?
   categoryName               String?
@@ -161,6 +164,7 @@ model TrainingStatus {
   id        String     @id @default(uuid())
   name      String
   trainings Training[]
+  status               Int             @default(1)
 }
 
 model Training {
@@ -183,5 +187,6 @@ model Training {
   certificationIds Certification?  @relation("trainingCertificationsIds", fields: [certificationId], references: [id])
   createdBy        User            @relation("trainingCreatedByIds", fields: [createdById], references: [id])
   employee         User            @relation("trainingEmployees", fields: [employeeId], references: [id])
-  status           TrainingStatus  @relation(fields: [statusId], references: [id])
+  trainingStatus           TrainingStatus  @relation(fields: [statusId], references: [id])
+  status           Int             @default(1)
 }
