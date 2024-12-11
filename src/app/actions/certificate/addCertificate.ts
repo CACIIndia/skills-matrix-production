@@ -73,7 +73,7 @@ export async function addCertificate(
       expiryDate: new Date(data.expiryDate),
       description: data.description,
       createdById: data.createdBy,
-      status: "Active",
+      status: 1,
       categoryId: data.categoryId,
       categoryName: data.categoryName,
     };
