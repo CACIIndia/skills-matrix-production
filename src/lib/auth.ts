@@ -62,7 +62,8 @@ export const options: AuthOptions = {
               },
             });
           }
-
+           
+          
  
           token.sub = user.id;
           token.email = user.email;
@@ -74,7 +75,7 @@ export const options: AuthOptions = {
         } catch (error: unknown) { 
           if (error instanceof Error) {
          
-            throw new Error("Error checking/creating user in JWT callback:", error);
+            throw new Error("Error checking/creating user in JWT callback:" + error.message);
           }
         
           throw new Error("An unknown error occurred.");
