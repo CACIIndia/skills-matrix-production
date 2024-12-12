@@ -4,7 +4,7 @@ export type UserSkill = {
   skillId: string;
   level: number;
   skill: Skill;
-  status: string | null; 
+  status: number ; 
   createdAt: Date;         
   updatedAt: Date;         
 }
@@ -39,7 +39,7 @@ export type UserDetails = {
   image: string;
   phone: string;
   location: string;
-  status: string;
+  status: number | null;
   startdate?:string;
   sfiaLevel: string;
   reportedTo: string;
@@ -57,7 +57,7 @@ export interface GeneralInfo {
   id?: string;
   email: string;
   phone: string;
-  status: string;
+  status: number;
   startdate: string;
   current_project: string;
   sfiaLevel: string;
