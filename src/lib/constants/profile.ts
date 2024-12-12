@@ -7,7 +7,7 @@ export const DEFAULT_USER_DETAILS: UserDetails = {
   email: "",
   phone: "",
   location: "",
-  status: "",
+  status: 1,
   startdate: "",
   sfiaLevel: "",
   reportedTo: "",

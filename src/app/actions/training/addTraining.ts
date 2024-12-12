@@ -46,7 +46,7 @@ export async function addTraining(data: TrainingAddData): Promise<AddTrainingRes
       const existingInProgressTraining = await db.training.findFirst({
         where: {
           employeeId: data.employeeId,
-          status: {
+          trainingStatus: {
             name: "In Progress",
           },
         },

@@ -81,7 +81,7 @@ export async function updateCertificate(
         updatedAt: new Date(),
         categoryId:data.categoryId,
         categoryName:data.categoryName,
-        status: "Active",
+        status: 1,
       },
     });
 
