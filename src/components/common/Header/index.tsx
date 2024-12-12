@@ -28,9 +28,9 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
     };
   }, []);
 
-  if (isLoading || !profile) {
-    return <HeaderSkeleton />;
-  }
+  // if (isLoading || !profile) {
+  //   return <HeaderSkeleton />;
+  // }
 
   return (
     <header

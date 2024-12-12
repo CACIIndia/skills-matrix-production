@@ -3,10 +3,44 @@ import db from "@/lib/db";
 
 export async function GET(request: Request, { params }: { params: { userId: string } }) {
   const { userId } = params;
+  const url = new URL(request.url);
+  const filter_status = url.searchParams.get("filter_status");
+  const filter_type = url.searchParams.get("filter_type"); 
 
   try {
+    let statusId = null;
+
+    if (filter_status) {
+      const status = await db.trainingStatus.findFirst({
+        where: {
+          name: filter_status,
+        }
+      });
+
+      if (status) {
+        statusId = status.id;
+      }
+    }
+
+  
+    const whereCondition: any = {};
+    if (filter_type === "createdBy") {
+      whereCondition.createdById = userId;
+    } else if (filter_type === "employeeId") {
+      whereCondition.employeeId = userId;
+    } else {
+      return NextResponse.json(
+        { error: "Invalid filter type provided" },
+        { status: 400 }
+      );
+    }
+
+    if (statusId) {
+      whereCondition.statusId = statusId;
+    }
+
     const trainingData = await db.training.findMany({
-      where: { createdById: userId },
+      where: whereCondition,
       select: {
         id: true,
         categoryId: true,
@@ -27,11 +61,11 @@ export async function GET(request: Request, { params }: { params: { userId: stri
             role: true, 
           },
         },
-        
       },
     });
+
     return NextResponse.json(
-      { message: "Training data retrieved successfully", data: trainingData,success:true },
+      { message: "Training data retrieved successfully", data: trainingData, success: true },
       { status: 200 }
     );
   } catch (error) {

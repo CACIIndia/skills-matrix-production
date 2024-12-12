@@ -11,7 +11,7 @@ export async function GET(request: Request) {
 
   try {
     const certificates = await db.certification.findMany({
-      where: { createdById: userId,status:"Active" },
+      where: { createdById: userId,status:1 },
       select: {
         id: true,
         name: true,

@@ -23,7 +23,7 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
           employeeId: id,
         },
         include: {
-          status: {
+          trainingStatus: {
             select: {
               name: true, 
             },

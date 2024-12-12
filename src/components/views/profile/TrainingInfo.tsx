@@ -26,7 +26,7 @@ const TrainingInfoCard: React.FC<TrainingInfoCardProps> = ({ data }) => {
           <tbody>
             <tr>
               <td className="pb-3 pr-4 text-sm font-medium text-gray-500 lg:pr-8">
-                Category Name:
+                Category :
               </td>
               <td className="pb-3 text-sm font-medium text-gray-800">
                 {data?.categoryName || "N/A"}
@@ -34,7 +34,7 @@ const TrainingInfoCard: React.FC<TrainingInfoCardProps> = ({ data }) => {
             </tr>
             <tr>
               <td className="pb-3 pr-4 text-sm font-medium text-gray-500 lg:pr-8">
-                Skill Name:
+                Skill :
               </td>
               <td className="pb-3 text-sm font-medium text-gray-800">
                 {data?.skillName || "N/A"}

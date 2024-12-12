@@ -50,7 +50,7 @@ export async function deleteCertificate(
     // Delete the certificate from the database
     await db.certification.update({
       where: { id },
-      data: { status: "Inactive" },
+      data: { status: 0 },
     });
 
     return {

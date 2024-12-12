@@ -13,7 +13,7 @@ export const useCertificateHandlers = (userId: string) => {
     queryClient.invalidateQueries({ queryKey: ["certificates", userId] });
   };
 
-  const handleUpload = async (certificate: any) => {
+  const handleUpload = async (certificate: any,refetch:()=>void) => {
  
     const { certificateFile, ...rest } = certificate;
 
@@ -31,6 +31,7 @@ export const useCertificateHandlers = (userId: string) => {
       });
 
       invalidate();
+      refetch();
       toast.success(result.message, { id: toastId });
     } catch (error) {
       const errorMessage =

@@ -85,7 +85,7 @@ export interface SkillCategory {
   createdAt:Date| string;
   updatedAt:Date| string;
   createdById: string;
-  status: string | null
+  status: number | null
 };
 
 export interface Training {

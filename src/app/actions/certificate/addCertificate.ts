@@ -14,7 +14,13 @@ type CertificateAddData = {
   description: string;
   createdBy: string;
   categoryName:string,
-  categoryId:string
+  categoryId:string;
+  isTrainingLinked: boolean;
+  trainingRecordId?: string;
+  trainingRecordName?: string;
+  trainingRecordCategoryId?: string;
+  trainingRecordCategoryName?: string;
+  trainingRecordSkillId?:string
 };
 
 type AddCertificateResponse = {
@@ -57,22 +63,46 @@ export async function addCertificate(
         data.base64Certificate,
       );
       certificateUrl = filename;
+    };
+
+    
+    const certificateData: any = {
+      name: data.name,
+      url: certificateUrl,
+      obtainedDate: new Date(data.obtainedDate),
+      expiryDate: new Date(data.expiryDate),
+      description: data.description,
+      createdById: data.createdBy,
+      status: 1,
+      categoryId: data.categoryId,
+      categoryName: data.categoryName,
+    };
+    
+   
+    if (data.isTrainingLinked) {
+      certificateData.isTrainingLinked = true;
+      certificateData.trainingRecordId = data.trainingRecordId;
+      certificateData.trainingRecordName = data.trainingRecordName;
+      certificateData.trainingRecordCategoryId = data.trainingRecordCategoryId;
+      certificateData.trainingRecordCategoryName = data.trainingRecordCategoryName;
+      certificateData.trainingRecordSkillId = data.trainingRecordSkillId;
+    }
+    const newCertificate = await db.certification.create({
+      data: certificateData,
+    });
+
+   
+    if (data.isTrainingLinked) {
+      await db.training.update({
+        where: {
+          id: data.trainingRecordId,
+        },
+        data: {
+          certificationId: newCertificate.id,
+        },
+      });
     }
 
-    // Create certificate in database
-    const newCertificate = await db.certification.create({
-      data: {
-        name: data.name,
-        url: certificateUrl,
-        obtainedDate: new Date(data.obtainedDate),
-        expiryDate: new Date(data.expiryDate),
-        description: data.description,
-        createdById: data.createdBy,
-        status: "Active",
-        categoryId:data.categoryId,
-        categoryName:data.categoryName
-      },
-    });
 
     return {
       message: "Certificate added successfully",

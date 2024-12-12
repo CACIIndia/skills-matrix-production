@@ -16,32 +16,30 @@ model Session {
 }
 
 model User {
-  id             String          @id @default(uuid())
-  name           String?
-  email          String?         @unique
-  emailVerified  DateTime?
-  image          String?
-  sessions       Session[]
-  phone          String?
-  location       String?
-  status         String?
-  sfiaLevel      String?
-  reportedTo     String?
-  reportedToId   String?
-  role           String?
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  additionalInfo AdditionalInfo?
-  projects       Project[]
-  joiningDate    DateTime?
-  userSkills     UserSkill[]
-  SkillCategory  SkillCategory[]
-  SfiaLevel      SfiaLevel[]
-  Certification  Certification[]
-  trainingCreatedByIds Training[] @relation("trainingCreatedByIds")
-  trainingEmployees    Training[] @relation("trainingEmployees")
-
- 
+  id                   String          @id @default(uuid())
+  name                 String?
+  email                String?         @unique
+  emailVerified        DateTime?
+  image                String?
+  phone                String?
+  location             String?
+  status               Int             @default(1)
+  sfiaLevel            String?
+  reportedTo           String?
+  reportedToId         String?
+  role                 String?
+  createdAt            DateTime        @default(now())
+  joiningDate          DateTime?
+  updatedAt            DateTime        @updatedAt
+  additionalInfo       AdditionalInfo?
+  Certification        Certification[]
+  projects             Project[]
+  sessions             Session[]
+  SfiaLevel            SfiaLevel[]
+  SkillCategory        SkillCategory[]
+  trainingCreatedByIds Training[]      @relation("trainingCreatedByIds")
+  trainingEmployees    Training[]      @relation("trainingEmployees")
+  userSkills           UserSkill[]
 }
 
 model Skill {
@@ -52,6 +50,7 @@ model Skill {
   updatedAt     DateTime       @updatedAt
   skillCategory SkillCategory? @relation(fields: [categoryId], references: [id])
   userSkills    UserSkill[]
+  status               Int             @default(1)
 }
 
 model SkillCategory {
@@ -60,20 +59,20 @@ model SkillCategory {
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   createdById    String
-  status         String?
-  createdBy      User            @relation(fields: [createdById], references: [id])
-  skills         Skill[]
+  status               Int             @default(1)
   certifications Certification[]
+  skills         Skill[]
+  createdBy      User            @relation(fields: [createdById], references: [id])
 }
 
 model UserSkill {
   id          String   @id @default(uuid())
-  level       Int
   skillId     String
+  level       Int
   createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
   createdById String
-  status      String?
+  status               Int             @default(1)
+  updatedAt   DateTime @updatedAt
   user        User     @relation(fields: [createdById], references: [id])
   skill       Skill    @relation(fields: [skillId], references: [id])
 }
@@ -85,10 +84,11 @@ model AdditionalInfo {
   employeeType String?
   location     String?
   costCentre   String?
+  userId       String   @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [id])
-  userId       String   @unique
+  status               Int             @default(1)
 }
 
 model Project {
@@ -100,27 +100,28 @@ model Project {
   description      String
   code             String
   isCurrentProject Boolean
-  user             User     @relation(fields: [userId], references: [id])
   userId           String
+  user             User     @relation(fields: [userId], references: [id])
+  status               Int             @default(1)
 }
 
 model Discipline {
-  id     String @id @default(uuid())
+  id     String  @id @default(uuid())
   name   String?
-  status String?
+  status               Int             @default(1)
 }
 
 model Location {
-  id         String @id @default(uuid())
+  id         String  @id @default(uuid())
   name       String?
   costCentre String?
-  status     String?
+  status               Int             @default(1)
 }
 
 model Specialism {
-  id         String @id @default(uuid())
+  id         String  @id @default(uuid())
   name       String?
-  status     String?
+  status               Int             @default(1)
   discipline Int?
 }
 
@@ -130,37 +131,44 @@ model SfiaLevel {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   createdById String
-  status      String?
+  status               Int             @default(1)
   createdBy   User     @relation(fields: [createdById], references: [id])
 }
 
 model Certification {
-  id           String         @id @default(uuid()) @db.Uuid
-  name         String
-  url          String
-  obtainedDate DateTime
-  expiryDate   DateTime
-  description  String
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @default(now()) @updatedAt
-  createdById  String
-  status       String
-  createdBy    User           @relation(fields: [createdById], references: [id])
-  categoryId   String?
-  categoryName String?
-  skillCategory SkillCategory? @relation(fields: [categoryId], references: [id])
+  id                         String         @id @default(uuid()) @db.Uuid
+  name                       String
+  url                        String
+  obtainedDate               DateTime
+  expiryDate                 DateTime
+  description                String
+  createdAt                  DateTime       @default(now())
+  updatedAt                  DateTime       @default(now()) @updatedAt
+  status                     Int            @default(1)
+  createdById                String
+  categoryId                 String?
+  categoryName               String?
+  isTrainingLinked           Boolean        @default(false)
+  trainingRecordCategoryId   String?
+  trainingRecordCategoryName String?
+  trainingRecordId           String?
+  trainingRecordName         String?
+  trainingRecordSkillId      String?
+  skillCategory              SkillCategory? @relation(fields: [categoryId], references: [id])
+  createdBy                  User           @relation(fields: [createdById], references: [id])
+  trainingRecord             Training?      @relation("certificationTrainingRecord", fields: [trainingRecordId], references: [id])
+  trainings                  Training[]     @relation("trainingCertificationsIds")
 }
 
-
-
-  model TrainingStatus {
-  id        String      @id @default(uuid())
+model TrainingStatus {
+  id        String     @id @default(uuid())
   name      String
   trainings Training[]
+  status               Int             @default(1)
 }
 
 model Training {
-  id               String         @id @default(uuid())
+  id               String          @id @default(uuid())
   categoryId       String
   categoryName     String
   skillId          String?
@@ -168,14 +176,17 @@ model Training {
   fromDate         DateTime
   tentativeEndDate DateTime
   description      String
-  createdAt        DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
   createdById      String
-  createdBy        User           @relation("trainingCreatedByIds", fields: [createdById], references: [id])
   statusId         String
-  status           TrainingStatus @relation(fields: [statusId], references: [id])
   employeeId       String
   employeeName     String
-  employee         User           @relation("trainingEmployees", fields: [employeeId], references: [id])
+  certificationId  String?         @db.Uuid
+  certifications   Certification[] @relation("certificationTrainingRecord")
+  certificationIds Certification?  @relation("trainingCertificationsIds", fields: [certificationId], references: [id])
+  createdBy        User            @relation("trainingCreatedByIds", fields: [createdById], references: [id])
+  employee         User            @relation("trainingEmployees", fields: [employeeId], references: [id])
+  trainingStatus           TrainingStatus  @relation(fields: [statusId], references: [id])
+  status           Int             @default(1)
 }
- 

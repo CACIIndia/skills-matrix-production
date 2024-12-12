@@ -96,7 +96,7 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
               </td>
               <td className='pb-3 text-sm font-medium text-gray-800'>
                 <span className='badge badge-sm badge-success badge-outline'>
-                  {editableData?.status || "Inactive"}
+                  {editableData?.status ? "Active" : "Inactive"}
                 </span>
               </td>
             </tr>

@@ -6,12 +6,24 @@ import useGetCertificates from "@/lib/hooks/profile/useGetCertificates";
 import ResumeCard from "@/components/views/account/ResumeCard";
 import CertificateTable from "@/components/views/profile/CertificateTable";
 import useGetSkillCategory from "@/lib/hooks/profile/useGetSkillCategory";
+import { useEffect, useState } from "react";
+import { Certificate } from "@/lib/types/profile";
+import useGetTrainingDataByUserId from "@/lib/hooks/Training/useGetTraining";
 
 const CertificatePage = () => {
   const { profile } = useAppContext();
 
   const { data: certificates,refetch } = useGetCertificates(profile.id);
   const {data: categoryskills} = useGetSkillCategory();
+  const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
+  const initialcertificates = certificates || [];
+  const { data: training_data,  } = useGetTrainingDataByUserId(
+    profile?.id , "employeeId","Completed"
+  );
+
+  useEffect(()=>{
+    setCertificatesData(certificates || []);
+  },[certificates])
  
   const { handleDelete, handleEdit, handleUpload,handleDownload } = useCertificateHandlers(
     profile.id,
@@ -22,21 +34,24 @@ const CertificatePage = () => {
       <div className=' text-start'>
         <div className='grid grid-cols-1 justify-between gap-4 lg:grid-cols-1'>
           <CertificateTable
-            certificates={certificates}
+            certificates={certificatesData}
+            setCertificatesData={setCertificatesData}
+            initialcertificates ={initialcertificates}
             categoryskills={categoryskills || []}
             onEdit={handleEdit}
             onDelete={handleDelete}
             onDownload={handleDownload}
             onAddCertificate={handleUpload}
             refetch={refetch}
+            trainingData ={training_data || []}
           />
 
-          <ResumeCard
+          {/* <ResumeCard
             iconSrc='/assets/media/file-types/pdf.svg'
             iconAlt='PDF file icon'
             title='Resume'
             timestamp='3 days ago'
-          />
+          /> */}
         </div>
       </div>
     </div>

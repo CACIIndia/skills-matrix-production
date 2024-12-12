@@ -103,7 +103,7 @@ const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
       </label>
 
       {/* Reported To Dropdown */}
-      <label>
+      {/* <label>
         Reported To:
         <select
           name='reportedTo'
@@ -120,7 +120,7 @@ const EditGeneralInfo: React.FC<EditGeneralInfoProps> = ({
               </option>
             ))}
         </select>
-      </label>
+      </label> */}
 
       {/* Save Button */}
       <Button
