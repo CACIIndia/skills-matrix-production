@@ -5,6 +5,7 @@ export const MENU_ITEMS = [
     icon: "ki-element-11",
     tab: "/profile/overview",
   },
+  
 ];
 
 export const PROFILE_MENU_ITEMS = [
@@ -23,3 +24,8 @@ export const LINE_MANAGER_MENU_ITEMS = [
   { name: "Certifications", path: "/line-manager/certifications" },
   { name: "Training", path: "/line-manager/training" },
 ];
+
+
+
+//shall i create a meeting again at 3 or 2 ?
+// check sentences

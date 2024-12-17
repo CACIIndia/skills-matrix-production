@@ -12,6 +12,7 @@ import useGetTrainingDataByUserId from "@/lib/hooks/Training/useGetTraining";
 
 const CertificatePage = () => {
   const { profile } = useAppContext();
+  console.log(profile,"profileprofileprofile");
 
   const { data: certificates,refetch } = useGetCertificates(profile.id);
   const {data: categoryskills} = useGetSkillCategory();

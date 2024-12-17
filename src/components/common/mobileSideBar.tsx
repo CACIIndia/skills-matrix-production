@@ -100,7 +100,7 @@ const MobileSideBar = ({ isOpen, onClose }: MobileSideBarProps) => {
         </div>
            
         <nav className="mt-6 space-y-2">
-        <MenuItem href="/" icon="ki-filled ki-element-11" title="Dashboard" onClick={onClose} />
+        <MenuItem href="/profile/overview" icon="ki-filled ki-element-11" title="Dashboard" onClick={onClose} />
         
       </nav>
       

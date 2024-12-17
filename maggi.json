@@ -1,0 +1,286 @@
+[
+    {
+        "category": "Databases",
+        "skills": [
+            {
+                "id": "2a6ffa01-5495-4def-9285-5156560793af",
+                "name": "AWS DynamoDB",
+                "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                "createdAt": "2024-11-01T16:49:13.518Z",
+                "updatedAt": "2024-11-01T16:49:13.518Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                    "name": "Databases",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "40320128-3e86-42b1-ae1f-85c44efa9d23",
+                "name": "MariaDB",
+                "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                "createdAt": "2024-11-01T16:49:13.518Z",
+                "updatedAt": "2024-11-01T16:49:13.518Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                    "name": "Databases",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "91dd84f8-30d3-41ca-ab4e-135af5834156",
+                "name": "MongoDB",
+                "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                "createdAt": "2024-11-01T16:49:13.518Z",
+                "updatedAt": "2024-11-01T16:49:13.518Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                    "name": "Databases",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "a419f961-da98-4355-863c-f33f6ac411cc",
+                "name": "MySQL",
+                "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                "createdAt": "2024-11-01T16:49:13.518Z",
+                "updatedAt": "2024-11-01T16:49:13.518Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                    "name": "Databases",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "ce265547-9ac2-48a4-8ad4-479bfbdc966f",
+                "name": "Oracle",
+                "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                "createdAt": "2024-11-01T16:49:13.518Z",
+                "updatedAt": "2024-11-01T16:49:13.518Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                    "name": "Databases",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "81a2ab3a-8a1a-4b1c-8291-e5d187742825",
+                "name": "PostgreSQL",
+                "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                "createdAt": "2024-11-01T16:49:13.518Z",
+                "updatedAt": "2024-11-01T16:49:13.518Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                    "name": "Databases",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "1f2c1c2d-9366-47be-bf57-1b3db72c56d2",
+                "name": "Redis",
+                "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                "createdAt": "2024-11-01T16:49:13.518Z",
+                "updatedAt": "2024-11-01T16:49:13.518Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                    "name": "Databases",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "fdceaa78-4332-4a12-9da5-37a591102b7c",
+                "name": "SQL Server & Scripting",
+                "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                "createdAt": "2024-11-01T16:49:13.518Z",
+                "updatedAt": "2024-11-01T16:49:13.518Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                    "name": "Databases",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "1e61ed4e-fa88-4d89-acc5-ee55dbc98da5",
+                "name": "SQL Server - SSAS",
+                "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                "createdAt": "2024-11-01T16:49:13.518Z",
+                "updatedAt": "2024-11-01T16:49:13.518Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                    "name": "Databases",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "5b8b0b64-d4cf-41ff-87a5-0e7b0fc142e5",
+                "name": "SQL Server - SSIS",
+                "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                "createdAt": "2024-11-01T16:49:13.518Z",
+                "updatedAt": "2024-11-01T16:49:13.518Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                    "name": "Databases",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "93e034ef-569e-4775-9720-dc8bf90ba58c",
+                "name": "Snowflake",
+                "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                "createdAt": "2024-11-01T16:49:13.518Z",
+                "updatedAt": "2024-11-01T16:49:13.518Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                    "name": "Databases",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "ef6d3693-f58b-46ea-8224-2424de2e6390",
+                "name": "Cassandra",
+                "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                "createdAt": "2024-11-01T16:49:13.518Z",
+                "updatedAt": "2024-11-01T16:49:13.518Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
+                    "name": "Databases",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            }
+        ]
+    },
+    {
+        "category": "Soft Skills",
+        "skills": [
+            {
+                "id": "f0ee72d1-a4b8-4c6f-8687-dd4e1c0e60d4",
+                "name": "Solution Design",
+                "categoryId": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+                "createdAt": "2024-11-01T16:49:18.302Z",
+                "updatedAt": "2024-11-01T16:49:18.302Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+                    "name": "Soft Skills",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "733e04ce-723a-41d7-b21f-f450acba0fb3",
+                "name": "Service Reporting and SLA Compliance",
+                "categoryId": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+                "createdAt": "2024-11-01T16:49:18.302Z",
+                "updatedAt": "2024-11-01T16:49:18.302Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+                    "name": "Soft Skills",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "fbbcf921-c7be-43d2-a1c2-b73e320ae0ca",
+                "name": "Vendor Management",
+                "categoryId": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+                "createdAt": "2024-11-01T16:49:18.302Z",
+                "updatedAt": "2024-11-01T16:49:18.302Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+                    "name": "Soft Skills",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "9b807c88-4d7c-4e47-8b24-b036635e60bd",
+                "name": "Communication Skills",
+                "categoryId": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+                "createdAt": "2024-11-01T16:49:18.302Z",
+                "updatedAt": "2024-11-01T16:49:18.302Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+                    "name": "Soft Skills",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            },
+            {
+                "id": "9ed14268-9a9f-4e94-98bc-ee59935c20a7",
+                "name": "Bid Response (Writing)",
+                "categoryId": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+                "createdAt": "2024-11-01T16:49:18.302Z",
+                "updatedAt": "2024-11-01T16:49:18.302Z",
+                "status": 1,
+                "skillCategory": {
+                    "id": "12b8cd62-c9d2-4e55-9ac1-aa43185d4d5e",
+                    "name": "Soft Skills",
+                    "createdAt": "2024-11-01T16:23:30.527Z",
+                    "updatedAt": "2024-11-01T16:23:30.527Z",
+                    "createdById": "7cb2c4dd-2482-4145-bd5e-33ca6c56ff11",
+                    "status": 1
+                }
+            }
+        ]
+    }
+   
+ 
+]

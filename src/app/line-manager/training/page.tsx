@@ -47,6 +47,7 @@ const TrainingSchedule: React.FC = () => {
 
   const { data: employeeData } = useGetUsersByLineManager(profile?.id);
   const { data: categoryskills } = useGetSkills();
+  console.log(categoryskills, "categoryskills");
 
   const [trainingData, setTrainingData] = useState<Training[]>([]);
   const [initialTrainingData, setInitialTrainingData] = useState<Training[]>(
