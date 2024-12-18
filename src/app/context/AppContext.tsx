@@ -24,7 +24,9 @@ type State = {
   user?: Session["user"];
   selectedItems: SkillCategory[];
   toggleSelectedItem: (item: SkillCategory) => void;
+  removeSelectedItem: (id: SkillCategory["id"]) => void;
   categoryskills: any;
+  setSelectedItems: Dispatch<SetStateAction<SkillCategory[]>>;
 
 };
 
@@ -59,6 +61,12 @@ export const AppProvider = ({ children }: AppProviderProps) => {
       }
     });
   };
+
+  const removeSelectedItem = (id: SkillCategory["id"]) => {
+    setSelectedItems((prevSelected) =>
+      prevSelected.filter((item) => item.id !== id)
+    );
+  };
   
   
   useEffect(() => {
@@ -81,7 +89,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         isLoading,
         selectedItems,
         toggleSelectedItem,
-        categoryskills
+        categoryskills,
+        removeSelectedItem,
+        setSelectedItems
       }}
     >
       {children}

@@ -14,6 +14,19 @@ export async function GET(request: Request) {
         name: true,
         email: true,
         image: true,
+        role: true,
+        location: true,
+        userSkills: {
+          select: {
+            skill: {
+              select: {
+                id: true,
+                name: true,
+               
+              },
+            },
+          },
+        },
       },
     });
 
