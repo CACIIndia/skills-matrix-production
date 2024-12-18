@@ -1,12 +1,18 @@
 "use client";
 import { useAppContext } from "@/app/context/AppContext";
+import SkillList from "@/components/search-skills/SkillList";
 import React, { FC } from "react";
+import defaultImage from "../../../../public/assets/media/avatars/default-image.png";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Profile {
+  id:string;
   name: string;
-  jobTitle: string;
+  role: string;
   location: string;
   image: string;
+  userSkills: any[];
 }
 
 interface SearchFilters {
@@ -23,6 +29,7 @@ interface SearchResultProfilesProps {
   onFilterChange: (filterName: string, value: string | number) => void;
   jobData: string[];
   resetSearchFilters: () => void;
+  locationData: string[];
 }
 
 const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
@@ -31,6 +38,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
   onFilterChange,
   jobData,
   resetSearchFilters,
+  locationData
 }) => {
   const {
     searchQuery,
@@ -39,13 +47,19 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
     resultsPerPage,
     currentPage,
   } = searchFilters;
+  const { selectedItems } = useAppContext();
+  const router = useRouter();
+  console.log(selectedItems,"selectedItemsssssss");
 
   const filteredProfiles = profiles.filter((profile) => {
     return (
       (searchQuery === "" ||
         profile.name.toLowerCase().includes(searchQuery.toLowerCase())) &&
-      (jobFilter === "" || profile.jobTitle === jobFilter) &&
-      (locationFilter === "" || profile.location === locationFilter)
+      (jobFilter === "" || profile.role === jobFilter) &&
+      (locationFilter === "" || profile.location === locationFilter) &&
+      selectedItems.every((item) => profile.userSkills.some((skill) => skill.skill.id === item.id))
+
+
     );
   });
 
@@ -54,7 +68,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
     (currentPage - 1) * resultsPerPage,
     currentPage * resultsPerPage,
   );
-  const { selectedItems } = useAppContext();
+  
 
   return (
     <div className='w-full p-6'>
@@ -92,9 +106,12 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
           onChange={(e) => onFilterChange("locationFilter", e.target.value)}
         >
           <option value=''>Location</option>
-          <option value='Bristol'>Bristol</option>
-          <option value='Cheltenham'>Cheltenham</option>
-          <option value='Plymouth'>Plymouth</option>
+          {locationData.map((location) => (
+            <option key={location} value={location}>
+              {location}
+            </option>
+          ))}
+          
         </select>
         <button
           onClick={() => resetSearchFilters()}
@@ -114,13 +131,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
             <div className='card-body'>
               <div className='mb-2 flex flex-wrap gap-2.5'>
                 {selectedItems && selectedItems?.length > 0 ? (
-                  <div className='mb-2 flex flex-wrap gap-2.5 '>
-                    {selectedItems?.map((skill) => {
-                      const name = skill.name;
-
-                      return <span className="border border-red-100" key={skill.id}>{name}</span>;
-                    })}
-                  </div>
+                  <SkillList/>
                 ) : (
                   <div className='text-center text-gray-600'>
                     <p>No skills found</p>
@@ -130,6 +141,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
             </div>
           </div>
         </div>
+
       </div>
 
       <div>
@@ -168,16 +180,20 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
           {paginatedProfiles.length > 0 ? (
             paginatedProfiles.map((profile, index) => (
               <tr key={index} className='hover:bg-gray-50'>
-                <td className='flex items-center border-b border-gray-300 px-4 py-2'>
-                  <img
-                    src={profile.image}
+                <td className='flex items-center border-b border-gray-300 px-4 py-2' onClick={()=>{
+                  router.push(`/profile/overview/${profile.id}`)
+                }}>
+                  <Image
+                    src={profile.image || defaultImage}
                     alt={profile.name}
                     className='mr-4 h-10 w-10 rounded-full'
+                    width={40}
+                    height={40}
                   />
                   {profile.name}
                 </td>
                 <td className='border-b border-gray-300 px-4 py-2'>
-                  {profile.jobTitle}
+                  {profile.role}
                 </td>
                 <td className='border-b border-gray-300 px-4 py-2'>
                   {profile.location}
