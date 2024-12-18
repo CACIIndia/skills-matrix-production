@@ -48,6 +48,7 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
             </div>
           </div>
         </div> */}
+        
         <div className='hidden lg:flex lg:items-stretch'>
           <MegaMenu />
         </div>
