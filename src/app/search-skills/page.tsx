@@ -30,12 +30,17 @@ function SearchSkills() {
       setJobTitleData(jobTitles);
       setLocationData(locations);
     }
+  
+  }, [users]); 
+
+
+  useEffect(()=>{
+
     return () => {
       console.log("Component is unmounting...");
       setSelectedItems([]);
     };
-  }, [users]); 
-
+  },[])
 
   
 
