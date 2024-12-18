@@ -14,12 +14,15 @@ const MegaMenu = ({}: MegaMenuProps) => {
 
   return (
     <div
-      className='gap-1.25 mb-2.5 flex items-center text-xs font-medium lg:mb-0 lg:text-sm'
+      className='mb-2.5 flex items-center gap-x-7 text-xs font-medium lg:mb-0 lg:text-sm'
       data-menu='true'
       id='megamenu'
     >
       {MENU_ITEMS.map(({ name, path, tab }) => (
-        <div key={name} className='flex items-center'>
+        <div
+          key={name}
+          className={`text-primary-text hover:text-primary-hover flex items-center ${pathname === path? 'text-primary-text-dark': ''}`}
+        >
           <Link
             href={path}
             // className={`text-gray-600 ${
