@@ -2,11 +2,13 @@
 import { useAppContext } from "@/app/context/AppContext";
 import CertificateTable from "@/components/views/profile/CertificateTable";
 import { useCertificateHandlers } from "@/lib/hooks/profile/useCertificateHandlers";
+import useGetCertificates from "@/lib/hooks/profile/useGetCertificates";
 import { Certificate } from "@/lib/types/profile";
 import { useEffect, useState } from "react";
 
 export default function Certifications() {
   const { profile } = useAppContext();
+  const { data: certificates, refetch } = useGetCertificates(profile?.id);
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
   const { handleDelete, handleEdit, handleUpload, handleDownload } =
     useCertificateHandlers(profile?.id);
@@ -29,8 +31,8 @@ export default function Certifications() {
   ];
 
   useEffect(() => {
-    setCertificatesData(mockData || []);
-  }, []);
+    setCertificatesData(certificates || []);
+  }, [certificates]);
 
   const headers = [
     {
