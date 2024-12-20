@@ -4,7 +4,6 @@ import AddCertificateModal from "./AddCertificate";
 import EditCertificateModal from "./EditCertificateModal";
 import { Certificate, SkillCategory, Training } from "@/lib/types/profile";
 import "react-datepicker/dist/react-datepicker.css";
-import { tableSearch } from "@/lib/utils/tableSearch";
 import Table from "@/components/common/Table/Table";
 
 
@@ -24,8 +23,6 @@ interface CertificateTableProps {
     newCertificate: Omit<Certificate, "id">,
     refetch: () => void,
   ) => void;
-  setCertificatesData: React.Dispatch<React.SetStateAction<Certificate[]>>;
-  initialcertificates: Certificate[];
   categoryskills: SkillCategory[];
   refetch: () => void;
   trainingData: Training[];
@@ -39,8 +36,6 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
   onEdit,
   onDelete,
   onDownload,
-  setCertificatesData,
-  initialcertificates,
   onAddCertificate,
   categoryskills,
   refetch,
@@ -66,19 +61,6 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
 
   const [editingFile, setEditingFile] = useState<File | undefined>();
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-
-
-  const handleTrainingSearch = (query: string) => {
-    const filteredData = tableSearch(query, initialcertificates, [
-      "name",
-      "categoryName",
-      "obtainedDate",
-      "expiryDate",
-    ]);
-
-    setCertificatesData(filteredData);
-  };
 
   // Toggle modal visibility
   const toggleAddModal = () => setIsAddModalOpen((prev) => !prev);
@@ -166,12 +148,10 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
         headers={headers}
         isSearchable={isSearchable}
         addNewData={addNewData}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        handleTrainingSearch={handleTrainingSearch}
         setIsAddModalOpen={setIsAddModalOpen}
         data={certificates}
         renderCell={renderCell}
+        isPaginated={true}
       />
 
       {/* Add Certificate Modal */}

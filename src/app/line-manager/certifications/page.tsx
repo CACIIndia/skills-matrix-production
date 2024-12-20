@@ -67,8 +67,6 @@ export default function Certifications() {
         <CertificateTable
           headers={headers}
           certificates={certificatesData}
-          setCertificatesData={setCertificatesData}
-          initialcertificates={[]}
           categoryskills={[]}
           onEdit={handleEdit}
           onDelete={handleDelete}
