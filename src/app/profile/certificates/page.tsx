@@ -12,39 +12,74 @@ import useGetTrainingDataByUserId from "@/lib/hooks/Training/useGetTraining";
 
 const CertificatePage = () => {
   const { profile } = useAppContext();
-  console.log(profile,"profileprofileprofile");
-
-  const { data: certificates,refetch } = useGetCertificates(profile.id);
-  const {data: categoryskills} = useGetSkillCategory();
+  const { data: certificates, refetch } = useGetCertificates(profile.id);
+  const { data: categoryskills } = useGetSkillCategory();
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
   const initialcertificates = certificates || [];
-  const { data: training_data,  } = useGetTrainingDataByUserId(
-    profile?.id , "employeeId","Completed"
+  const { data: training_data } = useGetTrainingDataByUserId(
+    profile?.id,
+    "employeeId",
+    "Completed",
   );
 
-  useEffect(()=>{
+  useEffect(() => {
     setCertificatesData(certificates || []);
-  },[certificates])
- 
-  const { handleDelete, handleEdit, handleUpload,handleDownload } = useCertificateHandlers(
-    profile.id,
-  );
+  }, [certificates]);
+
+  const { handleDelete, handleEdit, handleUpload, handleDownload } =
+    useCertificateHandlers(profile.id);
+
+  const headers = [
+    {
+      key: "categoryName",
+      label: "Category",
+      sortable: true,
+      className: "w-[150px] cursor-pointer",
+    },
+    {
+      key: "name",
+      label: "Name",
+      sortable: true,
+      className: "w-[280px] cursor-pointer",
+    },
+    {
+      key: "obtainedDate",
+      label: "Obtained Date",
+      sortable: true,
+      className: "min-w-[135px]",
+    },
+    {
+      key: "expiryDate",
+      label: "Valid Until",
+      sortable: true,
+      className: "min-w-[135px]",
+    },
+    {
+      key: "actions",
+      label: "Actions",
+      sortable: false,
+      className: "min-w-[135px]",
+    },
+  ];
 
   return (
     <div>
-      <div className=' text-start'>
+      <div className='text-start'>
         <div className='grid grid-cols-1 justify-between gap-4 lg:grid-cols-1'>
           <CertificateTable
+            headers={headers}
             certificates={certificatesData}
             setCertificatesData={setCertificatesData}
-            initialcertificates ={initialcertificates}
+            initialcertificates={initialcertificates}
             categoryskills={categoryskills || []}
             onEdit={handleEdit}
             onDelete={handleDelete}
             onDownload={handleDownload}
             onAddCertificate={handleUpload}
             refetch={refetch}
-            trainingData ={training_data || []}
+            trainingData={training_data || []}
+            isSearchable={true}
+            addNewData={true}
           />
 
           {/* <ResumeCard
