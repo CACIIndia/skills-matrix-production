@@ -17,6 +17,7 @@ export async function GET(request: Request) {
         role: true,
         location: true,
         userSkills: {
+          where: {level: {not:0}},
           select: {
             skill: {
               select: {
