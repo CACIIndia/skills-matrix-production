@@ -13,6 +13,7 @@ function Menu({ submenu, link, name }: any) {
 
   const handleItemClick = (skill: any) => {
     toggleSelectedItem(skill); 
+    // console.log(skill);
     router.push(`/search-skills`);
    
   };

@@ -5,6 +5,7 @@ import React, { FC } from "react";
 import defaultImage from "../../../../public/assets/media/avatars/default-image.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import DisplayName from "@/components/reusable-components/DisplayName";
 
 interface Profile {
   id:string;
@@ -51,7 +52,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
   const router = useRouter();
   console.log(selectedItems,"selectedItemsssssss");
 
-  const filteredProfiles = profiles.filter((profile) => {
+  const filteredProfiles = profiles?.filter((profile) => {
     return (
       (searchQuery === "" ||
         profile.name.toLowerCase().includes(searchQuery.toLowerCase())) &&
@@ -190,7 +191,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
                     width={40}
                     height={40}
                   />
-                  {profile.name}
+                  <DisplayName name={profile.name} isClickable={true} />
                 </td>
                 <td className='border-b border-gray-300 px-4 py-2'>
                   {profile.role}
