@@ -165,7 +165,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
       <Table
         headers={headers}
         isSearchable={isSearchable}
-        addNewData={false}
+        addNewData={addNewData}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         handleTrainingSearch={handleTrainingSearch}
