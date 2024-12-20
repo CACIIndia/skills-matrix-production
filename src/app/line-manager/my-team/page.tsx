@@ -119,6 +119,7 @@ interface TeamCardsProps {
     phone: string;
     id: string;
     image: string;
+    userSkills?: any;
   }[];
 }
 
@@ -142,40 +143,15 @@ const TeamCards: React.FC<TeamCardsProps> = ({ teams }) => {
 };
 
 const TeamsContainer: React.FC = () => {
-    const teams = [
-      {
-        id: "5ea5cfc1-000a-449a-be5e-9a7472305d87",
-        name: "Raghvendra Singh",
-        email: "rsingh@caci.co.uk",
-        image:
-          "https://smempprofile.blob.core.windows.net/profileimage/1733996700667-5ea5cfc1-000a-449a-be5e-9a7472305d87.png",
-        role: "Senior Software Developer",
-        location: "CACI India",
-        phone: "7985815061",
-        userSkills: [],
-      },
-      {
-        id: "24e3eb74-5db4-4f59-a0a0-332b57a2dc79",
-        name: "Sundeep Ballem",
-        email: "sballem@caci.co.uk",
-        image: null,
-        role: null,
-        location: null,
-        phone: null,
-        userSkills: [
-          { skill: { id: "2a6ffa01", name: "AWS DynamoDB" } },
-          { skill: { id: "afbdc77f", name: "C#" } },
-          { skill: { id: "fdceaa78", name: "SQL Server & Scripting" } },
-          { skill: { id: "40320128", name: "MariaDB" } },
-        ],
-      },
-    ];
+  
     const { profile } = useAppContext();
     const { data: users = [] } = useGetUsersByLineManager(profile?.id);
     const transformedTeams = users.map((team) => ({
       ...team,
-      skills: team.userSkills?.map((userSkill) => userSkill.skill.name) || [],
+      skills: team.userSkills?.map((item) => item.skill.name) || []
     }));
+
+   
   
     return (
       <div className="container-fixed">
