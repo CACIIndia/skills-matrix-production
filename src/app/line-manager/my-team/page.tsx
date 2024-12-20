@@ -1,6 +1,7 @@
 "use client";
 
 import { useAppContext } from "@/app/context/AppContext";
+import TeamsSkeleton from "@/components/skeletons/TeamSkeleton";
 import useGetUsersByLineManager from "@/lib/hooks/common/useGetUsersByLineManager";
 import Image from "next/image";
 import React from "react";
@@ -15,6 +16,18 @@ interface TeamCardProps {
   phone: string;
   id: string;
   image: string;
+}
+interface TeamCardsProps {
+  teams: {
+    name: string;
+    skills: string[];
+    email: string;
+    role: string;
+    phone: string;
+    id: string;
+    image: string;
+    userSkills?: any;
+  }[];
 }
 
 const TeamCard: React.FC<TeamCardProps> = ({
@@ -110,18 +123,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
   );
 };
 
-interface TeamCardsProps {
-  teams: {
-    name: string;
-    skills: string[];
-    email: string;
-    role: string;
-    phone: string;
-    id: string;
-    image: string;
-    userSkills?: any;
-  }[];
-}
+
 
 const TeamCards: React.FC<TeamCardsProps> = ({ teams }) => {
   return (
@@ -145,13 +147,16 @@ const TeamCards: React.FC<TeamCardsProps> = ({ teams }) => {
 const TeamsContainer: React.FC = () => {
   
     const { profile } = useAppContext();
-    const { data: users = [] } = useGetUsersByLineManager(profile?.id);
+    const { data: users = [], isLoading } = useGetUsersByLineManager(profile?.id);
+    if(isLoading || !users || users.length === 0) return <div>
+      <TeamsSkeleton/>
+    </div>;
     const transformedTeams = users.map((team) => ({
       ...team,
       skills: team.userSkills?.map((item) => item.skill.name) || []
     }));
 
-   
+  
   
     return (
       <div className="container-fixed">
