@@ -1,5 +1,6 @@
 "use client";
 import { useAppContext } from "@/app/context/AppContext";
+import TableSkeleton from "@/components/skeletons/TableSkeleton";
 import CertificateTable from "@/components/views/profile/CertificateTable";
 import { useCertificateHandlers } from "@/lib/hooks/profile/useCertificateHandlers";
 import useGetCertificates from "@/lib/hooks/profile/useGetCertificates";
@@ -8,27 +9,14 @@ import { useEffect, useState } from "react";
 
 export default function Certifications() {
   const { profile } = useAppContext();
-  const { data: certificates, refetch } = useGetCertificates(profile?.id);
+  const { data: certificates =[], refetch ,isLoading} = useGetCertificates(profile?.id);
+ 
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
   const { handleDelete, handleEdit, handleUpload, handleDownload } =
     useCertificateHandlers(profile?.id);
 
-  const mockData = [
-    {
-      id: "2d698fc5-25bc-4e69-b15c-32db596eaf4c",
-      name: "Typescript",
-      url: "typescript-1ea25887-ac9f-492a-9868-380438febe80-certificate.pdf",
-      obtainedDate: "2024-12-17T18:30:00.000Z",
-      expiryDate: "2025-02-05T18:30:00.000Z",
-      description: "",
-      createdAt: "2024-12-19T06:40:30.257Z",
-      updatedAt: "2024-12-19T06:40:30.257Z",
-      status: 1,
-      createdById: "1ea25887-ac9f-492a-9868-380438febe80",
-      categoryId: "7a368270-aa59-4f39-a5a4-6d041b5677a9",
-      categoryName: "Frontend",
-    },
-  ];
+  
+  
 
   useEffect(() => {
     setCertificatesData(certificates || []);
@@ -60,6 +48,14 @@ export default function Certifications() {
       className: "min-w-[135px]",
     }
   ];
+  if(isLoading || !certificates || certificates.length === 0){ 
+
+    return (
+      <TableSkeleton />
+    ) 
+
+  }
+
 
   return (
     <>
