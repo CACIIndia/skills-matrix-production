@@ -71,63 +71,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   
   useEffect(() => {
     if (profileData) {
-      setProfile({
-        "id": "da5124d1-8907-4a49-80d1-4d217f2e8505",
-        "name": "Magendran VA",
-        "email": "vmagendran@caci.co.uk",
-        "emailVerified": "2024-12-11T06:08:24.605Z",
-        "image": null,
-        "phone": "9398451030",
-        "location": "Hyderabad",
-        "status": 1,
-        "sfiaLevel": null,
-        "reportedTo": null,
-        "reportedToId": null,
-        "role": "Software Developer",
-        "createdAt": "2024-12-11T06:08:24.607Z",
-        "joiningDate": null,
-        "updatedAt": "2024-12-13T05:29:36.038Z",
-        "additionalInfo": null,
-        "userSkills": [
-            {
-                "id": "680c5bb3-22a2-44b5-9b56-776a9f819b73",
-                "skillId": "73699e84-ece3-4357-a882-5e853716a44f",
-                "level": 1,
-                "createdAt": "2024-12-18T09:43:16.603Z",
-                "createdById": "da5124d1-8907-4a49-80d1-4d217f2e8505",
-                "status": 1,
-                "updatedAt": "2024-12-18T09:43:16.603Z",
-                "skill": {
-                    "id": "73699e84-ece3-4357-a882-5e853716a44f",
-                    "name": "Angular",
-                    "categoryId": "7a368270-aa59-4f39-a5a4-6d041b5677a9",
-                    "createdAt": "2024-11-01T16:55:38.342Z",
-                    "updatedAt": "2024-11-01T16:55:38.342Z",
-                    "status": 1
-                }
-            },
-            {
-                "id": "50eeba14-d7e9-4be0-a591-5a91d0951478",
-                "skillId": "a419f961-da98-4355-863c-f33f6ac411cc",
-                "level": 1,
-                "createdAt": "2024-12-18T09:43:16.603Z",
-                "createdById": "da5124d1-8907-4a49-80d1-4d217f2e8505",
-                "status": 1,
-                "updatedAt": "2024-12-18T09:43:16.603Z",
-                "skill": {
-                    "id": "a419f961-da98-4355-863c-f33f6ac411cc",
-                    "name": "MySQL",
-                    "categoryId": "7175f3a7-f378-46e4-9ddc-22cc05e79a6f",
-                    "createdAt": "2024-11-01T16:49:13.518Z",
-                    "updatedAt": "2024-11-01T16:49:13.518Z",
-                    "status": 1
-                }
-            }
-        ],
-        "projects": [],
-        "isLineManager": true,
-        "trainingEmployees": []
-    });
+      setProfile(profileData?.user);
     }
   }, [profileData]);
 
