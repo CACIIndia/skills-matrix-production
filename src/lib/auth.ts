@@ -63,6 +63,7 @@ export const options: AuthOptions = {
             });
           }
            
+
           
  
           token.sub = user.id;
@@ -70,7 +71,7 @@ export const options: AuthOptions = {
           token.name = user.name;
           token.image = user.image || "";
           token.azure_access_token = typeof account.access_token === "string" ? account.access_token  : null ;
-        //  token.azure_access_token = process.env.TEMP_ACCESS_TOKEN;
+         token.azure_access_token = process.env.TEMP_ACCESS_TOKEN;
           return token;
         } catch (error: unknown) { 
           if (error instanceof Error) {
