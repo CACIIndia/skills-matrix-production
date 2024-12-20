@@ -45,33 +45,33 @@ export const options: AuthOptions = {
         }
 
         try {
-          // let user = await db.user.findUnique({
-          //   where: { email },
-          // });
-          // if (!user) {
-          // let ad_response = await  fetchUserProfile(account.access_token as string);
-          //   user = await db.user.create({
-          //     data: {
-          //       id:ad_response.id,
-          //       email:ad_response.mail,
-          //       name:ad_response.displayName,
-          //       emailVerified: new Date(),
-          //       role: ad_response.jobTitle,
-          //       location: ad_response.officeLocation,
-          //       phone:ad_response.mobilePhone,
-          //     },
-          //   });
-          // }
+          let user = await db.user.findUnique({
+            where: { email },
+          });
+          if (!user) {
+          let ad_response = await  fetchUserProfile(account.access_token as string);
+            user = await db.user.create({
+              data: {
+                id:ad_response.id,
+                email:ad_response.mail,
+                name:ad_response.displayName,
+                emailVerified: new Date(),
+                role: ad_response.jobTitle,
+                location: ad_response.officeLocation,
+                phone:ad_response.mobilePhone,
+              },
+            });
+          }
            
 
           
  
-          // token.sub = user.id;
-          // token.email = user.email;
-          // token.name = user.name;
-          // token.image = user.image || "";
-          // token.azure_access_token = typeof account.access_token === "string" ? account.access_token  : null ;
-        //  token.azure_access_token = process.env.TEMP_ACCESS_TOKEN;
+          token.sub = user.id;
+          token.email = user.email;
+          token.name = user.name;
+          token.image = user.image || "";
+          token.azure_access_token = typeof account.access_token === "string" ? account.access_token  : null ;
+         token.azure_access_token = process.env.TEMP_ACCESS_TOKEN;
           return token;
         } catch (error: unknown) { 
           if (error instanceof Error) {
