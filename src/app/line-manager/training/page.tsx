@@ -8,11 +8,9 @@ import useGetUsersByLineManager from "@/lib/hooks/common/useGetUsersByLineManage
 import useGetTrainingStatus from "@/lib/hooks/Training/useGetTrainingStatus";
 import { useTrainingHandlers } from "@/lib/hooks/Training/useTrainingHandlers";
 import { FaTrash } from "react-icons/fa";
-import { CiSquarePlus } from "react-icons/ci";
 import CreateTraining from "@/components/views/Training/TrainingModal";
 import EditTraining from "@/components/views/Training/EditTrainingModal";
-import { tableSearch } from "@/lib/utils/tableSearch";
-import SortingPagination from "@/components/common/Table/SortingPagination";
+import Table from "@/components/common/Table/Table";
 
 type CategoryResponse = {
   category: string;
@@ -29,7 +27,6 @@ type Employee = {
 
 const TrainingSchedule: React.FC = () => {
   const { profile, isLoading } = useAppContext();
-  console.log(profile, "profile");
   // if (isLoading || !profile) {
   //   return <div>Loading...</div>;
   // }
@@ -50,9 +47,6 @@ const TrainingSchedule: React.FC = () => {
   console.log(categoryskills, "categoryskills");
 
   const [trainingData, setTrainingData] = useState<Training[]>([]);
-  const [initialTrainingData, setInitialTrainingData] = useState<Training[]>(
-    [],
-  );
   const [categories, setCategories] = useState<CategoryResponse>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
 
@@ -64,50 +58,10 @@ const TrainingSchedule: React.FC = () => {
   const [trainingStatus, setTrainingStatus] = useState([]);
   const [editingId, setEditingId] = useState<string>("");
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [sortConfig, setSortConfig] = useState<{
-    key: string;
-    direction: "asc" | "desc" | null;
-  }>({ key: "", direction: null });
-
-  const sortData = (data: Training[]) => {
-    if (!sortConfig.key || !sortConfig.direction) return data;
-
-    return [...data].sort((a, b) => {
-      const aValue = a[sortConfig.key as keyof Training] ?? null;
-      const bValue = b[sortConfig.key as keyof Training] ?? null;
-
-      if (aValue === null && bValue === null) return 0;
-      if (aValue === null) return sortConfig.direction === "asc" ? -1 : 1;
-      if (bValue === null) return sortConfig.direction === "asc" ? 1 : -1;
-
-      const isAscending = sortConfig.direction === "asc";
-
-      return isAscending
-        ? (aValue as string | number) > (bValue as string | number)
-          ? 1
-          : -1
-        : (aValue as string | number) < (bValue as string | number)
-          ? 1
-          : -1;
-    });
-  };
-
-  const handleSort = (key: keyof Training) => {
-    let direction: "asc" | "desc" = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-  };
-
   useEffect(() => {
     setCategories(categoryskills || []);
     setEmployees(employeeData || []);
     setTrainingData(training_data || []);
-    setInitialTrainingData(training_data || []);
     setTrainingStatus(training_status || []);
   }, [categoryskills, employeeData, training_data, training_status]);
 
@@ -117,26 +71,67 @@ const TrainingSchedule: React.FC = () => {
     setEditTrainingData(training);
   };
 
-  const paginatedData = sortData(trainingData).slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
-  );
+  const headers = [
+    {
+      key: "categoryName",
+      label: "Category",
+      sortable: true,
+      className: "w-[150px] cursor-pointer",
+    },
+    {
+      key: "skillName",
+      label: "Skill",
+      sortable: true,
+      className: "w-[280px] cursor-pointer",
+    },
+    {
+      key: "fromDate",
+      label: "From Date",
+      sortable: true,
+      className: "min-w-[135px]",
+    },
+    {
+      key: "tentativeEndDate",
+      label: "Tentative End Date",
+      sortable: true,
+      className: "min-w-[135px]",
+    },
+    {
+      key: "actions",
+      label: "Actions",
+      sortable: false,
+      className: "min-w-[135px]",
+    },
+  ];
 
- 
-  const handleTrainingSearch = (query: string) => {
-    const filteredData = tableSearch(query, initialTrainingData, [
-      "employeeName",
-      "categoryName",
-      "skillName",
-      "fromDate",
-      "tentativeEndDate",
-    ]);
-    setTrainingData(filteredData);
-  };
-
-  const getSortClass = (key: string) => {
-    if (sortConfig.key !== key) return "";
-    return sortConfig.direction === "asc" ? "asc" : "desc";
+  const renderCell = (key: string, value: string, rowData: Training) => {
+    switch (key) {
+      case "fromDate":
+        return value ? new Date(value).toLocaleDateString() : "N/A";
+      case "tentativeEndDate":
+        return value ? new Date(value).toLocaleDateString() : "N/A";
+      case "actions":
+        return (
+          <div className='flex gap-3 text-xl'>
+            <button
+              className='text-primary'
+              onClick={() => handleEdit(rowData)}
+              title='Edit'
+            >
+              <i className='ki-filled ki-notepad-edit' />
+            </button>
+            <button
+              className='text-danger'
+              onClick={() => handleDelete(rowData?.id)}
+              title='Delete'
+            >
+              <FaTrash />
+            </button>
+          </div>
+        );
+      default:
+        return value;
+    }
   };
 
   return (
@@ -155,161 +150,15 @@ const TrainingSchedule: React.FC = () => {
       </div>
 
       <div className='container-fixed grid'>
-        <div className='card card-grid h-full min-w-full'>
-          <div className='card-header flex items-center justify-between'>
-            <div className='input input-sm flex max-w-48 items-center'>
-              <i className='ki-filled ki-magnifier' />
-              <input
-                placeholder='Search..'
-                type='text'
-                className='ml-2'
-                value={searchQuery}
-                onChange={(e) => {
-                  setSearchQuery(e.target.value);
-                  handleTrainingSearch(e.target.value);
-                }}
-              />
-            </div>
-            <h3 className='card-title'>
-              <button
-                onClick={() => setIsAddModalOpen(true)}
-                className='btn btn-sm btn-icon btn-clear btn-primary'
-              >
-                <CiSquarePlus size={32} />
-              </button>
-            </h3>
-          </div>
-
-          <div className='card-body'>
-            <div data-datatable='true' data-datatable-page-size='5'>
-              <div className='scrollable-x-auto'>
-                <table
-                  className='table-border table'
-                  data-datatable-table='true'
-                >
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th
-                        className='cursor-pointer'
-                        onClick={() => handleSort("employeeName")}
-                      >
-                        <span
-                          className={`sort ${getSortClass("employeeName")}`}
-                        >
-                          <span className='sort-label'>Team</span>
-                          <span className='sort-icon'></span>
-                        </span>
-                      </th>
-                      <th
-                        className='cursor-pointer'
-                        onClick={() => handleSort("categoryName")}
-                      >
-                        <span
-                          className={`sort ${getSortClass("categoryName")}`}
-                        >
-                          <span className='sort-label'>Category</span>
-                          <span className='sort-icon'></span>
-                        </span>
-                      </th>
-                      <th
-                        className='cursor-pointer'
-                        onClick={() => handleSort("skillName")}
-                      >
-                        <span className={`sort ${getSortClass("skillName")}`}>
-                          <span className='sort-label'>Skill</span>
-                          <span className='sort-icon'></span>
-                        </span>
-                      </th>
-                      <th
-                        className='cursor-pointer'
-                        onClick={() => handleSort("fromDate")}
-                      >
-                        <span className={`sort ${getSortClass("fromDate")}`}>
-                          <span className='sort-label'>From Date</span>
-                          <span className='sort-icon'></span>
-                        </span>
-                      </th>
-                      <th
-                        className='cursor-pointer'
-                        onClick={() => handleSort("tentativeEndDate")}
-                      >
-                        <span
-                          className={`sort ${getSortClass("tentativeEndDate")}`}
-                        >
-                          <span className='sort-label'>Tentative End Date</span>
-                          <span className='sort-icon'></span>
-                        </span>
-                      </th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {paginatedData.map((training, index) => (
-                      <tr key={training.id}>
-                        <td>{index + 1 + (currentPage - 1) * itemsPerPage}</td>
-                        <td>
-                          <div className='flex flex-col gap-2'>
-                            <a
-                              className='text-sm font-semibold leading-none text-gray-900 hover:text-primary'
-                              href='#'
-                            >
-                              {training.employeeName}
-                            </a>
-                            <span className='text-2sm leading-3 text-gray-600'>
-                              {training.employee.role}
-                            </span>
-                          </div>
-                        </td>
-                        <td>{training.categoryName}</td>
-                        <td>{training.skillName}</td>
-                        <td>
-                          {training.fromDate
-                            ? new Date(training.fromDate).toLocaleDateString()
-                            : "N/A"}
-                        </td>
-                        <td>
-                          {training.tentativeEndDate
-                            ? new Date(
-                                training.tentativeEndDate,
-                              ).toLocaleDateString()
-                            : "N/A"}
-                        </td>
-                        <td>
-                          <div className='flex gap-3'>
-                            <button
-                              className='text-primary'
-                              onClick={() => handleEdit(training)}
-                              title='Edit'
-                            >
-                              <i className='ki-filled ki-notepad-edit' />
-                            </button>
-                            <button
-                              className='text-danger'
-                              onClick={() => handleDelete(training.id)}
-                              title='Delete'
-                            >
-                              <FaTrash />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <SortingPagination
-                currentPage={currentPage}
-                totalItems={trainingData.length}
-                itemsPerPage={itemsPerPage}
-                setCurrentPage={setCurrentPage}
-                setItemsPerPage={setItemsPerPage}
-              />
-            </div>
-          </div>
-        </div>
+        <Table
+          headers={headers}
+          isSearchable={true}
+          addNewData={true}
+          setIsAddModalOpen={setIsAddModalOpen}
+          data={trainingData}
+          renderCell={renderCell}
+          isPaginated={true}
+        />
       </div>
 
       {/* Modals */}

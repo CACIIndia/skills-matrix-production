@@ -15,7 +15,6 @@ const CertificatePage = () => {
   const { data: certificates, refetch } = useGetCertificates(profile.id);
   const { data: categoryskills } = useGetSkillCategory();
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
-  const initialcertificates = certificates || [];
   const { data: training_data } = useGetTrainingDataByUserId(
     profile?.id,
     "employeeId",
@@ -69,8 +68,6 @@ const CertificatePage = () => {
           <CertificateTable
             headers={headers}
             certificates={certificatesData}
-            setCertificatesData={setCertificatesData}
-            initialcertificates={initialcertificates}
             categoryskills={categoryskills || []}
             onEdit={handleEdit}
             onDelete={handleDelete}

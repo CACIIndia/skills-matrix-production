@@ -7,16 +7,13 @@ import { filterTrainings } from "@/lib/utils/trainingFilter";
 
 
 
-
-
 const Training = () => {
   const { profile } = useAppContext();
-
   const { currentInProgress, otherTrainings } = filterTrainings(
     profile?.trainingEmployees || []
   );
-    
 
+    
   return (
     <div className=" ">
     <div className='lg:gap-7.5 grid grid-cols-1 lg:grid-cols-3'>
@@ -34,14 +31,10 @@ const Training = () => {
             },
           }}
         />
-
-       
       </div>
 
       <div className='col-span-2 grid gap-5'>
        <TrainingList trainings={otherTrainings || []}/>
-
-       
       </div>
     </div>
     </div>
