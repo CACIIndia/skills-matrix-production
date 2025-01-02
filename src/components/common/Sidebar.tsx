@@ -121,7 +121,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isExpanded, toggleSidebar }) => {
           Search
         </span>
       </div>
-      <div className='scrollbar flex h-[80%] flex-col overflow-y-scroll pb-10'>
+      <div className='scrollbar flex h-[80%] flex-col overflow-y-auto pb-10 select-none'>
         <Menu submenu={false} link='/search-profile' name='Search By Profile' />
         <Menu submenu={true} link='' name='Search By Skills' />
       </div>
