@@ -25,7 +25,11 @@ const SortingPagination: React.FC<PaginationProps> = ({
         <span>Rows per page:</span>
         <select
           value={itemsPerPage}
-          onChange={(e) => setItemsPerPage(Number(e.target.value))}
+          onChange={(e) => {
+            const value = Number(e.target.value);
+            setItemsPerPage(value);
+            setCurrentPage(1);
+          }}
         >
           <option value="1">1</option>
           <option value="2">2</option>

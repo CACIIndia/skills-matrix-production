@@ -51,6 +51,7 @@ const Table = <T,>({
   const handleSearch = (query: string) => {
     const filteredData = tableSearch(query, data, dataToCheckForSearch);
     setFilteredData(filteredData);
+    setCurrentPage(1);
   };
 
   const sortData = (data: any[]) => {
@@ -182,7 +183,7 @@ const Table = <T,>({
               )}
             </tbody>
           </table>
-          {isPaginated && (
+          {!searchQuery && isPaginated && (
             <SortingPagination
               currentPage={currentPage}
               totalItems={data?.length}
