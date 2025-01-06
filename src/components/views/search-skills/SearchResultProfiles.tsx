@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import DisplayName from "@/components/reusable-components/DisplayName";
 
 interface Profile {
-  id:string;
+  id: string;
   name: string;
   role: string;
   location: string;
@@ -39,7 +39,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
   onFilterChange,
   jobData,
   resetSearchFilters,
-  locationData
+  locationData,
 }) => {
   const {
     searchQuery,
@@ -50,7 +50,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
   } = searchFilters;
   const { selectedItems } = useAppContext();
   const router = useRouter();
-  console.log(selectedItems,"selectedItemsssssss");
+  console.log(selectedItems, "selectedItemsssssss");
 
   const filteredProfiles = profiles?.filter((profile) => {
     return (
@@ -58,9 +58,9 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
         profile.name.toLowerCase().includes(searchQuery.toLowerCase())) &&
       (jobFilter === "" || profile.role === jobFilter) &&
       (locationFilter === "" || profile.location === locationFilter) &&
-      selectedItems.every((item) => profile.userSkills.some((skill) => skill.skill.id === item.id))
-
-
+      selectedItems.every((item) =>
+        profile.userSkills.some((skill) => skill.skill.id === item.id),
+      )
     );
   });
 
@@ -69,7 +69,6 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
     (currentPage - 1) * resultsPerPage,
     currentPage * resultsPerPage,
   );
-  
 
   return (
     <div className='w-full p-6'>
@@ -112,7 +111,6 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
               {location}
             </option>
           ))}
-          
         </select>
         <button
           onClick={() => resetSearchFilters()}
@@ -121,29 +119,29 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
           Clear
         </button>
       </div>
+      {selectedItems?.length > 0 && (
+        <div>
+          <div className='lg:gap-7.5 flex flex-col gap-5'>
+            <div className='card'>
+              <div className='card-header flex items-center justify-between'>
+                <h3 className='card-title'>Selected Skills</h3>
+              </div>
 
-      <div>
-        <div className='lg:gap-7.5 flex flex-col gap-5'>
-          <div className='card'>
-            <div className='card-header flex items-center justify-between'>
-              <h3 className='card-title'>Selected Skills</h3>
-            </div>
-
-            <div className='card-body'>
-              <div className='mb-2 flex flex-wrap gap-2.5'>
-                {selectedItems && selectedItems?.length > 0 ? (
-                  <SkillList/>
-                ) : (
-                  <div className='text-center text-gray-600'>
-                    <p>No skills found</p>
-                  </div>
-                )}
+              <div className='card-body'>
+                <div className='mb-2 flex flex-wrap gap-2.5'>
+                  {selectedItems && selectedItems?.length > 0 ? (
+                    <SkillList />
+                  ) : (
+                    <div className='text-center text-gray-600'>
+                      <p>No skills found</p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-      </div>
+      )}
 
       <div>
         <div className='mb-2 mt-4'>
@@ -181,9 +179,12 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
           {paginatedProfiles.length > 0 ? (
             paginatedProfiles.map((profile, index) => (
               <tr key={index} className='hover:bg-gray-50'>
-                <td className='flex items-center border-b border-gray-300 px-4 py-2' onClick={()=>{
-                  router.push(`/profile/overview/${profile.id}`)
-                }}>
+                <td
+                  className='flex items-center border-b border-gray-300 px-4 py-2'
+                  onClick={() => {
+                    router.push(`/profile/overview/${profile.id}`);
+                  }}
+                >
                   <Image
                     src={profile.image || defaultImage}
                     alt={profile.name}
