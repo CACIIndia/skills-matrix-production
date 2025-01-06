@@ -89,7 +89,7 @@ const Table = <T,>({
     return sortConfig.direction === "asc" ? "asc" : "desc";
   };
 
-  const handleSort = (key: keyof any) => {
+  const handleSort = (key: string) => {
     let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.direction === "asc") {
       direction = "desc";
