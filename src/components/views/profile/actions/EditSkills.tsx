@@ -64,7 +64,7 @@ const EditSkills = ({
 
       <hr className='border-gray-200' />
 
-      <div className='space-y-6'>
+      <div className='space-y-6 px-2'>
         {isLoading ? (
           <SkeletonLoader />
         ) : (

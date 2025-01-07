@@ -14,8 +14,8 @@ const Legend: React.FC<LegendProps> = ({
   optionalComponent,
 }) => {
   return (
-    <div className='col-span-1 text-start'>
-      <div className='card'>
+    <div className='col-span-1 text-start sticky top-0 shadow-xl border rounded-t-xl bg-white'>
+      <div className=''>
         {!hideCardHeader && (
           <div className='card-header'>
             <h3 className='text-lg font-semibold text-gray-800'>Legend</h3>
