@@ -9,14 +9,15 @@ import { useEffect, useState } from "react";
 
 export default function Certifications() {
   const { profile } = useAppContext();
-  const { data: certificates =[], refetch ,isLoading} = useGetCertificates(profile?.id);
- 
+  const {
+    data: certificates = [],
+    refetch,
+    isLoading,
+  } = useGetCertificates(profile?.id);
+
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
   const { handleDelete, handleEdit, handleUpload, handleDownload } =
     useCertificateHandlers(profile?.id);
-
-  
-  
 
   useEffect(() => {
     setCertificatesData(certificates || []);
@@ -46,16 +47,20 @@ export default function Certifications() {
       label: "Valid Until",
       sortable: true,
       className: "min-w-[135px]",
-    }
+    },
   ];
-  if(isLoading || !certificates || certificates.length === 0){ 
-
+  if (isLoading || !profile) {
     return (
-      <TableSkeleton />
-    ) 
-
+      <div className='container-fixed'>
+        <TableSkeleton
+          cols={5}
+          tableHeader={false}
+          isSearchable={true}
+          addNewData={false}
+        />
+      </div>
+    );
   }
-
 
   return (
     <>
@@ -72,6 +77,7 @@ export default function Certifications() {
           trainingData={[]}
           isSearchable={true}
           addNewData={false}
+          noDataMessage="No certifications found"
         />
       </div>
     </>

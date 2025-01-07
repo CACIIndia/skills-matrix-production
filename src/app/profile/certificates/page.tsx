@@ -9,10 +9,11 @@ import useGetSkillCategory from "@/lib/hooks/profile/useGetSkillCategory";
 import { useEffect, useState } from "react";
 import { Certificate } from "@/lib/types/profile";
 import useGetTrainingDataByUserId from "@/lib/hooks/Training/useGetTraining";
+import TableSkeleton from "@/components/skeletons/TableSkeleton";
 
 const CertificatePage = () => {
   const { profile } = useAppContext();
-  const { data: certificates, refetch } = useGetCertificates(profile.id);
+  const { data: certificates, refetch, isLoading } = useGetCertificates(profile.id);
   const { data: categoryskills } = useGetSkillCategory();
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
   const { data: training_data } = useGetTrainingDataByUserId(
@@ -61,10 +62,21 @@ const CertificatePage = () => {
     },
   ];
 
+  if (isLoading || !profile) {
+    return (
+      <TableSkeleton
+        cols={5}
+        tableHeader={false}
+        isSearchable={true}
+        addNewData={true}
+      />
+    );
+  }
+
   return (
     <div>
-      <div className='text-start'>
-        <div className='grid grid-cols-1 justify-between gap-4 lg:grid-cols-1'>
+      <div className=''>
+        <div className=''>
           <CertificateTable
             headers={headers}
             certificates={certificatesData}
@@ -77,6 +89,7 @@ const CertificatePage = () => {
             trainingData={training_data || []}
             isSearchable={true}
             addNewData={true}
+            noDataMessage="No certifications found"
           />
 
           {/* <ResumeCard
