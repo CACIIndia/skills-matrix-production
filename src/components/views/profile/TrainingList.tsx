@@ -43,10 +43,10 @@ const TrainingList = ({ trainings }: TrainingListProps) => {
       className: "cursor-pointer",
     },
      {
-      key: "statusId",
+      key: "trainingStatus",
       label: "Status",
       sortable: false,
-      className: "cursor-pointer",
+      className: "cursor-pointer ",
     },
   ];
 
@@ -56,6 +56,8 @@ const TrainingList = ({ trainings }: TrainingListProps) => {
         return value ? new Date(value).toLocaleDateString() : "N/A";
       case "tentativeEndDate":
         return value ? new Date(value).toLocaleDateString() : "N/A";
+        case "trainingStatus":
+          return <span className="text-primary">{rowData?.trainingStatus?.name}</span> || "N/A";
       default:
         return value;
     }
