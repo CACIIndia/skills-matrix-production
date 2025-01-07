@@ -24,9 +24,9 @@ function SearchSkills() {
       const jobTitles = users
         .map((user: any) => user.role)
         .filter((role: any) => !!role);
-      const locations = users
+      const locations: any = Array.from(new Set(users
         .map((user: any) => user.location)
-        .filter((location: any) => !!location);
+        .filter((location: any) => !!location)));
       setJobTitleData(jobTitles);
       setLocationData(locations);
     }
