@@ -11,6 +11,7 @@ import { FaTrash } from "react-icons/fa";
 import CreateTraining from "@/components/views/Training/TrainingModal";
 import EditTraining from "@/components/views/Training/EditTrainingModal";
 import Table from "@/components/common/Table/Table";
+import TableSkeleton from "@/components/skeletons/TableSkeleton";
 
 type CategoryResponse = {
   category: string;
@@ -26,14 +27,16 @@ type Employee = {
 };
 
 const TrainingSchedule: React.FC = () => {
-  const { profile, isLoading } = useAppContext();
+  const { profile } = useAppContext();
   // if (isLoading || !profile) {
   //   return <div>Loading...</div>;
   // }
 
-  const { data: training_data, refetch } = useGetTrainingDataByUserId(
-    profile?.id || "",
-  );
+  const {
+    data: training_data,
+    refetch,
+    isLoading,
+  } = useGetTrainingDataByUserId(profile?.id || "");
 
   const { data: training_status } = useGetTrainingStatus();
   const {
@@ -149,17 +152,30 @@ const TrainingSchedule: React.FC = () => {
         </div>
       </div>
 
-      <div className='container-fixed grid'>
-        <Table
-          headers={headers}
-          isSearchable={true}
-          addNewData={true}
-          setIsAddModalOpen={setIsAddModalOpen}
-          data={trainingData}
-          renderCell={renderCell}
-          isPaginated={true}
-        />
-      </div>
+      {(isLoading || !profile) ? (
+        <div className='container-fixed'>
+          <TableSkeleton
+            cols={5}
+            rows={1}
+            tableHeader={false}
+            isSearchable={true}
+            addNewData={true}
+          />
+        </div>
+      ) : (
+        <div className='container-fixed grid'>
+          <Table
+            headers={headers}
+            isSearchable={true}
+            addNewData={true}
+            setIsAddModalOpen={setIsAddModalOpen}
+            data={trainingData}
+            renderCell={renderCell}
+            isPaginated={true}
+            noDataMessage="No trainings found"
+          />
+        </div>
+      )}
 
       {/* Modals */}
       <CreateTraining

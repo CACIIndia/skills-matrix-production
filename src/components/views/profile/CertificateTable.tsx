@@ -28,6 +28,7 @@ interface CertificateTableProps {
   trainingData: Training[];
   isSearchable: boolean;
   addNewData: boolean;
+  noDataMessage: string;
 }
 
 const CertificateTable: React.FC<CertificateTableProps> = ({
@@ -41,7 +42,8 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
   refetch,
   trainingData = [],
   isSearchable,
-  addNewData
+  addNewData,
+  noDataMessage
 }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -152,6 +154,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
         data={certificates}
         renderCell={renderCell}
         isPaginated={true}
+        noDataMessage={noDataMessage}
       />
 
       {/* Add Certificate Modal */}

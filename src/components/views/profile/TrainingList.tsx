@@ -71,6 +71,7 @@ const TrainingList = ({ trainings }: TrainingListProps) => {
         data={trainings}
         renderCell={renderCell}
         isPaginated={true}
+        noDataMessage="No trainings found"
       />
     </>
   );
