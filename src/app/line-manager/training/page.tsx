@@ -47,7 +47,7 @@ const TrainingSchedule: React.FC = () => {
 
   const { data: employeeData } = useGetUsersByLineManager(profile?.id);
   const { data: categoryskills } = useGetSkills();
-  console.log(categoryskills, "categoryskills");
+  
 
   const [trainingData, setTrainingData] = useState<Training[]>([]);
   const [categories, setCategories] = useState<CategoryResponse>([]);
@@ -75,6 +75,12 @@ const TrainingSchedule: React.FC = () => {
   };
 
   const headers = [
+    {
+      key: "employeeName",
+      label: "EmployeeName",
+      sortable: true,
+      className: "w-[150px] cursor-pointer",
+    },
     {
       key: "categoryName",
       label: "Category",
