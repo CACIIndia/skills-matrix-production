@@ -1,6 +1,7 @@
 "use client";
 
 import Table from "@/components/common/Table/Table";
+import classNames from "classnames";
 
 type Training = {
   id: string;
@@ -8,7 +9,7 @@ type Training = {
   skillName: string;
   fromDate: string;
   tentativeEndDate: string;
-  status: { name: string };
+  trainingStatus: { name: string };
 };
 
 type TrainingListProps = {
@@ -57,7 +58,15 @@ const TrainingList = ({ trainings }: TrainingListProps) => {
       case "tentativeEndDate":
         return value ? new Date(value).toLocaleDateString() : "N/A";
         case "trainingStatus":
-          return <span className="text-primary">{rowData?.trainingStatus?.name}</span> || "N/A";
+          return  <span
+          className={classNames("badge badge-sm", {
+            "badge-success": rowData.trainingStatus.name === "Completed",
+            "badge-warning": rowData.trainingStatus.name === "In Progress",
+            "badge-danger": rowData.trainingStatus.name === "Discontinued",
+          })}
+        >
+          {rowData.trainingStatus.name}
+        </span> ;
       default:
         return value;
     }
@@ -67,7 +76,7 @@ const TrainingList = ({ trainings }: TrainingListProps) => {
     <>
       <Table
         headers={headers}
-        tableHeading="Training List"
+        tableHeading="Training Overview"
         isSearchable={true}
         addNewData={false}
         data={trainings}
