@@ -25,7 +25,7 @@ type State = {
   selectedItems: SkillCategory[];
   toggleSelectedItem: (item: SkillCategory) => void;
   removeSelectedItem: (id: SkillCategory["id"]) => void;
-  categoryskills: any;
+  categorySkills: any;
   setSelectedItems: Dispatch<SetStateAction<SkillCategory[]>>;
 
 };
@@ -42,7 +42,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const { data: session } = useSession();
   const { data: profileData, isLoading } = useGetProfile(session?.user?.id ?? "");
   const [selectedItems, setSelectedItems] = useState<SkillCategory[]>([]);
-  const { data: categoryskills } = useGetSkills();
+  const { data: categorySkills } = useGetSkills();
   
 
   const [profile, setProfile] = useState<any>();
@@ -89,7 +89,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         isLoading,
         selectedItems,
         toggleSelectedItem,
-        categoryskills,
+        categorySkills,
         removeSelectedItem,
         setSelectedItems
       }}
