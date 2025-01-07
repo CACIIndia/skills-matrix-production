@@ -24,7 +24,7 @@ const Training = () => {
               fromDate: currentInProgress?.fromDate || "",
               tentativeEndDate: currentInProgress?.tentativeEndDate || "",
               status: {
-                name: currentInProgress?.status?.name || "",
+                name: currentInProgress?.trainingStatus?.name || "",
               },
             }}
           />

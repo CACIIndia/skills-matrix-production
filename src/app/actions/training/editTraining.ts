@@ -41,7 +41,7 @@ export async function editTraining(trainingId :string,data: TrainingEditData): P
     throw new Error("User is not authenticated");
   }
    
-  console.log(data,"editdataaa");
+
   try {
     // Find the training record to edit
     const existingTraining = await db.training.findUnique({
