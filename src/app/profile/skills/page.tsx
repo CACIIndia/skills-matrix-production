@@ -11,7 +11,7 @@ const SkillsPage = () => {
 
   return (
     <div className=' lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3'>
-      <div className='col-span-2'>
+      <div className='lg:col-span-2'>
         <ProfileSkills
           createdById={user?.id ?? ""}
           userSkills={profile?.userSkills}
