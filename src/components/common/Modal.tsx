@@ -35,14 +35,14 @@ const Modal = ({
     >
       <DialogBackdrop className='fixed inset-0 bg-black/30' />
 
-      <div className='fixed inset-0 z-10 w-screen overflow-y-auto'>
-        <div className='flex min-h-full items-center justify-center p-4'>
+      <div className='fixed inset-0 z-10 w-full h-screen overflow-y-auto'>
+        <div className='flex items-center justify-center w-[100%] h-[100%] sm:p-2 lg:p-0'>
           <DialogPanel
             className={`${
               customWidth ? customWidth : "w-full max-w-4xl"
-            } flex max-h-[90vh] flex-col rounded bg-white`}
+            } flex flex-col rounded bg-white`}
           >
-            <div className='mb-4 flex items-center justify-between p-6 pb-0'>
+            <div className='mb-4 flex items-center justify-between p-4 pb-0'>
               {title && (
                 <DialogTitle className='text-2xl font-medium'>
                   {title}
@@ -56,7 +56,7 @@ const Modal = ({
               </button>
             </div>
             <div className='flex-1 overflow-y-auto px-6'>{children}</div>{" "}
-            <div className='mt-10 flex justify-end space-x-3 p-6 pt-0'>
+            <div className=' flex justify-end space-x-3 px-6 py-4 '>
               <button onClick={onClose} className='btn btn-md btn-light'>
                 Close
               </button>
