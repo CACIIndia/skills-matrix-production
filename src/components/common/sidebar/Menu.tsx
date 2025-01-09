@@ -1,20 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import MenuAccordion from "./Menuaccordion";
 import { useAppContext } from "@/app/context/AppContext";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 
 function Menu({ submenu, link, name }: any) {
     const router = useRouter();
-    const { selectedItems, toggleSelectedItem,categoryskills } = useAppContext();
+    const pathname = usePathname();
+    const { selectedItems, toggleSelectedItem,categorySkills } = useAppContext();
 
   
 
   const handleItemClick = (skill: any) => {
     toggleSelectedItem(skill); 
+    // console.log(skill);
     router.push(`/search-skills`);
-   
   };
 
   // State to manage submenu visibility
@@ -24,6 +25,14 @@ function Menu({ submenu, link, name }: any) {
   const toggleSubmenu = () => {
     setIsSubmenuOpen(!isSubmenuOpen);
   };
+
+  useEffect(() => {
+    if (pathname === '/search-skills') {
+      setIsSubmenuOpen(true);
+    } else {
+     // setIsSubmenuOpen(false);
+    }
+  }, [pathname])
 
   if (!submenu) {
     return (
@@ -77,7 +86,7 @@ function Menu({ submenu, link, name }: any) {
           <MenuAccordion
           handleItemClick={handleItemClick}
             data={
-              categoryskills ||[]}
+              categorySkills ||[]}
           />
         )}
       </div>

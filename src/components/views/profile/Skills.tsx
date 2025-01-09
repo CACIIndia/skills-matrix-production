@@ -113,6 +113,7 @@ const ProfileSkills = ({
         title='Edit Skills'
         buttonText='Update'
         handler={handleEdit}
+        customWidth="w-[100%] lg:w-[70%] h-[100%] lg:h-[90%]"
       >
         <EditSkills
           createdById={createdById}

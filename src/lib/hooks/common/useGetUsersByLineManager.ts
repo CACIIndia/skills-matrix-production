@@ -6,6 +6,9 @@ interface User {
   name: string;
   email: string;
   image: string;
+  userSkills?: any[];
+  role: string;
+  phone: string;
 }
 
 const getUsers = async (reportedToId: string): Promise<User[]> => {

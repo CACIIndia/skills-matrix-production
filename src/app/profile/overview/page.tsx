@@ -11,7 +11,6 @@ import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
 
 const OverviewPage = () => {
   const { profile } = useAppContext();
-
   const projects = profile?.projects || [];
 
   const currentProject = projects.find(
@@ -46,6 +45,7 @@ const OverviewPage = () => {
         <ProfileSkills
           createdById={profile?.id}
           userSkills={profile?.userSkills}
+          showEditButton={true}
         />
 
         {profile?.projects?.length > 0 && (

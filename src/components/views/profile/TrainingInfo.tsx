@@ -19,7 +19,7 @@ const TrainingInfoCard: React.FC<TrainingInfoCardProps> = ({ data }) => {
   return (
     <div className="card border border-blue-100 max-h-[300px]">
       <div className="card-header">
-        <h3 className="card-title">Training Info</h3>
+        <h3 className="card-title">Current Training Info</h3>
       </div>
       <div className="card-body pb-3.5 pt-3.5">
         <table className="table-auto text-start">

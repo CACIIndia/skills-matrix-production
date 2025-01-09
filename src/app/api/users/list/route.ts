@@ -16,7 +16,9 @@ export async function GET(request: Request) {
         image: true,
         role: true,
         location: true,
+        phone:true,
         userSkills: {
+          where: {level: {not:0}},
           select: {
             skill: {
               select: {

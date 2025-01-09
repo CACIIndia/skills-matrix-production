@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useMemo } from "react";
 import classNames from "classnames";
 
 import Legend from "@/components/views/profile/Legend";
@@ -9,6 +9,7 @@ import SkeletonLoader from "@/components/skeletons/EditSkills";
 
 import { SKILL_LEVELS } from "@/lib/constants/profile";
 import useGetSkills from "@/lib/hooks/profile/useGetSkills";
+import { useAppContext } from "@/app/context/AppContext";
 
 type EditSkillsProps = {
   selectedSkills: SelectedSkill[];
@@ -21,9 +22,16 @@ const EditSkills = ({
   setSelectedSkills,
   createdById,
 }: EditSkillsProps) => {
-  const { data: categorySkills, isLoading } = useGetSkills();
-
+  const { categorySkills } = useAppContext();
+  const { data: fetchedSkills, isLoading } = useGetSkills(!categorySkills?.length);
   const MAX_LEVEL = SKILL_LEVELS.length - 1;
+
+  const skillsData = useMemo(() => {
+    if (categorySkills && categorySkills.length > 0) {
+      return categorySkills;
+    }
+    return fetchedSkills || [];
+  }, [categorySkills, fetchedSkills]);
 
   const handleSkillClick = (skillId: string) => {
     setSelectedSkills((prev) => {
@@ -56,11 +64,11 @@ const EditSkills = ({
 
       <hr className='border-gray-200' />
 
-      <div className='space-y-6'>
+      <div className='space-y-6 px-2'>
         {isLoading ? (
           <SkeletonLoader />
         ) : (
-          categorySkills?.map(({ category, skills }) => (
+          skillsData?.map(({ category, skills }: { category: string; skills: { id: string; name: string }[] }) => (
             <div key={category} className='space-y-3'>
               <h6 className='text-lg font-semibold text-gray-700'>
                 {category}
