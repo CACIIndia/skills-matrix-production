@@ -74,7 +74,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
     <div className='w-full p-6'>
       <div className='mb-4 flex items-center justify-between'>
         <h1 className='text-2xl font-bold'>Profiles</h1>
-        <button className='rounded bg-blue-500 px-4 py-2 text-white'>
+        <button onClick={()=> router.push(`/advance-search`)} className='rounded bg-blue-500 px-4 py-2 text-white'>
           Advanced Search
         </button>
       </div>
