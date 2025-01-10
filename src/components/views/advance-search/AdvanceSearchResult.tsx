@@ -17,6 +17,7 @@ import { useRouter } from "next/navigation";
 import { IoMailUnread } from "react-icons/io5";
 import { BsMicrosoftTeams } from "react-icons/bs";
 import { IoShareSocial } from "react-icons/io5";
+import TableSkeleton from "@/components/skeletons/TableSkeleton";
 
 const fields = [
   { name: "name", label: "Name" },
@@ -176,13 +177,13 @@ const AdvanceSearchResult = () => {
 
   const displayData = useMemo(() => {
     if (areAllRuleValuesEmpty(query.rules)) {
-      return initialData;
+      return initialData.slice(0, resultsPerPage);
     } else if (searchUsers && searchUsers.length > 0) {
       return paginatedData;
     } else {
       return [];
     }
-  }, [query.rules, initialData, searchUsers, paginatedData]);
+  }, [query.rules, initialData, searchUsers, paginatedData, resultsPerPage]);
 
   const totalPages = searchUsers
     ? Math.ceil(searchUsers.length / resultsPerPage)
@@ -242,9 +243,9 @@ const AdvanceSearchResult = () => {
 
     return checkRules(query.rules) ? "bg-[#198754] text-white" : "";
   };
-
+ 
   return (
-    <div className='w-full px-6'>
+    <div className='w-full px-6 pb-6'>
       <div className='mb-4 flex items-center justify-between'>
         <h1 className='text-2xl font-semibold'>Profiles - Advanced Search</h1>
       </div>
@@ -377,7 +378,13 @@ const AdvanceSearchResult = () => {
           <option value={25}>25</option>
         </select>
       </div>
-
+        {isLoading ? <TableSkeleton
+        cols={4}
+        rows={5}
+        tableHeader={true}
+        isSearchable={true}
+        addNewData={true}
+      /> :
       <table className='min-w-full'>
         <thead>
           <tr className='bg-gray-100'>
@@ -438,6 +445,8 @@ const AdvanceSearchResult = () => {
           )}
         </tbody>
       </table>
+       }
+      
       <div className='mt-4 flex items-center justify-between'>
         <button
           onClick={() => handlePageChange(currentPage - 1)}
