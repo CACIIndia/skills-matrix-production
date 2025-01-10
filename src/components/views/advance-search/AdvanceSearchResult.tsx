@@ -44,7 +44,7 @@ const AdvanceSearchResult = () => {
   >({});
   const [queryName, setQueryName] = useState("");
   const { data, isLoading, isError } = useGetUsers();
-  const users = data as User[];
+  const users = Array.isArray(data) ? (data as User[]) : [];
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(5);
@@ -57,8 +57,8 @@ const AdvanceSearchResult = () => {
     window.open("https://teams.microsoft.com/", "_blank");
   };
   const extractUniqueValues = (key: keyof (typeof users)[0]): string[] => {
-    if (!users || users.length === 0) return [];
-    return Array.from(new Set(users.map((item) => item[key]))) as string[];
+    if (!users || users?.length === 0) return [];
+    return Array.from(new Set(users?.map((item) => item[key]))) as string[];
   };
   const valueOptions: Record<string, string[]> = useMemo(
     () => ({
@@ -243,7 +243,7 @@ const AdvanceSearchResult = () => {
 
     return checkRules(query.rules) ? "bg-[#198754] text-white" : "";
   };
- 
+
   return (
     <div className='w-full px-6 pb-6'>
       <div className='mb-4 flex items-center justify-between'>
@@ -378,75 +378,79 @@ const AdvanceSearchResult = () => {
           <option value={25}>25</option>
         </select>
       </div>
-        {isLoading ? <TableSkeleton
-        cols={4}
-        rows={5}
-        tableHeader={true}
-        isSearchable={true}
-        addNewData={true}
-      /> :
-      <table className='min-w-full'>
-        <thead>
-          <tr className='bg-gray-100'>
-            <th className='px-4 py-2 text-left'>Profile</th>
-            <th className='px-4 py-2 text-left'>Job Title</th>
-            <th className='px-4 py-2 text-left'>Location</th>
-          </tr>
-        </thead>
-        <tbody>
-          {displayData.length > 0 ? (
-            displayData.map((profile, index) => (
-              <tr
-                key={index}
-                className='border-b border-gray-300 hover:bg-gray-50'
-              >
-                <td
-                  onClick={() => {
-                    router.push(`/profile/overview/${profile.id}`);
-                  }}
-                  className={`flex w-[300px] items-center px-4 py-1 capitalize ${getHighlightedClass(
-                    "name",
-                  )}`}
+      {isLoading ? (
+        <TableSkeleton
+          cols={4}
+          rows={5}
+          tableHeader={true}
+          isSearchable={true}
+          addNewData={true}
+        />
+      ) : (
+        <table className='min-w-full'>
+          <thead>
+            <tr className='bg-gray-100'>
+              <th className='px-4 py-2 text-left'>Profile</th>
+              <th className='px-4 py-2 text-left'>Job Title</th>
+              <th className='px-4 py-2 text-left'>Location</th>
+            </tr>
+          </thead>
+          <tbody>
+            {displayData.length > 0 ? (
+              displayData.map((profile, index) => (
+                <tr
+                  key={index}
+                  className='border-b border-gray-300 hover:bg-gray-50'
                 >
-                  <Image
-                    src={profile?.image || defaultImage}
-                    alt={profile.name}
-                    className='mr-4 cursor-pointer rounded-full'
-                    width={40}
-                    height={40}
-                  />
-                  {profile.name}
-                </td>
+                  <td
+                    onClick={() => {
+                      router.push(`/profile/overview/${profile.id}`);
+                    }}
+                    className={`flex w-[300px] items-center px-4 py-1 capitalize ${getHighlightedClass(
+                      "name",
+                    )}`}
+                  >
+                    <Image
+                      src={
+                        ("image" in profile && profile.image) || defaultImage
+                      }
+                      alt={profile.name}
+                      className='mr-4 cursor-pointer rounded-full'
+                      width={40}
+                      height={40}
+                    />
+                    {profile.name}
+                  </td>
+                  <td
+                    className={`px-4 py-1 capitalize ${getHighlightedClass(
+                      "role",
+                    )}`}
+                  >
+                    {'role' in profile ? profile.role : '-'}
+                  </td>
+                  <td
+                    className={`px-4 py-1 capitalize ${getHighlightedClass(
+                      "location",
+                    )}`}
+                  >
+                    {profile.location}
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
                 <td
-                  className={`px-4 py-1 capitalize ${getHighlightedClass(
-                    "role",
-                  )}`}
+                  colSpan={3}
+                  className='border border-gray-300 py-4 text-center'
                 >
-                  {profile.role}
-                </td>
-                <td
-                  className={`px-4 py-1 capitalize ${getHighlightedClass(
-                    "location",
-                  )}`}
-                >
-                  {profile.location}
+                  No profiles found matching the search query.
                 </td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td
-                colSpan={3}
-                className='border border-gray-300 py-4 text-center'
-              >
-                No profiles found matching the search query.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-       }
-      
+            )}
+          </tbody>
+        </table>
+      )}
+
       <div className='mt-4 flex items-center justify-between'>
         <button
           onClick={() => handlePageChange(currentPage - 1)}
