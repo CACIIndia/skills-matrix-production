@@ -6,6 +6,7 @@ import defaultImage from "../../../../public/assets/media/avatars/default-image.
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import DisplayName from "@/components/reusable-components/DisplayName";
+import Table from "@/components/common/Table/Table";
 
 interface Profile {
   id: string;
@@ -72,26 +73,33 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
 
   return (
     <div className='w-full p-6'>
-      <div className='mb-4 flex items-center justify-between'>
-        <h1 className='text-2xl font-bold'>Profiles</h1>
-        <button className='rounded bg-blue-500 px-4 py-2 text-white'>
-          Advanced Search
-        </button>
+      <div className='pb-7.5 flex flex-wrap items-center justify-between gap-5 lg:items-end'>
+        <div className='flex flex-col justify-center gap-2'>
+          <h1 className='text-xl font-semibold leading-none text-gray-900'>
+            <i className='ki-filled ki-users text-primary'></i> Profiles
+          </h1>
+        </div>
+        <div className='flex items-center gap-2.5'>
+          <button className='dropdown-toggle btn btn-sm btn-primary'>
+            <i className='ki-filled ki-magnifier text-2xs'></i>
+            Advance Search
+          </button>
+        </div>
       </div>
 
-      <div className='mb-6 flex gap-1'>
+      <div className='flex w-[100%] items-center gap-4 rounded-md bg-white'>
         <input
           type='text'
           placeholder='Search profiles...'
-          className='flex-grow rounded border p-2'
+          className='flex-grow rounded-md border border-gray-300 p-2 text-sm focus:ring focus:ring-blue-300'
           value={searchQuery}
           onChange={(e) => onFilterChange("searchQuery", e.target.value)}
         />
 
         <select
-          className='rounded border p-2'
           value={jobFilter}
           onChange={(e) => onFilterChange("jobFilter", e.target.value)}
+          className='basis-[15%] rounded-md border border-gray-300 p-2 text-sm text-gray-700 focus:ring focus:ring-blue-300'
         >
           <option value=''>Job Title</option>
           {jobData.map((job) => (
@@ -100,10 +108,11 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
             </option>
           ))}
         </select>
+
         <select
-          className='rounded border p-2'
           value={locationFilter}
           onChange={(e) => onFilterChange("locationFilter", e.target.value)}
+          className='basis-[15%] rounded-md border border-gray-300 p-2 text-sm text-gray-700 focus:ring focus:ring-blue-300'
         >
           <option value=''>Location</option>
           {locationData.map((location) => (
@@ -112,15 +121,17 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
             </option>
           ))}
         </select>
+
         <button
           onClick={() => resetSearchFilters()}
-          className='rounded border bg-red-500 px-4 py-2 text-white'
+          className='btn btn-sm btn-danger rounded-md bg-red-500 px-6 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300'
         >
-          Clear
+          <i className='ki-filled ki-trash'></i> Clear Search
         </button>
       </div>
+
       {selectedItems?.length > 0 && (
-        <div>
+        <div className='mt-4'>
           <div className='lg:gap-7.5 flex flex-col gap-5'>
             <div className='card'>
               <div className='card-header flex items-center justify-between'>
@@ -143,95 +154,38 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
         </div>
       )}
 
-      <div>
-        <div className='mb-2 mt-4'>
-          {" "}
-          <h1 className='text-4xl font-bold'>
-            Search Results({filteredProfiles.length})
+      <div className='pb-7.5 mt-4 flex flex-wrap items-center justify-between gap-5 lg:items-end'>
+        <div className='flex flex-col justify-center gap-2'>
+          <h1 className='text-xl font-semibold leading-none text-gray-900'>
+            <i className='ki-filled ki-users text-primary'></i> Search Results
+            ({filteredProfiles.length})
           </h1>
         </div>
-        <div className='mb-4'>
-          <label className='mr-2'>Results per page:</label>
-          <select
-            className='rounded border p-2'
-            value={resultsPerPage}
-            onChange={(e) => {
-              onFilterChange("resultsPerPage", parseInt(e.target.value));
-              onFilterChange("currentPage", 1); // Reset to the first page
-            }}
-          >
-            <option value={5}>5</option>
-            <option value={10}>10</option>
-            <option value={25}>25</option>
-          </select>
-        </div>
       </div>
+     
 
-      <table className='min-w-full'>
-        <thead>
-          <tr className='bg-gray-100'>
-            <th className='px-4 py-2 text-left'>Profile</th>
-            <th className='px-4 py-2 text-left'>Job Title</th>
-            <th className='px-4 py-2 text-left'>Location</th>
-          </tr>
-        </thead>
-        <tbody>
-          {paginatedProfiles.length > 0 ? (
-            paginatedProfiles.map((profile, index) => (
-              <tr key={index} className='hover:bg-gray-50'>
-                <td
-                  className='flex items-center border-b border-gray-300 px-4 py-2'
-                  onClick={() => {
-                    router.push(`/profile/overview/${profile.id}`);
-                  }}
-                >
-                  <Image
-                    src={profile.image || defaultImage}
-                    alt={profile.name}
-                    className='mr-4 h-10 w-10 rounded-full'
-                    width={40}
-                    height={40}
-                  />
-                  <DisplayName name={profile.name} isClickable={true} />
-                </td>
-                <td className='border-b border-gray-300 px-4 py-2'>
-                  {profile.role}
-                </td>
-                <td className='border-b border-gray-300 px-4 py-2'>
-                  {profile.location}
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td
-                colSpan={3}
-                className='border border-gray-300 py-4 text-center'
-              >
-                No profiles found.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-
-      {totalPages > 1 && (
-        <div className='mt-4 flex justify-center'>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index}
-              className={`mx-1 rounded px-3 py-1 ${
-                searchFilters.currentPage === index + 1
-                  ? "bg-blue-500 text-white"
-                  : "bg-gray-200"
-              }`}
-              onClick={() => onFilterChange("currentPage", index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
-        </div>
-      )}
+   
+      <Table
+        headers={[
+          {
+            key: "name",
+            label: "name",
+          },
+          {
+            key: "role",
+            label: "role",
+          },
+          {
+            key: "location",
+            label: "location",
+          },
+        ]}
+        isSearchable={true}
+        addNewData={false}
+        data={filteredProfiles}
+        isPaginated={true}
+        noDataMessage='No Profiles found'
+      />
     </div>
   );
 };
