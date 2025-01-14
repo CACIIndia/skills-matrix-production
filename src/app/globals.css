@@ -1141,7 +1141,8 @@ video {
   color: var(--tw-gray-800);
 }
 
-.menu-default .menu-item .menu-icon i,.menu-custom-icon {
+.menu-default .menu-item .menu-icon i,
+.menu-custom-icon {
   color: var(--tw-gray-500);
 }
 
@@ -1160,9 +1161,6 @@ video {
 .menu-default .menu-item .menu-link:hover .menu-icon .menu-custom-icon {
   color: var(--tw-primary);
 }
-
-
-
 
 .menu-default .menu-item.active > .menu-link .menu-title,
 .menu-default .menu-item.show > .menu-link .menu-title,
@@ -8957,6 +8955,108 @@ html.dark .\[html\.dark_\&\]\:hidden {
 
 /* custom css */
 
- .react-datepicker-wrapper {
+.react-datepicker-wrapper {
   width: 100%;
+}
+
+/* Global styles targeting QueryBuilder internal elements */
+/* Container for the query builder */
+.ruleGroup {
+  width: 100%;
+  padding: 10px;
+  background-color: #ccdbf1;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #6f7173;
+  font-size: 16px;
+}
+
+/* Header for the rule group with flexbox */
+.ruleGroup-header{
+  display: flex;
+  justify-content: space-between; /* Distribute space between left and right */
+  align-items: center;
+  background-color: transparent;
+  /* padding: 8px; */
+}
+
+/* Combinator button - place it on the left */
+.ruleGroup-combinators {
+  flex-grow: 1;
+  text-align: left;
+  padding: 4px;
+  background-color: #edf0f5;
+  border-radius: 4px;
+  margin-right: 10px; /* Add margin between combinator and buttons */
+  width:200px;
+}
+.queryBuilder-dragHandle {
+  margin-right: 10px; /* Adjust the value as needed */
+}
+/* Add Rule button - place it on the right */
+.ruleGroup-addRule {
+  background-color: #006ae6;
+  margin-left: 10px;
+  padding: 4px;
+  border-radius: 4px;
+  color: white;
+  text-align: right;
+}
+
+/* Add Group button - place it on the right */
+.ruleGroup-addGroup {
+  background-color: #6c757d;
+  margin-left: 10px;
+  padding: 4px;
+  padding-right: 4px;
+  border-radius: 4px;
+  color: white;
+  text-align: right;
+}
+
+.ruleGroup-body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Distribute space between left and right */
+  align-items: space-between;
+  background-color: transparent;
+  padding: 8px;
+  width: 100%;
+  
+}
+.rule {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  gap: 10px; /* Add spacing between the items */
+}
+.rule-fields, .rule-value{
+  flex-grow: 1;
+  text-align: left;
+  padding: 4px;
+  background-color: #edf0f5;
+  border-radius: 4px;
+  margin-right: 10px; /* Add margin between combinator and buttons */
+  /* width:200px; */
+  /* margin-top: 10px; */
+}
+ .rule-operators{
+  flex-grow: 1;
+  text-align: left;
+  padding: 4px;
+  background-color: #edf0f5;
+  border-radius: 4px;
+  margin-right: 10px; /* Add margin between combinator and buttons */
+  width:100px;
+  /* margin-top: 10px; */
+}
+.rule-remove {
+  width: 24px;
+  height: 24px;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 2px;
+  border: 0.5px solid #6f7173;
+  display: flex; /* Use flexbox */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
 }

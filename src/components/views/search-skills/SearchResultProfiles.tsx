@@ -80,7 +80,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
           </h1>
         </div>
         <div className='flex items-center gap-2.5'>
-          <button className='dropdown-toggle btn btn-sm btn-primary'>
+          <button className='dropdown-toggle btn btn-sm btn-primary' onClick={()=> router.push(`/advance-search`)} >
             <i className='ki-filled ki-magnifier text-2xs'></i>
             Advance Search
           </button>
