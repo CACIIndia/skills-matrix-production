@@ -110,7 +110,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
               </Link>
             </div>
           )}
-          <div className='menu-separator'></div>
+          {/* <div className='menu-separator'></div>
           <div className='menu-item mb-0.5'>
             <div className='menu-link'>
               <span className='menu-icon'>
@@ -127,7 +127,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
                 />
               </label>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className='flex flex-col'>
           <div className='menu-item px-4 py-1.5'>

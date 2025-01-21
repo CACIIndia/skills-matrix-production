@@ -5,12 +5,12 @@ export const MENU_ITEMS = [
     icon: "ki-element-11",
     tab: "/profile/overview",
   },
-  {
-    name: "Search By Profile",
-    path: "/search-profile",
-    icon: "ki-element-11",
-    tab: "/search-profile",
-  },
+  // {
+  //   name: "Search By Profile",
+  //   path: "/search-profile",
+  //   icon: "ki-element-11",
+  //   tab: "/search-profile",
+  // },
   {
     name: "Search By Skills",
     path: "/search-skills",
