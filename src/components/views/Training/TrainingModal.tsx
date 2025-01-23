@@ -138,7 +138,50 @@ const adjustedFromDate = new Date(
       <div className="relative w-full max-w-lg rounded-lg bg-white p-6 shadow-xl">
         <h2 className="mb-4 text-xl font-semibold">Create Training Data</h2>
         <form onSubmit={formik.handleSubmit} className="max-h-[500px] overflow-y-auto">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 ">
+          <div>
+            <label className="mb-1 block text-sm font-medium">Select Employee</label>
+            <select
+              name="employeeId"
+              value={formik.values.employeeId}
+              onChange={formik.handleChange}
+              className="w-full rounded-md border border-gray-300 p-2"
+            >
+              <option value="">Select Employee</option>
+              {employeeData.map((emp) => (
+                <option key={emp.id} value={emp.id}>
+                  {emp.name}
+                </option>
+              ))}
+            </select>
+            {formik.touched.employeeId && formik.errors.employeeId ? (
+              <div className="text-red-500 text-sm">{formik.errors.employeeId}</div>
+            ) : null}
+          </div>
+
+          {/* <div className="">
+            <label className="mb-1 block text-sm font-medium">Training Status</label>
+            <select
+              name="statusId"
+              value={formik.values.statusId}
+              onChange={formik.handleChange}
+              className="w-full rounded-md border border-gray-300 p-2"
+            >
+              <option value="">Select Status</option>
+              {trainingStatus.map((status) => (
+                <option key={status.id} value={status.id}>
+                  {status.name}
+                </option>
+              ))}
+            </select>
+            {formik.touched.statusId && formik.errors.statusId ? (
+              <div className="text-red-500 text-sm">{formik.errors.statusId}</div>
+            ) : null}
+          </div> */}
+        </div>
+        <div className="grid grid-cols-2 gap-4 mt-4">
+       
+          
           <div>
             <label className="mb-1 block text-sm font-medium">Category</label>
             <select
@@ -211,47 +254,7 @@ const adjustedFromDate = new Date(
         </div>
         
 
-        <div className="grid grid-cols-2 gap-4 mt-4">
-          <div>
-            <label className="mb-1 block text-sm font-medium">Select Employee</label>
-            <select
-              name="employeeId"
-              value={formik.values.employeeId}
-              onChange={formik.handleChange}
-              className="w-full rounded-md border border-gray-300 p-2"
-            >
-              <option value="">Select Employee</option>
-              {employeeData.map((emp) => (
-                <option key={emp.id} value={emp.id}>
-                  {emp.name}
-                </option>
-              ))}
-            </select>
-            {formik.touched.employeeId && formik.errors.employeeId ? (
-              <div className="text-red-500 text-sm">{formik.errors.employeeId}</div>
-            ) : null}
-          </div>
-
-          {/* <div className="">
-            <label className="mb-1 block text-sm font-medium">Training Status</label>
-            <select
-              name="statusId"
-              value={formik.values.statusId}
-              onChange={formik.handleChange}
-              className="w-full rounded-md border border-gray-300 p-2"
-            >
-              <option value="">Select Status</option>
-              {trainingStatus.map((status) => (
-                <option key={status.id} value={status.id}>
-                  {status.name}
-                </option>
-              ))}
-            </select>
-            {formik.touched.statusId && formik.errors.statusId ? (
-              <div className="text-red-500 text-sm">{formik.errors.statusId}</div>
-            ) : null}
-          </div> */}
-        </div>
+        
 
         <div className="grid grid-cols-1 mt-4">
           <div>
