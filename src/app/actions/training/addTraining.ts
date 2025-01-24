@@ -52,7 +52,7 @@ export async function addTraining(data: TrainingAddData): Promise<AddTrainingRes
         },
       });
       if (existingInProgressTraining) {
-        throw new Error("User already has In Progress training. Please complete the existing training first.");
+        throw new Error("User already has In Progress training.");
       }
     }
     const newTraining = await db.training.create({

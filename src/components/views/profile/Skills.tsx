@@ -84,7 +84,7 @@ const ProfileSkills = ({
                           "badge-success": level === 4,
                         })}
                       >
-                        {userSkill.skill.name} ({name})
+                        {userSkill.skill.name} | {name}
                       </span>
                     );
                   })}

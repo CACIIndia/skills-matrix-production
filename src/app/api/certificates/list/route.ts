@@ -24,7 +24,13 @@ export async function GET(request: Request) {
         status: true,
         createdById:true,
         categoryId:true,
-        categoryName:true
+        categoryName:true,
+        createdBy:{
+          select:{
+            name:true,
+            id:true
+          }
+        }
       },
       orderBy: {
         createdAt: 'asc', 

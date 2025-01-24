@@ -6,7 +6,7 @@ import { useAppContext } from '../context/AppContext';
 
 function SearchSkills() {
   const {setSelectedItems } = useAppContext();
-  const [jobTitleData,setJobTitleData] = useState([]);
+  const [jobTitleData, setJobTitleData] = useState<any[]>([]);
   const [locationData,setLocationData] = useState([]);
   const { data: users }  = useGetUsers();
 
@@ -21,9 +21,9 @@ function SearchSkills() {
   useEffect(() => {
     
     if (users) {
-      const jobTitles = users
+      const jobTitles = Array.from(new Set(users
         .map((user: any) => user.role)
-        .filter((role: any) => !!role);
+        .filter((role: any) => !!role)));
       const locations: any = Array.from(new Set(users
         .map((user: any) => user.location)
         .filter((location: any) => !!location)));
