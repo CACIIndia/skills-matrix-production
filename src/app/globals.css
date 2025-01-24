@@ -9060,3 +9060,9 @@ html.dark .\[html\.dark_\&\]\:hidden {
   align-items: center; /* Center vertically */
   justify-content: center; /* Center horizontally */
 }
+
+.text-style {
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 0.6875rem;
+}

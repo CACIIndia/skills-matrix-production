@@ -1,9 +1,11 @@
 import { useAppContext } from "@/app/context/AppContext";
 import React, { useState } from "react";
+import { skillsHexColors } from "@/lib/constants/SkillsHexColors";
 
 interface Skill {
   id: string;
   name: string;
+  color?: string;
 }
 
 interface Category {
@@ -17,6 +19,12 @@ interface MenuAccordionProps {
 }
 
 const MenuAccordion: React.FC<MenuAccordionProps> = ({ data ,handleItemClick}) => {
+  const sortedData = data?.sort((a,b) => a?.category?.localeCompare(b?.category));
+  const updatedData = sortedData?.map((item, index) => ({
+    ...item,
+    color: skillsHexColors[index % skillsHexColors?.length].color
+  }));
+
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const { selectedItems } = useAppContext();
 
@@ -26,8 +34,10 @@ const MenuAccordion: React.FC<MenuAccordionProps> = ({ data ,handleItemClick}) =
 
   return (
     <div className="menu-accordion block gap-0.5 pl-[10px] relative before:absolute before:left-[20px] before:top-0 before:bottom-0 before:border-l before:border-gray-200">
-      {data.map((category) => (
-        <div
+      {updatedData?.map((category) => {
+        const sortedSkills = category.skills.sort((a,b) => a?.name?.localeCompare(b?.name));
+        return (
+          <div
           key={category.category}
           className="menu-item "
          
@@ -53,9 +63,9 @@ const MenuAccordion: React.FC<MenuAccordionProps> = ({ data ,handleItemClick}) =
           {/* Sub-menu */}
           
             <div className={`menu-accordion  ${activeCategory === category.category ?"block":"hidden"} gap-0.5 relative before:absolute before:left-[32px] pl-[22px] before:top-0 before:bottom-0 before:border-l before:border-gray-200`}>
-              {category.skills.map((skill) => (
+              {sortedSkills?.map((skill) => (
                 <div key={skill.id} className={`menu-item ${selectedItems.find((item) => item.id === skill.id) ? "active" : ""}`}
-                onClick={()=>{handleItemClick(skill)}} >
+                onClick={()=>{handleItemClick({...skill, color:category?.color })}} >
                   <span
                    
                     className="menu-link border border-transparent items-center grow menu-item-active:bg-secondary-active dark:menu-item-active:bg-coal-300 dark:menu-item-active:border-gray-100 menu-item-active:rounded-lg hover:bg-secondary-active dark:hover:bg-coal-300 dark:hover:border-gray-100 hover:rounded-lg gap-[5px] pl-[10px] pr-[10px] py-[8px]"
@@ -70,7 +80,10 @@ const MenuAccordion: React.FC<MenuAccordionProps> = ({ data ,handleItemClick}) =
             </div>
         
         </div>
-      ))}
+
+        )
+      })}
+      
     </div>
   );
 };
