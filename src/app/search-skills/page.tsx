@@ -6,7 +6,7 @@ import { useAppContext } from '../context/AppContext';
 
 function SearchSkills() {
   const {setSelectedItems } = useAppContext();
-  const [jobTitleData,setJobTitleData] = useState([]);
+  const [jobTitleData, setJobTitleData] = useState<any[]>([]);
   const [locationData,setLocationData] = useState([]);
   const { data: users }  = useGetUsers();
 
