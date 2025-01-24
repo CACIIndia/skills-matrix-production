@@ -163,7 +163,7 @@ const TeamsContainer: React.FC = () => {
         <div className="flex flex-col items-stretch gap-5 lg:gap-7.5">
           <div className="flex flex-wrap items-center gap-5 justify-between">
             <h3 className="text-lg text-gray-800 font-semibold">
-              {transformedTeams.length} Members
+             Members -  {transformedTeams.length} 
             </h3>
           </div>
           <TeamCards teams={transformedTeams} />

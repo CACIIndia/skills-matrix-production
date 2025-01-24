@@ -59,6 +59,10 @@ export default function Certifications() {
   ];
   if (isLoading || !profile) {
     return (
+
+      <div>
+      
+    
       <div className='container-fixed'>
         <TableSkeleton
           cols={5}
@@ -67,11 +71,24 @@ export default function Certifications() {
           addNewData={false}
         />
       </div>
+      </div>
     );
   }
 
   return (
     <>
+      <div className='container-fixed'>
+        <div className='pb-7.5 flex flex-wrap items-center justify-between gap-5 lg:items-end'>
+          <div className='flex flex-col justify-center gap-2'>
+            <h1 className='text-xl font-semibold leading-none text-gray-900'>
+              Certifications
+            </h1>
+           {/*  <div className='flex items-center gap-2 text-sm font-medium text-gray-600'>
+              Some content goes here.
+            </div> */}
+          </div>
+        </div>
+      </div>
       <div className='container-fixed'>
         <CertificateTable
           headers={headers}
