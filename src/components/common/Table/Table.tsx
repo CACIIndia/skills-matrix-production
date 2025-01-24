@@ -183,7 +183,10 @@ const Table = <T,>({
                           <div className='flex items-center px-2'>
                             <div
                               onClick={() =>
-                                router.push(`/profile/overview/${row.id}`)
+                                window.open(
+                                  `/profile/overview/${row.id}`,
+                                  "_blank",
+                                )
                               }
                             >
                               <Image
@@ -267,7 +270,7 @@ const Table = <T,>({
                                       "_blank",
                                     )
                                   }
-                                  className='text-nowrap bg-green-600 h-[32px] w-[32px] rounded-[50%] text-white transition duration-300 hover:bg-blue-500'
+                                  className='text-nowrap rounded-[4px] bg-green-600 px-2 text-white transition duration-300 hover:bg-blue-600'
                                 >
                                   +{row.userSkills.length - 2} 
                                 </button>

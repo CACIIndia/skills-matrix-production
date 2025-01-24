@@ -171,9 +171,9 @@ const TrainingSchedule: React.FC = () => {
             <h1 className='text-xl font-semibold leading-none text-gray-900'>
               Training - Schedule
             </h1>
-            <div className='flex items-center gap-2 text-sm font-medium text-gray-600'>
-              Some content goes here..
-            </div>
+           {/*  <div className='flex items-center gap-2 text-sm font-medium text-gray-600'>
+              Some content goes here.
+            </div> */}
           </div>
         </div>
       </div>
