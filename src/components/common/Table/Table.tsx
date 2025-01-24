@@ -7,6 +7,8 @@ import defaultImage from "../../../../public/assets/media/avatars/default-image.
 import { useRouter } from "next/navigation";
 import { BsMicrosoftTeams } from "react-icons/bs";
 import { IoMailUnread } from "react-icons/io5";
+import classNames from "classnames";
+import { SKILL_LEVELS } from "@/lib/constants/profile";
 
 type TableHeaders = {
   key: string;
@@ -236,14 +238,25 @@ const Table = <T,>({
                               <div className='flex h-full items-center text-nowrap'>
                                 {row.userSkills
                                   .slice(0, 2)
-                                  .map((skill: Skill, ind: number) => (
-                                    <div
-                                      key={ind}
-                                      className='badge badge-sm badge-outline mr-2'
-                                    >
-                                      {skill.skill.name}
-                                    </div>
-                                  ))}
+                                  .map((skill: Skill, ind: number) => {
+                                    const level = skill.level;
+                                    const { name } = SKILL_LEVELS[level];
+                                    return (
+                                      <div key={ind} className='mr-2'>
+                                        <span
+                                          className={classNames("badge badge-sm", {
+                                            "badge-outline": level === 0,
+                                            "badge-danger": level === 1,
+                                            "badge-warning": level === 2,
+                                            "badge-primary": level === 3,
+                                            "badge-success": level === 4,
+                                          })}
+                                        >
+                                          {name} | {skill.skill.name}
+                                        </span>
+                                      </div>
+                                    );
+                                  })}
                               </div>
 
                               {row.userSkills.length > 2 && (

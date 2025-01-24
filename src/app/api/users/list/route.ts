@@ -20,7 +20,9 @@ export async function GET(request: Request) {
         userSkills: {
           where: {level: {not:0}},
           select: {
+            level:true,
             skill: {
+
               select: {
                 id: true,
                 name: true,
