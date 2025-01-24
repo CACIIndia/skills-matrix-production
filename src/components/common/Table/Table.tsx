@@ -267,7 +267,7 @@ const Table = <T,>({
                                       "_blank",
                                     )
                                   }
-                                  className='text-nowrap bg-purple-800 h-[32px] w-[32px] rounded-[50%] text-white transition duration-300 hover:bg-purple-700'
+                                  className='text-nowrap bg-green-600 h-[32px] w-[32px] rounded-[50%] text-white transition duration-300 hover:bg-blue-500'
                                 >
                                   +{row.userSkills.length - 2} 
                                 </button>
