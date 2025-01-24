@@ -35,7 +35,7 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
   return (
     <header
       className={`flex h-full items-center justify-between bg-[#fefefe] transition-all duration-300 ${
-        isScrolled ? "border-b-coal-100 border-b shadow-sm" : ""
+        isScrolled ? " shadow-blue-200 shadow-md" : "border-b-coal-100 border-b"
       }`}
     >
       <div className='container-fixed flex items-stretch justify-between lg:gap-4'>

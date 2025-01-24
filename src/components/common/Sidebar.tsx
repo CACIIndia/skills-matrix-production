@@ -28,19 +28,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isExpanded, toggleSidebar }) => {
     return (
       <Link
         href={href}
-        className={`flex items-center px-4 py-2 ${isActive ? "text-primary" : "text-gray-700"} hover:bg-gray-100`}
+        className={`flex items-center ${isActive ? "text-primary" : "text-gray-700"} h-[42px] px-4 hover:bg-gray-100`}
       >
-        <i className={`${icon} ${isExpanded ? "mr-3" : ""}`}></i>
-        {isExpanded && <span className='text-sm font-semibold'>{title}</span>}
+        <div className="flex items-center gap-x-2 h-[100%]">
+          <i className={`${icon} ${isExpanded ? "" : ""} pl-[2px]`}></i>
+          {isExpanded && <p className="text-sm font-semibold">{title}</p>}
+        </div>
       </Link>
     );
   };
 
   return (
-    <div
-      className={`bg-light h-full border-r border-gray-200 transition-all duration-300`}
-    >
-      <div className='flex items-center justify-between p-4'>
+    <div className={`bg-light h-full border-r transition-all duration-300`}>
+      <div className='relative hidden items-center justify-between px-3 py-4 lg:flex'>
         <Link href='/' className={`${isExpanded ? "hidden" : "flex"}`}>
           <svg
             className=''
@@ -102,7 +102,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isExpanded, toggleSidebar }) => {
           className='btn btn-icon btn-icon-md bg-light toggle absolute left-full top-8 size-[30px] -translate-x-2/4 -translate-y-2/4 rounded-lg border border-gray-200 text-gray-500 hover:text-gray-700'
         >
           <i
-            className={`ki-filled ${isExpanded ? "ki-black-left-line" : "ki-black-right-line"} rotate-180`}
+            className={`ki-filled ${isExpanded ? "ki-black-right-line" : "ki-black-left-line"} rotate-180`}
           ></i>
         </button>
       </div>
@@ -116,14 +116,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isExpanded, toggleSidebar }) => {
         {/* <MenuItem href='/search-skills' icon='ki-filled ki-element-11' title='Search Skills' /> */}
       </nav>
 
-      <div className='menu-item pt-2.25 pb-px'>
-        <span className='menu-heading text-2sm pl-[10px] pr-[10px] font-semibold uppercase text-gray-500'>
+      {/* <div className='menu-item pt-2.25 pb-px'>
+        <span className='menu-heading text-2sm px-4 py-1 font-semibold uppercase text-gray-500'>
           Search
         </span>
-      </div>
-      <div className='scrollbar flex h-[80%] flex-col overflow-y-auto pb-10 select-none'>
-        <Menu submenu={false} link='/search-profile' name='Search By Profile' />
-        <Menu submenu={true} link='' name='Search By Skills' />
+      </div> */}
+      <div className='scrollbar flex h-[80%] select-none flex-col overflow-y-auto pb-10'>
+       {/*  <Menu submenu={false} link='/search-profile' name='Search By Profile' isExpanded={isExpanded} /> */}
+        <Menu
+          submenu={true}
+          link=''
+          name='Search By Skills'
+          isExpanded={isExpanded}
+        />
       </div>
     </div>
   );
