@@ -54,6 +54,11 @@ export async function GET(request: Request, { params }: { params: { userId: stri
         updatedAt: true,
         createdById: true,
         statusId: true,
+        trainingStatus: {
+         select:{
+          name: true,
+         }
+        },
         employeeId: true,
         employeeName: true,
         employee: {
@@ -63,15 +68,19 @@ export async function GET(request: Request, { params }: { params: { userId: stri
         },
       },
     });
+    const formattedtrainingData = trainingData.map(training => ({
+      ...training,
+      trainingStatus: training.trainingStatus.name,
+    }));
 
     return NextResponse.json(
-      { message: "Training data retrieved successfully", data: trainingData, success: true },
+      { message: "Training data retrieved successfully", data: formattedtrainingData, success: true },
       { status: 200 }
     );
   } catch (error) {
     console.error("Error fetching training data:", error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: error },
       { status: 500 }
     );
   }
