@@ -61,6 +61,7 @@ export default function MasterLayout({
       <div className="flex">
         {/* Desktop Sidebar */}
         <div
+          onMouseEnter={() => setIsExpanded(true)}
           className="fixed z-10 hidden lg:block"
           style={{
             width: sidebarWidth,
@@ -73,7 +74,7 @@ export default function MasterLayout({
 
         {/* Main Content Area */}
         <div
-          className={`wrapper flex grow flex-col z-1 `}
+          className={`wrapper flex grow flex-col`}
           style={{
             marginLeft:
               screenSize === "lg" || screenSize === "xl" || screenSize === "2xl"

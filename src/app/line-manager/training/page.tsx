@@ -12,6 +12,7 @@ import CreateTraining from "@/components/views/Training/TrainingModal";
 import EditTraining from "@/components/views/Training/EditTrainingModal";
 import Table from "@/components/common/Table/Table";
 import TableSkeleton from "@/components/skeletons/TableSkeleton";
+import classNames from "classnames";
 
 type CategoryResponse = {
   category: string;
@@ -106,6 +107,12 @@ const TrainingSchedule: React.FC = () => {
       className: "min-w-[135px]",
     },
     {
+      key: "trainingStatus",
+      label: "Status",
+      sortable: true,
+      className: "min-w-[135px]",
+    },
+    {
       key: "actions",
       label: "Actions",
       sortable: false,
@@ -119,6 +126,19 @@ const TrainingSchedule: React.FC = () => {
         return value ? new Date(value).toLocaleDateString() : "N/A";
       case "tentativeEndDate":
         return value ? new Date(value).toLocaleDateString() : "N/A";
+
+        case "trainingStatus":
+          return (
+           <span
+                     className={classNames("badge badge-sm", {
+                       "badge-success": rowData.trainingStatus === "Completed",
+                       "badge-warning": rowData.trainingStatus === "In Progress",
+                       "badge-danger": rowData.trainingStatus === "Discontinued",
+                     })}
+                   >
+                     {rowData.trainingStatus}
+                   </span>
+          )
       case "actions":
         return (
           <div className='flex gap-3 text-xl'>
@@ -221,6 +241,7 @@ const TrainingSchedule: React.FC = () => {
             employee: {
               role: "",
             },
+            trainingStatus:""
           }
         }
         trainingStatus={trainingStatus}

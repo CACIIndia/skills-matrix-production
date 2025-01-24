@@ -2,18 +2,19 @@
 import { useAppContext } from "@/app/context/AppContext";
 import TableSkeleton from "@/components/skeletons/TableSkeleton";
 import CertificateTable from "@/components/views/profile/CertificateTable";
+import useGetCertificatesByLineManager from "@/lib/hooks/common/useGetCertificationByLineManager";
 import { useCertificateHandlers } from "@/lib/hooks/profile/useCertificateHandlers";
-import useGetCertificates from "@/lib/hooks/profile/useGetCertificates";
 import { Certificate } from "@/lib/types/profile";
 import { useEffect, useState } from "react";
 
 export default function Certifications() {
   const { profile } = useAppContext();
+  
   const {
     data: certificates = [],
     refetch,
     isLoading,
-  } = useGetCertificates(profile?.id);
+  } = useGetCertificatesByLineManager(profile?.id);
 
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
   const { handleDelete, handleEdit, handleUpload, handleDownload } =
@@ -25,6 +26,13 @@ export default function Certifications() {
 
   const headers = [
     {
+      key: "employeeName",
+      label: "Employee Name",
+      sortable: true,
+      className: "w-[150px] cursor-pointer",
+
+    },
+    {
       key: "categoryName",
       label: "Category",
       sortable: true,
@@ -32,7 +40,7 @@ export default function Certifications() {
     },
     {
       key: "name",
-      label: "Name",
+      label: "Certification Name",
       sortable: true,
       className: "w-[280px] cursor-pointer",
     },
