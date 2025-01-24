@@ -169,19 +169,19 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
         headers={[
           {
             key: "name",
-            label: "NAME",
+            label: "Name",
           },
           {
             key: "skill",
-            label: "SKILLS",
+            label: "Skills",
           },
           {
             key: "role",
-            label: "ROLE",
+            label: "Role",
           },
           {
             key: "location",
-            label: "LOCATION",
+            label: "Location",
           },
         ]}
         isSearchable={true}

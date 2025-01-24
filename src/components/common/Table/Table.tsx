@@ -194,7 +194,7 @@ const Table = <T,>({
                                 height={40}
                               />
                             </div>
-                            <div className='w-[170px]'>
+                            <div className='w-[150px]'>
                               <div>{row.name}</div>
                               <div className='text-[10px] text-gray-600'>
                                 {row.email}
@@ -211,7 +211,7 @@ const Table = <T,>({
                               className='ml-[8px] rounded-[4px] bg-purple-800 p-[4px] text-white transition duration-300 hover:bg-purple-700'
                             >
                               <div className='flex items-center justify-center space-x-1'>
-                                <div>Chat</div>{" "}
+                                {/* <div>Chat</div>{" "} */}
                                 <div>
                                   <BsMicrosoftTeams />
                                 </div>
@@ -224,7 +224,7 @@ const Table = <T,>({
                               className='ml-[8px] rounded-[4px] bg-blue-600 p-[4px] text-white transition duration-300 hover:bg-blue-700'
                             >
                               <div className='flex items-center justify-center space-x-1'>
-                                <div>Mail</div>{" "}
+                                {/* <div>Mail</div>{" "} */}
                                 <div>
                                   <IoMailUnread />
                                 </div>
@@ -258,7 +258,7 @@ const Table = <T,>({
                                     );
                                   })}
                               </div>
-
+                                  <div>
                               {row.userSkills.length > 2 && (
                                 <button
                                   onClick={() =>
@@ -267,11 +267,12 @@ const Table = <T,>({
                                       "_blank",
                                     )
                                   }
-                                  className='text-nowrap rounded-[4px] bg-blue-500 px-2 text-white transition duration-300 hover:bg-blue-600'
+                                  className='text-nowrap bg-blue-600 h-[32px] w-[32px] rounded-[50%] text-white transition duration-300 hover:bg-blue-500'
                                 >
-                                  + {row.userSkills.length - 2} more
+                                  +{row.userSkills.length - 2} 
                                 </button>
                               )}
+                              </div>
                             </div>
                           </td>
                         ) : (
