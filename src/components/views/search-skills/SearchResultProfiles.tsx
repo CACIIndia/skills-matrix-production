@@ -169,15 +169,19 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
         headers={[
           {
             key: "name",
-            label: "Name",
+            label: "NAME",
+          },
+          {
+            key: "skill",
+            label: "SKILLS",
           },
           {
             key: "role",
-            label: "Role",
+            label: "ROLE",
           },
           {
             key: "location",
-            label: "Location",
+            label: "LOCATION",
           },
         ]}
         isSearchable={true}
@@ -185,6 +189,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
         data={filteredProfiles}
         isPaginated={true}
         noDataMessage='No Profiles found'
+        isFromSearchProfile={true}
       />
     </div>
   );
