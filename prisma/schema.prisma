@@ -148,8 +148,8 @@ model Certification {
   createdById                String
   categoryId                 String
   categoryName               String
-  skillId                    String
-  skillName                  String
+  skillId                    String?
+  skillName                  String?
   isTrainingLinked           Boolean        @default(false)
   trainingRecordCategoryId   String?
   trainingRecordCategoryName String?
