@@ -2,7 +2,11 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CiSquarePlus } from "react-icons/ci";
 import SortingPagination from "./SortingPagination";
 import { tableSearch } from "@/lib/utils/tableSearch";
-// import { Certificate } from "@/lib/types/profile";
+import Image from "next/image";
+import defaultImage from "../../../../public/assets/media/avatars/default-image.png";
+import { useRouter } from "next/navigation";
+import { BsMicrosoftTeams } from "react-icons/bs";
+import { IoMailUnread } from "react-icons/io5";
 
 type TableHeaders = {
   key: string;
@@ -21,8 +25,13 @@ type TableProps<T> = {
   renderCell?: (key: string, value: string, rowData: any) => React.ReactNode; // Custom cell rendering
   isPaginated: boolean;
   noDataMessage?: string | undefined;
+  isFromSearchProfile?: boolean | false;
 };
-
+type Skill = {
+  skill: {
+    name: string;
+  };
+};
 const Table = <T,>({
   tableHeading,
   headers,
@@ -33,7 +42,9 @@ const Table = <T,>({
   renderCell,
   isPaginated,
   noDataMessage,
+  isFromSearchProfile,
 }: TableProps<T>) => {
+  const router = useRouter();
   const [filteredData, setFilteredData] = useState(data);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -43,7 +54,7 @@ const Table = <T,>({
     direction: "asc" | "desc" | null;
   }>({ key: "", direction: null });
   const dataToCheckForSearch = headers?.map((item) => item?.key);
-
+  
   useEffect(() => {
     setFilteredData(data);
   }, [data]);
@@ -164,20 +175,126 @@ const Table = <T,>({
                 finalData?.map((row, rowIndex) => (
                   <tr key={rowIndex}>
                     <td>{rowIndex + 1 + (currentPage - 1) * itemsPerPage}</td>
-                    {headers?.map((header) => (
-                      <td key={header.key}>
-                        {renderCell
-                          ? renderCell(header?.key, row[header?.key], row)
-                          : row[header?.key]}
-                      </td>
-                    ))}
+                    {isFromSearchProfile ? (
+                      <>
+                        <td>
+                          <div className='flex items-center px-2'>
+                            <div
+                              onClick={() =>
+                                router.push(`/profile/overview/${row.id}`)
+                              }
+                            >
+                              <Image
+                                src={row.image || defaultImage}
+                                alt={row.name}
+                                className='mr-4 cursor-pointer rounded-full'
+                                width={40}
+                                height={40}
+                              />
+                            </div>
+                            <div className='w-[170px]'>
+                              <div>{row.name}</div>
+                              <div className='text-[10px] text-gray-600'>
+                                {row.email}
+                              </div>
+                            </div>
+
+                            <button
+                              onClick={() => {
+                                window.open(
+                                  `https://teams.microsoft.com/l/chat/0/0?users=${row.email}`,
+                                  "_blank",
+                                );
+                              }}
+                              className='ml-[8px] rounded-[4px] bg-purple-800 p-[4px] text-white transition duration-300 hover:bg-purple-700'
+                            >
+                              <div className='flex items-center justify-center space-x-1'>
+                                <div>Chat</div>{" "}
+                                <div>
+                                  <BsMicrosoftTeams />
+                                </div>
+                              </div>
+                            </button>
+                            <button
+                              onClick={() => {
+                                window.location.href = `mailto:${row.email}`;
+                              }}
+                              className='ml-[8px] rounded-[4px] bg-blue-600 p-[4px] text-white transition duration-300 hover:bg-blue-700'
+                            >
+                              <div className='flex items-center justify-center space-x-1'>
+                                <div>Mail</div>{" "}
+                                <div>
+                                  <IoMailUnread />
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+                        </td>
+                        {row.userSkills.length > 0 ? (
+                          <td>
+                            <div className='flex items-center'>
+                              <div className='flex h-full items-center text-nowrap'>
+                                {row.userSkills
+                                  .slice(0, 2)
+                                  .map((skill: Skill, ind: number) => (
+                                    <div
+                                      key={ind}
+                                      className='badge badge-sm badge-outline mr-2'
+                                    >
+                                      {skill.skill.name}
+                                    </div>
+                                  ))}
+                              </div>
+
+                              {row.userSkills.length > 2 && (
+                                <button
+                                  onClick={() =>
+                                    window.open(
+                                      `/profile/overview/${row.id}`,
+                                      "_blank",
+                                    )
+                                  }
+                                  className='text-nowrap rounded-[4px] bg-blue-500 px-2 text-white transition duration-300 hover:bg-blue-600'
+                                >
+                                  + {row.userSkills.length - 2} more
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        ) : (
+                          <td>No skills found!</td>
+                        )}
+                        {headers
+                          .filter(
+                            (header) =>
+                              header.key !== "name" && header.key !== "skill",
+                          ) // Exclude "name" from data rendering
+                          .map((header) => (
+                            <td key={header.key}>
+                              {renderCell
+                                ? renderCell(header.key, row[header.key], row)
+                                : row[header.key]}
+                            </td>
+                          ))}
+                      </>
+                    ) : (
+                      headers.map((header) => (
+                        <td key={header.key}>
+                          {renderCell
+                            ? renderCell(header.key, row[header.key], row)
+                            : row[header.key]}
+                        </td>
+                      ))
+                    )}
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className='text-center text-gray-600'>
-                    {noDataMessage || ""}{" "}
-                    {/* Loader and no data found message */}
+                  <td
+                    colSpan={headers.length + 1}
+                    className='text-center text-gray-600'
+                  >
+                    {noDataMessage || "No data found"}
                   </td>
                 </tr>
               )}
