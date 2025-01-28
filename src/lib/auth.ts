@@ -8,8 +8,7 @@ interface ProfileWithId {
 
 }
 export const options: AuthOptions = {
-   debug: true,
-   providers: [
+      providers: [
       AzureADProvider({
          clientId: process.env.AZURE_AD_CLIENT_ID!,
          clientSecret: process.env.AZURE_AD_CLIENT_SECRET!,
