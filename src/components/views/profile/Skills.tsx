@@ -84,7 +84,7 @@ const ProfileSkills = ({
                           "badge-success": level === 4,
                         })}
                       >
-                        {userSkill.skill.name} ({name})
+                        {userSkill.skill.name} | {name}
                       </span>
                     );
                   })}
@@ -113,6 +113,7 @@ const ProfileSkills = ({
         title='Edit Skills'
         buttonText='Update'
         handler={handleEdit}
+        customWidth="w-[100%] lg:w-[70%] h-[100%] lg:h-[90%]"
       >
         <EditSkills
           createdById={createdById}

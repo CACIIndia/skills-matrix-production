@@ -3,6 +3,7 @@ const nextConfig = {
   images: {
     domains: ["randomuser.me","smempprofile.blob.core.windows.net"],
   },
+  reactStrictMode: false,
   env: {
     API_BASE_URL: process.env.API_BASE_URL,
   },

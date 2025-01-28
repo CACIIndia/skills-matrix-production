@@ -76,7 +76,8 @@ export interface Certificate  {
   categoryId: string;
   categoryName:string;
   url?:string;
-  createdById?:string
+  createdById?:string;
+  EmployeeName?:string;
 };
 
 export interface SkillCategory {
@@ -86,6 +87,7 @@ export interface SkillCategory {
   updatedAt:Date| string;
   createdById: string;
   status: number | null
+  color?:string;
 };
 
 export interface Training {
@@ -106,6 +108,7 @@ export interface Training {
   employee:{
     role:string;
   }
+  trainingStatus:string;
 }
 export interface Skill  {
   id: string;

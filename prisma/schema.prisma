@@ -146,8 +146,10 @@ model Certification {
   updatedAt                  DateTime       @default(now()) @updatedAt
   status                     Int            @default(1)
   createdById                String
-  categoryId                 String?
-  categoryName               String?
+  categoryId                 String
+  categoryName               String
+  skillId                    String?
+  skillName                  String?
   isTrainingLinked           Boolean        @default(false)
   trainingRecordCategoryId   String?
   trainingRecordCategoryName String?

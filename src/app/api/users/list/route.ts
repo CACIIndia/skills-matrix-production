@@ -14,6 +14,23 @@ export async function GET(request: Request) {
         name: true,
         email: true,
         image: true,
+        role: true,
+        location: true,
+        phone:true,
+        userSkills: {
+          where: {level: {not:0}},
+          select: {
+            level:true,
+            skill: {
+
+              select: {
+                id: true,
+                name: true,
+               
+              },
+            },
+          },
+        },
       },
     });
 

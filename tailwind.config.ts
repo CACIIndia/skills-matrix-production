@@ -18,6 +18,10 @@ const config: Config = {
       },
       colors: {
         primary: "#0F172A",
+        "primary-text": '#4B5675',
+        "primary-text-dark": '#071437',
+        "primary-text-active": '#1B84FF',
+        "primary-hover": '#1B84FF',
         "primary-light": "#eff6ff",
       },
     },

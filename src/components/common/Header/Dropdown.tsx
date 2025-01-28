@@ -2,9 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react"; // Import useSession hook
 import default_image from "../../../../public/assets/media/avatars/default-image.png";
-import Button from "../Button";
 import { useAppContext } from "@/app/context/AppContext";
-import { SiMicrosoftazure } from "react-icons/si";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useUpdateMicrosoftProfile } from "@/lib/hooks/useUpdateMicroSoftProfile";
@@ -88,24 +86,48 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
             </Link>
           </div>
           <div className='menu-item'>
-            <Link className='menu-link hover:text-primary' href={"#"}   onClick={handleAzureConnect}>
+            <Link
+              className='menu-link hover:text-primary'
+              href={"#"}
+              onClick={handleAzureConnect}
+            >
               <span className='menu-icon'>
-              <FiRefreshCcw className="menu-custom-icon "/>
+                <FiRefreshCcw className='menu-custom-icon' />
               </span>
-              <span className='menu-title '>Sync Azure AD</span>
+              <span className='menu-title'>Sync Azure AD</span>
             </Link>
           </div>
-          {profile?.isLineManager && <div className="menu-item">
-            <Link className="menu-link hover:text-primary" href="/line-manager/training">
-             <span className="menu-icon">
-             <i className="ki-filled ki-setting-2 text-lg">
-             </i>
-             </span>
-             <span className="menu-title">Line Manager</span>
-            </Link>
-          </div>}
-          
-
+          {profile?.isLineManager && (
+            <div className='menu-item'>
+              <Link
+                className='menu-link hover:text-primary'
+                href='/line-manager/my-team'
+              >
+                <span className='menu-icon'>
+                  <i className='ki-filled ki-setting-2 text-lg'></i>
+                </span>
+                <span className='menu-title'>Line Manager</span>
+              </Link>
+            </div>
+          )}
+          {/* <div className='menu-separator'></div>
+          <div className='menu-item mb-0.5'>
+            <div className='menu-link'>
+              <span className='menu-icon'>
+                <i className='ki-filled ki-moon'></i>
+              </span>
+              <span className='menu-title'>Dark Mode</span>
+              <label className='switch switch-sm'>
+                <input
+                  data-theme-state='dark'
+                  data-theme-toggle='true'
+                  name='check'
+                  type='checkbox'
+                  value='1'
+                />
+              </label>
+            </div>
+          </div> */}
         </div>
         <div className='flex flex-col'>
           <div className='menu-item px-4 py-1.5'>
@@ -113,7 +135,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
               className='btn btn-sm btn-light justify-center'
               onClick={() => {
                 signOut();
-                onClose(); 
+                onClose();
               }}
             >
               Log out

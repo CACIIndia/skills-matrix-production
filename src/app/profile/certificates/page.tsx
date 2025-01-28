@@ -9,41 +9,87 @@ import useGetSkillCategory from "@/lib/hooks/profile/useGetSkillCategory";
 import { useEffect, useState } from "react";
 import { Certificate } from "@/lib/types/profile";
 import useGetTrainingDataByUserId from "@/lib/hooks/Training/useGetTraining";
+import TableSkeleton from "@/components/skeletons/TableSkeleton";
 
 const CertificatePage = () => {
   const { profile } = useAppContext();
-
-  const { data: certificates,refetch } = useGetCertificates(profile.id);
-  const {data: categoryskills} = useGetSkillCategory();
+  const { data: certificates, refetch, isLoading } = useGetCertificates(profile.id);
+  const { data: categoryskills } = useGetSkillCategory();
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
-  const initialcertificates = certificates || [];
-  const { data: training_data,  } = useGetTrainingDataByUserId(
-    profile?.id , "employeeId","Completed"
+  const { data: training_data } = useGetTrainingDataByUserId(
+    profile?.id,
+    "employeeId",
+    "Completed",
   );
 
-  useEffect(()=>{
+  useEffect(() => {
     setCertificatesData(certificates || []);
-  },[certificates])
- 
-  const { handleDelete, handleEdit, handleUpload,handleDownload } = useCertificateHandlers(
-    profile.id,
-  );
+  }, [certificates]);
+
+  const { handleDelete, handleEdit, handleUpload, handleDownload } =
+    useCertificateHandlers(profile.id);
+
+  const headers = [
+    {
+      key: "categoryName",
+      label: "Category",
+      sortable: true,
+      className: "w-[150px] cursor-pointer",
+    },
+    {
+      key: "name",
+      label: "Name",
+      sortable: true,
+      className: "w-[280px] cursor-pointer",
+    },
+    {
+      key: "obtainedDate",
+      label: "Obtained Date",
+      sortable: true,
+      className: "min-w-[135px]",
+    },
+    {
+      key: "expiryDate",
+      label: "Valid Until",
+      sortable: true,
+      className: "min-w-[135px]",
+    },
+    {
+      key: "actions",
+      label: "Actions",
+      sortable: false,
+      className: "min-w-[135px]",
+    },
+  ];
+
+  if (isLoading || !profile) {
+    return (
+      <TableSkeleton
+        cols={5}
+        tableHeader={false}
+        isSearchable={true}
+        addNewData={true}
+      />
+    );
+  }
 
   return (
     <div>
-      <div className=' text-start'>
-        <div className='grid grid-cols-1 justify-between gap-4 lg:grid-cols-1'>
+      <div className=''>
+        <div className=''>
           <CertificateTable
+            headers={headers}
             certificates={certificatesData}
-            setCertificatesData={setCertificatesData}
-            initialcertificates ={initialcertificates}
             categoryskills={categoryskills || []}
             onEdit={handleEdit}
             onDelete={handleDelete}
             onDownload={handleDownload}
             onAddCertificate={handleUpload}
             refetch={refetch}
-            trainingData ={training_data || []}
+            trainingData={training_data || []}
+            isSearchable={true}
+            addNewData={true}
+            noDataMessage="No certifications found"
           />
 
           {/* <ResumeCard

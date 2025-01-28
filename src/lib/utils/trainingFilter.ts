@@ -13,7 +13,7 @@ type Training = {
     statusId: string;
     employeeId: string;
     employeeName: string;
-    status: {
+    trainingStatus: {
       name: string;
     };
   };
@@ -25,11 +25,11 @@ type Training = {
   
   export const filterTrainings = (trainingEmployees: Training[]): FilteredTrainings => {
     const inProgressTraining = trainingEmployees.find(
-      (training) => training.status.name === "In Progress"
+      (training) => training.trainingStatus.name === "In Progress"
     ) || null;
   
     const otherTrainings = trainingEmployees.filter(
-      (training) => training.status.name !== "In Progress"
+      (training) => training.trainingStatus.name !== "In Progress"
     );
   
     return {

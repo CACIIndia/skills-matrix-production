@@ -14,19 +14,19 @@ const Legend: React.FC<LegendProps> = ({
   optionalComponent,
 }) => {
   return (
-    <div className='col-span-1 text-start'>
-      <div className='card'>
+    <div className='col-span-1 text-start sticky top-0 bg-white'>
+      <div className={`${layout === 'vertical'? 'card': ''}`}>
         {!hideCardHeader && (
           <div className='card-header'>
             <h3 className='text-lg font-semibold text-gray-800'>Legend</h3>
           </div>
         )}
-        <div className={`p-6 ${hideCardHeader ? "pt-6" : ""}`}>
+        <div className={`py-2 sm:py-4 ${layout === 'vertical'? 'px-4': ''} ${hideCardHeader ? "pt-2 sm:pt-6" : ""}`}>
           <div
             className={`${
               layout === "vertical"
                 ? "flex flex-col gap-6"
-                : "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
+                : "grid gap-2 sm:grid-cols-2 lg:grid-cols-5"
             }`}
           >
             {SKILL_LEVELS.map((skill) => (
