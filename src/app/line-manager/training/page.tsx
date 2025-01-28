@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import React, { useState, useEffect, Suspense } from "react";
 import useGetTrainingDataByUserId from "@/lib/hooks/Training/useGetTraining";
 import { useAppContext } from "@/app/context/AppContext";
 import { Skill, Training } from "@/lib/types/profile";
@@ -8,11 +9,17 @@ import useGetUsersByLineManager from "@/lib/hooks/common/useGetUsersByLineManage
 import useGetTrainingStatus from "@/lib/hooks/Training/useGetTrainingStatus";
 import { useTrainingHandlers } from "@/lib/hooks/Training/useTrainingHandlers";
 import { FaTrash } from "react-icons/fa";
-import CreateTraining from "@/components/views/Training/TrainingModal";
-import EditTraining from "@/components/views/Training/EditTrainingModal";
 import Table from "@/components/common/Table/Table";
 import TableSkeleton from "@/components/skeletons/TableSkeleton";
 import classNames from "classnames";
+
+// Lazy-loaded modal components
+const CreateTraining = React.lazy(() =>
+  import("@/components/views/Training/TrainingModal")
+);
+const EditTraining = React.lazy(() =>
+  import("@/components/views/Training/EditTrainingModal")
+);
 
 type CategoryResponse = {
   category: string;
@@ -29,26 +36,15 @@ type Employee = {
 
 const TrainingSchedule: React.FC = () => {
   const { profile } = useAppContext();
-  // if (isLoading || !profile) {
-  //   return <div>Loading...</div>;
-  // }
-
-  const {
-    data: training_data,
-    refetch,
-    isLoading,
-  } = useGetTrainingDataByUserId(profile?.id || "");
-
+  const { data: training_data, refetch, isLoading } = useGetTrainingDataByUserId(
+    profile?.id || ""
+  );
   const { data: training_status } = useGetTrainingStatus();
-  const {
-    addTrainingData,
-    handleDelete,
-    handleEdit: handleTrainingEdit,
-  } = useTrainingHandlers(profile?.id || "", refetch);
+  const { addTrainingData, handleDelete, handleEdit: handleTrainingEdit } =
+    useTrainingHandlers(profile?.id || "", refetch);
 
   const { data: employeeData } = useGetUsersByLineManager(profile?.id);
   const { data: categoryskills } = useGetSkills();
-  
 
   const [trainingData, setTrainingData] = useState<Training[]>([]);
   const [categories, setCategories] = useState<CategoryResponse>([]);
@@ -57,7 +53,7 @@ const TrainingSchedule: React.FC = () => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editTrainingData, setEditTrainingData] = useState<Training | null>(
-    null,
+    null
   );
   const [trainingStatus, setTrainingStatus] = useState([]);
   const [editingId, setEditingId] = useState<string>("");
@@ -123,36 +119,34 @@ const TrainingSchedule: React.FC = () => {
   const renderCell = (key: string, value: string, rowData: Training) => {
     switch (key) {
       case "fromDate":
-        return value ? new Date(value).toLocaleDateString() : "N/A";
       case "tentativeEndDate":
         return value ? new Date(value).toLocaleDateString() : "N/A";
-
-        case "trainingStatus":
-          return (
-           <span
-                     className={classNames("badge badge-sm", {
-                       "badge-success": rowData.trainingStatus === "Completed",
-                       "badge-warning": rowData.trainingStatus === "In Progress",
-                       "badge-danger": rowData.trainingStatus === "Discontinued",
-                     })}
-                   >
-                     {rowData.trainingStatus}
-                   </span>
-          )
+      case "trainingStatus":
+        return (
+          <span
+            className={classNames("badge badge-sm", {
+              "badge-success": rowData.trainingStatus === "Completed",
+              "badge-warning": rowData.trainingStatus === "In Progress",
+              "badge-danger": rowData.trainingStatus === "Discontinued",
+            })}
+          >
+            {rowData.trainingStatus}
+          </span>
+        );
       case "actions":
         return (
-          <div className='flex gap-3 text-xl'>
+          <div className="flex gap-3 text-xl">
             <button
-              className='text-primary'
+              className="text-primary"
               onClick={() => handleEdit(rowData)}
-              title='Edit'
+              title="Edit"
             >
-              <i className='ki-filled ki-notepad-edit' />
+              <i className="ki-filled ki-notepad-edit" />
             </button>
             <button
-              className='text-danger'
+              className="text-danger"
               onClick={() => handleDelete(rowData?.id)}
-              title='Delete'
+              title="Delete"
             >
               <FaTrash />
             </button>
@@ -165,21 +159,18 @@ const TrainingSchedule: React.FC = () => {
 
   return (
     <div>
-      <div className='container-fixed'>
-        <div className='pb-7.5 flex flex-wrap items-center justify-between gap-5 lg:items-end'>
-          <div className='flex flex-col justify-center gap-2'>
-            <h1 className='text-xl font-semibold leading-none text-gray-900'>
+      <div className="container-fixed">
+        <div className="pb-7.5 flex flex-wrap items-center justify-between gap-5 lg:items-end">
+          <div className="flex flex-col justify-center gap-2">
+            <h1 className="text-xl font-semibold leading-none text-gray-900">
               Training - Schedule
             </h1>
-           {/*  <div className='flex items-center gap-2 text-sm font-medium text-gray-600'>
-              Some content goes here.
-            </div> */}
           </div>
         </div>
       </div>
 
-      {(isLoading || !profile) ? (
-        <div className='container-fixed'>
+      {isLoading || !profile ? (
+        <div className="container-fixed">
           <TableSkeleton
             cols={5}
             rows={1}
@@ -189,7 +180,7 @@ const TrainingSchedule: React.FC = () => {
           />
         </div>
       ) : (
-        <div className='container-fixed grid'>
+        <div className="container-fixed grid">
           <Table
             headers={headers}
             isSearchable={true}
@@ -203,50 +194,55 @@ const TrainingSchedule: React.FC = () => {
         </div>
       )}
 
-      {/* Modals */}
-      <CreateTraining
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        onSave={(newTrainingData) =>
-          addTrainingData(newTrainingData, () => setIsAddModalOpen(false))
-        }
-        employeeData={employees}
-        trainingStatus={trainingStatus}
-        categoriesData={categories}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        {isAddModalOpen && (
+          <CreateTraining
+            isOpen={isAddModalOpen}
+            onClose={() => setIsAddModalOpen(false)}
+            onSave={(newTrainingData) =>
+              addTrainingData(newTrainingData, () => setIsAddModalOpen(false))
+            }
+            employeeData={employees}
+            trainingStatus={trainingStatus}
+            categoriesData={categories}
+          />
+        )}
 
-      <EditTraining
-        isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-        onSave={(editTrainingData) => {
-          handleTrainingEdit(editingId, editTrainingData);
-        }}
-        categoriesData={categories}
-        initialTrainingData={
-          editTrainingData || {
-            id: "",
-            categoryId: "",
-            categoryName: "",
-            skillId: "",
-            skillName: "",
-            fromDate: null,
-            tentativeEndDate: null,
-            description: "",
-            createdAt: null,
-            updatedAt: null,
-            createdById: "",
-            statusId: "",
-            employeeId: "",
-            employeeName: "",
-            employee: {
-              role: "",
-            },
-            trainingStatus:""
-          }
-        }
-        trainingStatus={trainingStatus}
-        employeeData={employees}
-      />
+        {isEditModalOpen && (
+          <EditTraining
+            isOpen={isEditModalOpen}
+            onClose={() => setIsEditModalOpen(false)}
+            onSave={(editTrainingData) => {
+              handleTrainingEdit(editingId, editTrainingData);
+            }}
+            categoriesData={categories}
+            initialTrainingData={
+              editTrainingData || {
+                id: "",
+                categoryId: "",
+                categoryName: "",
+                skillId: "",
+                skillName: "",
+                fromDate: null,
+                tentativeEndDate: null,
+                description: "",
+                createdAt: null,
+                updatedAt: null,
+                createdById: "",
+                statusId: "",
+                employeeId: "",
+                employeeName: "",
+                employee: {
+                  role: "",
+                },
+                trainingStatus: "",
+              }
+            }
+            trainingStatus={trainingStatus}
+            employeeData={employees}
+          />
+        )}
+      </Suspense>
     </div>
   );
 };

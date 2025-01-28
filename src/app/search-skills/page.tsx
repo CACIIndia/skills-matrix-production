@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, Suspense } from 'react';
 import SearchResultProfiles from '@/components/views/search-skills/SearchResultProfiles';
 import useGetUsers from '@/lib/hooks/useGetUsers';
 import { useAppContext } from '../context/AppContext';
@@ -60,11 +60,14 @@ function SearchSkills() {
   return (
     <div className=" ">
       <div className="container-fixed flex gap-4">
-        <SearchResultProfiles profiles={users || []} searchFilters={searchFilters} onFilterChange={handleFilterChange} resetSearchFilters={resetSearchFilters}
-         jobData={jobTitleData || []} locationData={locationData || []} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <SearchResultProfiles profiles={users || []} searchFilters={searchFilters} onFilterChange={handleFilterChange} resetSearchFilters={resetSearchFilters}
+           jobData={jobTitleData || []} locationData={locationData || []} />
+        </Suspense>
       </div>
     </div>
   );
 }
 
 export default SearchSkills;
+

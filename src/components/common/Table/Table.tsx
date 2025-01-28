@@ -29,11 +29,7 @@ type TableProps<T> = {
   noDataMessage?: string | undefined;
   isFromSearchProfile?: boolean | false;
 };
-type Skill = {
-  skill: {
-    name: string;
-  };
-};
+
 const Table = <T,>({
   tableHeading,
   headers,
@@ -241,7 +237,7 @@ const Table = <T,>({
                               <div className='flex h-full items-center text-nowrap'>
                                 {row.userSkills
                                   .slice(0, 2)
-                                  .map((skill: Skill, ind: number) => {
+                                  .map((skill: any, ind: number) => {
                                     const level = skill.level;
                                     const { name } = SKILL_LEVELS[level];
                                     return (
