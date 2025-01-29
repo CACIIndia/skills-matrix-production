@@ -14,7 +14,9 @@ type CertificateUpdateData = {
   description: string;
   createdBy: string;
   categoryId:string;
-  categoryName:string
+  categoryName:string;
+  skillId?:string;
+  skillName?:string;
 };
 
 type UpdateCertificateResponse = {
@@ -82,6 +84,8 @@ export async function updateCertificate(
         categoryId:data.categoryId,
         categoryName:data.categoryName,
         status: 1,
+        skillId:data.skillId,
+        skillName:data.skillName
       },
     });
 
