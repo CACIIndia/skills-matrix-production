@@ -20,7 +20,9 @@ type CertificateAddData = {
   trainingRecordName?: string;
   trainingRecordCategoryId?: string;
   trainingRecordCategoryName?: string;
-  trainingRecordSkillId?:string
+  trainingRecordSkillId?:string;
+  skillId?:string;
+  skillName?:string;
 };
 
 type AddCertificateResponse = {
@@ -64,8 +66,6 @@ export async function addCertificate(
       );
       certificateUrl = filename;
     };
-
-    
     const certificateData: any = {
       name: data.name,
       url: certificateUrl,
@@ -76,22 +76,16 @@ export async function addCertificate(
       status: 1,
       categoryId: data.categoryId,
       categoryName: data.categoryName,
+      skillId: data.skillId,
+      skillName: data.skillName,
     };
-    
-   
     if (data.isTrainingLinked) {
       certificateData.isTrainingLinked = true;
       certificateData.trainingRecordId = data.trainingRecordId;
-      certificateData.trainingRecordName = data.trainingRecordName;
-      certificateData.trainingRecordCategoryId = data.trainingRecordCategoryId;
-      certificateData.trainingRecordCategoryName = data.trainingRecordCategoryName;
-      certificateData.trainingRecordSkillId = data.trainingRecordSkillId;
     }
     const newCertificate = await db.certification.create({
       data: certificateData,
     });
-
-   
     if (data.isTrainingLinked) {
       await db.training.update({
         where: {
