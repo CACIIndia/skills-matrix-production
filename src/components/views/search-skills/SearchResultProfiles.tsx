@@ -5,8 +5,11 @@ import React, { FC } from "react";
 import defaultImage from "../../../../public/assets/media/avatars/default-image.png";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import DisplayName from "@/components/reusable-components/DisplayName";
 import Table from "@/components/common/Table/Table";
+import { BsMicrosoftTeams } from "react-icons/bs";
+import { IoMailUnread } from "react-icons/io5";
+import { SKILL_LEVELS } from "@/lib/constants/profile";
+import classNames from "classnames";
 
 interface Profile {
   id: string;
@@ -14,6 +17,7 @@ interface Profile {
   role: string;
   location: string;
   image: string;
+  email: string;
   userSkills: any[];
 }
 
@@ -51,7 +55,6 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
   } = searchFilters;
   const { selectedItems } = useAppContext();
   const router = useRouter();
-  console.log(selectedItems, "selectedItemsssssss");
 
   const filteredProfiles = profiles?.filter((profile) => {
     return (
@@ -70,6 +73,106 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
     (currentPage - 1) * resultsPerPage,
     currentPage * resultsPerPage,
   );
+  const renderCell = (key: string, value: string, rowData: Profile) => {
+    switch (key) {
+      case "name":
+        return (
+         
+            <div className='flex items-center px-2'>
+              <div
+                onClick={() =>
+                  window.open(`/profile/overview/${rowData.id}`, "_blank")
+                }
+              >
+                <Image
+                  src={rowData.image || defaultImage}
+                  alt={rowData.name}
+                  className='mr-4 cursor-pointer rounded-full'
+                  width={40}
+                  height={40}
+                />
+              </div>
+              <div className='w-[150px]'>
+                <div>{rowData.name}</div>
+                <div className='text-[10px] text-gray-600'>{rowData.email}</div>
+              </div>
+
+              <button
+                onClick={() => {
+                  window.open(
+                    `https://teams.microsoft.com/l/chat/0/0?users=${rowData.email}`,
+                    "_blank",
+                  );
+                }}
+                className='ml-[8px] rounded-[4px] bg-purple-800 p-[4px] text-white transition duration-300 hover:bg-purple-700'
+              >
+                <div className='flex items-center justify-center space-x-1'>
+                  <div>
+                    <BsMicrosoftTeams />
+                  </div>
+                </div>
+              </button>
+              <button
+                onClick={() => {
+                  window.location.href = `mailto:${rowData.email}`;
+                }}
+                className='ml-[8px] rounded-[4px] bg-blue-600 p-[4px] text-white transition duration-300 hover:bg-blue-700'
+              >
+                <div className='flex items-center justify-center space-x-1'>
+                  <div>
+                    <IoMailUnread />
+                  </div>
+                </div>
+              </button>
+            </div>
+          
+        );
+      case "skill":
+        return (
+          rowData?.userSkills.length > 0 ? 
+            <div className='flex items-center'>
+              <div className='flex h-full items-center text-nowrap'>
+                {rowData.userSkills.slice(0, 2).map((skill: any, ind: number) => {
+                  const level = skill.level;
+                  const { name } = SKILL_LEVELS[level];
+                  return (
+                    <div key={ind} className='mr-2'>
+                      <span
+                        className={classNames("badge badge-sm", {
+                          "badge-outline": level === 0,
+                          "badge-danger": level === 1,
+                          "badge-warning": level === 2,
+                          "badge-primary": level === 3,
+                          "badge-success": level === 4,
+                        })}
+                      >
+                        {name} | {skill.skill.name}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              <div>
+                {rowData.userSkills.length > 2 && (
+                  <button
+                    onClick={() =>
+                      window.open(`/profile/overview/${rowData.id}`, "_blank")
+                    }
+                    className='text-nowrap rounded-[4px] bg-green-600 px-2 text-white transition duration-300 hover:bg-blue-600'
+                  >
+                    +{rowData.userSkills.length - 2}
+                  </button>
+                )}
+              </div>
+            </div>
+          
+          :
+          "No skills found!"
+        );
+      default:
+        return value;
+    }
+  };
 
   return (
     <div className='w-full p-6'>
@@ -80,7 +183,10 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
           </h1>
         </div>
         <div className='flex items-center gap-2.5'>
-          <button className='dropdown-toggle btn btn-sm btn-primary' onClick={()=> router.push(`/advance-search`)} >
+          <button
+            className='dropdown-toggle btn btn-sm btn-primary'
+            onClick={() => router.push(`/advance-search`)}
+          >
             <i className='ki-filled ki-magnifier text-2xs'></i>
             Advance Search
           </button>
@@ -157,14 +263,12 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
       <div className='pb-7.5 mt-4 flex flex-wrap items-center justify-between gap-5 lg:items-end'>
         <div className='flex flex-col justify-center gap-2'>
           <h1 className='text-xl font-semibold leading-none text-gray-900'>
-            <i className='ki-filled ki-users text-primary'></i> Search Results
-            ({filteredProfiles.length})
+            <i className='ki-filled ki-users text-primary'></i> Search Results (
+            {filteredProfiles.length})
           </h1>
         </div>
       </div>
-     
 
-   
       <Table
         headers={[
           {
@@ -189,7 +293,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
         data={filteredProfiles}
         isPaginated={true}
         noDataMessage='No Profiles found'
-        isFromSearchProfile={true}
+        renderCell={renderCell}
       />
     </div>
   );

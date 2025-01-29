@@ -1,6 +1,6 @@
 // components/Pagination.tsx
 
-import React from 'react';
+import React from "react";
 
 interface PaginationProps {
   currentPage: number;
@@ -20,8 +20,8 @@ const SortingPagination: React.FC<PaginationProps> = ({
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
-    <div className="card-footer text-2sm flex-col justify-center gap-5 font-medium text-gray-600 md:flex-row md:justify-between">
-      <div className="order-2 flex items-center gap-5 md:order-1">
+    <div className='card-footer text-2sm flex-col justify-center gap-5 font-medium text-gray-600 md:flex-row md:justify-between'>
+      <div className='order-2 flex items-center gap-5 md:order-1'>
         <span>Rows per page:</span>
         <select
           value={itemsPerPage}
@@ -31,31 +31,35 @@ const SortingPagination: React.FC<PaginationProps> = ({
             setCurrentPage(1);
           }}
         >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="15">15</option>
+          <option value='1'>1</option>
+          <option value='2'>2</option>
+          <option value='5'>5</option>
+          <option value='10'>10</option>
+          <option value='15'>15</option>
         </select>
       </div>
-      <div className="order-1 flex items-center justify-between gap-6 md:order-2">
+      <div className='order-1 flex items-center justify-between gap-6 md:order-2'>
         <span>
-          {`${(currentPage - 1) * itemsPerPage + 1}-${Math.min(
-            currentPage * itemsPerPage,
-            totalItems
-          )} of ${totalItems}`}
+          {totalItems === 0 || itemsPerPage === 0
+            ? "0-0 of 0"
+            : `${(currentPage - 1) * itemsPerPage + 1}-${Math.min(
+                currentPage * itemsPerPage,
+                totalItems,
+              )} of ${totalItems}`}
         </span>
-        <div className="flex gap-3">
+        <div className='flex gap-3'>
           <button
-            className="btn btn-sm btn-icon btn-clear btn-primary"
+            className='btn btn-sm btn-icon btn-clear btn-primary'
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
           >
             &lt;
           </button>
           <button
-            className="btn btn-sm btn-icon btn-clear btn-primary"
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            className='btn btn-sm btn-icon btn-clear btn-primary'
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
             disabled={currentPage === totalPages}
           >
             &gt;
