@@ -86,10 +86,8 @@ const EditCertificateModal: React.FC<EditCertificateModalProps> = ({
           skillName: selectedSkill ? selectedSkill.name : "",
           categoryId: selectedSkill ? selectedSkill.categoryId : "",
         };
-        // console.log(updatedValues);
         handleUpdateCertificate(updatedValues);
       } else {
-        // console.log(values, 'In else');
         handleUpdateCertificate(values);
       }
     },

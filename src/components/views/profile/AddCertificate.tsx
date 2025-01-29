@@ -86,10 +86,8 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
           categoryId: selectedSkill ? selectedSkill.categoryId : "",
         };
          handleUploadCertificate(updatedValues);
-        console.log(updatedValues);
       } else {
-        console.log(values);
-        // handleUploadCertificate(values);
+         handleUploadCertificate(values);
       }
     },
   });
