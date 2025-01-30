@@ -32,15 +32,16 @@ const ProfileSkills = ({
 }: ProfileSkillsProps) => {
   const mappedUserSkills = userSkillsMapper(userSkills);
 
-  const { setProfile } = useAppContext();
+  const { setProfile, profile } = useAppContext();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSkills, setSelectedSkills] = useState(mappedUserSkills);
 
   const handleEdit = async () => {
     const toastId = toast.loading("Updating Skills...");
     const result = await updateUserSkills(createdById, selectedSkills);
+    console.log(result);
 
-    setProfile(result.updatedUser);
+    setProfile(() => {return {...profile, ...result?.updatedUser }});
     toast.success(result.message, { id: toastId });
   };
 
