@@ -39,7 +39,6 @@ const ProfileSkills = ({
   const handleEdit = async () => {
     const toastId = toast.loading("Updating Skills...");
     const result = await updateUserSkills(createdById, selectedSkills);
-    console.log(result);
 
     setProfile(() => {return {...profile, ...result?.updatedUser }});
     toast.success(result.message, { id: toastId });
