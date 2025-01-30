@@ -92,7 +92,7 @@ export default function Certifications() {
           <CertificateTable
             headers={headers}
             certificates={certificatesData}
-            categoryskills={[]}
+            categorySkills={[]}
             onEdit={handleEdit}
             onDelete={handleDelete}
             onDownload={handleDownload}

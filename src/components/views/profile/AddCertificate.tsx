@@ -1,5 +1,5 @@
-import { Certificate, SkillCategory, Training } from "@/lib/types/profile";
-import React from "react";
+import { Certificate, Skill, Training } from "@/lib/types/profile";
+import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -8,17 +8,25 @@ type AddCertificateModalProps = {
   isAddModalOpen: boolean;
   handleToggleAddModal: () => void;
   handleUploadCertificate: (certificate: Certificate) => void;
-  categoryskills: SkillCategory[];
+  categorySkills: CategorySkillsData[];
   trainingData: Training[];
+};
+
+type CategorySkillsData = {
+  category: string;
+  categoryId?: string;
+  skills: Skill[];
 };
 
 const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
   isAddModalOpen,
   handleToggleAddModal,
   handleUploadCertificate,
-  categoryskills,
+  categorySkills,
   trainingData,
 }) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [skills, setSkills] = useState<Skill[]>([]);
   // Formik form handling
   const formik = useFormik({
     initialValues: {
@@ -29,55 +37,58 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
       description: "",
       categoryId: "",
       categoryName: "",
-      training: "",
+      skillId: "",
+      skillName: "",
       isTrainingLinked: false,
       trainingRecordId: "",
-      trainingRecordName: "",
-      trainingRecordCategoryId: "",
-      trainingRecordCategoryName: "",
-      trainingRecordSkillId:""
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Certificate Name is required"),
+      name: Yup.string().required("Certificate name is required"),
       certificateFile: Yup.mixed().required("Certificate file is required"),
-      categoryId: Yup.string().required("Category is required"),
+      categoryName: Yup.string().required("Category is required"),
+      skillId: Yup.string().required("Skill is required"),
       obtainedDate: Yup.date()
         .typeError("Please enter a valid date")
-        .required("ObtainedDate is required"),
+        .required("Obtained date is required"),
       expiryDate: Yup.date()
         .typeError("Please enter a valid date")
-        .required("ExpiryDate is required"),
+        .required("Valid until date is required")
+        .min(
+          Yup.ref("obtainedDate"),
+          "Valid until date cannot be before obtained date",
+        )
+        .test(
+          "not-equal-to-obtained-date",
+          "Valid until date cannot be the same as obtained date",
+          function (value) {
+            const { obtainedDate } = this.parent;
+            return (
+              value &&
+              obtainedDate &&
+              new Date(value).getTime() !== new Date(obtainedDate).getTime()
+            );
+          },
+        ),
       isTrainingLinked: Yup.boolean().default(false),
       trainingRecordId: Yup.string().when("isTrainingLinked", {
         is: true,
-        then: (schema) => schema.required("Training Record ID is required"),
-        otherwise: (schema) => schema.notRequired(),
-      }),
-      trainingRecordName: Yup.string().when("isTrainingLinked", {
-        is: true,
-        then: (schema) => schema.required("Training Record Name is required"),
-        otherwise: (schema) => schema.notRequired(),
-      }),
-      trainingRecordCategoryId: Yup.string().when("isTrainingLinked", {
-        is: true,
-        then: (schema) => schema.required("Training Record Category ID is required"),
-        otherwise: (schema) => schema.notRequired(),
-      }),
-      trainingRecordCategoryName: Yup.string().when("isTrainingLinked", {
-        is: true,
-        then: (schema) => schema.required("Training Record Category Name is required"),
-        otherwise: (schema) => schema.notRequired(),
-      }),
-      trainingRecordSkillId : Yup.string().when("isTrainingLinked", {
-        is: true,
-        then: (schema) => schema.required("Training Record Skill ID is required"),
+        then: (schema) => schema.required("Training is required"),
         otherwise: (schema) => schema.notRequired(),
       }),
     }),
-    
-    
+
     onSubmit: (values) => {
-      handleUploadCertificate(values);
+      if (!formik?.values?.isTrainingLinked) {
+        const selectedSkill = skills?.find((sk) => sk?.id === values?.skillId);
+        const updatedValues = {
+          ...values,
+          skillName: selectedSkill ? selectedSkill.name : "",
+          categoryId: selectedSkill ? selectedSkill.categoryId : "",
+        };
+         handleUploadCertificate(updatedValues);
+      } else {
+         handleUploadCertificate(values);
+      }
     },
   });
 
@@ -88,78 +99,105 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
     }
   };
 
-  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedCategoryId = e.target.value;
+  /* const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCategoryName = e.target.value;
 
-    const selectedCategory = categoryskills.find(
-      (category) => category.id === selectedCategoryId,
+    const selectedCategory = categorySkills.find(
+      (cat) => cat?.category === selectedCategory
     );
 
     if (selectedCategory) {
       formik.setFieldValue("categoryId", selectedCategory.id);
       formik.setFieldValue("categoryName", selectedCategory.name);
     }
-  };
-  console.log(formik.errors,"formikerroes");
+  }; */
+  //console.log(formik.errors,"formikerroes");
+
+  useEffect(() => {
+    formik?.resetForm({
+      values: {
+        ...formik.initialValues,
+        isTrainingLinked: formik?.values?.isTrainingLinked,
+      },
+    });
+    if (fileInputRef?.current) {
+      fileInputRef.current.value = "";
+    }
+  }, [formik?.values?.isTrainingLinked]);
+
+  useEffect(() => {
+    if (!formik.values.isTrainingLinked) {
+      const selectedCategory = categorySkills?.find(
+        (cat) => cat?.category === formik?.values?.categoryName,
+      );
+
+      setSkills(selectedCategory ? selectedCategory?.skills : []);
+      formik?.setFieldValue("skillId", "");
+      formik?.setFieldValue("skillName", "");
+    }
+  }, [
+    formik?.values?.isTrainingLinked,
+    formik?.values?.categoryName,
+    categorySkills,
+  ]);
 
   return (
     isAddModalOpen && (
       <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
-        <div className='w-full rounded-md bg-white p-6 shadow-lg sm:w-[600px]'>
-          <div className='flex items-center justify-between'>
+        <div className='mx-2 h-[95%] w-[100%] overflow-y-auto rounded-md bg-white p-6 shadow-lg sm:mx-0 sm:h-auto sm:w-[600px]'>
+          <div className='flex flex-wrap items-center justify-between'>
             <h3 className='mb-4 text-lg font-semibold'>Add New Certificate</h3>
-             {trainingData.length > 0 && (
-               <div className='flex items-center justify-end'>
-               <label
-                 htmlFor='certificateToggle'
-                 className='mr-2 text-sm font-medium text-gray-700'
-               >
-                 Linked Training
-               </label>
-               <div className='relative inline-block w-11'>
-                 <input
-                   type='checkbox'
-                   id='certificateToggle'
-                   name='isTrainingLinked '
-                   checked={formik.values.isTrainingLinked}
-                   onChange={() =>
-                     formik.setFieldValue(
-                       "isTrainingLinked ",
-                       !formik.values.isTrainingLinked,
-                     )
-                   }
-                   className='sr-only' // Hidden input element
-                 />
-                 <div
-                   className={`block h-6 w-full cursor-pointer rounded-full ${
-                     formik.values.isTrainingLinked
-                       ? "bg-green-500"
-                       : "bg-gray-300"
-                   }`}
-                   onClick={() =>
-                     formik.setFieldValue(
-                       "isTrainingLinked",
-                       !formik.values.isTrainingLinked,
-                     )
-                   } // Manually toggle on click
-                 ></div>
-                 <div
-                   className={`absolute left-1 top-1 h-4 w-4 cursor-pointer rounded-full bg-white transition-transform ${
-                     formik.values.isTrainingLinked
-                       ? "translate-x-5"
-                       : "translate-x-0"
-                   }`}
-                   onClick={() =>
-                     formik.setFieldValue(
-                       "isTrainingLinked",
-                       !formik.values.isTrainingLinked,
-                     )
-                   }
-                 ></div>
-               </div>
-             </div>
-             )}
-            
+            {trainingData.length > 0 && (
+              <div className='mb-4 flex items-center justify-end'>
+                <label
+                  htmlFor='certificateToggle'
+                  className='mr-2 text-sm font-medium text-gray-700'
+                >
+                  Link with training
+                </label>
+                <div className='relative inline-block w-11'>
+                  <input
+                    type='checkbox'
+                    id='certificateToggle'
+                    name='isTrainingLinked '
+                    checked={formik.values.isTrainingLinked}
+                    onChange={() =>
+                      formik.setFieldValue(
+                        "isTrainingLinked ",
+                        !formik.values.isTrainingLinked,
+                      )
+                    }
+                    className='sr-only' // Hidden input element
+                  />
+                  <div
+                    className={`block h-6 w-full cursor-pointer rounded-full ${
+                      formik.values.isTrainingLinked
+                        ? "bg-green-500"
+                        : "bg-gray-300"
+                    }`}
+                    onClick={() =>
+                      formik.setFieldValue(
+                        "isTrainingLinked",
+                        !formik.values.isTrainingLinked,
+                      )
+                    } // Manually toggle on click
+                  ></div>
+                  <div
+                    className={`absolute left-1 top-1 h-4 w-4 cursor-pointer rounded-full bg-white transition-transform ${
+                      formik.values.isTrainingLinked
+                        ? "translate-x-5"
+                        : "translate-x-0"
+                    }`}
+                    onClick={() =>
+                      formik.setFieldValue(
+                        "isTrainingLinked",
+                        !formik.values.isTrainingLinked,
+                      )
+                    }
+                  ></div>
+                </div>
+              </div>
+            )}
           </div>
 
           <form onSubmit={formik.handleSubmit} className='space-y-4'>
@@ -169,16 +207,16 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                   htmlFor='training'
                   className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'
                 >
-                  Training List
+                  Training List<span className='text-red-500'>*</span>
                 </label>
                 <div className='flex-1'>
                   <select
-                    id='training'
-                    name='training'
-                    value={formik.values.training}
+                    id='trainingRecordId'
+                    name='trainingRecordId'
+                    onBlur={formik.handleBlur}
+                    value={formik?.values?.trainingRecordId}
                     onChange={(e) => {
                       const selectedTrainingId = e.target.value;
-                      formik.setFieldValue("training", selectedTrainingId);
                       const selectedTraining = trainingData.find(
                         (training) => training.id === selectedTrainingId,
                       );
@@ -187,35 +225,22 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                           "trainingRecordId",
                           selectedTraining.id,
                         );
-                        
-                        formik.setFieldValue(
-                          "skills",
-                          selectedTraining.skillName,
-                        );
                         formik.setFieldValue(
                           "categoryId",
                           selectedTraining.categoryId,
                         );
-                        formik.setFieldValue(
-                          "trainingRecordCategoryId",
-                          selectedTraining.categoryId,
-                        );
-                        
+
                         formik.setFieldValue(
                           "categoryName",
                           selectedTraining.categoryName,
                         );
                         formik.setFieldValue(
-                          "trainingRecordCategoryName",
-                          selectedTraining.categoryName,
+                          "skillId",
+                          selectedTraining?.skillId,
                         );
                         formik.setFieldValue(
-                          "trainingRecordName",
-                          selectedTraining.skillName,
-                        );
-                        formik.setFieldValue(
-                          "trainingRecordSkillId",
-                          selectedTraining.skillId
+                          "skillName",
+                          selectedTraining?.skillName,
                         );
                       }
                     }}
@@ -230,43 +255,84 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                       </option>
                     ))}
                   </select>
+                  {formik.touched.trainingRecordId &&
+                    formik.errors.trainingRecordId && (
+                      <p className='text-sm text-red-500'>
+                        {formik?.errors?.trainingRecordId}
+                      </p>
+                    )}
                 </div>
               </div>
             )}
             {/* Category Dropdown */}
-            <div className='flex flex-col sm:flex-row sm:gap-4'>
-              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
-                Category
-              </label>
-              <div className='flex-1'>
-                <select
-                  name='categoryId'
-                  value={formik.values.categoryId}
-                  onChange={handleCategoryChange}
-                  onBlur={formik.handleBlur}
-                  className='w-full border p-2'
-                >
-                  <option value='' disabled>
-                    Select a category
-                  </option>
-                  {categoryskills.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
+            {!formik?.values?.isTrainingLinked && (
+              <div className='flex flex-col sm:flex-row sm:gap-4'>
+                <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
+                  Category<span className='text-red-500'>*</span>
+                </label>
+                <div className='flex-1'>
+                  <select
+                    name='categoryName'
+                    value={formik?.values?.categoryName}
+                    onChange={formik?.handleChange}
+                    onBlur={formik.handleBlur}
+                    className='w-full border p-2'
+                    disabled={formik?.values?.trainingRecordId}
+                  >
+                    <option value='' disabled>
+                      Select a category
                     </option>
-                  ))}
-                </select>
-                {formik.touched.categoryId && formik.errors.categoryId && (
-                  <p className='text-sm text-red-500'>
-                    {formik.errors.categoryId}
-                  </p>
-                )}
+                    {categorySkills?.map((cat) => (
+                      <option key={cat?.category} value={cat?.category}>
+                        {cat?.category}
+                      </option>
+                    ))}
+                  </select>
+                  {formik.touched.categoryName &&
+                    formik.errors.categoryName && (
+                      <p className='text-sm text-red-500'>
+                        {formik?.errors?.categoryName}
+                      </p>
+                    )}
+                </div>
               </div>
-            </div>
+            )}
+            {!formik?.values?.isTrainingLinked && (
+              <div className='flex flex-col sm:flex-row sm:gap-4'>
+                <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
+                  Skill<span className='text-red-500'>*</span>
+                </label>
+                <div className='flex-1'>
+                  <select
+                    name='skillId'
+                    value={formik?.values?.skillId}
+                    onChange={formik?.handleChange}
+                    onBlur={formik.handleBlur}
+                    className='w-full border p-2'
+                    disabled={!formik?.values?.categoryName}
+                  >
+                    <option value='' disabled>
+                      Select skill
+                    </option>
+                    {skills?.map((sk) => (
+                      <option key={sk?.id} value={sk?.id}>
+                        {sk?.name}
+                      </option>
+                    ))}
+                  </select>
+                  {formik.touched.skillId && formik.errors.skillId ? (
+                    <div className='text-sm text-red-500'>
+                      {formik.errors?.skillId}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            )}
 
             {/* Certificate Name */}
             <div className='flex flex-col sm:flex-row sm:gap-4'>
               <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
-                Certificate Name
+                Certificate Name<span className='text-red-500'>*</span>
               </label>
               <div className='flex-1'>
                 <input
@@ -287,11 +353,12 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
             {/* Certificate File */}
             <div className='flex flex-col sm:flex-row sm:gap-4'>
               <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
-                Upload Certificate File
+                Upload Certificate File<span className='text-red-500'>*</span>
               </label>
               <div className='flex-1'>
                 <input
                   type='file'
+                  ref={fileInputRef}
                   accept='application/pdf'
                   onChange={handleFileChange}
                   className='w-full border p-2'
@@ -308,11 +375,13 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
             {/* Obtained Date */}
             <div className='flex flex-col sm:flex-row sm:gap-4'>
               <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
-                Obtained Date
+                Obtained Date<span className='text-red-500'>*</span>
               </label>
               <div className='flex-1'>
                 <DatePicker
                   selected={formik.values.obtainedDate}
+                  name='obtainedDate'
+                  onBlur={formik.handleBlur}
                   onChange={(date) =>
                     formik.setFieldValue("obtainedDate", date)
                   }
@@ -332,11 +401,13 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
             {/* Valid Until */}
             <div className='flex flex-col sm:flex-row sm:gap-4'>
               <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
-                Valid Until
+                Valid Until<span className='text-red-500'>*</span>
               </label>
               <div className='flex-1'>
                 <DatePicker
                   selected={formik.values.expiryDate}
+                  name='expiryDate'
+                  onBlur={formik.handleBlur}
                   onChange={(date) => formik.setFieldValue("expiryDate", date)}
                   className='w-full border p-2'
                   dateFormat='yyyy-MM-dd'

@@ -6,12 +6,15 @@ export async function GET(request: Request) {
   const userId = searchParams.get("userId");
 
   if (!userId) {
-    return NextResponse.json({ message: "User ID is required" }, { status: 400 });
+    return NextResponse.json(
+      { message: "User ID is required" },
+      { status: 400 },
+    );
   }
 
   try {
     const certificates = await db.certification.findMany({
-      where: { createdById: userId,status:1 },
+      where: { createdById: userId, status: 1 },
       select: {
         id: true,
         name: true,
@@ -22,24 +25,32 @@ export async function GET(request: Request) {
         createdAt: true,
         updatedAt: true,
         status: true,
-        createdById:true,
-        categoryId:true,
-        categoryName:true,
+        createdById: true,
+        categoryId: true,
+        categoryName: true,
+        isTrainingLinked: true,
+        trainingRecordId: true,
+        skillId: true,
+        skillName: true,
         createdBy:{
           select:{
             name:true,
             id:true
           }
-        }
+        },
+        
       },
       orderBy: {
-        createdAt: 'asc', 
+        createdAt: "asc",
       },
     });
-         
+
     return NextResponse.json(certificates, { status: 200 });
   } catch (error) {
     console.error("Error fetching certificates:", error);
-    return NextResponse.json({ message: "Error fetching certificates" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Error fetching certificates" },
+      { status: 500 },
+    );
   }
 }

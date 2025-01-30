@@ -73,11 +73,15 @@ export interface Certificate  {
   obtainedDate: Date |null;
   expiryDate: Date | null;
   description: string;
-  categoryId: string;
+  categoryId: string | null;
   categoryName:string;
   url?:string;
   createdById?:string;
   EmployeeName?:string;
+  skillId?:string;
+  skillName?:string;
+  trainingRecordId?:string;
+  isTrainingLinked: boolean;
 };
 
 export interface SkillCategory {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import AddCertificateModal from "./AddCertificate";
 import EditCertificateModal from "./EditCertificateModal";
-import { Certificate, SkillCategory, Training } from "@/lib/types/profile";
+import { Certificate, Skill, Training } from "@/lib/types/profile";
 import "react-datepicker/dist/react-datepicker.css";
 import Table from "@/components/common/Table/Table";
 
@@ -12,6 +12,11 @@ type TableHeaders = {
   label: string;
   sortable?: boolean;
   className?: string;
+};
+type CategorySkillsData = {
+  category: string;
+  categoryId?: string; 
+  skills: Skill[];
 };
 interface CertificateTableProps {
   headers: TableHeaders[];
@@ -23,7 +28,7 @@ interface CertificateTableProps {
     newCertificate: Omit<Certificate, "id">,
     refetch: () => void,
   ) => void;
-  categoryskills: SkillCategory[];
+  categorySkills: CategorySkillsData[];
   refetch: () => void;
   trainingData: Training[];
   isSearchable: boolean;
@@ -38,7 +43,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
   onDelete,
   onDownload,
   onAddCertificate,
-  categoryskills,
+  categorySkills,
   refetch,
   trainingData = [],
   isSearchable,
@@ -59,6 +64,14 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
     certificateFile: null,
     categoryId: "",
     categoryName: "",
+    skillId: "",
+    skillName: "",
+    trainingRecordId: "",
+   /*  trainingRecordCategoryId: "",
+    trainingRecordCategoryName: "",
+    trainingRecordSkillId: "",
+    trainingRecordName: "", */
+    isTrainingLinked: false
   });
 
   const [editingFile, setEditingFile] = useState<File | undefined>();
@@ -163,7 +176,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
           isAddModalOpen={isAddModalOpen}
           handleToggleAddModal={toggleAddModal}
           handleUploadCertificate={handleAddCertificate}
-          categoryskills={categoryskills}
+          categorySkills={categorySkills}
           trainingData={trainingData}
         />
       )}
@@ -174,9 +187,10 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
           isEditModalOpen={isEditModalOpen}
           handleToggleEditModal={toggleEditModal}
           handleUpdateCertificate={handleUpdateCertificate}
-          categoryskills={categoryskills}
+          categorySkills={categorySkills}
           editingCertificate={editingCertificate}
           handleFileChange={handleFileChange}
+          trainingData={trainingData}
         />
       )}
     </div>
