@@ -277,7 +277,7 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                     onChange={formik?.handleChange}
                     onBlur={formik.handleBlur}
                     className='w-full border p-2'
-                    disabled={formik?.values?.trainingRecordId}
+                    disabled={!!formik?.values?.trainingRecordId}
                   >
                     <option value='' disabled>
                       Select a category
