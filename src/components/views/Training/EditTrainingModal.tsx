@@ -5,8 +5,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Skill, Training } from "@/lib/types/profile";
 
-
-
 export type TrainingStatus = {
   id: string;
   name: string;
@@ -24,7 +22,7 @@ interface EditTrainingProps {
 
 type CategoryResponse = {
   category: string;
-  categoryId?: string; 
+  categoryId?: string;
   skills: Skill[];
 }[];
 
@@ -45,7 +43,7 @@ const EditTraining = ({
   initialTrainingData,
 }: EditTrainingProps) => {
   const [skills, setSkills] = useState<Skill[]>([]);
-  
+
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -89,13 +87,11 @@ const EditTraining = ({
     },
   });
 
- 
-
   useEffect(() => {
     if (isOpen) {
       formik.resetForm();
     }
-  }, [isOpen,formik.resetForm]);
+  }, [isOpen, formik.resetForm]);
 
   useEffect(() => {
     const selectedCategory = categoriesData.find(
@@ -115,10 +111,10 @@ const EditTraining = ({
           onSubmit={formik.handleSubmit}
           className='max-h-[500px] overflow-y-auto'
         >
-          <div className="grid grid-cols-2 gap-4 ">
+          <div className='grid grid-cols-2 gap-4'>
             <div>
               <label className='mb-1 block text-sm font-medium'>
-                Select Employee
+                Select Employee<span className='text-red-500'>*</span>
               </label>
               <select
                 name='employeeId'
@@ -142,7 +138,7 @@ const EditTraining = ({
 
             <div>
               <label className='mb-1 block text-sm font-medium'>
-                Training Status
+                Training Status<span className='text-red-500'>*</span>
               </label>
               <select
                 name='statusId'
@@ -164,9 +160,9 @@ const EditTraining = ({
               ) : null}
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4 mt-4">
+          <div className='mt-4 grid grid-cols-2 gap-4'>
             <div>
-              <label className='mb-1 block text-sm font-medium'>Category</label>
+              <label className='mb-1 block text-sm font-medium'>Category<span className='text-red-500'>*</span></label>
               <select
                 name='categoryName'
                 value={formik.values.categoryName}
@@ -188,10 +184,10 @@ const EditTraining = ({
             </div>
 
             <div>
-              <label className='mb-1 block text-sm font-medium'>Skill</label>
+              <label className='mb-1 block text-sm font-medium'>Skill<span className='text-red-500'>*</span></label>
               <select
                 name='skillId'
-                id="formik-skillId"
+                id='formik-skillId'
                 value={formik.values.skillId}
                 onChange={formik.handleChange}
                 className='w-full rounded-md border border-gray-300 p-2'
@@ -211,9 +207,11 @@ const EditTraining = ({
               ) : null}
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4 mt-4">
+          <div className='mt-4 grid grid-cols-2 gap-4'>
             <div>
-              <label className='mb-1 block text-sm font-medium'>From Date</label>
+              <label className='mb-1 block text-sm font-medium'>
+                From Date<span className='text-red-500'>*</span>
+              </label>
               <DatePicker
                 selected={formik.values.fromDate}
                 onChange={(date) => formik.setFieldValue("fromDate", date)}
@@ -231,7 +229,7 @@ const EditTraining = ({
             </div>
 
             <div>
-              <label className='mb-1 block text-sm font-medium'>To Date</label>
+              <label className='mb-1 block text-sm font-medium'>To Date<span className='text-red-500'>*</span></label>
               <DatePicker
                 selected={formik.values.toDate}
                 onChange={(date) => formik.setFieldValue("toDate", date)}
@@ -248,14 +246,11 @@ const EditTraining = ({
               ) : null}
             </div>
           </div>
-          
 
-          
-
-          <div className="grid grid-cols-1">
+          <div className='grid grid-cols-1'>
             <div className='mt-4'>
               <label className='mb-1 block text-sm font-medium'>
-                Description
+                Description<span className='text-red-500'>*</span>
               </label>
               <textarea
                 name='description'
