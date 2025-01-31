@@ -64,7 +64,7 @@ const CreateTraining = ({
     },
     validationSchema: Yup.object({
       categoryName: Yup.string().required("Category is required"),
-      skillId: Yup.string().required("SkillId is required"),
+      skillId: Yup.string().required("Skill is required"),
       fromDate: Yup.date().nullable().required("From Date is required"),
       toDate: Yup.date()
         .nullable()
@@ -219,7 +219,7 @@ const adjustedFromDate = new Date(
               ))}
             </select>
             {formik.touched.skillId && formik.errors.skillId ? (
-              <div className="text-red-500 text-sm">{formik.errors.skillName}</div>
+              <div className="text-red-500 text-sm">{formik.errors.skillId}</div>
             ) : null}
           </div>
         </div>
