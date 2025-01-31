@@ -34,9 +34,6 @@ export const options: AuthOptions = {
 
    callbacks: {
       async jwt({ token, account, profile }) {
-         console.log("Token : " + token);
-         console.log("Accout : " + account);
-         console.log("Profile : " + profile);
          if (account && profile) {
             const email = profile.email;
 
@@ -73,7 +70,6 @@ export const options: AuthOptions = {
             } catch (error: unknown) {
                console.log("Error : " + error);
                if (error instanceof Error) {
-
                   throw new Error("Error checking/creating user in JWT callback:" + error.message);
                }
 
@@ -84,7 +80,6 @@ export const options: AuthOptions = {
          return token;
       },
       async session({ session, token }) {
-
          if (token) {
             session.user = {
                id: token?.sub,
