@@ -8,11 +8,15 @@ const updateMicrosoftProfile = async (
   accessToken: string,
   user: UserDetails
 ): Promise<UserDetails> => {
-  const response = await axiosInstance.post('update-user-ad-profile', {
-    accessToken,
-    user,
-  });
-  return response.data.updatedUser; 
+  try {
+    const response = await axiosInstance.post('update-user-ad-profile', {
+      accessToken,
+      user,
+    });
+    return response.data.updatedUser; 
+  } catch (error) {
+    throw error;
+  }
 };
 
 
