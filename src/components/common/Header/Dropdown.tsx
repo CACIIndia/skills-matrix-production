@@ -42,8 +42,17 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
     toast.success("Updated Successfully", { id: toastId });
   };
 
+  const handleMenuItemClick = (e: React.MouseEvent<HTMLElement>) => {
+    const clickedElement = e.target as HTMLElement;
+    const menuItem = clickedElement.closest('.menu-item');
+    if (menuItem) {
+      onClose();
+    }
+  };
+
   return (
     <div
+      onClick={handleMenuItemClick}
       className={`absolute right-0 mt-2 w-[250px] rounded-lg border border-gray-200 bg-white shadow-lg transition-opacity duration-300 ${
         isOpen ? "opacity-100" : "opacity-0"
       }`}
