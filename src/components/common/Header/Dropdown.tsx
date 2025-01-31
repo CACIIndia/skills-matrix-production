@@ -21,7 +21,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
 
   const { mutate, mutateAsync, isError, error } = useUpdateMicrosoftProfile(
     (error) => {
-      toast.error(error.message, { id: toastId });
+     // toast.error(error.message, { id: toastId });
     },
   );
   if (!session) {
@@ -30,16 +30,24 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
 
   const handleAzureConnect = async () => {
     const toastId = toast.loading("Connecting To Azure, Please Wait...");
-
     setToastId(toastId);
+    try {
+      const response = await mutateAsync({
+        accessToken: session.azure_access_token || "",
+        user: profile,
+      });
+      setProfile(response);
 
-    const response = await mutateAsync({
-      accessToken: session.azure_access_token || "",
-      user: profile,
-    });
-    setProfile(response);
-
-    toast.success("Updated Successfully", { id: toastId });
+      toast.success("Updated Successfully", { id: toastId });
+    } catch (error: any) {
+      toast.remove(toastId);
+      if (
+        error?.response?.data?.error ===
+        "Error fetching profile photo: 401 - Unauthorized"
+      ) {
+         signOut();
+      }
+    }
   };
 
   return (
