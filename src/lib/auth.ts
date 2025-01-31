@@ -1,7 +1,7 @@
 import AzureADProvider from "next-auth/providers/azure-ad";
 import { AuthOptions, getServerSession } from "next-auth";
 import db from "./db";
-import { fetchUserProfile } from "@/app/actions/updateUserMicrosoftProfile";
+import { fetchUserProfile } from "./microsoft-graph";
 
 interface ProfileWithId {
    tid: string;
