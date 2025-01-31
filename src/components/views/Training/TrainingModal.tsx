@@ -27,7 +27,7 @@ interface CreateTrainingProps {
 
 type CategoryResponse = {
   category: string;
-  categoryId?: string; 
+  categoryId?: string;
   skills: Skill[];
 }[];
 
@@ -48,7 +48,6 @@ const CreateTraining = ({
 }: CreateTrainingProps) => {
   const [skills, setSkills] = useState<Skill[]>([]);
 
-
   const formik = useFormik({
     initialValues: {
       categoryId: "",
@@ -60,7 +59,7 @@ const CreateTraining = ({
       description: "",
       employeeId: "",
       employeeName: "",
-      statusId: "", 
+      statusId: "",
     },
     validationSchema: Yup.object({
       categoryName: Yup.string().required("Category is required"),
@@ -72,48 +71,42 @@ const CreateTraining = ({
         .required("To Date is required"),
       description: Yup.string().required("Description is required"),
       employeeId: Yup.string().required("Employee selection is required"),
-      statusId: Yup.string().required("Status is required"), 
+      statusId: Yup.string().required("Status is required"),
     }),
     onSubmit: (values) => {
       const selectedSkill = skills.find((sk) => sk.id === values.skillId);
-      const selectedEmployee = employeeData.find((emp) => emp.id === values.employeeId);
+      const selectedEmployee = employeeData.find(
+        (emp) => emp.id === values.employeeId,
+      );
 
       const fromDate: any = values.fromDate;
       const toDate: any = values.toDate;
-const adjustedFromDate = new Date(
-                fromDate.getTime() - fromDate.getTimezoneOffset() * 60000,
-              );
-              const adjustedToDate = new Date(
-                toDate.getTime() - toDate.getTimezoneOffset() * 60000,
-              );
+      const adjustedFromDate = new Date(
+        fromDate.getTime() - fromDate.getTimezoneOffset() * 60000,
+      );
+      const adjustedToDate = new Date(
+        toDate.getTime() - toDate.getTimezoneOffset() * 60000,
+      );
 
+      const selectedStatus = trainingStatus.find(
+        (status) => status.id === values.statusId,
+      );
 
-              const selectedStatus = trainingStatus.find(
-                (status) => status.id === values.statusId
-              );
+      const statusInProgress = selectedStatus?.name === "In Progress";
 
-              const statusInProgress = selectedStatus?.name === "In Progress";
-
-    
       const updatedValues = {
         ...values,
         skillName: selectedSkill ? selectedSkill.name : "",
         categoryId: selectedSkill ? selectedSkill.categoryId : "",
         employeeName: selectedEmployee ? selectedEmployee.name : "",
-        fromDate:adjustedFromDate,
-        toDate:adjustedToDate,
-        statusInProgress
-
+        fromDate: adjustedFromDate,
+        toDate: adjustedToDate,
+        statusInProgress,
       };
-      
+
       onSave(updatedValues);
-     },
-    
+    },
   });
-
-
-
-
 
   useEffect(() => {
     if (isOpen) {
@@ -123,43 +116,53 @@ const adjustedFromDate = new Date(
 
   useEffect(() => {
     const selectedCategory = categoriesData.find(
-      (cat) => cat.category === formik.values.categoryName
+      (cat) => cat.category === formik.values.categoryName,
     );
-   let statusId = trainingStatus.find((status) => status.name === "In Progress")?.id || ""
+    let statusId =
+      trainingStatus.find((status) => status.name === "In Progress")?.id || "";
     setSkills(selectedCategory ? selectedCategory.skills : []);
     formik.setFieldValue("skillId", "");
     formik.setFieldValue("skillName", "");
     formik.setFieldValue("statusId", statusId);
-    
   }, [formik.values.categoryName, categoriesData]);
 
   return isOpen ? (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-gray-700 bg-opacity-80" style={{ backdropFilter: "blur(4px)" }}>
-      <div className="relative w-full max-w-lg rounded-lg bg-white p-6 shadow-xl">
-        <h2 className="mb-4 text-xl font-semibold">Create Training Data</h2>
-        <form onSubmit={formik.handleSubmit} className="max-h-[500px] overflow-y-auto">
-        <div className="grid grid-cols-1 gap-4 ">
-          <div>
-            <label className="mb-1 block text-sm font-medium">Select Employee</label>
-            <select
-              name="employeeId"
-              value={formik.values.employeeId}
-              onChange={formik.handleChange}
-              className="w-full rounded-md border border-gray-300 p-2"
-            >
-              <option value="">Select Employee</option>
-              {employeeData.map((emp) => (
-                <option key={emp.id} value={emp.id}>
-                  {emp.name}
-                </option>
-              ))}
-            </select>
-            {formik.touched.employeeId && formik.errors.employeeId ? (
-              <div className="text-red-500 text-sm">{formik.errors.employeeId}</div>
-            ) : null}
-          </div>
+    <div
+      className='fixed inset-0 z-[100] flex items-center justify-center bg-gray-700 bg-opacity-80'
+      style={{ backdropFilter: "blur(4px)" }}
+    >
+      <div className='relative w-full max-w-lg rounded-lg bg-white p-6 shadow-xl'>
+        <h2 className='mb-4 text-xl font-semibold'>Create Training Data</h2>
+        <form
+          onSubmit={formik.handleSubmit}
+          className='max-h-[500px] overflow-y-auto'
+        >
+          <div className='grid grid-cols-1 gap-4'>
+            <div>
+              <label className='mb-1 block text-sm font-medium'>
+                Select Employee<span className='text-red-500'>*</span>
+              </label>
+              <select
+                name='employeeId'
+                value={formik.values.employeeId}
+                onChange={formik.handleChange}
+                className='w-full rounded-md border border-gray-300 p-2'
+              >
+                <option value=''>Select Employee</option>
+                {employeeData.map((emp) => (
+                  <option key={emp.id} value={emp.id}>
+                    {emp.name}
+                  </option>
+                ))}
+              </select>
+              {formik.touched.employeeId && formik.errors.employeeId ? (
+                <div className='text-sm text-red-500'>
+                  {formik.errors.employeeId}
+                </div>
+              ) : null}
+            </div>
 
-          {/* <div className="">
+            {/* <div className="">
             <label className="mb-1 block text-sm font-medium">Training Status</label>
             <select
               name="statusId"
@@ -178,116 +181,130 @@ const adjustedFromDate = new Date(
               <div className="text-red-500 text-sm">{formik.errors.statusId}</div>
             ) : null}
           </div> */}
-        </div>
-        <div className="grid grid-cols-2 gap-4 mt-4">
-       
-          
-          <div>
-            <label className="mb-1 block text-sm font-medium">Category</label>
-            <select
-              name="categoryName"
-              value={formik.values.categoryName}
-              onChange={formik.handleChange}
-              className="w-full rounded-md border border-gray-300 p-2"
+          </div>
+          <div className='mt-4 grid grid-cols-2 gap-4'>
+            <div>
+              <label className='mb-1 block text-sm font-medium'>
+                Category<span className='text-red-500'>*</span>
+              </label>
+              <select
+                name='categoryName'
+                value={formik.values.categoryName}
+                onChange={formik.handleChange}
+                className='w-full rounded-md border border-gray-300 p-2'
+              >
+                <option value=''>Select Category</option>
+                {categoriesData.map((cat) => (
+                  <option key={cat.category} value={cat.category}>
+                    {cat.category}
+                  </option>
+                ))}
+              </select>
+              {formik.touched.categoryName && formik.errors.categoryName ? (
+                <div className='text-sm text-red-500'>
+                  {formik.errors.categoryName}
+                </div>
+              ) : null}
+            </div>
+
+            <div>
+              <label className='mb-1 block text-sm font-medium'>
+                Skill<span className='text-red-500'>*</span>
+              </label>
+              <select
+                name='skillId'
+                value={formik.values.skillId}
+                onChange={formik.handleChange}
+                className='w-full rounded-md border border-gray-300 p-2'
+                disabled={!formik.values.categoryName}
+              >
+                <option value=''>Select Skill</option>
+                {skills.map((sk) => (
+                  <option key={sk.id} value={sk.id}>
+                    {sk.name}
+                  </option>
+                ))}
+              </select>
+              {formik.touched.skillId && formik.errors.skillId ? (
+                <div className='text-sm text-red-500'>
+                  {formik.errors.skillId}
+                </div>
+              ) : null}
+            </div>
+          </div>
+
+          <div className='mt-4 grid grid-cols-2 gap-4'>
+            <div className=''>
+              <label className='mb-1 block text-sm font-medium'>
+                From Date<span className='text-red-500'>*</span>
+              </label>
+              <DatePicker
+                selected={formik.values.fromDate}
+                onChange={(date) => formik.setFieldValue("fromDate", date)}
+                className='w-full rounded-md border border-gray-300 p-2'
+                dateFormat='yyyy/MM/dd'
+                placeholderText='Select date'
+              />
+              {formik.touched.fromDate && formik.errors.fromDate ? (
+                <div className='text-sm text-red-500'>
+                  {formik.errors.fromDate}
+                </div>
+              ) : null}
+            </div>
+            <div className=''>
+              <label className='mb-1 block text-sm font-medium'>
+                To Date<span className='text-red-500'>*</span>
+              </label>
+              <DatePicker
+                selected={formik.values.toDate}
+                onChange={(date) => formik.setFieldValue("toDate", date)}
+                className='w-full rounded-md border border-gray-300 p-2'
+                dateFormat='yyyy/MM/dd'
+                placeholderText='Select date'
+              />
+              {formik.touched.toDate && formik.errors.toDate ? (
+                <div className='text-sm text-red-500'>
+                  {formik.errors.toDate}
+                </div>
+              ) : null}
+            </div>
+          </div>
+
+          <div className='mt-4 grid grid-cols-1'>
+            <div>
+              <label className='mb-1 block text-sm font-medium'>
+                Description<span className='text-red-500'>*</span>
+              </label>
+              <textarea
+                name='description'
+                value={formik.values.description}
+                onChange={formik.handleChange}
+                className='w-full rounded-md border border-gray-300 p-2'
+                rows={3}
+              />
+              {formik.touched.description && formik.errors.description ? (
+                <div className='text-sm text-red-500'>
+                  {formik.errors.description}
+                </div>
+              ) : null}
+            </div>
+          </div>
+
+          <div className='mt-4 flex justify-between'>
+            <button
+              type='button'
+              onClick={onClose}
+              className='px-6 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100'
             >
-              <option value="">Select Category</option>
-              {categoriesData.map((cat) => (
-                <option key={cat.category} value={cat.category}>
-                  {cat.category}
-                </option>
-              ))}
-            </select>
-            {formik.touched.categoryName&& formik.errors.categoryName ? (
-              <div className="text-red-500 text-sm">{formik.errors.categoryName}</div>
-            ) : null}
-          </div>
-
-          <div>
-            <label className="mb-1 block text-sm font-medium">Skill</label>
-            <select
-              name="skillId"
-              value={formik.values.skillId}
-              onChange={formik.handleChange}
-              className="w-full rounded-md border border-gray-300 p-2"
-              disabled={!formik.values.categoryName}
+              Cancel
+            </button>
+            <button
+              type='submit'
+              className='bg-blue-600 px-6 py-2 text-sm font-semibold text-white hover:bg-blue-700 disabled:bg-gray-300'
             >
-              <option value="">Select Skill</option>
-              {skills.map((sk) => (
-                <option key={sk.id} value={sk.id}>
-                  {sk.name}
-                </option>
-              ))}
-            </select>
-            {formik.touched.skillId && formik.errors.skillId ? (
-              <div className="text-red-500 text-sm">{formik.errors.skillId}</div>
-            ) : null}
+              Save
+            </button>
           </div>
-        </div>
-          
-        <div className="grid grid-cols-2 gap-4 mt-4">
-          <div className="">
-            <label className="mb-1 block text-sm font-medium">From Date</label>
-            <DatePicker
-              selected={formik.values.fromDate}
-              onChange={(date) => formik.setFieldValue("fromDate", date)}
-              className="w-full rounded-md border border-gray-300 p-2"
-              dateFormat="yyyy/MM/dd"
-              placeholderText="Select date"
-            />
-            {formik.touched.fromDate && formik.errors.fromDate ? (
-              <div className="text-red-500 text-sm">{formik.errors.fromDate}</div>
-            ) : null}
-          </div>
-          <div className="">
-            <label className="mb-1 block text-sm font-medium">To Date</label>
-            <DatePicker
-              selected={formik.values.toDate}
-              onChange={(date) => formik.setFieldValue("toDate", date)}
-              className="w-full rounded-md border border-gray-300 p-2"
-              dateFormat="yyyy/MM/dd"
-              placeholderText="Select date"
-            />
-            {formik.touched.toDate && formik.errors.toDate ? (
-              <div className="text-red-500 text-sm">{formik.errors.toDate}</div>
-            ) : null}
-          </div>
-        </div>
-        
-
-        
-
-        <div className="grid grid-cols-1 mt-4">
-          <div>
-            <label className="mb-1 block text-sm font-medium">Description</label>
-            <textarea
-              name="description"
-              value={formik.values.description}
-              onChange={formik.handleChange}
-              className="w-full rounded-md border border-gray-300 p-2"
-              rows={3}
-            />
-            {formik.touched.description && formik.errors.description ? (
-              <div className="text-red-500 text-sm">{formik.errors.description}</div>
-            ) : null}
-          </div>
-        </div>
-
-        <div className="flex justify-between mt-4">
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-6 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            
-            className="px-6 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300"
-          >
-            Save
-          </button>
-        </div>
         </form>
       </div>
     </div>
