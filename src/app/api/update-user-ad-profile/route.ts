@@ -1,19 +1,27 @@
 import { NextResponse } from "next/server";
 import { updateUserMicrosoftProfile } from "@/app/actions/updateUserMicrosoftProfile";
 import { UserDetails } from "@/lib/types/profile";
+import { ERROR_CODES } from "@/lib/utils/errorCodes";
 
 export async function POST(request: Request) {
   const { accessToken, user }: { accessToken: string; user: UserDetails } = await request.json();
 
   if (!accessToken || !user) {
-    return NextResponse.json({ message: "Access token and user data are required" }, { status: 400 });
+    const response = {
+      "success": false,
+      "error_code": ERROR_CODES.BAD_REQUEST,
+    };
+    return NextResponse.json(response);
   }
 
   try {
-    const updatedUser = await updateUserMicrosoftProfile(accessToken, user);
-    return NextResponse.json({ success: true, updatedUser });
+    const response = await updateUserMicrosoftProfile(accessToken, user);
+    return NextResponse.json(response);
   } catch (error) {
-    console.error("Error updating Microsoft profile:", error);
-    return NextResponse.json({ message: "Error updating profile", error: error instanceof Error ? error.message : "Unknown error" }, { status: 500 });
+    const response =  {
+      "success": false,
+      "error_code": ERROR_CODES.INTERNAL_SERVER_ERROR,
+    };
+    return NextResponse.json(response);
   }
 }
