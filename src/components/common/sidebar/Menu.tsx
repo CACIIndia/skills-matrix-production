@@ -71,9 +71,9 @@ function Menu({ submenu, link, name, isExpanded }: any) {
           {isExpanded && (
             <span className='menu-arrow w-[20px] shrink-0 cursor-pointer text-gray-400'>
               {isSubmenuOpen ? (
-                <i className='ki-filled ki-minus text-2xs'></i>
+                <i className='ki-filled ki-minus text-2xs text-gray-700'></i>
               ) : (
-                <i className='ki-filled ki-plus text-2xs'></i>
+                <i className='ki-filled ki-plus text-2xs text-gray-700'></i>
               )}
             </span>
           )}
