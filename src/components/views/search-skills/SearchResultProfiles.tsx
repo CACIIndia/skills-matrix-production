@@ -203,7 +203,8 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
           onChange={(e) => onFilterChange("jobFilter", e.target.value)}
           className='basis-[15%] rounded-md border border-gray-300 p-2 text-sm text-gray-700 focus:ring focus:ring-blue-300'
         >
-          <option value=''>Job Title</option>
+          <option value='' className="hidden">Job Title</option>
+          <option value="">-- Clear Selection --</option>
           {jobData.map((job) => (
             <option key={job} value={job}>
               {job}
@@ -216,7 +217,8 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
           onChange={(e) => onFilterChange("locationFilter", e.target.value)}
           className='basis-[15%] rounded-md border border-gray-300 p-2 text-sm text-gray-700 focus:ring focus:ring-blue-300'
         >
-          <option value=''>Location</option>
+          <option value='' className="hidden">Location</option>
+          <option value="">-- Clear Selection --</option>
           {locationData.map((location) => (
             <option key={location} value={location}>
               {location}
