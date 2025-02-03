@@ -12,9 +12,9 @@ import useGetTrainingDataByUserId from "@/lib/hooks/Training/useGetTraining";
 import TableSkeleton from "@/components/skeletons/TableSkeleton";
 
 const CertificatePage = () => {
-  const { profile } = useAppContext();
+  const { profile, categorySkills } = useAppContext();
   const { data: certificates, refetch, isLoading } = useGetCertificates(profile.id);
-  const { data: categoryskills } = useGetSkillCategory();
+ // const { data: categoryskills } = useGetSkillCategory();
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
   const { data: training_data } = useGetTrainingDataByUserId(
     profile?.id,
@@ -80,7 +80,7 @@ const CertificatePage = () => {
           <CertificateTable
             headers={headers}
             certificates={certificatesData}
-            categoryskills={categoryskills || []}
+            categorySkills={categorySkills || []}
             onEdit={handleEdit}
             onDelete={handleDelete}
             onDownload={handleDownload}
