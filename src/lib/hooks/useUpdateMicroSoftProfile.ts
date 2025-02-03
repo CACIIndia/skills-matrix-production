@@ -13,7 +13,7 @@ const updateMicrosoftProfile = async (
       accessToken,
       user,
     });
-    return response.data.updatedUser; 
+    return response.data; 
   } catch (error) {
     throw error;
   }
@@ -21,7 +21,7 @@ const updateMicrosoftProfile = async (
 
 
 const useUpdateMicrosoftProfile = (onError: (error: Error) => void) => {
-  return useMutation<UserDetails, Error, { accessToken: string; user: UserDetails }>({
+  return useMutation<any, Error, { accessToken: string; user: UserDetails }>({
     mutationFn: ({ accessToken, user }) => updateMicrosoftProfile(accessToken, user),
     onError, 
   });
