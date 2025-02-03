@@ -51,7 +51,6 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
   } = searchFilters;
   const { selectedItems } = useAppContext();
   const router = useRouter();
-  console.log(selectedItems, "selectedItemsssssss");
 
   const filteredProfiles = profiles?.filter((profile) => {
     return (

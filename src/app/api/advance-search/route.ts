@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const reqBody = await req.json();
-  console.log("reqBody.queryRules", reqBody.queryRules);
   const queryRules = reqBody.queryRules;
   if (!queryRules) {
     return NextResponse.json(
@@ -15,7 +14,6 @@ export async function POST(req: Request) {
 
   try {
     const whereConditions = parseQueryRules(queryRules);
-    console.log("whereConditions", whereConditions);
     const persons = await db.user.findMany({
       where: whereConditions,
     });

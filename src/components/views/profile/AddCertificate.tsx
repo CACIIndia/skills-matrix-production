@@ -1,5 +1,5 @@
 import { Certificate, SkillCategory, Training } from "@/lib/types/profile";
-import React from "react";
+import React, { useEffect } from "react";
 import DatePicker from "react-datepicker";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -35,7 +35,7 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
       trainingRecordName: "",
       trainingRecordCategoryId: "",
       trainingRecordCategoryName: "",
-      trainingRecordSkillId:""
+      trainingRecordSkillId: "",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Certificate Name is required"),
@@ -60,22 +60,24 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
       }),
       trainingRecordCategoryId: Yup.string().when("isTrainingLinked", {
         is: true,
-        then: (schema) => schema.required("Training Record Category ID is required"),
+        then: (schema) =>
+          schema.required("Training Record Category ID is required"),
         otherwise: (schema) => schema.notRequired(),
       }),
       trainingRecordCategoryName: Yup.string().when("isTrainingLinked", {
         is: true,
-        then: (schema) => schema.required("Training Record Category Name is required"),
+        then: (schema) =>
+          schema.required("Training Record Category Name is required"),
         otherwise: (schema) => schema.notRequired(),
       }),
-      trainingRecordSkillId : Yup.string().when("isTrainingLinked", {
+      trainingRecordSkillId: Yup.string().when("isTrainingLinked", {
         is: true,
-        then: (schema) => schema.required("Training Record Skill ID is required"),
+        then: (schema) =>
+          schema.required("Training Record Skill ID is required"),
         otherwise: (schema) => schema.notRequired(),
       }),
     }),
-    
-    
+
     onSubmit: (values) => {
       handleUploadCertificate(values);
     },
@@ -100,7 +102,6 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
       formik.setFieldValue("categoryName", selectedCategory.name);
     }
   };
-  console.log(formik.errors,"formikerroes");
 
   return (
     isAddModalOpen && (
@@ -108,58 +109,57 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
         <div className='w-full rounded-md bg-white p-6 shadow-lg sm:w-[600px]'>
           <div className='flex items-center justify-between'>
             <h3 className='mb-4 text-lg font-semibold'>Add New Certificate</h3>
-             {trainingData.length > 0 && (
-               <div className='flex items-center justify-end'>
-               <label
-                 htmlFor='certificateToggle'
-                 className='mr-2 text-sm font-medium text-gray-700'
-               >
-                 Linked Training
-               </label>
-               <div className='relative inline-block w-11'>
-                 <input
-                   type='checkbox'
-                   id='certificateToggle'
-                   name='isTrainingLinked '
-                   checked={formik.values.isTrainingLinked}
-                   onChange={() =>
-                     formik.setFieldValue(
-                       "isTrainingLinked ",
-                       !formik.values.isTrainingLinked,
-                     )
-                   }
-                   className='sr-only' // Hidden input element
-                 />
-                 <div
-                   className={`block h-6 w-full cursor-pointer rounded-full ${
-                     formik.values.isTrainingLinked
-                       ? "bg-green-500"
-                       : "bg-gray-300"
-                   }`}
-                   onClick={() =>
-                     formik.setFieldValue(
-                       "isTrainingLinked",
-                       !formik.values.isTrainingLinked,
-                     )
-                   } // Manually toggle on click
-                 ></div>
-                 <div
-                   className={`absolute left-1 top-1 h-4 w-4 cursor-pointer rounded-full bg-white transition-transform ${
-                     formik.values.isTrainingLinked
-                       ? "translate-x-5"
-                       : "translate-x-0"
-                   }`}
-                   onClick={() =>
-                     formik.setFieldValue(
-                       "isTrainingLinked",
-                       !formik.values.isTrainingLinked,
-                     )
-                   }
-                 ></div>
-               </div>
-             </div>
-             )}
-            
+            {trainingData.length > 0 && (
+              <div className='flex items-center justify-end'>
+                <label
+                  htmlFor='certificateToggle'
+                  className='mr-2 text-sm font-medium text-gray-700'
+                >
+                  Linked Training
+                </label>
+                <div className='relative inline-block w-11'>
+                  <input
+                    type='checkbox'
+                    id='certificateToggle'
+                    name='isTrainingLinked '
+                    checked={formik.values.isTrainingLinked}
+                    onChange={() =>
+                      formik.setFieldValue(
+                        "isTrainingLinked ",
+                        !formik.values.isTrainingLinked,
+                      )
+                    }
+                    className='sr-only' // Hidden input element
+                  />
+                  <div
+                    className={`block h-6 w-full cursor-pointer rounded-full ${
+                      formik.values.isTrainingLinked
+                        ? "bg-green-500"
+                        : "bg-gray-300"
+                    }`}
+                    onClick={() =>
+                      formik.setFieldValue(
+                        "isTrainingLinked",
+                        !formik.values.isTrainingLinked,
+                      )
+                    } // Manually toggle on click
+                  ></div>
+                  <div
+                    className={`absolute left-1 top-1 h-4 w-4 cursor-pointer rounded-full bg-white transition-transform ${
+                      formik.values.isTrainingLinked
+                        ? "translate-x-5"
+                        : "translate-x-0"
+                    }`}
+                    onClick={() =>
+                      formik.setFieldValue(
+                        "isTrainingLinked",
+                        !formik.values.isTrainingLinked,
+                      )
+                    }
+                  ></div>
+                </div>
+              </div>
+            )}
           </div>
 
           <form onSubmit={formik.handleSubmit} className='space-y-4'>
@@ -187,7 +187,7 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                           "trainingRecordId",
                           selectedTraining.id,
                         );
-                        
+
                         formik.setFieldValue(
                           "skills",
                           selectedTraining.skillName,
@@ -200,7 +200,7 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                           "trainingRecordCategoryId",
                           selectedTraining.categoryId,
                         );
-                        
+
                         formik.setFieldValue(
                           "categoryName",
                           selectedTraining.categoryName,
@@ -215,7 +215,7 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                         );
                         formik.setFieldValue(
                           "trainingRecordSkillId",
-                          selectedTraining.skillId
+                          selectedTraining.skillId,
                         );
                       }
                     }}
@@ -320,7 +320,10 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                   dateFormat='yyyy-MM-dd'
                   showYearDropdown
                   showMonthDropdown
-                />
+                  dropdownMode="scroll"  // 👈 Required for arrows to work
+                  scrollableYearDropdown
+                  maxDate={new Date()}
+                /> 
                 {formik.touched.obtainedDate && formik.errors.obtainedDate && (
                   <p className='text-sm text-red-500'>
                     {formik.errors.obtainedDate}
@@ -342,6 +345,8 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                   dateFormat='yyyy-MM-dd'
                   showYearDropdown
                   showMonthDropdown
+                  dropdownMode="scroll"  // 👈 Required for arrows to work
+                  scrollableYearDropdown
                 />
                 {formik.touched.expiryDate && formik.errors.expiryDate && (
                   <p className='text-sm text-red-500'>
