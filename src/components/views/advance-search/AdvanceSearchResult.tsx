@@ -110,7 +110,6 @@ const AdvanceSearchResult = () => {
         value={value}
         onChange={(e) => {
           handleOnChange(e.target.value);
-          console.log(e.target.value);
         }}
         className='rule-operators'
       >

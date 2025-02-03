@@ -8959,8 +8959,52 @@ html.dark .\[html\.dark_\&\]\:hidden {
   width: 100%;
 }
 
-/* Global styles targeting QueryBuilder internal elements */
-/* Container for the query builder */
+.react-datepicker__year-dropdown {
+  max-height: 150px !important;
+  overflow-y: auto !important;
+}
+
+.react-datepicker__navigation--years-upcoming,
+.react-datepicker__navigation--years-previous {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: #f0f0f0;
+  cursor: pointer;
+  z-index: 10;
+  position: absolute;
+  left: 15%;
+  transform: translateX(-50%);
+}
+
+.react-datepicker__navigation--years-upcoming {
+  top: -30px;
+}
+
+.react-datepicker__navigation--years-previous {
+  bottom: -30px;
+}
+
+.react-datepicker__navigation--years-upcoming::before,
+.react-datepicker__navigation--years-previous::before {
+  content: "";
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 4px;
+}
+
+.react-datepicker__navigation--years-upcoming::before {
+  transform: rotate(-135deg);
+}
+
+.react-datepicker__navigation--years-previous::before {
+  transform: rotate(45deg);
+}
+
+
 .ruleGroup {
   width: 100%;
   padding: 10px;
@@ -8971,29 +9015,26 @@ html.dark .\[html\.dark_\&\]\:hidden {
   font-size: 16px;
 }
 
-/* Header for the rule group with flexbox */
 .ruleGroup-header{
   display: flex;
-  justify-content: space-between; /* Distribute space between left and right */
+  justify-content: space-between; 
   align-items: center;
   background-color: transparent;
-  /* padding: 8px; */
 }
 
-/* Combinator button - place it on the left */
 .ruleGroup-combinators {
   flex-grow: 1;
   text-align: left;
   padding: 4px;
   background-color: #edf0f5;
   border-radius: 4px;
-  margin-right: 10px; /* Add margin between combinator and buttons */
+  margin-right: 10px;
   width:200px;
 }
 .queryBuilder-dragHandle {
-  margin-right: 10px; /* Adjust the value as needed */
+  margin-right: 10px;
 }
-/* Add Rule button - place it on the right */
+
 .ruleGroup-addRule {
   background-color: #006ae6;
   margin-left: 10px;
@@ -9003,7 +9044,6 @@ html.dark .\[html\.dark_\&\]\:hidden {
   text-align: right;
 }
 
-/* Add Group button - place it on the right */
 .ruleGroup-addGroup {
   background-color: #6c757d;
   margin-left: 10px;
@@ -9017,7 +9057,7 @@ html.dark .\[html\.dark_\&\]\:hidden {
 .ruleGroup-body{
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Distribute space between left and right */
+  justify-content: center; 
   align-items: space-between;
   background-color: transparent;
   padding: 8px;
@@ -9026,8 +9066,8 @@ html.dark .\[html\.dark_\&\]\:hidden {
 }
 .rule {
   display: flex;
-  align-items: center; /* Align items vertically */
-  gap: 10px; /* Add spacing between the items */
+  align-items: center; 
+  gap: 10px; 
 }
 .rule-fields, .rule-value{
   flex-grow: 1;
