@@ -45,9 +45,9 @@ const SortingPagination: React.FC<PaginationProps> = ({
             : `${(currentPage - 1) * itemsPerPage + 1}-${Math.min(
                 currentPage * itemsPerPage,
                 totalItems,
-              )} of ${totalItems}`}
+              )} of ${totalItems} Records`}
         </span>
-        <div className='flex gap-3'>
+        <div className='flex gap-3 items-center'>
           <button
             className='btn btn-sm btn-icon btn-clear btn-primary'
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -55,6 +55,7 @@ const SortingPagination: React.FC<PaginationProps> = ({
           >
             &lt;
           </button>
+          {currentPage}
           <button
             className='btn btn-sm btn-icon btn-clear btn-primary'
             onClick={() =>
