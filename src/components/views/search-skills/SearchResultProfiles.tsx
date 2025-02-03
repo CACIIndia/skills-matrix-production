@@ -77,96 +77,92 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
     switch (key) {
       case "name":
         return (
-         
-            <div className='flex items-center px-2'>
-              <div
-                onClick={() =>
-                  window.open(`/profile/overview/${rowData.id}`, "_blank")
-                }
-              >
-                <Image
-                  src={rowData.image || defaultImage}
-                  alt={rowData.name}
-                  className='mr-4 cursor-pointer rounded-full'
-                  width={40}
-                  height={40}
-                />
-              </div>
-              <div className='w-[150px]'>
-                <div>{rowData.name}</div>
-                <div className='text-[10px] text-gray-600'>{rowData.email}</div>
-              </div>
-
-              <button
-                onClick={() => {
-                  window.open(
-                    `https://teams.microsoft.com/l/chat/0/0?users=${rowData.email}`,
-                    "_blank",
-                  );
-                }}
-                className='ml-[8px] rounded-[4px] bg-purple-800 p-[4px] text-white transition duration-300 hover:bg-purple-700'
-              >
-                <div className='flex items-center justify-center space-x-1'>
-                  <div>
-                    <BsMicrosoftTeams />
-                  </div>
-                </div>
-              </button>
-              <button
-                onClick={() => {
-                  window.location.href = `mailto:${rowData.email}`;
-                }}
-                className='ml-[8px] rounded-[4px] bg-blue-600 p-[4px] text-white transition duration-300 hover:bg-blue-700'
-              >
-                <div className='flex items-center justify-center space-x-1'>
-                  <div>
-                    <IoMailUnread />
-                  </div>
-                </div>
-              </button>
+          <div className='flex items-center px-2'>
+            <div
+              onClick={() =>
+                window.open(`/profile/overview/${rowData.id}`, "_blank")
+              }
+            >
+              <Image
+                src={rowData.image || defaultImage}
+                alt={rowData.name}
+                className='mr-4 cursor-pointer rounded-full'
+                width={40}
+                height={40}
+              />
             </div>
-          
+            <div className='w-[150px]'>
+              <div>{rowData.name}</div>
+              <div className='text-[10px] text-gray-600'>{rowData.email}</div>
+            </div>
+
+            <button
+              onClick={() => {
+                window.open(
+                  `https://teams.microsoft.com/l/chat/0/0?users=${rowData.email}`,
+                  "_blank",
+                );
+              }}
+              className='ml-[8px] rounded-[4px] bg-purple-800 p-[4px] text-white transition duration-300 hover:bg-purple-700'
+            >
+              <div className='flex items-center justify-center space-x-1'>
+                <div>
+                  <BsMicrosoftTeams />
+                </div>
+              </div>
+            </button>
+            <button
+              onClick={() => {
+                window.location.href = `mailto:${rowData.email}`;
+              }}
+              className='ml-[8px] rounded-[4px] bg-blue-600 p-[4px] text-white transition duration-300 hover:bg-blue-700'
+            >
+              <div className='flex items-center justify-center space-x-1'>
+                <div>
+                  <IoMailUnread />
+                </div>
+              </div>
+            </button>
+          </div>
         );
       case "skill":
-        return (
-          rowData?.userSkills.length > 0 ? 
-            <div className='flex items-center'>
-              <div className='flex h-full items-center text-nowrap'>
-                {rowData.userSkills.slice(0, 2).map((skill: any, ind: number) => {
-                  const level = skill.level;
-                  const { name } = SKILL_LEVELS[level];
-                  return (
-                    <div key={ind} className='mr-2'>
-                      <span
-                        className={classNames("badge badge-sm", {
-                          "badge-outline": level === 0,
-                          "badge-danger": level === 1,
-                          "badge-warning": level === 2,
-                          "badge-primary": level === 3,
-                          "badge-success": level === 4,
-                        })}
-                      >
-                        {name} | {skill.skill.name}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-              <div>
-                {rowData.userSkills.length > 2 && (
-                  <button
-                    onClick={() =>
-                      window.open(`/profile/overview/${rowData.id}`, "_blank")
-                    }
-                    className='text-nowrap rounded-[4px] bg-green-600 px-2 text-white transition duration-300 hover:bg-blue-600'
-                  >
-                    +{rowData.userSkills.length - 2}
-                  </button>
-                )}
-              </div>
+        return rowData?.userSkills.length > 0 ? (
+          <div className='flex items-center'>
+            <div className='flex h-full items-center text-nowrap'>
+              {rowData.userSkills.slice(0, 2).map((skill: any, ind: number) => {
+                const level = skill.level;
+                const { name } = SKILL_LEVELS[level];
+                return (
+                  <div key={ind} className='mr-2'>
+                    <span
+                      className={classNames("badge badge-sm", {
+                        "badge-outline": level === 0,
+                        "badge-danger": level === 1,
+                        "badge-warning": level === 2,
+                        "badge-primary": level === 3,
+                        "badge-success": level === 4,
+                      })}
+                    >
+                      {name} | {skill.skill.name}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
-          
-          :
+            <div>
+              {rowData.userSkills.length > 2 && (
+                <button
+                  onClick={() =>
+                    window.open(`/profile/overview/${rowData.id}`, "_blank")
+                  }
+                  className='text-nowrap rounded-[4px] bg-green-600 px-2 text-white transition duration-300 hover:bg-blue-600'
+                >
+                  +{rowData.userSkills.length - 2}
+                </button>
+              )}
+            </div>
+          </div>
+        ) : (
           "No skills found!"
         );
       default:

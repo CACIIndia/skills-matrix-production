@@ -53,9 +53,9 @@ const MenuAccordion: React.FC<MenuAccordionProps> = ({ data ,handleItemClick}) =
             </span>
             <span className="menu-arrow text-gray-400 w-[20px] shrink-0">
               {activeCategory === category.category ? (
-                <i className="ki-filled ki-minus text-2xs"></i>
+                <i className="ki-filled ki-minus text-2xs text-gray-700"></i>
               ) : (
-                <i className="ki-filled ki-plus text-2xs"></i>
+                <i className="ki-filled ki-plus text-2xs text-gray-700"></i>
               )}
             </span>
           </div>
