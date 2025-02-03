@@ -1,7 +1,7 @@
 "use client";
 
 import classNames from "classnames";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import EditSkills from "@/components/views/profile/actions/EditSkills";
 import Modal from "@/components/common/Modal";
@@ -34,14 +34,24 @@ const ProfileSkills = ({
 
   const { setProfile, profile } = useAppContext();
   const [isOpen, setIsOpen] = useState(false);
+  const [initialselectedSkills,setinitialselectedSkills] = useState(mappedUserSkills);
   const [selectedSkills, setSelectedSkills] = useState(mappedUserSkills);
+  
 
+
+ useEffect(()=>{
+  setSelectedSkills(initialselectedSkills);
+ },[isOpen])
   const handleEdit = async () => {
     const toastId = toast.loading("Updating Skills...");
+    const tempSelectedSkill = [...selectedSkills];
     const result = await updateUserSkills(createdById, selectedSkills);
 
     setProfile(() => {return {...profile, ...result?.updatedUser }});
     toast.success(result.message, { id: toastId });
+    setSelectedSkills(tempSelectedSkill);
+    setinitialselectedSkills(tempSelectedSkill);
+
   };
 
   return (
