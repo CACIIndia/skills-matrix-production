@@ -57,7 +57,7 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
   }, [data]);
 
   return (
-    <div className='card border border-red-100' >
+    <div className='card border border-red-100 max-h-[300px] mb-[16px] lg:mb-[0px] ' >
       <div className='card-header'>
         <h3 className='card-title'>General Info</h3>
         {!disableEdit && (
@@ -74,14 +74,6 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
       <div className='card-body pb-3.5 pt-3.5'>
         <table className='table-auto text-start'>
           <tbody>
-           {/*  <tr>
-              <td className='pb-3 pr-4 text-sm font-medium text-gray-500 lg:pr-8'>
-                Email:
-              </td>
-              <td className='pb-3 text-sm font-medium text-gray-800'>
-                {editableData?.email || "N/A"}
-              </td>
-            </tr> */}
             <tr>
               <td className='pb-3 pr-4 text-sm font-medium text-gray-500 lg:pr-8'>
                 Phone:
