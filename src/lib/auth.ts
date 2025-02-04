@@ -39,7 +39,7 @@ export const options: AuthOptions = {
             token.access_token = account.access_token;
             token.refresh_token = account.refresh_token;
             
-            const expiresAt = account.expires_at ? account.expires_at * 1000 : Date.now() + 60 * 60;
+            const expiresAt = account.expires_at ? account.expires_at * 1000  : Date.now() + 60 * 60 * 1000;
             token.expires_at = expiresAt;
 
             const email = profile.email;
@@ -145,11 +145,11 @@ export async function refreshAccessToken(token: JWT): Promise<any> {
       expires_in: number
       refresh_token?: string
      }
-     
+
      return {
       ...token,
       access_token: newTokens.access_token,
-      expires_at: Math.floor(Date.now() / 1000 + newTokens.expires_in),
+      expires_at: Math.floor(Date.now() + (newTokens.expires_in * 1000)),
       refresh_token: newTokens.refresh_token
          ? newTokens.refresh_token
          : token.refresh_token,
