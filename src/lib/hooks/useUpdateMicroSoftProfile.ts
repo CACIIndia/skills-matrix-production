@@ -8,16 +8,20 @@ const updateMicrosoftProfile = async (
   accessToken: string,
   user: UserDetails
 ): Promise<UserDetails> => {
-  const response = await axiosInstance.post('update-user-ad-profile', {
-    accessToken,
-    user,
-  });
-  return response.data.updatedUser; 
+  try {
+    const response = await axiosInstance.post('update-user-ad-profile', {
+      accessToken,
+      user,
+    });
+    return response.data; 
+  } catch (error) {
+    throw error;
+  }
 };
 
 
 const useUpdateMicrosoftProfile = (onError: (error: Error) => void) => {
-  return useMutation<UserDetails, Error, { accessToken: string; user: UserDetails }>({
+  return useMutation<any, Error, { accessToken: string; user: UserDetails }>({
     mutationFn: ({ accessToken, user }) => updateMicrosoftProfile(accessToken, user),
     onError, 
   });

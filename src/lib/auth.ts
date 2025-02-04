@@ -1,7 +1,7 @@
 import AzureADProvider from "next-auth/providers/azure-ad";
 import { AuthOptions, getServerSession } from "next-auth";
 import db from "./db";
-import { fetchUserProfile } from "@/app/actions/updateUserMicrosoftProfile";
+import { fetchUserProfile } from "./microsoft-graph";
 
 interface ProfileWithId {
    tid: string;
@@ -34,9 +34,6 @@ export const options: AuthOptions = {
 
    callbacks: {
       async jwt({ token, account, profile }) {
-         console.log("Token : " + token);
-         console.log("Accout : " + account);
-         console.log("Profile : " + profile);
          if (account && profile) {
             const email = profile.email;
 
@@ -48,32 +45,34 @@ export const options: AuthOptions = {
                let user = await db.user.findUnique({
                   where: { email },
                });
-               console.log("User : " + user);
+
                if (!user) {
                   let ad_response = await fetchUserProfile(account.access_token as string);
-                  user = await db.user.create({
-                     data: {
-                        id: ad_response.id,
-                        email: ad_response.mail,
-                        name: ad_response.displayName,
-                        emailVerified: new Date(),
-                        role: ad_response.jobTitle,
-                        location: ad_response.officeLocation,
-                        phone: ad_response.mobilePhone,
-                     },
-                  });
+                  if (! ad_response.error) {
+                     user = await db.user.create({
+                        data: {
+                           id: ad_response.id,
+                           email: ad_response.mail,
+                           name: ad_response.displayName,
+                           emailVerified: new Date(),
+                           role: ad_response.jobTitle,
+                           location: ad_response.officeLocation,
+                           phone: ad_response.mobilePhone,
+                        },
+                     });
+                  }
                }
-               token.sub = user.id;
-               token.email = user.email;
-               token.name = user.name;
-               token.image = user.image || "";
+               
+               token.sub = user?.id;
+               token.email = user?.email;
+               token.name = user?.name;
+               token.image = user?.image || "";
                token.azure_access_token = typeof account.access_token === "string" ? account.access_token : null;
                //  token.azure_access_token = process.env.TEMP_ACCESS_TOKEN;
                return token;
             } catch (error: unknown) {
                console.log("Error : " + error);
                if (error instanceof Error) {
-
                   throw new Error("Error checking/creating user in JWT callback:" + error.message);
                }
 
@@ -84,7 +83,6 @@ export const options: AuthOptions = {
          return token;
       },
       async session({ session, token }) {
-
          if (token) {
             session.user = {
                id: token?.sub,

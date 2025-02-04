@@ -7,6 +7,8 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useUpdateMicrosoftProfile } from "@/lib/hooks/useUpdateMicroSoftProfile";
 import { FiRefreshCcw } from "react-icons/fi";
+import { getProfile } from "@/lib/api/getProfile";
+import { ERROR_CODES } from "@/lib/utils/errorCodes";
 
 type HeaderDropdownProps = {
   isOpen: boolean;
@@ -21,7 +23,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
 
   const { mutate, mutateAsync, isError, error } = useUpdateMicrosoftProfile(
     (error) => {
-      toast.error(error.message, { id: toastId });
+     // toast.error(error.message, { id: toastId });
     },
   );
   if (!session) {
@@ -30,16 +32,23 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
 
   const handleAzureConnect = async () => {
     const toastId = toast.loading("Connecting To Azure, Please Wait...");
-
     setToastId(toastId);
-
+   
     const response = await mutateAsync({
       accessToken: session.azure_access_token || "",
       user: profile,
     });
-    setProfile(response);
+    if (response.success) {
+      let user_data = await getProfile(profile.id);
+      setProfile(user_data.user);
+      toast.success("Updated Successfully", { id: toastId });
+    } else {
+      if (response.error_code === ERROR_CODES.UNAUTHORIZED) {
+        signOut();
+      }
+      toast.remove(toastId);
+    }
 
-    toast.success("Updated Successfully", { id: toastId });
   };
 
   const handleMenuItemClick = (e: React.MouseEvent<HTMLElement>) => {

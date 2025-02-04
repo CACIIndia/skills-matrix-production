@@ -27,7 +27,7 @@ type State = {
   removeSelectedItem: (id: SkillCategory["id"]) => void;
   categorySkills: any;
   setSelectedItems: Dispatch<SetStateAction<SkillCategory[]>>;
-
+  removeAllSelectedSkills: () => void;
 };
 
 // Create the context
@@ -68,6 +68,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     );
   };
   
+  const removeAllSelectedSkills = () => {
+    setSelectedItems((prevSelected)=> [])
+  }
   
   useEffect(() => {
     if (profileData) {
@@ -91,7 +94,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         toggleSelectedItem,
         categorySkills,
         removeSelectedItem,
-        setSelectedItems
+        setSelectedItems,
+        removeAllSelectedSkills
       }}
     >
       {children}

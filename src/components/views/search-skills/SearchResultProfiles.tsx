@@ -53,7 +53,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
     resultsPerPage,
     currentPage,
   } = searchFilters;
-  const { selectedItems } = useAppContext();
+  const { selectedItems, removeAllSelectedSkills } = useAppContext();
   const router = useRouter();
 
   const filteredProfiles = profiles?.filter((profile) => {
@@ -77,96 +77,92 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
     switch (key) {
       case "name":
         return (
-         
-            <div className='flex items-center px-2'>
-              <div
-                onClick={() =>
-                  window.open(`/profile/overview/${rowData.id}`, "_blank")
-                }
-              >
-                <Image
-                  src={rowData.image || defaultImage}
-                  alt={rowData.name}
-                  className='mr-4 cursor-pointer rounded-full'
-                  width={40}
-                  height={40}
-                />
-              </div>
-              <div className='w-[150px]'>
-                <div>{rowData.name}</div>
-                <div className='text-[10px] text-gray-600'>{rowData.email}</div>
-              </div>
-
-              <button
-                onClick={() => {
-                  window.open(
-                    `https://teams.microsoft.com/l/chat/0/0?users=${rowData.email}`,
-                    "_blank",
-                  );
-                }}
-                className='ml-[8px] rounded-[4px] bg-purple-800 p-[4px] text-white transition duration-300 hover:bg-purple-700'
-              >
-                <div className='flex items-center justify-center space-x-1'>
-                  <div>
-                    <BsMicrosoftTeams />
-                  </div>
-                </div>
-              </button>
-              <button
-                onClick={() => {
-                  window.location.href = `mailto:${rowData.email}`;
-                }}
-                className='ml-[8px] rounded-[4px] bg-blue-600 p-[4px] text-white transition duration-300 hover:bg-blue-700'
-              >
-                <div className='flex items-center justify-center space-x-1'>
-                  <div>
-                    <IoMailUnread />
-                  </div>
-                </div>
-              </button>
+          <div className='flex items-center px-2'>
+            <div
+              onClick={() =>
+                window.open(`/profile/overview/${rowData.id}`, "_blank")
+              }
+            >
+              <Image
+                src={rowData.image || defaultImage}
+                alt={rowData.name}
+                className='mr-4 cursor-pointer rounded-full'
+                width={40}
+                height={40}
+              />
             </div>
-          
+            <div className='w-[150px]'>
+              <div>{rowData.name}</div>
+              <div className='text-[10px] text-gray-600'>{rowData.email}</div>
+            </div>
+
+            <button
+              onClick={() => {
+                window.open(
+                  `https://teams.microsoft.com/l/chat/0/0?users=${rowData.email}`,
+                  "_blank",
+                );
+              }}
+              className='ml-[8px] rounded-[4px] bg-purple-800 p-[4px] text-white transition duration-300 hover:bg-purple-700'
+            >
+              <div className='flex items-center justify-center space-x-1'>
+                <div>
+                  <BsMicrosoftTeams />
+                </div>
+              </div>
+            </button>
+            <button
+              onClick={() => {
+                window.location.href = `mailto:${rowData.email}`;
+              }}
+              className='ml-[8px] rounded-[4px] bg-blue-600 p-[4px] text-white transition duration-300 hover:bg-blue-700'
+            >
+              <div className='flex items-center justify-center space-x-1'>
+                <div>
+                  <IoMailUnread />
+                </div>
+              </div>
+            </button>
+          </div>
         );
       case "skill":
-        return (
-          rowData?.userSkills.length > 0 ? 
-            <div className='flex items-center'>
-              <div className='flex h-full items-center text-nowrap'>
-                {rowData.userSkills.slice(0, 2).map((skill: any, ind: number) => {
-                  const level = skill.level;
-                  const { name } = SKILL_LEVELS[level];
-                  return (
-                    <div key={ind} className='mr-2'>
-                      <span
-                        className={classNames("badge badge-sm", {
-                          "badge-outline": level === 0,
-                          "badge-danger": level === 1,
-                          "badge-warning": level === 2,
-                          "badge-primary": level === 3,
-                          "badge-success": level === 4,
-                        })}
-                      >
-                        {name} | {skill.skill.name}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-              <div>
-                {rowData.userSkills.length > 2 && (
-                  <button
-                    onClick={() =>
-                      window.open(`/profile/overview/${rowData.id}`, "_blank")
-                    }
-                    className='text-nowrap rounded-[4px] bg-green-600 px-2 text-white transition duration-300 hover:bg-blue-600'
-                  >
-                    +{rowData.userSkills.length - 2}
-                  </button>
-                )}
-              </div>
+        return rowData?.userSkills.length > 0 ? (
+          <div className='flex items-center'>
+            <div className='flex h-full items-center text-nowrap'>
+              {rowData.userSkills.slice(0, 2).map((skill: any, ind: number) => {
+                const level = skill.level;
+                const { name } = SKILL_LEVELS[level];
+                return (
+                  <div key={ind} className='mr-2'>
+                    <span
+                      className={classNames("badge badge-sm", {
+                        "badge-outline": level === 0,
+                        "badge-danger": level === 1,
+                        "badge-warning": level === 2,
+                        "badge-primary": level === 3,
+                        "badge-success": level === 4,
+                      })}
+                    >
+                      {name} | {skill.skill.name}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
-          
-          :
+            <div>
+              {rowData.userSkills.length > 2 && (
+                <button
+                  onClick={() =>
+                    window.open(`/profile/overview/${rowData.id}`, "_blank")
+                  }
+                  className='text-nowrap rounded-[4px] bg-green-600 px-2 text-white transition duration-300 hover:bg-blue-600'
+                >
+                  +{rowData.userSkills.length - 2}
+                </button>
+              )}
+            </div>
+          </div>
+        ) : (
           "No skills found!"
         );
       default:
@@ -207,7 +203,10 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
           onChange={(e) => onFilterChange("jobFilter", e.target.value)}
           className='basis-[15%] rounded-md border border-gray-300 p-2 text-sm text-gray-700 focus:ring focus:ring-blue-300'
         >
-          <option value=''>Job Title</option>
+          <option value='' className='hidden'>
+            Job Title
+          </option>
+          <option value=''>-- Clear Selection --</option>
           {jobData.map((job) => (
             <option key={job} value={job}>
               {job}
@@ -220,7 +219,10 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
           onChange={(e) => onFilterChange("locationFilter", e.target.value)}
           className='basis-[15%] rounded-md border border-gray-300 p-2 text-sm text-gray-700 focus:ring focus:ring-blue-300'
         >
-          <option value=''>Location</option>
+          <option value='' className='hidden'>
+            Location
+          </option>
+          <option value=''>-- Clear Selection --</option>
           {locationData.map((location) => (
             <option key={location} value={location}>
               {location}
@@ -242,6 +244,12 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
             <div className='card'>
               <div className='card-header flex items-center justify-between'>
                 <h3 className='card-title'>Selected Skills</h3>
+                <button
+                  onClick={() => removeAllSelectedSkills()}
+                  className='btn btn-sm btn-danger rounded-md bg-red-500 px-2 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300'
+                >
+                  <i className='ki-filled ki-trash'></i>
+                </button>
               </div>
 
               <div className='card-body'>
