@@ -39,7 +39,7 @@ export const options: AuthOptions = {
             token.access_token = account.access_token;
             token.refresh_token = account.refresh_token;
             
-            const expiresAt = account.expires_at ? account.expires_at * 1000 : Date.now() + 60 * 60 * 1000;
+            const expiresAt = account.expires_at ? account.expires_at * 1000 : Date.now() + 60 * 60;
             token.expires_at = expiresAt;
 
             const email = profile.email;
@@ -85,7 +85,7 @@ export const options: AuthOptions = {
 
                throw new Error("An unknown error occurred.");
             }
-         } else if (Date.now() < token.expires_at * 1000) {
+         } else if (Date.now() < token.expires_at) {
             return token;
          } else {
             return refreshAccessToken(token);
@@ -139,7 +139,7 @@ export async function refreshAccessToken(token: JWT): Promise<any> {
      const tokensOrError = await response.json()
 
      if (!response.ok) throw tokensOrError
- 
+
      const newTokens = tokensOrError as {
       access_token: string
       expires_in: number
