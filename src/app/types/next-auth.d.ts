@@ -11,6 +11,7 @@ declare module "next-auth" {
       image?: string | null;
     };
     azure_access_token:string|null;
+    error: string|null;
   }
 
   interface User {
@@ -21,4 +22,13 @@ declare module "next-auth" {
   }
 
  
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    access_token: string | null | undefined
+    expires_at: number
+    refresh_token?: string
+    error: string|null;
+  }
 }
