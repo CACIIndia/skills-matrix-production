@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import FileUploadIcon from "@/components/custom-icons/FileUploadIcon";
 
 type EditCertificateModalProps = {
   isEditModalOpen: boolean;
@@ -305,16 +306,34 @@ const EditCertificateModal: React.FC<EditCertificateModalProps> = ({
 
             {/* Certificate File */}
             <div className='flex flex-col sm:flex-row sm:gap-4'>
-              <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
+              <label
+                htmlFor='certificateFile'
+                className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'
+              >
                 Upload New Certificate File (Optional)
               </label>
-              <div className='flex-1'>
-                <input
-                  type='file'
-                  accept='application/pdf'
-                  onChange={handleFileChange}
-                  className='w-full border p-2'
-                />
+              <div className='flex flex-col'>
+                <div className='flex'>
+                  <label className='cursor-pointer' htmlFor='certificateFile'>
+                    <button
+                      tabIndex={-1}
+                      data-qa='bulk-upload-button'
+                      type={"button"}
+                      className='pointer-events-none flex h-[100%] w-[46px] flex-grow-0 cursor-pointer items-center justify-center rounded-l-[6px] btn-primary'
+                    >
+                      <FileUploadIcon />
+                    </button>
+                  </label>
+                  <div className='flex flex-col'>
+                    <input
+                      type='file'
+                      id='certificateFile'
+                      accept='application/pdf'
+                      onChange={handleFileChange}
+                      className='w-full border px-2 py-2 cursor-pointer'
+                    />
+                  </div>
+                </div>
                 {formik.touched.certificateFile &&
                   formik.errors.certificateFile && (
                     <p className='text-sm text-red-500'>
