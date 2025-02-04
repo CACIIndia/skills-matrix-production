@@ -60,16 +60,6 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
     <div className='card border border-red-100 max-h-[300px] mb-[16px] lg:mb-[0px] ' >
       <div className='card-header'>
         <h3 className='card-title'>General Info</h3>
-        {!disableEdit && (
-          <span>
-            <button
-              className='btn btn-sm btn-icon btn-clear btn-primary'
-              onClick={() => setIsOpen(true)}
-            >
-              <i className='ki-filled ki-notepad-edit'></i>
-            </button>
-          </span>
-        )}
       </div>
       <div className='card-body pb-3.5 pt-3.5'>
         <table className='table-auto text-start'>
