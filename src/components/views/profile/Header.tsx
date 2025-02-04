@@ -9,6 +9,7 @@ import { uploadImage } from "@/app/utils/imageUpload";
 import { useAppContext } from "@/app/context/AppContext";
 import image_spinner from "../../../../public/assets/media/misc/spinner.gif";
 import ProfileHeaderSkeleton from "@/components/skeletons/ProfileHeader";
+import RoleIcon from "@/components/custom-icons/RoleIcon";
 
 type ProfileHeaderProps = {
   data?: UserDetails;
@@ -125,20 +126,17 @@ const ProfileHeader = ({ data, isLoading,editProfile }: ProfileHeaderProps) => {
               </svg>
             </div>
           )}
-          <div className='lg:gap-4.5 flex flex-wrap justify-center gap-1 text-sm'>
+          <div className='lg:gap-4.5 flex flex-wrap justify-center items-center gap-1 text-sm'>
             {data?.role && (
               <div className='gap-1.25 flex items-center'>
-                <i
-                  className='ki-filled ki-geolocation text-sm text-gray-500'
-                  style={{ zIndex: -10 }}
-                ></i>
+                <RoleIcon />
                 <span className='text-gray-600'>{data?.role}</span>
               </div>
             )}
             {data?.location && (
               <div className='gap-1.25 flex items-center'>
                 <i
-                  className='ki-filled ki-geolocation text-sm text-gray-500'
+                  className='ki-filled ki-geolocation text-sm text-primary'
                   style={{ zIndex: -10 }}
                 ></i>
                 <span className='text-gray-600'>{data?.location}</span>
@@ -147,7 +145,7 @@ const ProfileHeader = ({ data, isLoading,editProfile }: ProfileHeaderProps) => {
             {data?.email && (
               <div className='gap-1.25 flex items-center'>
                 <i
-                  className='ki-filled ki-sms text-sm text-gray-500'
+                  className='ki-filled ki-sms text-sm text-primary mt-[2px]'
                   style={{ zIndex: -10 }}
                 ></i>
                 <a
