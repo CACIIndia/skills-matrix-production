@@ -39,6 +39,7 @@ model User {
   trainingCreatedByIds Training[]      @relation("trainingCreatedByIds")
   trainingEmployees    Training[]      @relation("trainingEmployees")
   userSkills           UserSkill[]
+  projects             CACIProfile[]
 }
 
 model Skill {
@@ -89,8 +90,6 @@ model AdditionalInfo {
   status       Int      @default(1)
   user         User     @relation(fields: [userId], references: [id])
 }
-
-
 
 model Discipline {
   id     String  @id @default(uuid())
@@ -178,4 +177,33 @@ model Training {
   createdBy        User            @relation("trainingCreatedByIds", fields: [createdById], references: [id])
   employee         User            @relation("trainingEmployees", fields: [employeeId], references: [id])
   trainingStatus   TrainingStatus  @relation(fields: [statusId], references: [id])
+}
+
+model Project {
+  id          String        @id @default(uuid())
+  name        String
+  code        String?
+  description String?
+  status      Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  profiles    CACIProfile[]
+}
+
+model CACIProfile {
+  id            String    @id @default(uuid())
+  employeeId    String
+  employeeName  String
+  employeeImage String?
+  projectId     String
+  projectName   String
+  roleInProject String?
+  isCurrentProject  Boolean @default(false)
+  startDate     DateTime
+  endDate       DateTime?
+  description   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  employee  User     @relation(fields: [employeeId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id])
 }
