@@ -436,6 +436,7 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                   showYearDropdown
                   showMonthDropdown
                   dropdownMode='scroll'
+                  minDate={formik?.values?.obtainedDate || new Date()}
                   scrollableYearDropdown
                 />
                 {formik.touched.expiryDate && formik.errors.expiryDate && (

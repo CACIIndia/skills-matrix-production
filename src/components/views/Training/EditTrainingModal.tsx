@@ -218,6 +218,7 @@ const EditTraining = ({
                 className='w-full rounded-md border border-gray-300 p-2'
                 dateFormat='yyyy/MM/dd'
                 placeholderText='Select date'
+                maxDate={new Date()}
               />
               {formik.touched.fromDate && formik.errors.fromDate ? (
                 <div className='text-sm text-red-500'>
@@ -236,6 +237,7 @@ const EditTraining = ({
                 className='w-full rounded-md border border-gray-300 p-2'
                 dateFormat='yyyy/MM/dd'
                 placeholderText='Select date'
+                minDate={formik?.values?.fromDate || new Date()}
               />
               {formik.touched.toDate && formik.errors.toDate ? (
                 <div className='text-sm text-red-500'>

@@ -382,6 +382,7 @@ const EditCertificateModal: React.FC<EditCertificateModalProps> = ({
                   onChange={(date) => formik.setFieldValue("expiryDate", date)}
                   className='w-full border p-2'
                   dateFormat='yyyy-MM-dd'
+                  minDate={formik?.values?.obtainedDate || new Date()}
                   showYearDropdown
                   showMonthDropdown
                 />
