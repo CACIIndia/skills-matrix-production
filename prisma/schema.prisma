@@ -33,7 +33,6 @@ model User {
   status               Int             @default(1)
   additionalInfo       AdditionalInfo?
   Certification        Certification[]
-  projects             Project[]
   sessions             Session[]
   SfiaLevel            SfiaLevel[]
   SkillCategory        SkillCategory[]
@@ -91,19 +90,7 @@ model AdditionalInfo {
   user         User     @relation(fields: [userId], references: [id])
 }
 
-model Project {
-  id               String   @id @default(uuid())
-  projectName      String
-  startDate        DateTime
-  endDate          DateTime
-  role             String
-  description      String
-  code             String
-  isCurrentProject Boolean
-  userId           String
-  status           Int      @default(1)
-  user             User     @relation(fields: [userId], references: [id])
-}
+
 
 model Discipline {
   id     String  @id @default(uuid())
