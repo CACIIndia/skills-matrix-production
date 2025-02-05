@@ -81,12 +81,11 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
               <span className='text-sm font-semibold leading-none text-gray-800'>
                 {profile?.name || "User Name"}
               </span>
-              <Link
-                className='text-xs font-medium leading-none text-gray-600 hover:text-primary'
-                href='/account/home/get-started'
+              <span
+                className='text-xs font-medium leading-none text-gray-600'
               >
                 {profile?.email || ""}
-              </Link>
+              </span>
             </div>
           </div>
           <span className='badge badge-xs badge-primary badge-outline'>
