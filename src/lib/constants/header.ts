@@ -23,7 +23,8 @@ export const PROFILE_MENU_ITEMS = [
   { name: "Overview", path: "/profile/overview" },
   { name: "Skills", path: "/profile/skills" },
   { name: "Certifications", path: "/profile/certificates" },
-   {name:"Training",path:"/profile/training"},
+  { name: "Training", path: "/profile/training" },
+  { name: "Project", path: "/profile/project" },
 ];
 
 export const VIEW_PROFILE_MENU_ITEMS = [
@@ -35,8 +36,6 @@ export const LINE_MANAGER_MENU_ITEMS = [
   { name: "Certifications", path: "/line-manager/certifications" },
   { name: "Training", path: "/line-manager/training" },
 ];
-
-
 
 //shall i create a meeting again at 3 or 2 ?
 // check sentences
