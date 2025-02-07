@@ -23,7 +23,6 @@ export async function GET(request: Request) {
         status: true,
         createdAt: true,
         updatedAt: true,
-        profiles: true,
       },
       orderBy: {
         createdAt: "asc",
