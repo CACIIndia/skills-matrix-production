@@ -122,3 +122,12 @@ export interface Skill  {
   updatedAt: Date |string;
   skillCategory?: SkillCategory;
 };
+
+
+export interface ProjectRole {
+  id: string;
+  name: string;
+  status: boolean;
+  createdAt: string;
+  updatedAt: string;
+}

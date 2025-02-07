@@ -6,10 +6,12 @@ type ProjectHistoryCardProps = {
 };
 
 const ProjectHistoryCard = ({ projects }: ProjectHistoryCardProps) => {
-  const currentProject = projects.find((project) => project.isCurrentProject);
+  const currentProject = projects.filter((project) => project.isCurrentProject);
+  
   const previousProjects = projects.filter(
     (project) => !project.isCurrentProject,
   );
+  
 
   return (
     <div className='card' style={{ zIndex: -1 }}>
@@ -18,19 +20,22 @@ const ProjectHistoryCard = ({ projects }: ProjectHistoryCardProps) => {
       </div>
       <div className='card-body text-start'>
         <div className='flex flex-col'>
-          {currentProject && (
-            <div className='relative flex items-start'>
+        {currentProject.map((project, index) => (
+            <div key={index} className='relative flex items-start'>
               <div className='absolute bottom-0 left-0 top-9 w-9 translate-x-1/2 border-l border-l-gray-300'></div>
-              <div className='flex size-9 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-gray-600'>
-                <i className='ki-filled ki-calendar-tick text-base'></i>
+              <div className='f lex size-9 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-gray-600'>
+                <i className='ki-filled ki-calendar text-base'></i>
               </div>
               <div className='text-md mb-7 grow pl-2.5'>
                 <div className='flex flex-col pb-2.5'>
                   <span className='text-sm font-medium text-gray-700'>
-                    Working in {currentProject.projectName}
+                    Working in {project.projectName}
                   </span>
                   <span className='text-xs font-medium text-gray-500'>
-                    {new Date(currentProject.startDate).toLocaleDateString()}
+                    {new Date(project.startDate).toLocaleDateString()} -{" "}
+                    {project.endDate
+                      ? new Date(project.endDate).toLocaleDateString()
+                      : "Ongoing"}
                   </span>
                 </div>
                 <div className='card p-4 shadow-none'>
@@ -40,10 +45,10 @@ const ProjectHistoryCard = ({ projects }: ProjectHistoryCardProps) => {
                       <div className='flex flex-wrap items-center justify-between'>
                         <div className='flex flex-col gap-0.5'>
                           <span className='text-md mb-px cursor-pointer font-semibold text-gray-900 hover:text-primary'>
-                            {currentProject.role}
+                            {project.roleInProject}
                           </span>
                           <span className='text-xs font-medium text-gray-500'>
-                            {currentProject.description}
+                            {project.description}
                           </span>
                         </div>
                       </div>
@@ -53,7 +58,8 @@ const ProjectHistoryCard = ({ projects }: ProjectHistoryCardProps) => {
                 </div>
               </div>
             </div>
-          )}
+          ))}
+          
           {/* Previous Projects */}
           {previousProjects.map((project, index) => (
             <div key={index} className='relative flex items-start'>
@@ -80,7 +86,7 @@ const ProjectHistoryCard = ({ projects }: ProjectHistoryCardProps) => {
                       <div className='flex flex-wrap items-center justify-between'>
                         <div className='flex flex-col gap-0.5'>
                           <span className='text-md mb-px cursor-pointer font-semibold text-gray-900 hover:text-primary'>
-                            {project.role}
+                            {project.roleInProject}
                           </span>
                           <span className='text-xs font-medium text-gray-500'>
                             {project.description}
