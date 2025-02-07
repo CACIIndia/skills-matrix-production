@@ -14,6 +14,7 @@ type ModalProps = {
   buttonText?: string;
   handler?: () => void;
   customWidth?: string;
+  isFromAddProject?: boolean
 };
 
 const Modal = ({
@@ -24,6 +25,7 @@ const Modal = ({
   buttonText,
   handler,
   customWidth,
+  isFromAddProject=false
 }: ModalProps) => {
   const onClose = () => setIsOpen(!isOpen);
 
@@ -56,7 +58,7 @@ const Modal = ({
               </button>
             </div>
             <div className='flex-1 overflow-y-auto px-6'>{children}</div>{" "}
-            <div className=' flex justify-end space-x-3 px-6 py-4 '>
+            {!isFromAddProject && <div className=' flex justify-end space-x-3 px-6 py-4 '>
               <button onClick={onClose} className='btn btn-md btn-light'>
                 Close
               </button>
@@ -72,7 +74,7 @@ const Modal = ({
                   {buttonText}
                 </button>
               )}
-            </div>
+            </div>}
           </DialogPanel>
         </div>
       </div>
