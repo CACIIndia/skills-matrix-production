@@ -2,24 +2,34 @@ import Image from "next/image";
 import { Project } from "@/lib/types/profile";
 import Link from "next/link";
 import defaultImage from "../../../../public/assets/media/avatars/default-image.png";
+import { CiSquarePlus } from "react-icons/ci";
 
 type ProjectHistoryCardProps = {
   projects: Project[];
+  setIsOpen: (isOpen: boolean) => void;
+  isOpen: boolean;
 };
 
-const ProjectHistoryCard = ({ projects }: ProjectHistoryCardProps) => {
+const ProjectHistoryCard = ({ projects ,setIsOpen, isOpen}: ProjectHistoryCardProps) => {
   const currentProject =
     projects?.filter((project) => project.isCurrentProject) || [];
 
   const previousProjects =
     projects?.filter((project) => !project.isCurrentProject) || [];
 
-  console.log(previousProjects);
 
   return (
     <div className='card' style={{ zIndex: -1 }}>
       <div className='card-header'>
         <h3 className='card-title'>Projects History</h3>
+        <h3 className='card-title'>
+          <button
+            onClick={() => (setIsOpen ? setIsOpen(!isOpen) : "")}
+            className='btn btn-sm btn-icon btn-clear btn-primary'
+          >
+            <CiSquarePlus size={32} />
+          </button>
+        </h3>
       </div>
       <div className='card-body text-start'>
         <div className='flex flex-col'>

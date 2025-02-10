@@ -5,6 +5,7 @@ import useGetProjectRoles from "@/lib/hooks/common/useGetProjectRoles";
 import { useSession } from "next-auth/react";
 import useAddProject from "@/lib/hooks/profile/projects/useAddProjects";
 import toast from "react-hot-toast";
+import { useAppContext } from "@/app/context/AppContext";
 
 type AddProjectModalProps = {
   handleClose: () => void;
@@ -17,6 +18,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
   projects,
 }) => {
   const { data: session } = useSession();
+  const {addProject} = useAppContext();
   const { data: projectRoles } = useGetProjectRoles();
   const mutation = useAddProject();
   const formik = useFormik({
@@ -60,9 +62,11 @@ const AddProject: React.FC<AddProjectModalProps> = ({
         employeeImage: session?.user?.image || "",
       };
 
-      await mutation.mutateAsync(payload);
-      console.log("Project added successfully:", payload);
+      let result =  await mutation.mutateAsync(payload);
+      console.log(result,"result");
       toast.success("Project Added Successfully");
+      addProject(result);
+      handleClose()
     } catch (error: unknown) {
       console.error("Error adding project:", error);
       if (error instanceof Error) {
