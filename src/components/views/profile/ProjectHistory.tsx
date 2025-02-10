@@ -11,10 +11,14 @@ type ProjectHistoryCardProps = {
   isOpen: boolean;
 };
 
-const ProjectHistoryCard = ({ projects ,setIsOpen, isOpen}: ProjectHistoryCardProps) => {
+const ProjectHistoryCard = ({
+  projects,
+  setIsOpen,
+  isOpen,
+}: ProjectHistoryCardProps) => {
   const currentProject =
     projects?.filter((project) => project.isCurrentProject) || [];
-    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const previousProjects =
     projects?.filter((project) => !project.isCurrentProject) || [];
   return (
@@ -26,13 +30,13 @@ const ProjectHistoryCard = ({ projects ,setIsOpen, isOpen}: ProjectHistoryCardPr
           <div className='card-header'>
             <h3 className='card-title'>Projects History</h3>
             <h3 className='card-title'>
-          <button
-            onClick={() => (setIsOpen ? setIsOpen(!isOpen) : "")}
-            className='btn btn-sm btn-icon btn-clear btn-primary'
-          >
-            <CiSquarePlus size={32} />
-          </button>
-        </h3>
+              <button
+                onClick={() => (setIsOpen ? setIsOpen(!isOpen) : "")}
+                className='btn btn-sm btn-icon btn-clear btn-primary'
+              >
+                <CiSquarePlus size={32} />
+              </button>
+            </h3>
           </div>
           <div className='card-body text-start'>
             <div className='flex flex-col'>
@@ -89,21 +93,25 @@ const ProjectHistoryCard = ({ projects ,setIsOpen, isOpen}: ProjectHistoryCardPr
                                   {projectCode}
                                 </Link>
                               </div>
-                              <div className='flex items-center gap-1.5'>
-                                <span className='text-2sm font-medium text-gray-500'>
-                                  Members:
-                                </span>
-                                {members.length > 0 ? (
+                              {members.length > 0 && (
+                                <div className='flex items-center gap-1.5'>
+                                  <span className='text-2sm font-medium text-gray-500'>
+                                    Members:
+                                  </span>
+
                                   <div className='flex -space-x-2'>
                                     {displayedMembers?.map((member) => (
                                       <div
                                         key={member.id}
-                                        className='flex'
+                                        className='flex cursor-pointer'
                                         onClick={() => setSelectedProject(item)}
                                       >
                                         <Image
                                           className='hover:z-5 ring-light-light relative size-7 shrink-0 rounded-full ring-1'
-                                          src={member.employeeImage}
+                                          src={
+                                            member?.employeeImage ||
+                                            defaultImage
+                                          }
                                           alt={member.employeeName}
                                           width={28}
                                           height={28}
@@ -111,19 +119,15 @@ const ProjectHistoryCard = ({ projects ,setIsOpen, isOpen}: ProjectHistoryCardPr
                                       </div>
                                     ))}
                                     {remainingMembersCount > 0 && (
-                                      <div className='flex'>
+                                      <div onClick={() => setSelectedProject(item)} className='flex cursor-pointer'>
                                         <span className='hover:z-5 text-3xs text-primary-inverse relative inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary font-semibold leading-none ring-1 ring-primary-light'>
                                           +{remainingMembersCount}
                                         </span>
                                       </div>
                                     )}
                                   </div>
-                                ) : (
-                                  <span className='text-2sm text-gray-500'>
-                                    -
-                                  </span>
-                                )}
-                              </div>
+                                </div>
+                              )}
                             </div>
                             {/* End of Members Section */}
                           </div>
@@ -194,7 +198,11 @@ const ProjectHistoryCard = ({ projects ,setIsOpen, isOpen}: ProjectHistoryCardPr
 
                                   <div className='flex -space-x-2'>
                                     {displayedMembers?.map((member) => (
-                                      <div key={member.id} className='flex'>
+                                      <div
+                                        onClick={() => setSelectedProject(item)}
+                                        key={member.id}
+                                        className='flex cursor-pointer'
+                                      >
                                         <Image
                                           className='hover:z-5 ring-light-light relative size-7 shrink-0 rounded-full ring-1'
                                           src={
@@ -208,7 +216,10 @@ const ProjectHistoryCard = ({ projects ,setIsOpen, isOpen}: ProjectHistoryCardPr
                                       </div>
                                     ))}
                                     {remainingMembersCount > 0 && (
-                                      <div className='flex'>
+                                      <div
+                                        onClick={() => setSelectedProject(item)}
+                                        className='flex cursor-pointer'
+                                      >
                                         <span className='hover:z-5 text-3xs text-primary-inverse relative inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary font-semibold leading-none ring-1 ring-primary-light'>
                                           +{remainingMembersCount}
                                         </span>
@@ -229,12 +240,11 @@ const ProjectHistoryCard = ({ projects ,setIsOpen, isOpen}: ProjectHistoryCardPr
             </div>
           </div>
           <div className='card-footer justify-center'>
-            <a
+            <span
               className='btn btn-link'
-              href='html/demo1/public-profile/activity.html'
             >
               All-time Activities
-            </a>
+            </span>
           </div>
         </div>
       </div>
@@ -253,14 +263,14 @@ const ProjectHistoryCard = ({ projects ,setIsOpen, isOpen}: ProjectHistoryCardPr
           </div>
           {selectedProject.project?.profiles?.map((member) => (
             <div
-              key={member.id}
+              key={member?.id}
               className='border-b-1 flex items-center gap-x-2 border px-4 py-2 hover:bg-gray-50'
             >
               <div>
                 <Image
                   className='hover:z-5 ring-light-light relative size-7 shrink-0 rounded-full ring-1'
-                  src={member.employeeImage}
-                  alt={member.employeeName}
+                  src={member?.employeeImage || defaultImage}
+                  alt={member?.employeeName}
                   width={36}
                   height={36}
                 />
