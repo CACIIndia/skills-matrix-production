@@ -100,7 +100,6 @@ async function updateJoiningDate(
     "error_code": '',
   };
     const employeeHireDate = await fetchEmployeeHireDate(accessToken);
-    console.log(employeeHireDate);
     if (employeeHireDate.error) {
       response.error_code = employeeHireDate.error || ERROR_CODES.UNKNOWN_ERROR;
     } else if (employeeHireDate.employeeHireDate !== null){
