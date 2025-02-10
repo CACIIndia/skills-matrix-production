@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import useGetProjectRoles from "@/lib/hooks/common/useGetProjectRoles";
 import { useSession } from "next-auth/react";
+import useAddProject from "@/lib/hooks/profile/projects/useAddProjects";
+import toast from "react-hot-toast";
 
 type AddProjectModalProps = {
   handleClose: () => void;
@@ -16,7 +18,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
 }) => {
   const { data: session } = useSession();
   const { data: projectRoles } = useGetProjectRoles();
-  console.log("sesseion data", session);
+  const mutation = useAddProject();
   const formik = useFormik({
     initialValues: {
       projectName: "",
@@ -39,7 +41,13 @@ const AddProject: React.FC<AddProjectModalProps> = ({
         .min(Yup.ref("startDate"), "To date must be after from date"),
     }),
 
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
+      await handleSubmit(values);
+    },
+  });
+
+  const handleSubmit = async (values: any) => {
+    try {
       const selectedProject = projects?.find(
         (project) => project.name === values.projectName,
       );
@@ -52,9 +60,18 @@ const AddProject: React.FC<AddProjectModalProps> = ({
         employeeImage: session?.user?.image || "",
       };
 
-      console.log("add project values", payload);
-    },
-  });
+      await mutation.mutateAsync(payload);
+      console.log("Project added successfully:", payload);
+      toast.success("Project Added Successfully");
+    } catch (error: unknown) {
+      console.error("Error adding project:", error);
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+    }
+  };
   return (
     <div className='flex h-full flex-col'>
       <form
@@ -168,7 +185,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             name='isCurrentProject'
             checked={formik.values.isCurrentProject}
             onChange={formik.handleChange}
-            className='w-4 h-4'
+            className='h-4 w-4'
           />
           <label className='text-sm font-medium text-gray-700'>
             Currently working on this project
