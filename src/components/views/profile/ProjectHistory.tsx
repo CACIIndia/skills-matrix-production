@@ -6,12 +6,12 @@ type ProjectHistoryCardProps = {
 };
 
 const ProjectHistoryCard = ({ projects }: ProjectHistoryCardProps) => {
-  const currentProject = projects.filter((project) => project.isCurrentProject);
+  const currentProject = projects?.filter((project) => project.isCurrentProject) || [];
   
-  const previousProjects = projects.filter(
+  const previousProjects = projects?.filter(
     (project) => !project.isCurrentProject,
-  );
-  
+  ) || [];
+
 
   return (
     <div className='card' style={{ zIndex: -1 }}>
