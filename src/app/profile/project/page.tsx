@@ -25,10 +25,14 @@ export default function ProjectPage() {
         </div>
       )}
 
-      {profile?.projects?.length !== 0 && (
-        <ProjectHistoryCard projects={profile?.projects || []} />
-      )}
+     
 
+      {
+        profile?.projects?.length!==0&&<ProjectHistoryCard projects={profile?.projects || []} setIsOpen={setIsOpen} isOpen={isOpen} />
+      }
+
+    
+      
       <Modal
         isOpen={isOpen}
         setIsOpen={setIsOpen}

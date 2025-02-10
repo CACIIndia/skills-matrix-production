@@ -48,11 +48,11 @@ const OverviewPage = () => {
           showEditButton={true}
         />
 
-        {profile?.projects?.length > 0 && (
+        {/* {profile?.projects?.length > 0 && (
           <ProfileProjectHistory
             projects={profile?.projects || DEFAULT_USER_DETAILS.projects}
           />
-        )}
+        )} */}
       </div>
     </div>
     </div>

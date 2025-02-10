@@ -26,8 +26,31 @@ export async function POST(req: Request) {
         description: body.description || null,
       },
     });
-
-    return NextResponse.json(newProfile, { status: 200 }); 
+    const user = await db.user.findUnique({
+      where:{
+        id:body.employeeId
+      },
+      include:{
+        projects: {
+          include:{
+            project: {
+              include: {
+                profiles: {
+                  where:{
+                    employeeId: {
+                      not: body.employeeId
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+    const project = user?.projects;
+ 
+    return NextResponse.json(project, { status: 200 }); 
 
   } catch (error: unknown) {
     console.error("Error creating CACIProfile:", error);
