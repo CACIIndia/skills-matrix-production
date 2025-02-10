@@ -15,7 +15,7 @@ export const fullUserInclude = Prisma.validator<Prisma.UserInclude>()({
       level: "desc",
     },
   },
-  projects: true,
+
   
 });
 
