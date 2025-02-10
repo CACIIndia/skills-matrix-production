@@ -20,11 +20,11 @@ const OverviewPage = () => {
 
       <div className='col-span-2 grid gap-5'>
         <ProfileSkills userSkills={viewedProfile?.userSkills || []} />
-        {viewedProfile?.projects?.length > 0 && (
+        {/* {viewedProfile?.projects?.length > 0 && (
           <ProfileProjectHistory
             projects={viewedProfile?.projects || DEFAULT_USER_DETAILS.projects}
           />
-        )}
+        )} */}
       </div>
     </div>
   );
