@@ -28,6 +28,7 @@ type State = {
   categorySkills: any;
   setSelectedItems: Dispatch<SetStateAction<SkillCategory[]>>;
   removeAllSelectedSkills: () => void;
+  addProject:()=>void;
 };
 
 // Create the context
@@ -78,6 +79,13 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     }
   }, [profileData]);
 
+  const addProject = (projects:any)=>{
+    if(projects){
+      setProfile({...profile,projects})
+    }
+
+
+  }
 
 
 
@@ -95,7 +103,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         categorySkills,
         removeSelectedItem,
         setSelectedItems,
-        removeAllSelectedSkills
+        removeAllSelectedSkills,
+        addProject
       }}
     >
       {children}
