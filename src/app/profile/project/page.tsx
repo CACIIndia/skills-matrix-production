@@ -4,6 +4,7 @@ import Modal from "@/components/common/Modal";
 import Image from "next/image";
 import { useState } from "react";
 import AddProject from "./AddProject";
+import useGetProjects from "@/lib/hooks/profile/projects/useGetProjects";
 interface ActivityItemProps {
   icon: string;
   title: string;
@@ -36,6 +37,7 @@ interface ActivityItemWithContentProps {
   guestCount: number;
 }
 export default function ProjectPage() {
+  const { data: projects } = useGetProjects();
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className='flex h-[40vh] items-center justify-center'>
@@ -44,7 +46,7 @@ export default function ProjectPage() {
         className='relative mb-[4px] mr-[10px] rounded-[4px] bg-[#0d6efd] p-[6px] text-white transition duration-300 hover:bg-blue-700'
       >
         <div className='flex items-center justify-center space-x-1'>
-          <div>Add Project</div> <div>{/* <IoShareSocial /> */}</div>
+          <div>Add Project</div>
         </div>
       </button>
       <Modal
@@ -53,10 +55,10 @@ export default function ProjectPage() {
         title='Add New Project'
         buttonText='Update'
         // handler={handleEdit}
-        customWidth='w-[100%] lg:w-[30%] h-[100%] lg:h-[50%]'
+        customWidth='w-[100%] lg:w-[40%] h-[100%] lg:h-[50%]'
         isFromAddProject={true}
       >
-        <AddProject handleClose={() => setIsOpen(false)} />
+        <AddProject handleClose={() => setIsOpen(false)} projects={projects} />
       </Modal>
     </div>
   );

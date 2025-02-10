@@ -1,40 +1,66 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import useGetProjectRoles from "@/lib/hooks/common/useGetProjectRoles";
+import { useSession } from "next-auth/react";
 
 type AddProjectModalProps = {
-    handleClose: ()=> void
+  handleClose: () => void;
+  projects: [];
 };
-const AddProject: React.FC<AddProjectModalProps> = ({handleClose}) => {
-  const projects = ["Project A", "Project B", "Project C"];
-  const roles = ["Developer", "Designer", "Manager"];
+// useGetProjectRoles
+
+const AddProject: React.FC<AddProjectModalProps> = ({
+  handleClose,
+  projects,
+}) => {
+  const { data: session } = useSession();
+  const { data: projectRoles } = useGetProjectRoles();
+  console.log("sesseion data", session);
   const formik = useFormik({
     initialValues: {
       projectName: "",
-      role: "",
-      toDate: "",
-      fromDate: "",
+      roleInProject: "",
+      startDate: "",
+      endDate: "",
+      isCurrentProject: false,
     },
     validationSchema: Yup.object({
       projectName: Yup.string().required("Certificate name is required"),
-      role: Yup.mixed().required("Certificate file is required"),
+      roleInProject: Yup.mixed().required("Certificate file is required"),
 
-      toDate: Yup.date()
+      startDate: Yup.date()
         .typeError("Please enter a valid date")
-        .required("To date is required")
-        .min(Yup.ref("fromDate"), "To date must be after from date"),
-      fromDate: Yup.date()
+        .required("To date is required"),
+
+      endDate: Yup.date()
         .typeError("Please enter a valid date")
-        .required("From date is required"),
+        .required("From date is required")
+        .min(Yup.ref("startDate"), "To date must be after from date"),
     }),
 
     onSubmit: (values) => {
-      console.log("add project values", values);
+      const selectedProject = projects?.find(
+        (project) => project.name === values.projectName,
+      );
+
+      const payload = {
+        ...values,
+        projectId: selectedProject?.id || "", // Ensures id exists
+        employeeId: session?.user?.id || "",
+        employeeName: session?.user?.name || "",
+        employeeImage: session?.user?.image || "",
+      };
+
+      console.log("add project values", payload);
     },
   });
   return (
-    <div className="flex flex-col h-full">
-      <form onSubmit={formik.handleSubmit} className='space-y-4 flex-1 overflow-y-auto px-6'>
+    <div className='flex h-full flex-col'>
+      <form
+        onSubmit={formik.handleSubmit}
+        className='flex-1 space-y-4 overflow-y-auto px-6'
+      >
         <div className='flex flex-col sm:flex-row sm:gap-4'>
           <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
             Project Name<span className='text-red-500'>*</span>
@@ -50,11 +76,15 @@ const AddProject: React.FC<AddProjectModalProps> = ({handleClose}) => {
               <option value='' disabled>
                 Select a project
               </option>
-              {projects.map((project) => (
-                <option key={project} value={project}>
-                  {project}
-                </option>
-              ))}
+              {projects && projects.length > 0 ? (
+                projects.map((project) => (
+                  <option key={project.id} value={project.name}>
+                    {`${project.code}: ${project.name}`}
+                  </option>
+                ))
+              ) : (
+                <p className='text-gray-500'>No projects available.</p>
+              )}
             </select>
             {formik.touched.projectName && formik.errors.projectName && (
               <p className='text-sm text-red-500'>
@@ -70,8 +100,8 @@ const AddProject: React.FC<AddProjectModalProps> = ({handleClose}) => {
           </label>
           <div className='flex-1'>
             <select
-              name='role'
-              value={formik.values.role}
+              name='roleInProject'
+              value={formik.values.roleInProject}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className='w-full border p-2'
@@ -79,14 +109,17 @@ const AddProject: React.FC<AddProjectModalProps> = ({handleClose}) => {
               <option value='' disabled>
                 Select a role
               </option>
-              {roles.map((role) => (
-                <option key={role} value={role}>
-                  {role}
-                </option>
-              ))}
+              {projectRoles &&
+                projectRoles.map((role) => (
+                  <option key={role.id} value={role.name}>
+                    {role.name}
+                  </option>
+                ))}
             </select>
-            {formik.touched.role && formik.errors.role && (
-              <p className='text-sm text-red-500'>{formik.errors.role}</p>
+            {formik.touched.roleInProject && formik.errors.roleInProject && (
+              <p className='text-sm text-red-500'>
+                {formik.errors.roleInProject}
+              </p>
             )}
           </div>
         </div>
@@ -98,14 +131,14 @@ const AddProject: React.FC<AddProjectModalProps> = ({handleClose}) => {
           <div className='flex-1'>
             <input
               type='date'
-              name='fromDate'
-              value={formik.values.fromDate}
+              name='startDate'
+              value={formik.values.startDate}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className='w-full border p-2'
             />
-            {formik.touched.fromDate && formik.errors.fromDate && (
-              <p className='text-sm text-red-500'>{formik.errors.fromDate}</p>
+            {formik.touched.startDate && formik.errors.startDate && (
+              <p className='text-sm text-red-500'>{formik.errors.startDate}</p>
             )}
           </div>
         </div>
@@ -117,29 +150,45 @@ const AddProject: React.FC<AddProjectModalProps> = ({handleClose}) => {
           <div className='flex-1'>
             <input
               type='date'
-              name='toDate'
-              value={formik.values.toDate}
+              name='endDate'
+              value={formik.values.endDate}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className='w-full border p-2'
             />
-            {formik.touched.toDate && formik.errors.toDate && (
-              <p className='text-sm text-red-500'>{formik.errors.toDate}</p>
+            {formik.touched.endDate && formik.errors.endDate && (
+              <p className='text-sm text-red-500'>{formik.errors.endDate}</p>
             )}
           </div>
         </div>
+        {/* isCurrentProject Checkbox */}
+        <div className='flex items-center gap-2'>
+          <input
+            type='checkbox'
+            name='isCurrentProject'
+            checked={formik.values.isCurrentProject}
+            onChange={formik.handleChange}
+            className='w-4 h-4'
+          />
+          <label className='text-sm font-medium text-gray-700'>
+            Currently working on this project
+          </label>
+        </div>
+        <div className='flex justify-end gap-4 bg-white p-4'>
+          <button
+            onClick={() => handleClose()}
+            type='button'
+            className='btn btn-secondary'
+          >
+            Cancel
+          </button>
+          <button type='submit' className='btn btn-primary'>
+            Save
+          </button>
+        </div>
       </form>
       {/* Buttons at the Bottom Inside Modal */}
-    <div className='p-4 bg-white flex justify-end gap-4'>
-      <button onClick={()=> handleClose()} type='button' className='btn btn-secondary'>
-        Cancel
-      </button>
-      <button type='submit' className='btn btn-primary'>
-        Upload
-      </button>
     </div>
-  </div>
-   
   );
 };
 

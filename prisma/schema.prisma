@@ -208,11 +208,10 @@ model CACIProfile {
   project          Project   @relation(fields: [projectId], references: [id])
 }
 
-
 model ProjectRole {
-  id         String   @id @default(uuid())  
-  name       String  
-  status     Boolean  @default(true)  
-  createdAt  DateTime @default(now())  
-  updatedAt  DateTime @updatedAt  
+  id        String   @id @default(uuid())
+  name      String
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
