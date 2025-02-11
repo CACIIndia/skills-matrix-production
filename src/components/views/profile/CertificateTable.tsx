@@ -5,6 +5,7 @@ import EditCertificateModal from "./EditCertificateModal";
 import { Certificate, Skill, Training } from "@/lib/types/profile";
 import "react-datepicker/dist/react-datepicker.css";
 import Table from "@/components/common/Table/Table";
+import { getFormattedDate } from "@/components/common/Date-Handling/DateFormat";
 
 
 type TableHeaders = {
@@ -117,9 +118,8 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
   const renderCell = (key: string, value: string, rowData: Certificate) => {
     switch (key) {
       case "obtainedDate":
-        return value ? new Date(value).toLocaleDateString() : "N/A";
-      case "expiryDate":
-        return value ? new Date(value).toLocaleDateString() : "N/A";
+        case "expiryDate":
+          return value ? getFormattedDate(value) : "N/A";
       case "actions":
         return (
           <div className='flex gap-3 text-xl'>
