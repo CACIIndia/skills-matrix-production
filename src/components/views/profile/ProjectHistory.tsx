@@ -119,7 +119,10 @@ const ProjectHistoryCard = ({
                                       </div>
                                     ))}
                                     {remainingMembersCount > 0 && (
-                                      <div onClick={() => setSelectedProject(item)} className='flex cursor-pointer'>
+                                      <div
+                                        onClick={() => setSelectedProject(item)}
+                                        className='flex cursor-pointer'
+                                      >
                                         <span className='hover:z-5 text-3xs text-primary-inverse relative inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary font-semibold leading-none ring-1 ring-primary-light'>
                                           +{remainingMembersCount}
                                         </span>
@@ -240,11 +243,7 @@ const ProjectHistoryCard = ({
             </div>
           </div>
           <div className='card-footer justify-center'>
-            <span
-              className='btn btn-link'
-            >
-              All-time Activities
-            </span>
+            <span className='btn btn-link'>All-time Activities</span>
           </div>
         </div>
       </div>
@@ -266,7 +265,15 @@ const ProjectHistoryCard = ({
               key={member?.id}
               className='border-b-1 flex items-center gap-x-2 border px-4 py-2 hover:bg-gray-50'
             >
-              <div>
+              <div
+                className='cursor-pointer'
+                onClick={() =>
+                  window.open(
+                    `/profile/overview/${member.employeeId}`,
+                    "_blank",
+                  )
+                }
+              >
                 <Image
                   className='hover:z-5 ring-light-light relative size-7 shrink-0 rounded-full ring-1'
                   src={member?.employeeImage || defaultImage}
