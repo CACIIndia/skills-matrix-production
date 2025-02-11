@@ -129,7 +129,7 @@ export async function refreshAccessToken(token: JWT): Promise<any> {
        },
        body: new URLSearchParams({
          grant_type: "refresh_token",
-         scope: "user.read mail.read",
+         scope: "openid email User.Read User.ReadBasic.All User.Read.All User.ReadWrite User.ReadWrite.All",
          client_id: process.env.AZURE_AD_CLIENT_ID!,
          client_secret: process.env.AZURE_AD_CLIENT_SECRET!,
          refresh_token: token.refresh_token!,
