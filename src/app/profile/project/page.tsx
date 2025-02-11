@@ -5,6 +5,7 @@ import AddProject from "./AddProject";
 import useGetProjects from "@/lib/hooks/profile/projects/useGetProjects";
 import { useAppContext } from "@/app/context/AppContext";
 import ProjectHistoryCard from "@/components/views/profile/ProjectHistory";
+import { HiOutlineDocumentAdd } from "react-icons/hi";
 
 export default function ProjectPage() {
   const { data: projects } = useGetProjects();
@@ -25,22 +26,23 @@ export default function ProjectPage() {
         </div>
       )}
 
-     
+      {profile?.projects?.length !== 0 && (
+        <ProjectHistoryCard
+          projects={profile?.projects || []}
+          setIsOpen={setIsOpen}
+          isOpen={isOpen}
+        />
+      )}
 
-      {
-        profile?.projects?.length!==0&&<ProjectHistoryCard projects={profile?.projects || []} setIsOpen={setIsOpen} isOpen={isOpen} />
-      }
-
-    
-      
       <Modal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        title='Add New Project'
+        title='New Project'
         buttonText='Update'
         // handler={handleEdit}
         customWidth='w-[100%] lg:w-[40%] h-auto lg:h-auto'
         isFromAddProject={true}
+        icon={<HiOutlineDocumentAdd className="w-6 h-6 text-blue-500" />}
       >
         <AddProject handleClose={() => setIsOpen(false)} projects={projects} />
       </Modal>

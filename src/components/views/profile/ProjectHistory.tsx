@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Project } from "@/lib/types/profile";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import defaultImage from "../../../../public/assets/media/avatars/default-image.png";
 import { CiSquarePlus } from "react-icons/ci";
 
@@ -21,13 +21,23 @@ const ProjectHistoryCard = ({
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const previousProjects =
     projects?.filter((project) => !project.isCurrentProject) || [];
+  const memberListRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (selectedProject && memberListRef.current) {
+      memberListRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [selectedProject]);
+
   return (
-    <div className='relative flex'>
+    <div className='relative flex flex-col md:flex-row overflow-auto max-h-screen'>
       <div
-        className={`transition-all duration-300 ${selectedProject ? "w-2/3" : "w-full"}`}
+        className={`transition-all duration-300 ${selectedProject ? "md:w-2/3" : "w-full"}`}
       >
         <div className='card' style={{ zIndex: -1 }}>
-          <div className='card-header'>
+          <div className='card-header flex justify-between'>
             <h3 className='card-title'>Projects History</h3>
             <h3 className='card-title'>
               <button
@@ -119,7 +129,10 @@ const ProjectHistoryCard = ({
                                       </div>
                                     ))}
                                     {remainingMembersCount > 0 && (
-                                      <div onClick={() => setSelectedProject(item)} className='flex cursor-pointer'>
+                                      <div
+                                        onClick={() => setSelectedProject(item)}
+                                        className='flex cursor-pointer'
+                                      >
                                         <span className='hover:z-5 text-3xs text-primary-inverse relative inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary font-semibold leading-none ring-1 ring-primary-light'>
                                           +{remainingMembersCount}
                                         </span>
@@ -239,18 +252,18 @@ const ProjectHistoryCard = ({
               })}
             </div>
           </div>
-          <div className='card-footer justify-center'>
-            <span
-              className='btn btn-link'
-            >
-              All-time Activities
-            </span>
-          </div>
+          {/* <div className='card-footer justify-center'>
+            <span className='btn btn-link'>All-time Activities</span>
+          </div> */}
         </div>
       </div>
       {selectedProject && (
-        <div className='card ml-4 w-1/3 border-l bg-white transition-all duration-300'>
-          <div className='card-header'>
+        <div
+          className={`card w-full border bg-white
+            300 md:relative md:w-1/3 mt-4 md:mt-0 md:ml-4`}
+        >
+          {" "}
+          <div className='card-header flex justify-between'>
             <h3 className='card-title'>
               Members of {selectedProject.projectName}
             </h3>
@@ -261,12 +274,21 @@ const ProjectHistoryCard = ({
               ✕
             </button>
           </div>
-          {selectedProject.project?.profiles?.map((member) => (
+          {selectedProject.project?.profiles?.map((member, index) => (
             <div
+              ref={memberListRef}
               key={member?.id}
-              className='border-b-1 flex items-center gap-x-2 border px-4 py-2 hover:bg-gray-50'
+              className={`border-b-1 flex items-center gap-2 border-b p-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}
             >
-              <div>
+              <div
+                className='cursor-pointer'
+                onClick={() =>
+                  window.open(
+                    `/profile/overview/${member.employeeId}`,
+                    "_blank",
+                  )
+                }
+              >
                 <Image
                   className='hover:z-5 ring-light-light relative size-7 shrink-0 rounded-full ring-1'
                   src={member?.employeeImage || defaultImage}
@@ -292,3 +314,5 @@ const ProjectHistoryCard = ({
 };
 
 export default ProjectHistoryCard;
+
+

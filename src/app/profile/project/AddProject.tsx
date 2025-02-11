@@ -18,7 +18,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
   projects,
 }) => {
   const { data: session } = useSession();
-  const {addProject} = useAppContext();
+  const { addProject } = useAppContext();
   const { data: projectRoles } = useGetProjectRoles();
   const mutation = useAddProject();
   const formik = useFormik({
@@ -30,16 +30,16 @@ const AddProject: React.FC<AddProjectModalProps> = ({
       isCurrentProject: false,
     },
     validationSchema: Yup.object({
-      projectName: Yup.string().required("Certificate name is required"),
-      roleInProject: Yup.mixed().required("Certificate file is required"),
+      projectName: Yup.string().required("Project name is required"),
+      roleInProject: Yup.mixed().required("Role is required"),
 
       startDate: Yup.date()
         .typeError("Please enter a valid date")
-        .required("To date is required"),
+        .required("From date is required"),
 
       endDate: Yup.date()
         .typeError("Please enter a valid date")
-        .required("From date is required")
+        .required("To date is required")
         .min(Yup.ref("startDate"), "To date must be after from date"),
     }),
 
@@ -62,11 +62,11 @@ const AddProject: React.FC<AddProjectModalProps> = ({
         employeeImage: session?.user?.image || "",
       };
 
-      let result =  await mutation.mutateAsync(payload);
-      console.log(result,"result");
+      let result = await mutation.mutateAsync(payload);
+      console.log(result, "result");
       toast.success("Project Added Successfully");
       addProject(result);
-      handleClose()
+      handleClose();
     } catch (error: unknown) {
       console.error("Error adding project:", error);
       if (error instanceof Error) {
@@ -183,18 +183,27 @@ const AddProject: React.FC<AddProjectModalProps> = ({
           </div>
         </div>
         {/* isCurrentProject Checkbox */}
+        {/* isCurrentProject Toggle Button */}
         <div className='flex items-center gap-2'>
-          <input
-            type='checkbox'
-            name='isCurrentProject'
-            checked={formik.values.isCurrentProject}
-            onChange={formik.handleChange}
-            className='h-4 w-4'
-          />
-          <label className='text-sm font-medium text-gray-700'>
+          <span className='text-sm font-medium text-gray-700'>
             Currently working on this project
-          </label>
+          </span>
+          <button
+            type='button'
+            onClick={() =>
+              formik.setFieldValue(
+                "isCurrentProject",
+                !formik.values.isCurrentProject,
+              )
+            }
+            className={`relative flex h-6 w-12 items-center rounded-full transition-all ${formik.values.isCurrentProject ? "bg-[#1b84ff]" : "bg-gray-400"}`}
+          >
+            <span
+              className={`absolute left-1 h-4 w-4 rounded-full bg-white shadow-md transition-transform ${formik.values.isCurrentProject ? "translate-x-6" : "translate-x-0"}`}
+            ></span>
+          </button>
         </div>
+
         <div className='flex justify-end gap-4 bg-white p-4'>
           <button
             onClick={() => handleClose()}
@@ -204,7 +213,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             Cancel
           </button>
           <button type='submit' className='btn btn-primary'>
-            Save
+            Update
           </button>
         </div>
       </form>
