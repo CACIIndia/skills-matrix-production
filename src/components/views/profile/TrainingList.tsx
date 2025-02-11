@@ -1,5 +1,6 @@
 "use client";
 
+import { getFormattedDate } from "@/components/common/Date-Handling/DateFormat";
 import Table from "@/components/common/Table/Table";
 import classNames from "classnames";
 
@@ -54,9 +55,8 @@ const TrainingList = ({ trainings }: TrainingListProps) => {
   const renderCell = (key: string, value: string, rowData: Training) => {
     switch (key) {
       case "fromDate":
-        return value ? new Date(value).toLocaleDateString() : "N/A";
       case "tentativeEndDate":
-        return value ? new Date(value).toLocaleDateString() : "N/A";
+        return value ? getFormattedDate(value) : "N/A";
         case "trainingStatus":
           return  <span
           className={classNames("badge badge-sm", {

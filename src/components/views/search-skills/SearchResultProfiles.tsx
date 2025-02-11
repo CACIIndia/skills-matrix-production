@@ -92,7 +92,14 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
               />
             </div>
             <div className='w-[150px]'>
-              <div>{rowData.name}</div>
+              <h1
+                className='cursor-pointer'
+                onClick={() =>
+                  window.open(`/profile/overview/${rowData.id}`, "_blank")
+                }
+              >
+                {rowData.name}
+              </h1>
               <div className='text-[10px] text-gray-600'>{rowData.email}</div>
             </div>
 
