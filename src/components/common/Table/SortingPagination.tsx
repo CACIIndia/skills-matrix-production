@@ -51,17 +51,17 @@ const SortingPagination: React.FC<PaginationProps> = ({
           <button
             className='btn btn-sm btn-icon btn-clear btn-primary'
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
+            disabled={currentPage === 1 || totalItems ==0}
           >
             &lt;
           </button>
-          {currentPage}
+          {totalItems ==0?"":currentPage}
           <button
             className='btn btn-sm btn-icon btn-clear btn-primary'
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
-            disabled={currentPage === totalPages}
+            disabled={currentPage === totalPages ||  totalItems ==0}
           >
             &gt;
           </button>
