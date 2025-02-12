@@ -1,7 +1,7 @@
 import db from "@/lib/db";
 import { UserDetails } from "@/lib/types/profile";
 import { uploadUserImageBuffer } from "./utils/uploadUserImageBuffer";
-import { fetchUserManager, fetchUserProfile, fetchUserProfilePicture } from "@/lib/microsoft-graph";
+import { fetchEmployeeHireDate, fetchUserManager, fetchUserProfile, fetchUserProfilePicture } from "@/lib/microsoft-graph";
 import { ERROR_CODES } from "@/lib/utils/errorCodes";
 
 const updateUserMicrosoftProfile = async (
@@ -30,6 +30,12 @@ const updateUserMicrosoftProfile = async (
   const updateManagerResponse = await updateManager(accessToken, userId);
   if (!updateManagerResponse.success) {
     response.error_code = updateManagerResponse.error_code;
+    return response;
+  }
+
+  const updateJoiningDateResponse = await updateJoiningDate(accessToken, userId);
+  if (!updateJoiningDateResponse.success) {
+    response.error_code = updateJoiningDateResponse.error_code;
     return response;
   }
 
@@ -84,6 +90,31 @@ async function updateProfile(
 
   return response;
 }
+
+async function updateJoiningDate(
+  accessToken: string,
+  userId: string,
+) {
+  let response = {
+    "success": false,
+    "error_code": '',
+  };
+    const employeeHireDate = await fetchEmployeeHireDate(accessToken);
+    if (employeeHireDate.error) {
+      response.error_code = employeeHireDate.error || ERROR_CODES.UNKNOWN_ERROR;
+    } else if (employeeHireDate.employeeHireDate !== null){
+      await db.user.update({
+        where: { id: userId },
+        data: {
+          joiningDate: employeeHireDate.employeeHireDate,
+        },
+      });
+      response.success = true;
+    }
+
+  return response;
+}
+
 
 async function updateManager(
   accessToken: string,
