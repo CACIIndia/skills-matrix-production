@@ -112,7 +112,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
               value={formik.values.projectName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className='w-full border p-2 bg-gray-200'
+              className={`w-full border p-2 ${isEdit && 'bg-gray-200'}`}
             >
               <option value='' disabled>
                 Select a project
