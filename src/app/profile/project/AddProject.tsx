@@ -1,33 +1,42 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import useGetProjectRoles from "@/lib/hooks/common/useGetProjectRoles";
+import useGetProjectRoles from "@/lib/hooks/profile/projects/useGetProjectRoles";
 import { useSession } from "next-auth/react";
 import useAddProject from "@/lib/hooks/profile/projects/useAddProjects";
 import toast from "react-hot-toast";
 import { useAppContext } from "@/app/context/AppContext";
+import useEditProject from "@/lib/hooks/profile/projects/useEditProject";
 
 type AddProjectModalProps = {
   handleClose: () => void;
   projects: [];
+  isEdit: boolean;
+  editData?: any;
 };
-// useGetProjectRoles
 
 const AddProject: React.FC<AddProjectModalProps> = ({
   handleClose,
   projects,
+  isEdit,
+  editData,
 }) => {
   const { data: session } = useSession();
-  const { addProject } = useAppContext();
+  const { addProject, replaceEditedProject } = useAppContext();
+
   const { data: projectRoles } = useGetProjectRoles();
-  const mutation = useAddProject();
+  const mutationAdd = useAddProject();
+  const mutationEdit = useEditProject();
+  const formatDate = (isoString: string): string => {
+    return isoString?.split("T")[0];
+  };
   const formik = useFormik({
     initialValues: {
-      projectName: "",
-      roleInProject: "",
-      startDate: "",
-      endDate: "",
-      isCurrentProject: false,
+      projectName: editData?.projectName || "",
+      roleInProject: editData?.roleInProject || "",
+      startDate: formatDate(editData?.startDate) || "",
+      endDate: formatDate(editData?.endDate) || "",
+      isCurrentProject: editData?.isCurrentProject || false,
     },
     validationSchema: Yup.object({
       projectName: Yup.string().required("Project name is required"),
@@ -54,21 +63,29 @@ const AddProject: React.FC<AddProjectModalProps> = ({
         (project) => project.name === values.projectName,
       );
 
-      const payload = {
-        ...values,
-        projectId: selectedProject?.id || "", // Ensures id exists
-        employeeId: session?.user?.id || "",
-        employeeName: session?.user?.name || "",
-        employeeImage: session?.user?.image || "",
-      };
+      const payload = isEdit
+        ? {
+            ...values,
+            projectId: editData?.projectId,
+            profileId: editData?.id,
+          }
+        : {
+            ...values,
+            projectId: selectedProject?.id || "", // Ensures id exists
+            employeeId: session?.user?.id || "",
+            employeeName: session?.user?.name || "",
+            employeeImage: session?.user?.image || "",
+          };
 
-      let result = await mutation.mutateAsync(payload);
-      console.log(result, "result");
-      toast.success("Project Added Successfully");
-      addProject(result);
+      let result = isEdit
+        ? await mutationEdit.mutateAsync(payload)
+        : await mutationAdd.mutateAsync(payload);
+      toast.success(`Project ${isEdit ? "Edited" : "Added"} Successfully`);
+      {
+        isEdit ? replaceEditedProject(result) : addProject(result);
+      }
       handleClose();
     } catch (error: unknown) {
-      console.error("Error adding project:", error);
       if (error instanceof Error) {
         toast.error(error.message);
       } else {
@@ -83,16 +100,19 @@ const AddProject: React.FC<AddProjectModalProps> = ({
         className='flex-1 space-y-4 overflow-y-auto px-6'
       >
         <div className='flex flex-col sm:flex-row sm:gap-4'>
-          <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
+          <label
+            className={`mb-1 block text-sm font-medium sm:w-1/3 ${isEdit ? "text-gray-600" : "text-gray-700"}`}
+          >
             Project Name<span className='text-red-500'>*</span>
           </label>
           <div className='flex-1'>
             <select
               name='projectName'
+              disabled={isEdit}
               value={formik.values.projectName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className='w-full border p-2'
+              className='w-full border p-2 bg-gray-200'
             >
               <option value='' disabled>
                 Select a project
