@@ -13,10 +13,9 @@ const deleteProject = async ({ profileId }: { profileId: string }) => {
   }
 };
 
-const useDeleteProject = (onError: (error: Error) => void) => {
+const useDeleteProject = () => {
   return useMutation<void, Error, { profileId: string }>({
-    mutationFn: deleteProject,
-    onError,
+    mutationFn: deleteProject
   });
 };
 

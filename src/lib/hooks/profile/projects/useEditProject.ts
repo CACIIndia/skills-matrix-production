@@ -7,10 +7,9 @@ const editProject = async (updatedProject: Partial<Project>): Promise<Project> =
   return response.data;
 };
 
-const useEditProject = (onError: (error: Error) => void) => {
+const useEditProject = () => {
   return useMutation<Project, Error, Partial<Project>>({
-    mutationFn: editProject, 
-    onError,
+    mutationFn: editProject
   });
 };
 
