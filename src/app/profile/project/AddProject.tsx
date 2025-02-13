@@ -7,6 +7,7 @@ import useAddProject from "@/lib/hooks/profile/projects/useAddProjects";
 import toast from "react-hot-toast";
 import { useAppContext } from "@/app/context/AppContext";
 import useEditProject from "@/lib/hooks/profile/projects/useEditProject";
+import DatePicker from "react-datepicker";
 
 type AddProjectModalProps = {
   handleClose: () => void;
@@ -14,7 +15,6 @@ type AddProjectModalProps = {
   isEdit: boolean;
   editData?: any;
 };
-
 
 const AddProject: React.FC<AddProjectModalProps> = ({
   handleClose,
@@ -35,8 +35,8 @@ const AddProject: React.FC<AddProjectModalProps> = ({
     initialValues: {
       projectName: editData?.projectName || "",
       roleInProject: editData?.roleInProject || "",
-      startDate: formatDate(editData?.startDate) || "",
-      endDate: formatDate(editData?.endDate) || "",
+      startDate: editData?.startDate ? new Date(editData.startDate) : null,
+      endDate: editData?.endDate ? new Date(editData.endDate) : null,
       isCurrentProject: editData?.isCurrentProject || false,
     },
     validationSchema: Yup.object({
@@ -47,7 +47,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
         .typeError("Please enter a valid date")
         .required("From date is required"),
 
-        endDate: Yup.date()
+      endDate: Yup.date()
         .typeError("Please enter a valid date")
         .when("isCurrentProject", {
           is: false,
@@ -55,9 +55,8 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             schema
               .required("To date is required")
               .min(Yup.ref("startDate"), "To date must be after from date"),
-          otherwise: (schema) => schema.notRequired(), 
+          otherwise: (schema) => schema.notRequired(),
         }),
-        
     }),
 
     onSubmit: async (values) => {
@@ -66,6 +65,9 @@ const AddProject: React.FC<AddProjectModalProps> = ({
   });
 
   const handleSubmit = async (values: any) => {
+    const toastId = toast.loading(
+      `${isEdit ? "Editing" : "Submitting"} Project...`,
+    );
     try {
       const selectedProject = projects?.find(
         (project) => project.name === values.projectName,
@@ -79,7 +81,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
           }
         : {
             ...values,
-            projectId: selectedProject?.id || "", // Ensures id exists
+            projectId: selectedProject?.id || "",
             employeeId: session?.user?.id || "",
             employeeName: session?.user?.name || "",
             employeeImage: session?.user?.image || "",
@@ -88,16 +90,18 @@ const AddProject: React.FC<AddProjectModalProps> = ({
       let result = isEdit
         ? await mutationEdit.mutateAsync(payload)
         : await mutationAdd.mutateAsync(payload);
-      toast.success(`Project ${isEdit ? "Edited" : "Added"} Successfully`);
+      toast.success(`Project ${isEdit ? "Edited" : "Added"} Successfully`, {
+        id: toastId,
+      });
       {
         isEdit ? replaceEditedProject(result) : addProject(result);
       }
       handleClose();
     } catch (error: unknown) {
       if (error instanceof Error) {
-        toast.error(error.message);
+        toast.error(error.message, { id: toastId });
       } else {
-        toast.error("An unexpected error occurred");
+        toast.error("An unexpected error occurred", { id: toastId });
       }
     }
   };
@@ -120,7 +124,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
               value={formik.values.projectName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`w-full border p-2 ${isEdit && 'bg-gray-200'}`}
+              className={`w-full border p-2 ${isEdit && "bg-gray-200"}`}
             >
               <option value='' disabled>
                 Select a project
@@ -197,19 +201,22 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             )}
           </div>
         </div>
-
         <div className='flex flex-col sm:flex-row sm:gap-4'>
           <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
             From Date<span className='text-red-500'>*</span>
           </label>
           <div className='flex-1'>
-            <input
-              type='date'
-              name='startDate'
-              value={formik.values.startDate}
-              onChange={formik.handleChange}
+            <DatePicker
+              selected={formik.values.startDate}
               onBlur={formik.handleBlur}
-              className='w-full border p-2'
+              name='startDate'
+              onChange={(date) => formik.setFieldValue("startDate", date)}
+              className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+              dateFormat='yyyy-MM-dd'
+              showYearDropdown
+              showMonthDropdown
+              dropdownMode='scroll'
+              scrollableYearDropdown
             />
             {formik.touched.startDate && formik.errors.startDate && (
               <p className='text-sm text-red-500'>{formik.errors.startDate}</p>
@@ -228,23 +235,24 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             To Date<span className='text-red-500'>*</span>
           </label>
           <div className='flex-1'>
-            <input
-              type='date'
+            <DatePicker
+              selected={formik.values.endDate}
               name='endDate'
-              value={formik.values.endDate}
-              onChange={formik.handleChange}
+              onChange={(date) => formik.setFieldValue("endDate", date)}
               onBlur={formik.handleBlur}
-              className='w-full border p-2'
+              className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+              dateFormat='yyyy-MM-dd'
+              showYearDropdown
+              showMonthDropdown
+              dropdownMode='scroll'
+              scrollableYearDropdown
+              portalId="root-portal" 
             />
             {formik.touched.endDate && formik.errors.endDate && (
               <p className='text-sm text-red-500'>{formik.errors.endDate}</p>
             )}
           </div>
         </div>
-
-        {/* isCurrentProject Checkbox */}
-        {/* isCurrentProject Toggle Button */}
-        
 
         <div className='flex justify-end gap-4 bg-white p-4'>
           <button
@@ -255,7 +263,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             Cancel
           </button>
           <button type='submit' className='btn btn-primary'>
-            Update
+            {isEdit ? "Update" : "Submit"}
           </button>
         </div>
       </form>

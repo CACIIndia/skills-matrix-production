@@ -26,7 +26,7 @@ const ProjectHistoryCard = ({
   isOpen,
 }: ProjectHistoryCardProps) => {
   const mutationDelete = useDeleteProject();
-  const {removeDeletedProject} = useAppContext();
+  const { removeDeletedProject } = useAppContext();
   const currentProject =
     projects?.filter((project) => project.isCurrentProject) || [];
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -44,7 +44,7 @@ const ProjectHistoryCard = ({
 
   const deleteProject = async (profileId: string) => {
     try {
-     let result = await mutationDelete?.mutateAsync({ profileId });
+      let result = await mutationDelete?.mutateAsync({ profileId });
       removeDeletedProject(profileId);
       toast.success(`Project Deleted Successfully`);
     } catch (error: unknown) {
@@ -325,6 +325,7 @@ const ProjectHistoryCard = ({
       {selectedProject && (
         <div
           className={`card 300 mt-4 w-full border bg-white md:relative md:ml-4 md:mt-0 md:w-1/3`}
+          style={{ maxHeight: "79vh", minHeight: "200px", overflowY:"auto"}} // Ensure visibility
         >
           {" "}
           <div className='card-header flex justify-between'>
