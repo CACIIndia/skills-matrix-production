@@ -405,12 +405,13 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                     formik.setFieldValue("obtainedDate", date)
                   }
                   className='w-full border p-2'
-                  dateFormat='yyyy-MM-dd'
+                  dateFormat='dd-MM-yyyy'
                   showYearDropdown
                   showMonthDropdown
                   dropdownMode='scroll'
                   scrollableYearDropdown
                   maxDate={new Date()}
+                  onKeyDown={(e) => e.preventDefault()}
                 />
                 {formik.touched.obtainedDate && formik.errors.obtainedDate && (
                   <p className='text-sm text-red-500'>
@@ -432,11 +433,12 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                   onBlur={formik.handleBlur}
                   onChange={(date) => formik.setFieldValue("expiryDate", date)}
                   className='w-full border p-2'
-                  dateFormat='yyyy-MM-dd'
+                  dateFormat='dd-MM-yyyy'
                   showYearDropdown
                   showMonthDropdown
                   dropdownMode='scroll'
                   minDate={formik?.values?.obtainedDate || new Date()}
+                  onKeyDown={(e) => e.preventDefault()}
                   scrollableYearDropdown
                 />
                 {formik.touched.expiryDate && formik.errors.expiryDate && (

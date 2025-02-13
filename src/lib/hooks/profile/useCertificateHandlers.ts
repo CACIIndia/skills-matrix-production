@@ -30,6 +30,11 @@ export const useCertificateHandlers = (userId: string) => {
         createdBy: userId,
       });
 
+      if(result.error){
+        throw new Error(result.message);
+    }
+    
+
       invalidate();
       refetch();
       toast.success(result.message, { id: toastId });
@@ -61,6 +66,10 @@ export const useCertificateHandlers = (userId: string) => {
   
     
       const result = await updateCertificate(String(id), payload);
+      if(result.error){
+        throw new Error(result.message);
+    }
+    
   
      
       invalidate();
@@ -81,6 +90,10 @@ export const useCertificateHandlers = (userId: string) => {
 
     try {
       const result = await deleteCertificate(String(id));
+      if(result.error){
+        throw new Error(result.message);
+    }
+    
       invalidate();
       toast.success(result.message, { id: toastId });
       refetch();

@@ -1,7 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import useGetProjectRoles from "@/lib/hooks/profile/projects/useGetProjectRoles";
 import { useSession } from "next-auth/react";
 import useAddProject from "@/lib/hooks/profile/projects/useAddProjects";
 import toast from "react-hot-toast";
@@ -25,6 +24,7 @@ type AddProjectModalProps = {
   handleClose: () => void;
   projects: Project[];
   isEdit: boolean;
+  projectRoles: ProjectRole[];
   editData?: {
     projectId: string;
     projectName: string;
@@ -33,6 +33,7 @@ type AddProjectModalProps = {
     endDate: string;
     isCurrentProject: boolean;
     id?: string; 
+    
   };
 };
 
@@ -41,10 +42,10 @@ const AddProject: React.FC<AddProjectModalProps> = ({
   projects,
   isEdit,
   editData,
+  projectRoles,
 }) => {
   const { data: session } = useSession();
   const { addProject, replaceEditedProject } = useAppContext();
-  const { data: projectRoles } = useGetProjectRoles() as { data?: ProjectRole[] };
   const mutationAdd = useAddProject();
   const mutationEdit = useEditProject();
 

@@ -7,13 +7,17 @@ import { useAppContext } from "@/app/context/AppContext";
 import ProjectHistoryCard from "@/components/views/profile/ProjectHistory";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 import { FaRegEdit } from "react-icons/fa";
+import useGetProjectRoles from "@/lib/hooks/profile/projects/useGetProjectRoles";
 
 export default function ProjectPage() {
   const { data: projects } = useGetProjects();
+   const { data: projectRoles } = useGetProjectRoles();
   const { profile } = useAppContext();
   const [isOpen, setIsOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [editData, setEditData] = useState<any>({});
+  const joiningDate = profile?.joiningDate;
+
   return (
     <>
       {profile?.projects?.length === 0 && (
@@ -40,6 +44,7 @@ export default function ProjectPage() {
           setIsEdit={setIsEdit}
           setEditData={setEditData}
           isOpen={isOpen}
+          joiningDate={joiningDate}
         />
       )}
 
@@ -60,6 +65,7 @@ export default function ProjectPage() {
           projects={(projects || []).map(project => ({ ...project, code: project.code || '' }))}
           isEdit={isEdit}
           editData={editData}
+          projectRoles={projectRoles || []}
         />
       </Modal>
     </>

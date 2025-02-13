@@ -21,7 +21,8 @@ type CertificateUpdateData = {
 
 type UpdateCertificateResponse = {
   message: string;
-  certificate: Certification;
+  certificate?: Certification;
+  error:boolean
 };
 
 export async function updateCertificate(
@@ -92,11 +93,14 @@ export async function updateCertificate(
     return {
       message: "Certificate updated successfully",
       certificate: updated,
+      error:false
     };
   } catch (error) {
-    console.error("Error updating certificate:", error);
-    throw new Error(
-      error instanceof Error ? error.message : "Failed to update certificate",
-    );
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+    console.error("Error updating certificate:", errorMessage);
+    return {
+      message: errorMessage,
+      error: true
+    };
   }
 }

@@ -12,6 +12,7 @@ import { FaTrash } from "react-icons/fa";
 import Table from "@/components/common/Table/Table";
 import TableSkeleton from "@/components/skeletons/TableSkeleton";
 import classNames from "classnames";
+import { getFormattedDate } from "@/components/common/Date-Handling/DateFormat";
 
 // Lazy-loaded modal components
 const CreateTraining = React.lazy(() =>
@@ -120,7 +121,7 @@ const TrainingSchedule: React.FC = () => {
     switch (key) {
       case "fromDate":
       case "tentativeEndDate":
-        return value ? new Date(value).toLocaleDateString() : "N/A";
+        return value ? getFormattedDate(value) : "N/A";
       case "trainingStatus":
         return (
           <span
