@@ -34,7 +34,6 @@ model User {
   additionalInfo       AdditionalInfo?
   projects             CACIProfile[]
   Certification        Certification[]
-  Project              Project[]
   sessions             Session[]
   SfiaLevel            SfiaLevel[]
   SkillCategory        SkillCategory[]
