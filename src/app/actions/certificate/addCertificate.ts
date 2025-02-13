@@ -27,7 +27,8 @@ type CertificateAddData = {
 
 type AddCertificateResponse = {
   message: string;
-  certificate: Certification;
+  certificate?: Certification;
+  error:boolean
 };
 
 export async function addCertificate(
@@ -101,11 +102,14 @@ export async function addCertificate(
     return {
       message: "Certificate added successfully",
       certificate: newCertificate,
+      error: false
     };
   } catch (error) {
-    console.error("Error adding certificate:", error);
-    throw new Error(
-      error instanceof Error ? error.message : "Failed to add certificate",
-    );
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+    console.error("Error adding certificate:", errorMessage);
+    return {
+      message: errorMessage,
+      error: true
+    };
   }
 }
