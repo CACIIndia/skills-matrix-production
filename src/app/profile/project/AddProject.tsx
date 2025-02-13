@@ -15,6 +15,7 @@ type AddProjectModalProps = {
   editData?: any;
 };
 
+
 const AddProject: React.FC<AddProjectModalProps> = ({
   handleClose,
   projects,
@@ -46,10 +47,17 @@ const AddProject: React.FC<AddProjectModalProps> = ({
         .typeError("Please enter a valid date")
         .required("From date is required"),
 
-      endDate: Yup.date()
+        endDate: Yup.date()
         .typeError("Please enter a valid date")
-        .required("To date is required")
-        .min(Yup.ref("startDate"), "To date must be after from date"),
+        .when("isCurrentProject", {
+          is: false,
+          then: (schema) =>
+            schema
+              .required("To date is required")
+              .min(Yup.ref("startDate"), "To date must be after from date"),
+          otherwise: (schema) => schema.notRequired(), 
+        }),
+        
     }),
 
     onSubmit: async (values) => {
@@ -134,6 +142,31 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             )}
           </div>
         </div>
+        <div className='flex items-center gap-2'>
+          <span className='text-sm font-medium text-gray-700'>
+            Currently working on this project
+          </span>
+          <button
+            type='button'
+            onClick={() =>
+              formik.setFieldValue(
+                "isCurrentProject",
+                !formik.values.isCurrentProject,
+              )
+            }
+            className={`relative flex h-6 w-12 items-center rounded-full transition-all duration-300 ${
+              formik.values.isCurrentProject ? "bg-[#1b84ff]" : "bg-gray-400"
+            }`}
+          >
+            <span
+              className={`absolute left-1 h-4 w-4 rounded-full bg-white shadow-md transition-transform duration-300 ${
+                formik.values.isCurrentProject
+                  ? "translate-x-6"
+                  : "translate-x-0"
+              }`}
+            ></span>
+          </button>
+        </div>
 
         <div className='flex flex-col sm:flex-row sm:gap-4'>
           <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
@@ -184,7 +217,13 @@ const AddProject: React.FC<AddProjectModalProps> = ({
           </div>
         </div>
 
-        <div className='flex flex-col sm:flex-row sm:gap-4'>
+        <div
+          className={`flex flex-col transition-all duration-300 sm:flex-row sm:gap-4 ${
+            formik.values.isCurrentProject
+              ? "h-0 scale-95 overflow-hidden opacity-0"
+              : "h-auto scale-100 opacity-100"
+          }`}
+        >
           <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
             To Date<span className='text-red-500'>*</span>
           </label>
@@ -202,27 +241,10 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             )}
           </div>
         </div>
+
         {/* isCurrentProject Checkbox */}
         {/* isCurrentProject Toggle Button */}
-        <div className='flex items-center gap-2'>
-          <span className='text-sm font-medium text-gray-700'>
-            Currently working on this project
-          </span>
-          <button
-            type='button'
-            onClick={() =>
-              formik.setFieldValue(
-                "isCurrentProject",
-                !formik.values.isCurrentProject,
-              )
-            }
-            className={`relative flex h-6 w-12 items-center rounded-full transition-all ${formik.values.isCurrentProject ? "bg-[#1b84ff]" : "bg-gray-400"}`}
-          >
-            <span
-              className={`absolute left-1 h-4 w-4 rounded-full bg-white shadow-md transition-transform ${formik.values.isCurrentProject ? "translate-x-6" : "translate-x-0"}`}
-            ></span>
-          </button>
-        </div>
+        
 
         <div className='flex justify-end gap-4 bg-white p-4'>
           <button
