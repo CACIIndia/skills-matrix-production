@@ -19,12 +19,8 @@ export const fullUserInclude =(userId: string)=> Prisma.validator<Prisma.UserInc
     include:{
       project: {
         include: {
-          profiles: {
-            where:{
-              employeeId: {
-                not: userId
-              }
-            }
+          profiles:{
+            distinct: ["employeeId"]
           }
         }
       }
