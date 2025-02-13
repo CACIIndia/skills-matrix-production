@@ -4,8 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 
 const useAddProject = () => {
   return useMutation({
-    mutationFn: addProject,
-    throwOnError: true,
+    mutationFn: addProject
   });
 };
 

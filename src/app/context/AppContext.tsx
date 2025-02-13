@@ -13,8 +13,6 @@ import useGetProfile from "@/lib/hooks/profile/useGetProfile";
 import useGetSkills from "@/lib/hooks/profile/useGetSkills";
 import { SkillCategory } from "@/lib/types/profile";
 
-
-
 type State = {
   profile: any;
   setProfile: Dispatch<SetStateAction<any>>;
@@ -28,7 +26,9 @@ type State = {
   categorySkills: any;
   setSelectedItems: Dispatch<SetStateAction<SkillCategory[]>>;
   removeAllSelectedSkills: () => void;
-  addProject:()=>void;
+  addProject: (data: any) => void;
+  replaceEditedProject: (data: any) => void;
+  removeDeletedProject: (id: any) => void;
 };
 
 // Create the context
@@ -38,13 +38,13 @@ type AppProviderProps = {
   children: ReactNode;
 };
 
-
 export const AppProvider = ({ children }: AppProviderProps) => {
   const { data: session } = useSession();
-  const { data: profileData, isLoading } = useGetProfile(session?.user?.id ?? "");
+  const { data: profileData, isLoading } = useGetProfile(
+    session?.user?.id ?? "",
+  );
   const [selectedItems, setSelectedItems] = useState<SkillCategory[]>([]);
   const { data: categorySkills } = useGetSkills();
-  
 
   const [profile, setProfile] = useState<any>();
   const [viewedProfile, setViewedProfile] = useState<any>();
@@ -65,29 +65,46 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
   const removeSelectedItem = (id: SkillCategory["id"]) => {
     setSelectedItems((prevSelected) =>
-      prevSelected.filter((item) => item.id !== id)
+      prevSelected.filter((item) => item.id !== id),
     );
   };
-  
+
   const removeAllSelectedSkills = () => {
-    setSelectedItems((prevSelected)=> [])
-  }
-  
+    setSelectedItems((prevSelected) => []);
+  };
+
   useEffect(() => {
     if (profileData) {
       setProfile(profileData?.user);
     }
   }, [profileData]);
 
-  const addProject = (projects:any)=>{
-    if(projects){
-      setProfile({...profile,projects})
+  const addProject = (projects: any) => {
+    if (projects) {
+      setProfile({ ...profile, projects });
     }
+  };
 
+  const replaceEditedProject = (editedProject: any) => {
+    if (profile) {
+      const newProjects = profile.projects.map((project: any) => {
+        if (project.id === editedProject.id) {
+          return { ...project, ...editedProject };
+        }
+        return project;
+      });
+      setProfile({ ...profile, projects: newProjects });
+    }
+  };
 
-  }
-
-
+  const removeDeletedProject = (deletedProjectId: any) => {
+    if (profile) {
+      const newProjects = profile.projects.filter(
+        (project: any) => project.id !== deletedProjectId,
+      );
+      setProfile({ ...profile, projects: newProjects });
+    }
+  };
 
   return (
     <AppContext.Provider
@@ -104,11 +121,12 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         removeSelectedItem,
         setSelectedItems,
         removeAllSelectedSkills,
-        addProject
+        addProject,
+        replaceEditedProject,
+        removeDeletedProject
       }}
     >
       {children}
-      
     </AppContext.Provider>
   );
 };

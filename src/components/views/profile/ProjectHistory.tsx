@@ -4,18 +4,29 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import defaultImage from "../../../../public/assets/media/avatars/default-image.png";
 import { CiSquarePlus } from "react-icons/ci";
+import EditIcon from "@/components/custom-icons/EditIcon";
+import DeleteIcon from "@/components/custom-icons/DeleteIcon";
+import useDeleteProject from "@/lib/hooks/profile/projects/useDeleteProjects";
+import toast from "react-hot-toast";
+import { useAppContext } from "@/app/context/AppContext";
 
 type ProjectHistoryCardProps = {
   projects: Project[];
   setIsOpen: (isOpen: boolean) => void;
+  setIsEdit: (isOpen: boolean) => void;
+  setEditData: (data: any) => void;
   isOpen: boolean;
 };
 
 const ProjectHistoryCard = ({
   projects,
   setIsOpen,
+  setIsEdit,
+  setEditData,
   isOpen,
 }: ProjectHistoryCardProps) => {
+  const mutationDelete = useDeleteProject();
+  const {removeDeletedProject} = useAppContext();
   const currentProject =
     projects?.filter((project) => project.isCurrentProject) || [];
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -31,8 +42,22 @@ const ProjectHistoryCard = ({
     }
   }, [selectedProject]);
 
+  const deleteProject = async (profileId: string) => {
+    try {
+     let result = await mutationDelete?.mutateAsync({ profileId });
+      removeDeletedProject(profileId);
+      toast.success(`Project Deleted Successfully`);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unexpected error occurred");
+      }
+    }
+  };
+
   return (
-    <div className='relative flex flex-col md:flex-row overflow-auto max-h-screen'>
+    <div className='relative flex max-h-screen flex-col overflow-auto md:flex-row'>
       <div
         className={`transition-all duration-300 ${selectedProject ? "md:w-2/3" : "w-full"}`}
       >
@@ -41,7 +66,11 @@ const ProjectHistoryCard = ({
             <h3 className='card-title'>Projects History</h3>
             <h3 className='card-title'>
               <button
-                onClick={() => (setIsOpen ? setIsOpen(!isOpen) : "")}
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                  setIsEdit(false);
+                  setEditData({});
+                }}
                 className='btn btn-sm btn-icon btn-clear btn-primary'
               >
                 <CiSquarePlus size={32} />
@@ -76,8 +105,8 @@ const ProjectHistoryCard = ({
                         </span>
                       </div>
                       <div className='card p-4 shadow-none'>
-                        <div className='flex flex-wrap gap-2.5'>
-                          <i className='ki-filled ki-code text-info text-lg'></i>
+                        <div className='flex gap-2.5'>
+                          <i className='ki-filled ki-code text-info mt-[3px] text-lg'></i>
                           <div className='flex grow flex-col gap-5'>
                             <div className='flex flex-wrap items-center justify-between'>
                               <div className='flex flex-col gap-0.5'>
@@ -87,6 +116,24 @@ const ProjectHistoryCard = ({
                                 <span className='text-xs font-medium text-gray-500'>
                                   {item.description}
                                 </span>
+                              </div>
+                              <div className='flex gap-2.5'>
+                                <div
+                                  className='cursor-pointer'
+                                  onClick={() => {
+                                    setIsOpen(true);
+                                    setIsEdit(true);
+                                    setEditData(item);
+                                  }}
+                                >
+                                  <EditIcon />
+                                </div>
+                                <div
+                                  className='cursor-pointer'
+                                  onClick={() => deleteProject(item.id)}
+                                >
+                                  <DeleteIcon />
+                                </div>
                               </div>
                             </div>
 
@@ -177,8 +224,8 @@ const ProjectHistoryCard = ({
                         </span>
                       </div>
                       <div className='card p-4 shadow-none'>
-                        <div className='flex flex-wrap gap-2.5'>
-                          <i className='ki-filled ki-code text-info text-lg'></i>
+                        <div className='flex gap-2.5'>
+                          <i className='ki-filled ki-code text-info mt-[3px] text-lg'></i>
                           <div className='flex grow flex-col gap-5'>
                             <div className='flex flex-wrap items-center justify-between'>
                               <div className='flex flex-col gap-0.5'>
@@ -188,6 +235,24 @@ const ProjectHistoryCard = ({
                                 <span className='text-xs font-medium text-gray-500'>
                                   {item.description}
                                 </span>
+                              </div>
+                              <div className='flex gap-2.5'>
+                                <div
+                                  className='cursor-pointer'
+                                  onClick={() => {
+                                    setIsOpen(true);
+                                    setIsEdit(true);
+                                    setEditData(item);
+                                  }}
+                                >
+                                  <EditIcon />
+                                </div>
+                                <div
+                                  className='cursor-pointer'
+                                  onClick={() => deleteProject(item.id)}
+                                >
+                                  <DeleteIcon />
+                                </div>
                               </div>
                             </div>
                             <div className='gap-7.5 flex flex-wrap'>
@@ -259,8 +324,7 @@ const ProjectHistoryCard = ({
       </div>
       {selectedProject && (
         <div
-          className={`card w-full border bg-white
-            300 md:relative md:w-1/3 mt-4 md:mt-0 md:ml-4`}
+          className={`card 300 mt-4 w-full border bg-white md:relative md:ml-4 md:mt-0 md:w-1/3`}
         >
           {" "}
           <div className='card-header flex justify-between'>
@@ -314,5 +378,3 @@ const ProjectHistoryCard = ({
 };
 
 export default ProjectHistoryCard;
-
-
