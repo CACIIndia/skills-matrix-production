@@ -19,6 +19,9 @@ export type Project = {
   code: string;
   isCurrentProject: boolean;
   userId: string;
+  project?:any;
+  roleInProject: string;
+  member:any;
 };
 
 export type AdditionalInfo = {

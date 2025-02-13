@@ -57,7 +57,7 @@ export default function ProjectPage() {
       >
         <AddProject
           handleClose={() => setIsOpen(false)}
-          projects={projects}
+          projects={(projects || []).map(project => ({ ...project, code: project.code || '' }))}
           isEdit={isEdit}
           editData={editData}
         />
