@@ -34,6 +34,8 @@ export const DEFAULT_USER_DETAILS: UserDetails = {
     code: "",
     isCurrentProject: false,
     userId: "",
+    roleInProject:"",
+    member:[]
   },
   emailVerified: "",
   joiningDate: "",

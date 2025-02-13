@@ -15,7 +15,7 @@ type ModalProps = {
   handler?: () => void;
   customWidth?: string;
   isFromAddProject?: boolean;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
 };
 
 const Modal = ({

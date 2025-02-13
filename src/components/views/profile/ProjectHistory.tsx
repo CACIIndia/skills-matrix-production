@@ -160,7 +160,7 @@ const ProjectHistoryCard = ({
                                   </span>
 
                                   <div className='flex -space-x-2'>
-                                    {displayedMembers?.map((member) => (
+                                    {displayedMembers?.map((member:any) => (
                                       <div
                                         key={member.id}
                                         className='flex cursor-pointer'
@@ -279,7 +279,7 @@ const ProjectHistoryCard = ({
                                     </span>
 
                                     <div className='flex -space-x-2'>
-                                      {displayedMembers?.map((member) => (
+                                      {displayedMembers?.map((member:any) => (
                                         <div
                                           onClick={() =>
                                             setSelectedProject(item)
@@ -365,7 +365,7 @@ const ProjectHistoryCard = ({
               ✕
             </button>
           </div>
-          {selectedProject.project?.profiles?.map((member, index) => (
+          {selectedProject.project?.profiles?.map((member:any, index:number) => (
             <div
               ref={memberListRef}
               key={member?.id}
