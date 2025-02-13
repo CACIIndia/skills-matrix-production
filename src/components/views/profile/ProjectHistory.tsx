@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Project } from "@/lib/types/profile";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import defaultImage from "../../../../public/assets/media/avatars/default-image.png";
 import { CiSquarePlus } from "react-icons/ci";
 import EditIcon from "@/components/custom-icons/EditIcon";
@@ -9,6 +9,7 @@ import DeleteIcon from "@/components/custom-icons/DeleteIcon";
 import useDeleteProject from "@/lib/hooks/profile/projects/useDeleteProjects";
 import toast from "react-hot-toast";
 import { useAppContext } from "@/app/context/AppContext";
+import { getFormattedDate } from "@/components/common/Date-Handling/DateFormat";
 
 type ProjectHistoryCardProps = {
   projects: Project[];
@@ -16,6 +17,7 @@ type ProjectHistoryCardProps = {
   setIsEdit: (isOpen: boolean) => void;
   setEditData: (data: any) => void;
   isOpen: boolean;
+  joiningDate: string | null;
 };
 
 const ProjectHistoryCard = ({
@@ -24,9 +26,10 @@ const ProjectHistoryCard = ({
   setIsEdit,
   setEditData,
   isOpen,
+  joiningDate,
 }: ProjectHistoryCardProps) => {
   const mutationDelete = useDeleteProject();
-  const {removeDeletedProject} = useAppContext();
+  const { removeDeletedProject } = useAppContext();
   const currentProject =
     projects?.filter((project) => project.isCurrentProject) || [];
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -44,7 +47,7 @@ const ProjectHistoryCard = ({
 
   const deleteProject = async (profileId: string) => {
     try {
-     let result = await mutationDelete?.mutateAsync({ profileId });
+      let result = await mutationDelete?.mutateAsync({ profileId });
       removeDeletedProject(profileId);
       toast.success(`Project Deleted Successfully`);
     } catch (error: unknown) {
@@ -98,9 +101,9 @@ const ProjectHistoryCard = ({
                           Working in {item.projectName}
                         </span>
                         <span className='text-xs font-medium text-gray-500'>
-                          {new Date(item.startDate).toLocaleDateString()} -{" "}
+                          {getFormattedDate(item.startDate)} -{" "}
                           {item.endDate
-                            ? new Date(item.endDate).toLocaleDateString()
+                            ? getFormattedDate(item.endDate)
                             : "Ongoing"}
                         </span>
                       </div>
@@ -206,113 +209,137 @@ const ProjectHistoryCard = ({
                 const remainingMembersCount =
                   members.length - displayedMembers?.length;
                 return (
-                  <div key={index} className='relative flex items-start'>
-                    <div className='absolute bottom-0 left-0 top-9 w-9 translate-x-1/2 border-l border-l-gray-300'></div>
-                    <div className='flex size-9 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-gray-600'>
-                      <i className='ki-filled ki-calendar text-base'></i>
-                    </div>
-                    <div className='text-md mb-7 grow pl-2.5'>
-                      <div className='flex flex-col pb-2.5'>
-                        <span className='text-sm font-medium text-gray-700'>
-                          Worked in {item.projectName}
-                        </span>
-                        <span className='text-xs font-medium text-gray-500'>
-                          {new Date(item.startDate).toLocaleDateString()} -{" "}
-                          {item.endDate
-                            ? new Date(item.endDate).toLocaleDateString()
-                            : "Ongoing"}
-                        </span>
+                  <Fragment key={index}>
+                    <div key={index} className='relative flex items-start'>
+                      <div className='absolute bottom-0 left-0 top-9 w-9 translate-x-1/2 border-l border-l-gray-300'></div>
+                      <div className='flex size-9 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-gray-600'>
+                        <i className='ki-filled ki-calendar text-base'></i>
                       </div>
-                      <div className='card p-4 shadow-none'>
-                        <div className='flex gap-2.5'>
-                          <i className='ki-filled ki-code text-info mt-[3px] text-lg'></i>
-                          <div className='flex grow flex-col gap-5'>
-                            <div className='flex flex-wrap items-center justify-between'>
-                              <div className='flex flex-col gap-0.5'>
-                                <span className='text-md mb-px cursor-pointer font-semibold capitalize text-gray-900 hover:text-primary'>
-                                  {item.roleInProject}
-                                </span>
-                                <span className='text-xs font-medium text-gray-500'>
-                                  {item.description}
-                                </span>
-                              </div>
-                              <div className='flex gap-2.5'>
-                                <div
-                                  className='cursor-pointer'
-                                  onClick={() => {
-                                    setIsOpen(true);
-                                    setIsEdit(true);
-                                    setEditData(item);
-                                  }}
-                                >
-                                  <EditIcon />
-                                </div>
-                                <div
-                                  className='cursor-pointer'
-                                  onClick={() => deleteProject(item.id)}
-                                >
-                                  <DeleteIcon />
-                                </div>
-                              </div>
-                            </div>
-                            <div className='gap-7.5 flex flex-wrap'>
-                              <div className='flex items-center gap-1.5'>
-                                <span className='text-2sm font-medium text-gray-500'>
-                                  Code:
-                                </span>
-                                <Link
-                                  className='text-2sm font-semibold text-primary'
-                                  href='#'
-                                >
-                                  {projectCode}
-                                </Link>
-                              </div>
-
-                              {members?.length > 0 && (
-                                <div className='flex items-center gap-1.5'>
-                                  <span className='text-2sm font-medium text-gray-500'>
-                                    Members:
+                      <div className='text-md mb-7 grow pl-2.5'>
+                        <div className='flex flex-col pb-2.5'>
+                          <span className='text-sm font-medium text-gray-700'>
+                            Worked in {item.projectName}
+                          </span>
+                          <span className='text-xs font-medium text-gray-500'>
+                            {getFormattedDate(item.startDate)} -{" "}
+                            {item.endDate
+                              ? getFormattedDate(item.endDate)
+                              : "Ongoing"}
+                          </span>
+                        </div>
+                        <div className='card p-4 shadow-none'>
+                          <div className='flex gap-2.5'>
+                            <i className='ki-filled ki-code text-info mt-[3px] text-lg'></i>
+                            <div className='flex grow flex-col gap-5'>
+                              <div className='flex flex-wrap items-center justify-between'>
+                                <div className='flex flex-col gap-0.5'>
+                                  <span className='text-md mb-px cursor-pointer font-semibold capitalize text-gray-900 hover:text-primary'>
+                                    {item.roleInProject}
                                   </span>
-
-                                  <div className='flex -space-x-2'>
-                                    {displayedMembers?.map((member) => (
-                                      <div
-                                        onClick={() => setSelectedProject(item)}
-                                        key={member.id}
-                                        className='flex cursor-pointer'
-                                      >
-                                        <Image
-                                          className='hover:z-5 ring-light-light relative size-7 shrink-0 rounded-full ring-1'
-                                          src={
-                                            member?.employeeImage ||
-                                            defaultImage
-                                          }
-                                          alt={member?.employeeName}
-                                          width={28}
-                                          height={28}
-                                        />
-                                      </div>
-                                    ))}
-                                    {remainingMembersCount > 0 && (
-                                      <div
-                                        onClick={() => setSelectedProject(item)}
-                                        className='flex cursor-pointer'
-                                      >
-                                        <span className='hover:z-5 text-3xs text-primary-inverse relative inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary font-semibold leading-none ring-1 ring-primary-light'>
-                                          +{remainingMembersCount}
-                                        </span>
-                                      </div>
-                                    )}
+                                  <span className='text-xs font-medium text-gray-500'>
+                                    {item.description}
+                                  </span>
+                                </div>
+                                <div className='flex gap-2.5'>
+                                  <div
+                                    className='cursor-pointer'
+                                    onClick={() => {
+                                      setIsOpen(true);
+                                      setIsEdit(true);
+                                      setEditData(item);
+                                    }}
+                                  >
+                                    <EditIcon />
+                                  </div>
+                                  <div
+                                    className='cursor-pointer'
+                                    onClick={() => deleteProject(item.id)}
+                                  >
+                                    <DeleteIcon />
                                   </div>
                                 </div>
-                              )}
+                              </div>
+                              <div className='gap-7.5 flex flex-wrap'>
+                                <div className='flex items-center gap-1.5'>
+                                  <span className='text-2sm font-medium text-gray-500'>
+                                    Code:
+                                  </span>
+                                  <Link
+                                    className='text-2sm font-semibold text-primary'
+                                    href='#'
+                                  >
+                                    {projectCode}
+                                  </Link>
+                                </div>
+
+                                {members?.length > 0 && (
+                                  <div className='flex items-center gap-1.5'>
+                                    <span className='text-2sm font-medium text-gray-500'>
+                                      Members:
+                                    </span>
+
+                                    <div className='flex -space-x-2'>
+                                      {displayedMembers?.map((member) => (
+                                        <div
+                                          onClick={() =>
+                                            setSelectedProject(item)
+                                          }
+                                          key={member.id}
+                                          className='flex cursor-pointer'
+                                        >
+                                          <Image
+                                            className='hover:z-5 ring-light-light relative size-7 shrink-0 rounded-full ring-1'
+                                            src={
+                                              member?.employeeImage ||
+                                              defaultImage
+                                            }
+                                            alt={member?.employeeName}
+                                            width={28}
+                                            height={28}
+                                          />
+                                        </div>
+                                      ))}
+                                      {remainingMembersCount > 0 && (
+                                        <div
+                                          onClick={() =>
+                                            setSelectedProject(item)
+                                          }
+                                          className='flex cursor-pointer'
+                                        >
+                                          <span className='hover:z-5 text-3xs text-primary-inverse relative inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary font-semibold leading-none ring-1 ring-primary-light'>
+                                            +{remainingMembersCount}
+                                          </span>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                              {/* Members section can be added here if needed */}
                             </div>
-                            {/* Members section can be added here if needed */}
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                    {joiningDate && (
+                      <div className='relative flex items-start'>
+                        <div className='absolute bottom-0 left-0 top-9 w-9 translate-x-1/2 border-l border-l-gray-300'></div>
+                        <div className='flex size-9 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-gray-600'>
+                          <i className='ki-filled ki-entrance-left text-base'></i>
+                        </div>
+                        <div className='text-md mb-7 grow pl-2.5'>
+                          <div className='flex flex-col'>
+                            <div className='text-sm font-medium text-gray-800'>
+                              Joined in CACI
+                            </div>
+                            <span className='text-xs font-medium text-gray-500'>
+                              {getFormattedDate(joiningDate)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </Fragment>
                 );
               })}
             </div>
