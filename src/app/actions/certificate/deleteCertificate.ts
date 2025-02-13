@@ -9,6 +9,7 @@ import { getAzureConfig } from "@/lib/azure";
 type DeleteCertificateResponse = {
   message: string;
   success: boolean;
+  error: boolean
 };
 
 export async function deleteCertificate(
@@ -56,11 +57,15 @@ export async function deleteCertificate(
     return {
       message: "Certificate deleted successfully",
       success: true,
+      error: false
     };
   } catch (error) {
-    console.error("Error deleting certificate:", error);
-    throw new Error(
-      error instanceof Error ? error.message : "Failed to delete certificate",
-    );
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+    console.error("Error deleting certificate:", errorMessage);
+    return {
+      message: errorMessage,
+      success: false,
+      error: true
+    };
   }
 }

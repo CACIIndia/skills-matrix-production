@@ -18,7 +18,8 @@ type TrainingEditData = {
 
 type EditTrainingResponse = {
   message: string;
-  training: {
+  error:boolean;
+  training?: {
     id: string;
     categoryId: string;
     categoryName: string;
@@ -77,9 +78,14 @@ export async function editTraining(trainingId :string,data: TrainingEditData): P
     return {
       message: "Training updated successfully",
       training: updatedTraining,
+      error:false
     };
   } catch (error) {
-    console.error("Error updating training:", error);
-    throw new Error("Failed to update training. Please try again.");
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+    console.error("Error updating training:", errorMessage);
+    return {
+      message: errorMessage,
+      error: true
+    };
   }
 }

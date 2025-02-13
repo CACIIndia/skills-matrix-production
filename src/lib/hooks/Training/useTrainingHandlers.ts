@@ -16,6 +16,9 @@ export const useTrainingHandlers = (userId: string, refetch: () => void) => {
     const toastId = toast.loading("Please wait...");
     try {
       const result = await addTraining(TrainingData);
+      if(result.error){
+          throw new Error(result.message);
+      }
       
       invalidate();
       closeModal();
@@ -40,6 +43,10 @@ export const useTrainingHandlers = (userId: string, refetch: () => void) => {
 
     try {
       const result = await deleteTraining(trainingId);
+      if(result.error){
+        throw new Error(result.message);
+      }
+    
       console.log(result, "Delete result");
 
       invalidate();
@@ -60,6 +67,9 @@ export const useTrainingHandlers = (userId: string, refetch: () => void) => {
 
     try {
       const result = await editTraining(editingId,updatedTrainingData);
+      if(result.error){
+        throw new Error(result.message);
+      }
 
       invalidate();
       toast.success(result.message, { id: toastId });

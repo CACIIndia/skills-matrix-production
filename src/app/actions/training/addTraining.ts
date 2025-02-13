@@ -18,7 +18,8 @@ type TrainingAddData = {
 
 type AddTrainingResponse = {
   message: string;
-  training: {
+  error:boolean;
+  training?: {
     id: string;
     categoryId: string;
     categoryName: string;
@@ -74,13 +75,14 @@ export async function addTraining(data: TrainingAddData): Promise<AddTrainingRes
     return {
       message: "Training added successfully",
       training: newTraining,
+      error:false
     };
   } catch (error: unknown) {
-    console.error("Error adding training:", error);
-    if (error instanceof Error) {
-      throw new Error(error.message || "Failed to add training");
-    } else {
-      throw new Error("Failed to add training");
-    }
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+    console.error("Error adding training:", errorMessage);
+    return {
+      message: errorMessage,
+      error: true
+    };
   }
 }
