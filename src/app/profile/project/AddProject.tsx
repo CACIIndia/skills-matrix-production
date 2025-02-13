@@ -80,8 +80,10 @@ const AddProject: React.FC<AddProjectModalProps> = ({
     },
   });
 
-  // Handle form submission
-  const handleSubmit = async (values: typeof formik.values) => {
+  const handleSubmit = async (values: any) => {
+    const toastId = toast.loading(
+      `${isEdit ? "Editing" : "Submitting"} Project...`,
+    );
     try {
       const selectedProject = projects.find((project) => project.name === values.projectName);
 
@@ -103,12 +105,16 @@ const AddProject: React.FC<AddProjectModalProps> = ({
     };
 
       const result = isEdit ? await mutationEdit.mutateAsync(payload) : await mutationAdd.mutateAsync(payload);
-      toast.success(`Project ${isEdit ? "Edited" : "Added"} Successfully`);
+      toast.success(`Project ${isEdit ? "Edited" : "Added"} Successfully`, {
+        id: toastId,
+      });
       
       isEdit ? replaceEditedProject(result) : addProject(result);
       handleClose();
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : "An unexpected error occurred");
+      toast.error(error instanceof Error ? error.message : "An unexpected error occurred", {
+        id: toastId,
+      });
     }
   };
 
@@ -169,7 +175,6 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             ></span>
           </button>
         </div>
-
         <div className='flex flex-col sm:flex-row sm:gap-4'>
           <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
             Role<span className='text-red-500'>*</span>
@@ -214,7 +219,6 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             )}
           </div>
         </div>
-
         <div
           className={`flex flex-col transition-all duration-300 sm:flex-row sm:gap-4 ${
             formik.values.isCurrentProject

@@ -352,6 +352,7 @@ const ProjectHistoryCard = ({
       {selectedProject && (
         <div
           className={`card 300 mt-4 w-full border bg-white md:relative md:ml-4 md:mt-0 md:w-1/3`}
+          style={{ maxHeight: "79vh", minHeight: "200px", overflowY:"auto"}} // Ensure visibility
         >
           {" "}
           <div className='card-header flex justify-between'>
