@@ -5,6 +5,7 @@ import { getSession } from "@/lib/auth";
 type DeleteTrainingResponse = {
   message: string;
   trainingId: string;
+  error:boolean;
 };
 
 export async function deleteTraining(trainingId: string): Promise<DeleteTrainingResponse> {
@@ -40,9 +41,15 @@ export async function deleteTraining(trainingId: string): Promise<DeleteTraining
     return {
       message: "Training deleted successfully",
       trainingId,
+      error:false
     };
   } catch (error) {
-    console.error("Error deleting training:", error);
-    throw new Error("Failed to delete training. Please try again.");
+    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+    console.error("Error deleting training:", errorMessage);
+    return {
+      message: errorMessage,
+      error: true,
+      trainingId
+    };
   }
 }
