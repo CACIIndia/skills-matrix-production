@@ -7,7 +7,6 @@ import useAddProject from "@/lib/hooks/profile/projects/useAddProjects";
 import toast from "react-hot-toast";
 import { useAppContext } from "@/app/context/AppContext";
 import useEditProject from "@/lib/hooks/profile/projects/useEditProject";
-import DatePicker from "react-datepicker";
 
 type AddProjectModalProps = {
   handleClose: () => void;
@@ -35,8 +34,8 @@ const AddProject: React.FC<AddProjectModalProps> = ({
     initialValues: {
       projectName: editData?.projectName || "",
       roleInProject: editData?.roleInProject || "",
-      startDate: editData?.startDate ? new Date(editData.startDate) : null,
-      endDate: editData?.endDate ? new Date(editData.endDate) : null,
+      startDate: formatDate(editData?.startDate) || "",
+      endDate: formatDate(editData?.endDate) || "",
       isCurrentProject: editData?.isCurrentProject || false,
     },
     validationSchema: Yup.object({
@@ -171,7 +170,6 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             ></span>
           </button>
         </div>
-
         <div className='flex flex-col sm:flex-row sm:gap-4'>
           <label className='mb-1 block text-sm font-medium text-gray-700 sm:w-1/3'>
             Role<span className='text-red-500'>*</span>
@@ -206,24 +204,19 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             From Date<span className='text-red-500'>*</span>
           </label>
           <div className='flex-1'>
-            <DatePicker
-              selected={formik.values.startDate}
-              onBlur={formik.handleBlur}
+            <input
+              type='date'
               name='startDate'
-              onChange={(date) => formik.setFieldValue("startDate", date)}
-              className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-              dateFormat='yyyy-MM-dd'
-              showYearDropdown
-              showMonthDropdown
-              dropdownMode='scroll'
-              scrollableYearDropdown
+              value={formik.values.startDate}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              className='w-full border p-2'
             />
             {formik.touched.startDate && formik.errors.startDate && (
               <p className='text-sm text-red-500'>{formik.errors.startDate}</p>
             )}
           </div>
         </div>
-
         <div
           className={`flex flex-col transition-all duration-300 sm:flex-row sm:gap-4 ${
             formik.values.isCurrentProject
@@ -235,25 +228,19 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             To Date<span className='text-red-500'>*</span>
           </label>
           <div className='flex-1'>
-            <DatePicker
-              selected={formik.values.endDate}
+            <input
+              type='date'
               name='endDate'
-              onChange={(date) => formik.setFieldValue("endDate", date)}
+              value={formik.values.endDate}
+              onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className='w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
-              dateFormat='yyyy-MM-dd'
-              showYearDropdown
-              showMonthDropdown
-              dropdownMode='scroll'
-              scrollableYearDropdown
-              portalId="root-portal" 
+              className='w-full border p-2'
             />
             {formik.touched.endDate && formik.errors.endDate && (
               <p className='text-sm text-red-500'>{formik.errors.endDate}</p>
             )}
           </div>
-        </div>
-
+        </div>{" "}
         <div className='flex justify-end gap-4 bg-white p-4'>
           <button
             onClick={() => handleClose()}
@@ -266,8 +253,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             {isEdit ? "Update" : "Submit"}
           </button>
         </div>
-      </form>
-      {/* Buttons at the Bottom Inside Modal */}
+      </form>{" "}
     </div>
   );
 };
