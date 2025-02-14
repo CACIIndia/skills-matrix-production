@@ -35,9 +35,10 @@ export default function ProjectPage() {
               setIsEdit(false);
               setIsOpen(true);
             }}
-            className='relative mb-[4px] mr-[10px] rounded-[4px] bg-[#0d6efd] p-[6px] text-white transition duration-300 hover:bg-blue-700'
+            className='relative mb-[4px] mr-[10px] rounded-[4px] bg-[#0d6efd] p-[6px] text-white transition duration-300  btn-primary hover:bg-blue-700'
           >
             <div className='flex items-center justify-center space-x-1'>
+               <HiOutlineDocumentAdd className='h-6 w-6' />
               <div>Add Project</div>
             </div>
           </button>
