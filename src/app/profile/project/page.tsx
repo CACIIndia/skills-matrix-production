@@ -8,10 +8,11 @@ import ProjectHistoryCard from "@/components/views/profile/ProjectHistory";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 import { FaRegEdit } from "react-icons/fa";
 import useGetProjectRoles from "@/lib/hooks/profile/projects/useGetProjectRoles";
+import { getFormattedDate } from "@/components/common/Date-Handling/DateFormat";
 
 export default function ProjectPage() {
   const { data: projects } = useGetProjects();
-   const { data: projectRoles } = useGetProjectRoles();
+  const { data: projectRoles } = useGetProjectRoles();
   const { profile } = useAppContext();
   const [isOpen, setIsOpen] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
@@ -21,7 +22,13 @@ export default function ProjectPage() {
   return (
     <>
       {profile?.projects?.length === 0 && (
-        <div className='flex h-[40vh] items-center justify-center'>
+        <div className='flex h-[40vh] flex-col items-center justify-center space-y-4 flex-wrap'>
+          <div>No projects found, still some work to do...😄</div>
+          {joiningDate && (
+            <div>
+              <h1>Joined in CACI: <span className="font-semibold">{getFormattedDate(joiningDate)}</span></h1>
+            </div>
+          )}
           <button
             onClick={() => {
               setEditData({});
@@ -57,12 +64,19 @@ export default function ProjectPage() {
         customWidth='w-[100%] lg:w-[40%] h-auto lg:h-auto'
         isFromAddProject={true}
         icon={
-        isEdit ? <FaRegEdit className='h-5 w-5 text-blue-500' /> :
-        <HiOutlineDocumentAdd className='h-6 w-6 text-blue-500' />}
+          isEdit ? (
+            <FaRegEdit className='h-5 w-5 text-blue-500' />
+          ) : (
+            <HiOutlineDocumentAdd className='h-6 w-6 text-blue-500' />
+          )
+        }
       >
         <AddProject
           handleClose={() => setIsOpen(false)}
-          projects={(projects || []).map(project => ({ ...project, code: project.code || '' }))}
+          projects={(projects || []).map((project) => ({
+            ...project,
+            code: project.code || "",
+          }))}
           isEdit={isEdit}
           editData={editData}
           projectRoles={projectRoles || []}
