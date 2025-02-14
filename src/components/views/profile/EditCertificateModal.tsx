@@ -361,6 +361,7 @@ const EditCertificateModal: React.FC<EditCertificateModalProps> = ({
                   onKeyDown={(e) => e.preventDefault()}
                   showYearDropdown
                   showMonthDropdown
+                  maxDate={new Date()}
                 />
                 {formik.touched.obtainedDate && formik.errors.obtainedDate && (
                   <p className='text-sm text-red-500'>
