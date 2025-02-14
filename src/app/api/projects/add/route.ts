@@ -57,13 +57,7 @@ export async function POST(req: Request) {
           include: {
             project: {
               include: {
-                profiles: {
-                  where: {
-                    employeeId: {
-                      not: body.employeeId,
-                    },
-                  },
-                },
+                profiles: true
               },
             },
           },
