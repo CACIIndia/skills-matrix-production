@@ -216,7 +216,8 @@ const EditTraining = ({
                 selected={formik.values.fromDate}
                 onChange={(date) => formik.setFieldValue("fromDate", date)}
                 className='w-full rounded-md border border-gray-300 p-2'
-                dateFormat='yyyy/MM/dd'
+                dateFormat='dd-MM-yyyy'
+                onKeyDown={(e) => e.preventDefault()}
                 placeholderText='Select date'
                 maxDate={new Date()}
               />
@@ -235,7 +236,8 @@ const EditTraining = ({
                 selected={formik.values.toDate}
                 onChange={(date) => formik.setFieldValue("toDate", date)}
                 className='w-full rounded-md border border-gray-300 p-2'
-                dateFormat='yyyy/MM/dd'
+                dateFormat='dd-MM-yyyy'
+                onKeyDown={(e) => e.preventDefault()}
                 placeholderText='Select date'
                 minDate={formik?.values?.fromDate || new Date()}
               />

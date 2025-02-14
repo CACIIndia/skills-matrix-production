@@ -14,6 +14,8 @@ type ModalProps = {
   buttonText?: string;
   handler?: () => void;
   customWidth?: string;
+  isFromAddProject?: boolean;
+  icon?: React.ReactNode;
 };
 
 const Modal = ({
@@ -24,6 +26,8 @@ const Modal = ({
   buttonText,
   handler,
   customWidth,
+  isFromAddProject = false,
+  icon = null,
 }: ModalProps) => {
   const onClose = () => setIsOpen(!isOpen);
 
@@ -35,19 +39,22 @@ const Modal = ({
     >
       <DialogBackdrop className='fixed inset-0 bg-black/30' />
 
-      <div className='fixed inset-0 z-10 w-full h-screen overflow-y-auto'>
-        <div className='flex items-center justify-center w-[100%] h-[100%] sm:p-2 lg:p-0'>
+      <div className='fixed inset-0 z-10 h-screen w-full overflow-y-auto'>
+        <div className='flex h-[100%] w-[100%] items-center justify-center sm:p-2 lg:p-0'>
           <DialogPanel
             className={`${
               customWidth ? customWidth : "w-full max-w-4xl"
             } flex flex-col rounded bg-white`}
           >
             <div className='mb-4 flex items-center justify-between p-4 pb-0'>
-              {title && (
-                <DialogTitle className='text-2xl font-medium'>
-                  {title}
-                </DialogTitle>
-              )}
+              <div className='flex items-center space-x-2'>
+                {icon && <div className='h-6 w-6'>{icon}</div>}{" "}
+                {title && (
+                  <DialogTitle className='text-2xl font-medium'>
+                    {title}
+                  </DialogTitle>
+                )}
+              </div>
               <button
                 className='btn btn-sm btn-icon btn-light btn-clear shrink-0'
                 onClick={onClose}
@@ -56,23 +63,25 @@ const Modal = ({
               </button>
             </div>
             <div className='flex-1 overflow-y-auto px-6'>{children}</div>{" "}
-            <div className=' flex justify-end space-x-3 px-6 py-4 '>
-              <button onClick={onClose} className='btn btn-md btn-light'>
-                Close
-              </button>
-
-              {buttonText && handler && (
-                <button
-                  className='btn btn-md btn-primary'
-                  onClick={() => {
-                    handler && handler();
-                    onClose();
-                  }}
-                >
-                  {buttonText}
+            {!isFromAddProject && (
+              <div className='flex justify-end space-x-3 px-6 py-4'>
+                <button onClick={onClose} className='btn btn-md btn-light'>
+                  Close
                 </button>
-              )}
-            </div>
+
+                {buttonText && handler && (
+                  <button
+                    className='btn btn-md btn-primary'
+                    onClick={() => {
+                      handler && handler();
+                      onClose();
+                    }}
+                  >
+                    {buttonText}
+                  </button>
+                )}
+              </div>
+            )}
           </DialogPanel>
         </div>
       </div>

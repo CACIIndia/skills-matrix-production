@@ -8954,7 +8954,9 @@ html.dark .\[html\.dark_\&\]\:hidden {
 }
 
 /* custom css */
-
+.react-datepicker-popper {
+  z-index: 1050 !important; /* Ensure it's higher than the modal */
+}
 .react-datepicker-wrapper {
   width: 100%;
 }
