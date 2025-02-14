@@ -10,6 +10,10 @@ import useDeleteProject from "@/lib/hooks/profile/projects/useDeleteProjects";
 import toast from "react-hot-toast";
 import { useAppContext } from "@/app/context/AppContext";
 import { getFormattedDate } from "@/components/common/Date-Handling/DateFormat";
+import {
+  isProjectDeletable,
+  isProjectEditable,
+} from "@/lib/constants/GlobalVariables";
 
 type ProjectHistoryCardProps = {
   projects: Project[];
@@ -90,114 +94,142 @@ const ProjectHistoryCard = ({
                   members.length - displayedMembers.length;
 
                 return (
-                  <div key={index} className='relative flex items-start'>
-                    <div className='absolute bottom-0 left-0 top-9 w-9 translate-x-1/2 border-l border-l-gray-300'></div>
-                    <div className='flex size-9 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-gray-600'>
-                      <i className='ki-filled ki-calendar text-base'></i>
-                    </div>
-                    <div className='text-md mb-7 grow pl-2.5'>
-                      <div className='flex flex-col pb-2.5'>
-                        <span className='text-sm font-medium text-gray-700'>
-                          Working in {item.projectName}
-                        </span>
-                        <span className='text-xs font-medium text-gray-500'>
-                          {getFormattedDate(item.startDate)} -{" "}
-                          {item.endDate
-                            ? getFormattedDate(item.endDate)
-                            : "Ongoing"}
-                        </span>
+                  <Fragment key={index}>
+                    <div key={index} className='relative flex items-start'>
+                      <div className='absolute bottom-0 left-0 top-9 w-9 translate-x-1/2 border-l border-l-gray-300'></div>
+                      <div className='flex size-9 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-gray-600'>
+                        <i className='ki-filled ki-calendar text-base'></i>
                       </div>
-                      <div className='card p-4 shadow-none'>
-                        <div className='flex gap-2.5'>
-                          <i className='ki-filled ki-code text-info mt-[3px] text-lg'></i>
-                          <div className='flex grow flex-col gap-5'>
-                            <div className='flex flex-wrap items-center justify-between'>
-                              <div className='flex flex-col gap-0.5'>
-                                <span className='text-md mb-px cursor-pointer font-semibold text-gray-900 hover:text-primary'>
-                                  {item.roleInProject}
-                                </span>
-                                <span className='text-xs font-medium text-gray-500'>
-                                  {item.description}
-                                </span>
-                              </div>
-                              <div className='flex gap-2.5'>
-                                <div
-                                  className='cursor-pointer'
-                                  onClick={() => {
-                                    setIsOpen(true);
-                                    setIsEdit(true);
-                                    setEditData(item);
-                                  }}
-                                >
-                                  <EditIcon />
+                      <div className='text-md mb-7 grow pl-2.5'>
+                        <div className='flex flex-col pb-2.5'>
+                          <span className='text-sm font-medium text-gray-700'>
+                            Working in {item.projectName}
+                          </span>
+                          <span className='text-xs font-medium text-gray-500'>
+                            {getFormattedDate(item.startDate)} -{" "}
+                            {item.endDate
+                              ? getFormattedDate(item.endDate)
+                              : "Ongoing"}
+                          </span>
+                        </div>
+                        <div className='card p-4 shadow-none'>
+                          <div className='flex gap-2.5'>
+                            <i className='ki-filled ki-code text-info mt-[3px] text-lg'></i>
+                            <div className='flex grow flex-col gap-5'>
+                              <div className='flex flex-wrap items-center justify-between'>
+                                <div className='flex flex-col gap-0.5'>
+                                  <span className='text-md mb-px cursor-pointer font-semibold text-gray-900 hover:text-primary'>
+                                    {item.roleInProject}
+                                  </span>
+                                  <span className='text-xs font-medium text-gray-500'>
+                                    {item.description}
+                                  </span>
                                 </div>
-                                <div
-                                  className='cursor-pointer'
-                                  onClick={() => deleteProject(item.id)}
-                                >
-                                  <DeleteIcon />
+                                <div className='flex gap-2.5'>
+                                  {isProjectEditable && (
+                                    <div
+                                      className='cursor-pointer'
+                                      onClick={() => {
+                                        setIsOpen(true);
+                                        setIsEdit(true);
+                                        setEditData(item);
+                                      }}
+                                    >
+                                      <EditIcon />
+                                    </div>
+                                  )}
+                                  {isProjectDeletable && (
+                                    <div
+                                      className='cursor-pointer'
+                                      onClick={() => deleteProject(item.id)}
+                                    >
+                                      <DeleteIcon />
+                                    </div>
+                                  )}
                                 </div>
                               </div>
-                            </div>
 
-                            {/* Members Section */}
-                            <div className='gap-7.5 flex flex-wrap'>
-                              <div className='flex items-center gap-1.5'>
-                                <span className='text-2sm font-medium text-gray-500'>
-                                  Code:
-                                </span>
-                                <Link
-                                  className='text-2sm font-semibold text-primary'
-                                  href='#'
-                                >
-                                  {projectCode}
-                                </Link>
-                              </div>
-                              {members.length > 0 && (
+                              {/* Members Section */}
+                              <div className='gap-7.5 flex flex-wrap'>
                                 <div className='flex items-center gap-1.5'>
                                   <span className='text-2sm font-medium text-gray-500'>
-                                    Members:
+                                    Code:
                                   </span>
-
-                                  <div className='flex -space-x-2'>
-                                    {displayedMembers?.map((member:any) => (
-                                      <div
-                                        key={member.id}
-                                        className='flex cursor-pointer'
-                                        onClick={() => setSelectedProject(item)}
-                                      >
-                                        <Image
-                                          className='hover:z-5 ring-light-light relative size-7 shrink-0 rounded-full ring-1'
-                                          src={
-                                            member?.employeeImage ||
-                                            defaultImage
-                                          }
-                                          alt={member.employeeName}
-                                          width={28}
-                                          height={28}
-                                        />
-                                      </div>
-                                    ))}
-                                    {remainingMembersCount > 0 && (
-                                      <div
-                                        onClick={() => setSelectedProject(item)}
-                                        className='flex cursor-pointer'
-                                      >
-                                        <span className='hover:z-5 text-3xs text-primary-inverse relative inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary font-semibold leading-none ring-1 ring-primary-light'>
-                                          +{remainingMembersCount}
-                                        </span>
-                                      </div>
-                                    )}
-                                  </div>
+                                  <Link
+                                    className='text-2sm font-semibold text-primary'
+                                    href='#'
+                                  >
+                                    {projectCode}
+                                  </Link>
                                 </div>
-                              )}
+                                {members.length > 0 && (
+                                  <div className='flex items-center gap-1.5'>
+                                    <span className='text-2sm font-medium text-gray-500'>
+                                      Members:
+                                    </span>
+
+                                    <div className='flex -space-x-2'>
+                                      {displayedMembers?.map((member: any) => (
+                                        <div
+                                          key={member.id}
+                                          className='flex cursor-pointer'
+                                          onClick={() =>
+                                            setSelectedProject(item)
+                                          }
+                                        >
+                                          <Image
+                                            className='hover:z-5 ring-light-light relative size-7 shrink-0 rounded-full ring-1'
+                                            src={
+                                              member?.employeeImage ||
+                                              defaultImage
+                                            }
+                                            alt={member.employeeName}
+                                            width={28}
+                                            height={28}
+                                          />
+                                        </div>
+                                      ))}
+                                      {remainingMembersCount > 0 && (
+                                        <div
+                                          onClick={() =>
+                                            setSelectedProject(item)
+                                          }
+                                          className='flex cursor-pointer'
+                                        >
+                                          <span className='hover:z-5 text-3xs text-primary-inverse relative inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary font-semibold leading-none ring-1 ring-primary-light'>
+                                            +{remainingMembersCount}
+                                          </span>
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                              {/* End of Members Section */}
                             </div>
-                            {/* End of Members Section */}
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
+                    {joiningDate && previousProjects.length === 0 && (
+                      <div className='relative flex items-start'>
+                        <div className='absolute bottom-0 left-0 top-9 w-9 translate-x-1/2 border-l border-l-gray-300'></div>
+                        <div className='flex size-9 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-gray-600'>
+                          <i className='ki-filled ki-entrance-left text-base'></i>
+                        </div>
+                        <div className='text-md mb-7 grow pl-2.5'>
+                          <div className='flex flex-col'>
+                            <div className='text-sm font-medium text-gray-800'>
+                              Joined in CACI
+                            </div>
+                            <span className='text-xs font-medium text-gray-500'>
+                              {getFormattedDate(joiningDate)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </Fragment>
                 );
               })}
 
@@ -241,22 +273,26 @@ const ProjectHistoryCard = ({
                                   </span>
                                 </div>
                                 <div className='flex gap-2.5'>
-                                  <div
-                                    className='cursor-pointer'
-                                    onClick={() => {
-                                      setIsOpen(true);
-                                      setIsEdit(true);
-                                      setEditData(item);
-                                    }}
-                                  >
-                                    <EditIcon />
-                                  </div>
-                                  <div
-                                    className='cursor-pointer'
-                                    onClick={() => deleteProject(item.id)}
-                                  >
-                                    <DeleteIcon />
-                                  </div>
+                                  {isProjectEditable && (
+                                    <div
+                                      className='cursor-pointer'
+                                      onClick={() => {
+                                        setIsOpen(true);
+                                        setIsEdit(true);
+                                        setEditData(item);
+                                      }}
+                                    >
+                                      <EditIcon />
+                                    </div>
+                                  )}
+                                  {isProjectDeletable && (
+                                    <div
+                                      className='cursor-pointer'
+                                      onClick={() => deleteProject(item.id)}
+                                    >
+                                      <DeleteIcon />
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                               <div className='gap-7.5 flex flex-wrap'>
@@ -279,7 +315,7 @@ const ProjectHistoryCard = ({
                                     </span>
 
                                     <div className='flex -space-x-2'>
-                                      {displayedMembers?.map((member:any) => (
+                                      {displayedMembers?.map((member: any) => (
                                         <div
                                           onClick={() =>
                                             setSelectedProject(item)
@@ -321,7 +357,7 @@ const ProjectHistoryCard = ({
                         </div>
                       </div>
                     </div>
-                    {joiningDate && (
+                    {joiningDate && previousProjects.length > 0 && (
                       <div className='relative flex items-start'>
                         <div className='absolute bottom-0 left-0 top-9 w-9 translate-x-1/2 border-l border-l-gray-300'></div>
                         <div className='flex size-9 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-gray-600'>
@@ -352,7 +388,7 @@ const ProjectHistoryCard = ({
       {selectedProject && (
         <div
           className={`card 300 mt-4 w-full border bg-white md:relative md:ml-4 md:mt-0 md:w-1/3`}
-          style={{ maxHeight: "79vh", minHeight: "200px", overflowY:"auto"}} // Ensure visibility
+          style={{ maxHeight: "79vh", minHeight: "200px", overflowY: "auto" }} // Ensure visibility
         >
           {" "}
           <div className='card-header flex justify-between'>
@@ -366,39 +402,41 @@ const ProjectHistoryCard = ({
               ✕
             </button>
           </div>
-          {selectedProject.project?.profiles?.map((member:any, index:number) => (
-            <div
-              ref={memberListRef}
-              key={member?.id}
-              className={`border-b-1 flex items-center gap-2 border-b p-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}
-            >
+          {selectedProject.project?.profiles?.map(
+            (member: any, index: number) => (
               <div
-                className='cursor-pointer'
-                onClick={() =>
-                  window.open(
-                    `/profile/overview/${member.employeeId}`,
-                    "_blank",
-                  )
-                }
+                ref={memberListRef}
+                key={member?.id}
+                className={`border-b-1 flex items-center gap-2 border-b p-2 ${index % 2 === 0 ? "bg-gray-100" : "bg-white"}`}
               >
-                <Image
-                  className='hover:z-5 ring-light-light relative size-7 shrink-0 rounded-full ring-1'
-                  src={member?.employeeImage || defaultImage}
-                  alt={member?.employeeName}
-                  width={36}
-                  height={36}
-                />
-              </div>
-              <div>
-                <div className='text-sm font-medium text-gray-700'>
-                  {member.employeeName}
+                <div
+                  className='cursor-pointer'
+                  onClick={() =>
+                    window.open(
+                      `/profile/overview/${member.employeeId}`,
+                      "_blank",
+                    )
+                  }
+                >
+                  <Image
+                    className='hover:z-5 ring-light-light relative size-7 shrink-0 rounded-full ring-1'
+                    src={member?.employeeImage || defaultImage}
+                    alt={member?.employeeName}
+                    width={36}
+                    height={36}
+                  />
                 </div>
-                <div className='text-xs font-medium text-gray-500'>
-                  {member.employeeName}
+                <div>
+                  <div className='text-sm font-medium text-gray-700'>
+                    {member.employeeName}
+                  </div>
+                  <div className='text-xs font-medium text-gray-500'>
+                    {member.employeeName}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ),
+          )}
         </div>
       )}
     </div>
