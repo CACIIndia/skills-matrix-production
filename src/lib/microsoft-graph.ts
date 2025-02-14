@@ -181,3 +181,8 @@ export async function fetchUserProfilePicture(
   const arrayBuffer = await response.arrayBuffer();
   return Buffer.from(arrayBuffer);
 }
+
+export async function fetchEmployeeHireDate(accessToken: string): Promise<any> {
+  const response = await makeGraphRequest(accessToken, "/me?$select=employeeHireDate");
+  return handleGraphResponse(response);
+}

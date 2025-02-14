@@ -19,6 +19,9 @@ export type Project = {
   code: string;
   isCurrentProject: boolean;
   userId: string;
+  project?:any;
+  roleInProject: string;
+  member:any;
 };
 
 export type AdditionalInfo = {
@@ -122,3 +125,12 @@ export interface Skill  {
   updatedAt: Date |string;
   skillCategory?: SkillCategory;
 };
+
+
+export interface ProjectRole {
+  id: string;
+  name: string;
+  status: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
