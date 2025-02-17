@@ -32,6 +32,7 @@ const AdvanceSearchResult = () => {
     location: string;
     image?: string;
     id: string;
+    email: string;
   }
 
   const [query, setQuery] = useState<RuleGroupType>({
@@ -44,17 +45,25 @@ const AdvanceSearchResult = () => {
   >({});
   const [queryName, setQueryName] = useState("");
   const { data, isLoading, isError } = useGetUsers();
-  const users = Array.isArray(data) ? (data as User[]) : [];
+  const users = useMemo(() => (Array.isArray(data) ? (data as User[]) : []), [data]);
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(5);
 
-  const handleMailClick = () => {
-    window.location.href = "mailto:";
+ const handleMailClick = () => {
+    if (searchUsers && searchUsers?.length) {
+      const emailList = searchUsers?.map(searchUser => searchUser?.email).join(',');
+      window.location.href = "mailto:"+emailList;
+    }
   };
-
+ 
   const handleTeamsClick = () => {
-    window.open("https://teams.microsoft.com/", "_blank");
+    if (searchUsers && searchUsers?.length) {
+      let teamChatLink = "https://teams.microsoft.com/l/chat/0/0?users=";
+      const emailList = searchUsers?.map(searchUser => searchUser?.email).join(',');
+      teamChatLink += emailList;
+      window.open(teamChatLink, "_blank");
+    }
   };
   const extractUniqueValues = (key: keyof (typeof users)[0]): string[] => {
     if (!users || users?.length === 0) return [];
