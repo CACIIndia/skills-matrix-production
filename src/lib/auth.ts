@@ -3,6 +3,7 @@ import { AuthOptions, getServerSession } from "next-auth";
 import db from "./db";
 import { fetchUserProfile } from "./microsoft-graph";
 import { JWT } from "next-auth/jwt";
+import { updateJoiningDate } from "@/app/actions/updateUserMicrosoftProfile";
 
 interface ProfileWithId {
    tid: string;
@@ -55,6 +56,7 @@ export const options: AuthOptions = {
 
                if (!user) {
                   let ad_response = await fetchUserProfile(account.access_token as string);
+                 
                   if (! ad_response.error) {
                      user = await db.user.create({
                         data: {
@@ -67,6 +69,10 @@ export const options: AuthOptions = {
                            phone: ad_response.mobilePhone,
                         },
                      });
+                  }
+                  const updateJoiningDateResponse = await updateJoiningDate(account.access_token as string, ad_response.id);
+                  if(!updateJoiningDateResponse.success){
+                     throw new Error("Error updating joining date");
                   }
                }
                
