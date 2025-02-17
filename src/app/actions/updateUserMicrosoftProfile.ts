@@ -91,7 +91,7 @@ async function updateProfile(
   return response;
 }
 
-async function updateJoiningDate(
+ async function updateJoiningDate(
   accessToken: string,
   userId: string,
 ) {
@@ -142,4 +142,4 @@ async function updateManager(
   return response;
 }
 
-export { updateUserMicrosoftProfile };
+export { updateUserMicrosoftProfile ,updateJoiningDate};

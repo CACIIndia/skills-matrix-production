@@ -6,6 +6,7 @@ import useAddProject from "@/lib/hooks/profile/projects/useAddProjects";
 import toast from "react-hot-toast";
 import { useAppContext } from "@/app/context/AppContext";
 import useEditProject from "@/lib/hooks/profile/projects/useEditProject";
+import { convertToLocalDate } from "@/components/common/Date-Handling/DateFormat";
 import CustomSelect from "@/components/reusable-components/CustomSelect";
 
 type Project = {
@@ -29,6 +30,7 @@ type AddProjectModalProps = {
   projects: Project[];
   isEdit: boolean;
   projectRoles: ProjectRole[];
+  joiningDate:string
   editData?: {
     projectId: string;
     projectName: string;
@@ -46,11 +48,13 @@ const AddProject: React.FC<AddProjectModalProps> = ({
   isEdit,
   editData,
   projectRoles,
+  joiningDate
 }) => {
   const { data: session } = useSession();
   const { addProject, replaceEditedProject } = useAppContext();
   const mutationAdd = useAddProject();
   const mutationEdit = useEditProject();
+  const minProjectDate = convertToLocalDate(joiningDate);
   const [projectOptions, setProjectOptions] = useState<Option[]>([]);
   const [roleOptions, setProjectRoleOptions] = useState<Option[]>([]);
 
@@ -255,6 +259,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className='w-full border p-2'
+              min={minProjectDate}
             />
             {formik.touched.startDate && formik.errors.startDate && (
               <p className='text-sm text-red-500'>{formik.errors.startDate}</p>

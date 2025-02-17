@@ -22,3 +22,19 @@ export const getFormattedDate = (dateString: string): string => {
 
   return `${day}${getOrdinalSuffix(day)} ${month} ${year}`;
 };
+
+// format YYYY-MM-DD
+export const convertToLocalDate = (dateString: string) => {
+  if (!dateString) return "N/A"; 
+  const utcDate = new Date(dateString); 
+  const userTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: userTimeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  })
+    .format(utcDate)
+    .split("/")
+    .join("-"); 
+};
