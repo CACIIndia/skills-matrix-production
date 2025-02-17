@@ -81,6 +81,7 @@ export default function ProjectPage() {
           isEdit={isEdit}
           editData={editData}
           projectRoles={projectRoles || []}
+          joiningDate={joiningDate}
         />
       </Modal>
     </>
