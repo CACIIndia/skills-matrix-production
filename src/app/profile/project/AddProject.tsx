@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useSession } from "next-auth/react";
@@ -6,11 +6,17 @@ import useAddProject from "@/lib/hooks/profile/projects/useAddProjects";
 import toast from "react-hot-toast";
 import { useAppContext } from "@/app/context/AppContext";
 import useEditProject from "@/lib/hooks/profile/projects/useEditProject";
+import CustomSelect from "@/components/reusable-components/CustomSelect";
 
 type Project = {
   id: string;
   name: string;
   code: string;
+};
+
+type Option = {
+  value: string;
+  label: string;
 };
 
 type ProjectRole = {
@@ -45,6 +51,8 @@ const AddProject: React.FC<AddProjectModalProps> = ({
   const { addProject, replaceEditedProject } = useAppContext();
   const mutationAdd = useAddProject();
   const mutationEdit = useEditProject();
+  const [projectOptions, setProjectOptions] = useState<Option[]>([]);
+  const [roleOptions, setProjectRoleOptions] = useState<Option[]>([]);
 
   const formatDate = (date?: string | Date): string => {
     if (!date) return "";
@@ -78,6 +86,26 @@ const AddProject: React.FC<AddProjectModalProps> = ({
       await handleSubmit(values);
     },
   });
+
+  useEffect(() => {
+    if (projects) {
+      setProjectOptions(
+        projects?.map((project) => ({
+          value: project?.name,
+          label: `${project?.code}: ${project?.name}`,
+        })),
+      );
+    }
+
+    if (projectRoles) {
+      setProjectRoleOptions(
+        projectRoles?.map((role) => ({
+          value: role?.name,
+          label: `${role?.name}`,
+        })),
+      );
+    }
+  }, [projects, projectRoles]);
 
   const handleSubmit = async (values: any) => {
     const toastId = toast.loading(
@@ -137,27 +165,21 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             Project Name<span className='text-red-500'>*</span>
           </label>
           <div className='flex-1'>
-            <select
+            <CustomSelect
+              options={projectOptions}
+              isDisabled={isEdit}
               name='projectName'
-              disabled={isEdit}
-              value={formik.values.projectName}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className={`w-full border p-2 ${isEdit && "bg-gray-200"}`}
-            >
-              <option value='' disabled>
-                Select a project
-              </option>
-              {projects.length > 0 ? (
-                projects.map((project) => (
-                  <option key={project.id} value={project.name}>
-                    {`${project.code}: ${project.name}`}
-                  </option>
-                ))
-              ) : (
-                <option disabled>No projects available</option>
-              )}
-            </select>
+              value={
+                projectOptions?.find(
+                  (opt) => opt?.value === formik?.values?.projectName,
+                ) || null
+              }
+              onBlur={() => formik?.setFieldTouched("projectName", true)}
+              onChange={(selected) =>
+                formik.setFieldValue("projectName", selected?.value || "")
+              }
+              placeholder='Select or search a project'
+            />
             {formik.touched.projectName && formik.errors.projectName && (
               <p className='text-sm text-red-500'>
                 {formik.errors.projectName}
@@ -198,22 +220,20 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             Role<span className='text-red-500'>*</span>
           </label>
           <div className='flex-1'>
-            <select
+            <CustomSelect
+              options={roleOptions}
               name='roleInProject'
-              value={formik.values.roleInProject}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              className='w-full border p-2'
-            >
-              <option value='' disabled>
-                Select a role
-              </option>
-              {projectRoles?.map((role) => (
-                <option key={role.id} value={role.name}>
-                  {role.name}
-                </option>
-              ))}
-            </select>
+              value={
+                roleOptions?.find(
+                  (opt) => opt?.value === formik?.values?.roleInProject,
+                ) || null
+              }
+              onBlur={() => formik?.setFieldTouched("roleInProject", true)}
+              onChange={(selected) =>
+                formik.setFieldValue("roleInProject", selected?.value || "")
+              }
+              placeholder='Select or search role'
+            />
             {formik.touched.roleInProject && formik.errors.roleInProject && (
               <p className='text-sm text-red-500'>
                 {formik.errors.roleInProject}
