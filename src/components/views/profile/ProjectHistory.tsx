@@ -37,19 +37,23 @@ const ProjectHistoryCard = ({
   const currentProject =
     projects?.filter((project) => project.isCurrentProject) || [];
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const previousProjects =
     projects?.filter((project) => !project.isCurrentProject) || [];
   const memberListRef = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
-    if (selectedProject && memberListRef.current) {
+    if (isScrolled && selectedProject && memberListRef.current) {
+      setIsScrolled(false);
       memberListRef.current.scrollIntoView({
         behavior: "smooth",
-        block: "start",
+        block: "center",
       });
     }
-  }, [selectedProject]);
+  }, [isScrolled, selectedProject]);
 
   const deleteProject = async (profileId: string) => {
+    setSelectedProject(null);
     try {
       let result = await mutationDelete?.mutateAsync({ profileId });
       removeDeletedProject(profileId);
@@ -64,7 +68,9 @@ const ProjectHistoryCard = ({
   };
 
   return (
-    <div className='relative flex max-h-screen flex-col overflow-auto md:flex-row'>
+    <div
+      className='relative flex max-h-screen flex-col md:flex-row'
+    >
       <div
         className={`transition-all duration-300 ${selectedProject ? "md:w-2/3" : "w-full"}`}
       >
@@ -173,9 +179,9 @@ const ProjectHistoryCard = ({
                                         <div
                                           key={member.id}
                                           className='flex cursor-pointer'
-                                          onClick={() =>
-                                            setSelectedProject(item)
-                                          }
+                                          onClick={() => {
+                                            setSelectedProject(item);
+                                          }}
                                         >
                                           <Image
                                             className='hover:z-5 ring-light-light relative size-7 shrink-0 rounded-full ring-1'
@@ -299,9 +305,10 @@ const ProjectHistoryCard = ({
                                     <div className='flex -space-x-2'>
                                       {displayedMembers?.map((member: any) => (
                                         <div
-                                          onClick={() =>
-                                            setSelectedProject(item)
-                                          }
+                                          onClick={() => {
+                                            setSelectedProject(item);
+                                            setIsScrolled(true);
+                                          }}
                                           key={member.id}
                                           className='flex cursor-pointer'
                                         >
@@ -343,24 +350,24 @@ const ProjectHistoryCard = ({
                 );
               })}
 
-              {joiningDate && (previousProjects.length > 0  || currentProject.length>0) && (
-                <div className='relative flex items-start'>
-                  <div className='absolute bottom-0 left-0 top-9 w-9 translate-x-1/2 border-l border-l-gray-300'></div>
-                  <div className='flex size-9 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-gray-600'>
-                    <i className='ki-filled ki-entrance-left text-base'></i>
-                  </div>
-                  <div className='text-md mb-7 grow pl-2.5'>
-                    <div className='flex flex-col'>
-                      <div className='text-sm font-medium text-gray-800'>
-                        Joined in CACI
+              {joiningDate && (
+                  <div className='relative flex items-start'>
+                    <div className='absolute bottom-0 left-0 top-9 w-9 translate-x-1/2 border-l border-l-gray-300'></div>
+                    <div className='flex size-9 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-gray-100 text-gray-600'>
+                      <i className='ki-filled ki-entrance-left text-base'></i>
+                    </div>
+                    <div className='text-md mb-7 grow pl-2.5'>
+                      <div className='flex flex-col'>
+                        <div className='text-sm font-medium text-gray-800'>
+                          Joined in CACI
+                        </div>
+                        <span className='text-xs font-medium text-gray-500'>
+                          {getFormattedDate(joiningDate)}
+                        </span>
                       </div>
-                      <span className='text-xs font-medium text-gray-500'>
-                        {getFormattedDate(joiningDate)}
-                      </span>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
             </div>
           </div>
           {/* <div className='card-footer justify-center'>
@@ -410,11 +417,19 @@ const ProjectHistoryCard = ({
                   />
                 </div>
                 <div>
-                  <div className='text-sm font-medium text-gray-700'>
+                  <div
+                    className='cursor-pointer text-sm font-medium text-gray-700'
+                    onClick={() =>
+                      window.open(
+                        `/profile/overview/${member.employeeId}`,
+                        "_blank",
+                      )
+                    }
+                  >
                     {member.employeeName}
                   </div>
                   <div className='text-xs font-medium text-gray-500'>
-                    {member.employeeName}
+                    {member.employee.email}
                   </div>
                 </div>
               </div>

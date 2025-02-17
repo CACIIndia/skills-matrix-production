@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-export const fullUserInclude =(userId: string)=> Prisma.validator<Prisma.UserInclude>()({
+export const fullUserInclude = (userId: string) => Prisma.validator<Prisma.UserInclude>()({
   additionalInfo: true,
   userSkills: {
     where: {
@@ -16,18 +16,26 @@ export const fullUserInclude =(userId: string)=> Prisma.validator<Prisma.UserInc
     },
   },
   projects: {
-    include:{
+    include: {
       project: {
         include: {
-          profiles:{
-            distinct: ["employeeId"]
+          profiles: {
+            distinct: ["employeeId"],
+            include:{
+              employee:{
+                select:{
+                  email:true
+                }
+              }
+            }
           }
         }
       }
-    }
+    },
+    orderBy: {
+      startDate: "desc",
+    },
   }
-  
-  
 });
 
 

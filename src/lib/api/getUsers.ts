@@ -15,6 +15,7 @@ type UserResponse = {
   name: string;
   location: string;
   jobTitle: string;
+  email: string;
 }[];
 
 export const fetchUsers = async (query: any): Promise<UserResponse> => {

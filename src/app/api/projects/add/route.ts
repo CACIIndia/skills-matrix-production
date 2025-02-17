@@ -57,7 +57,16 @@ export async function POST(req: Request) {
           include: {
             project: {
               include: {
-                profiles: true
+                profiles: {
+                  distinct: ["employeeId"],
+                  include:{
+                    employee:{
+                      select:{
+                        email:true
+                      }
+                    }
+                  }
+                },
               },
             },
           },
