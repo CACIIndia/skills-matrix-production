@@ -64,7 +64,7 @@ const ProjectHistoryCard = ({
   };
 
   return (
-    <div className='relative flex max-h-screen flex-col overflow-auto md:flex-row'>
+    <div className='relative flex max-h-screen flex-col overflow-auto md:flex-row' id="projectmembers">
       <div
         className={`transition-all duration-300 ${selectedProject ? "md:w-2/3" : "w-full"}`}
       >
@@ -173,9 +173,10 @@ const ProjectHistoryCard = ({
                                         <div
                                           key={member.id}
                                           className='flex cursor-pointer'
-                                          onClick={() =>
-                                            setSelectedProject(item)
-                                          }
+                                          onClick={() => {
+                                            setSelectedProject(item);
+                                            window.location.hash = '#projectmembers';
+                                          }}
                                         >
                                           <Image
                                             className='hover:z-5 ring-light-light relative size-7 shrink-0 rounded-full ring-1'
@@ -370,6 +371,7 @@ const ProjectHistoryCard = ({
       </div>
       {selectedProject && (
         <div
+         
           className={`card 300 mt-4 w-full border bg-white md:relative md:ml-4 md:mt-0 md:w-1/3`}
           style={{ maxHeight: "79vh", minHeight: "200px", overflowY: "auto" }} // Ensure visibility
         >
@@ -410,11 +412,18 @@ const ProjectHistoryCard = ({
                   />
                 </div>
                 <div>
-                  <div className='text-sm font-medium text-gray-700'>
+                  <div className='text-sm font-medium text-gray-700 cursor-pointer' 
+                  onClick={() =>
+                    window.open(
+                      `/profile/overview/${member.employeeId}`,
+                      "_blank",
+                    )
+                  }
+                  >
                     {member.employeeName}
                   </div>
                   <div className='text-xs font-medium text-gray-500'>
-                    {member.employeeName}
+                    {member.employee.email}
                   </div>
                 </div>
               </div>
