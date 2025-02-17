@@ -49,6 +49,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [profile, setProfile] = useState<any>();
   const [viewedProfile, setViewedProfile] = useState<any>();
   const user = session?.user;
+  console.log(profile,"profileprofileprofile");
 
   const toggleSelectedItem = (item: SkillCategory) => {
     setSelectedItems((prevSelected) => {
@@ -81,7 +82,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
   const addProject = (projects: any) => {
     if (projects) {
-      setProfile({ ...profile, projects });
+      setProfile({ ...profile, projects: projects.sort((a: any, b: any) => (new Date(b.startDate) as any) - (new Date(a.startDate) as any)) });
     }
   };
 
@@ -93,7 +94,13 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         }
         return project;
       });
-      setProfile({ ...profile, projects: newProjects });
+      setProfile({
+        ...profile,
+        projects: newProjects.sort((a: any, b: any) =>
+          (new Date(b.startDate) as any) - (new Date(a.startDate) as any)
+        ),
+      });
+
     }
   };
 
