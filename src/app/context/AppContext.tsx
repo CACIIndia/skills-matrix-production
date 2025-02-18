@@ -49,7 +49,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [profile, setProfile] = useState<any>();
   const [viewedProfile, setViewedProfile] = useState<any>();
   const user = session?.user;
-  console.log(profile,"profileprofileprofile");
+
 
   const toggleSelectedItem = (item: SkillCategory) => {
     setSelectedItems((prevSelected) => {
