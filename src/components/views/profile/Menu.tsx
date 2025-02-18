@@ -14,7 +14,7 @@ const ProfileMenu = () => {
   const items = id ? VIEW_PROFILE_MENU_ITEMS : PROFILE_MENU_ITEMS;
 
   return (
-    <div className='container-fixed' >
+    <div className='' >
       <div className='mb-2 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:items-end'>
         <Menu items={items} />
         <ProfileActions />
