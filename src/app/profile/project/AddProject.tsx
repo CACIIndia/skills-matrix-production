@@ -283,6 +283,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
               value={formik.values.endDate}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
+              max={new Date().toISOString().split('T')[0]}
               className='w-full border p-2'
             />
             {formik.touched.endDate && formik.errors.endDate && (
