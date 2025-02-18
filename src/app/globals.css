@@ -9112,3 +9112,11 @@ html.dark .\[html\.dark_\&\]\:hidden {
 input[type='file']::file-selector-button {
   display: none;
 }
+
+.banner {
+  background-image: url('/Banner.png');
+  background-size: cover;
+  background-position: center;
+  height: 192px;
+  width: 100%;
+}
