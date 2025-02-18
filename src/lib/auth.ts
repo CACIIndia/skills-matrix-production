@@ -55,7 +55,11 @@ export const options: AuthOptions = {
                });
 
                if (!user) {
-                  let ad_response = await fetchUserProfile(account.access_token as string);
+                  let ad_response = await fetchUserProfile(
+                     account.access_token as string,
+                     'id,mail,displayName,jobTitle,officeLocation,mobilePhone,employeeHireDate'
+                  );
+                  console.log(ad_response);
                  
                   if (! ad_response.error) {
                      user = await db.user.create({
@@ -67,12 +71,9 @@ export const options: AuthOptions = {
                            role: ad_response.jobTitle,
                            location: ad_response.officeLocation,
                            phone: ad_response.mobilePhone,
+                           joiningDate: ad_response.employeeHireDate,
                         },
                      });
-                  }
-                  const updateJoiningDateResponse = await updateJoiningDate(account.access_token as string, ad_response.id);
-                  if(!updateJoiningDateResponse.success){
-                     throw new Error("Error updating joining date");
                   }
                }
                
