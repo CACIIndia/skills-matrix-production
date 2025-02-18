@@ -59,7 +59,6 @@ export const options: AuthOptions = {
                      account.access_token as string,
                      'id,mail,displayName,jobTitle,officeLocation,mobilePhone,employeeHireDate'
                   );
-                  console.log(ad_response);
                  
                   if (! ad_response.error) {
                      user = await db.user.create({
