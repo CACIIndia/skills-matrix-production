@@ -159,10 +159,12 @@ async function handleGraphResponse(response: Response): Promise<any> {
   return apiResponse;
 }
 
-export async function fetchUserProfile(accessToken: string): Promise<any> {
-  const response = await makeGraphRequest(accessToken, "/me");
+export async function fetchUserProfile(accessToken: string, select: string = ''): Promise<any> {
+  const url = select ? `/me?$select=${select}` : '/me';
+  const response = await makeGraphRequest(accessToken, url);
   return handleGraphResponse(response);
 }
+
 
 export async function fetchUserManager(accessToken: string): Promise<any> {
   const response = await makeGraphRequest(accessToken, "/me/manager");
@@ -180,9 +182,4 @@ export async function fetchUserProfilePicture(
 
   const arrayBuffer = await response.arrayBuffer();
   return Buffer.from(arrayBuffer);
-}
-
-export async function fetchEmployeeHireDate(accessToken: string): Promise<any> {
-  const response = await makeGraphRequest(accessToken, "/me?$select=employeeHireDate");
-  return handleGraphResponse(response);
 }
