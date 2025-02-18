@@ -35,7 +35,7 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
 
   return (
     <div className='w-full'>
-      <ProfileHeader data={data} isLoading={isLoading} editProfile={editProfile}/>
+      {/* <ProfileHeader data={data} isLoading={isLoading} editProfile={editProfile}/> */}
 
       <ProfileMenu />
 

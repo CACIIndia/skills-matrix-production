@@ -4,7 +4,6 @@ import React, { useState, useRef, useEffect } from "react";
 import { UserDetails } from "@/lib/types/profile";
 import Image from "next/image";
 import default_image from "../../../../public/assets/media/avatars/default-image.png";
-import { FaEdit } from "react-icons/fa";
 import { uploadImage } from "@/app/utils/imageUpload";
 import { useAppContext } from "@/app/context/AppContext";
 import image_spinner from "../../../../public/assets/media/misc/spinner.gif";
@@ -72,7 +71,7 @@ const ProfileHeader = ({ data, isLoading,editProfile }: ProfileHeaderProps) => {
   return (
     <div className='hero-bg bg-cover bg-center bg-no-repeat'>
       <div className='container-fixed'>
-        <div className='flex flex-col items-center gap-2 py-4 lg:gap-3.5 lg:pb-10 lg:pt-5'>
+        <div className='flex flex-col items-center gap-2 lg:gap-3.5'>
           {/* Profile Image */}
           <div className='relative flex flex-col items-center gap-2'>
             <Image
@@ -108,7 +107,7 @@ const ProfileHeader = ({ data, isLoading,editProfile }: ProfileHeaderProps) => {
           {/* User Info */}
           {data?.name && (
             <div className='flex items-center gap-1.5'>
-              <div className='text-lg font-semibold leading-5 text-gray-900'>
+              <div className='text-lg leading-5 text-gray-900 font-inter font-bold'>
                 {data?.name}
               </div>
               <svg
