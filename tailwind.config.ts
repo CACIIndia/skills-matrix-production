@@ -10,7 +10,16 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      opensans: ['"Open Sans"', 'sans-serif'],
+      inter: ['Inter', 'sans-serif'], 
+    },
     extend: {
+      fontWeight: {
+        light: '400',  
+        medium: '500', 
+        bold: '700',
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
