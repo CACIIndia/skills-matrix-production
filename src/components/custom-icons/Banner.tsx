@@ -4,7 +4,7 @@ const Banner = () => {
   return (
     <div>
       <svg
-        width='1512'
+        width=''
         height='192'
         viewBox='0 0 1512 192'
         fill='none'
