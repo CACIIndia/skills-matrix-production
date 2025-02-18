@@ -1,31 +1,26 @@
 
 "use client";
 import { useEffect, useState } from "react";
+import { useAppContext } from "../context/AppContext";
 
 
 export default function SearchPage() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const { searchQuery, setSearchQuery } = useAppContext();
+
+
 
 
   useEffect(() => {
     return () => {
-
         localStorage.removeItem("searchQuery");
     }
-
   },[])
 
 
   return (
     <div className="h-full w-full">
-      <div className="flex h-full w-full flex-col">
-        <input
-          type="text"
-          className="h-12 w-full rounded-lg border-2 p-4"
-          placeholder="Search by name, email, or skills"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+      <div className="flex justify-center items-center h-full w-full">
+        <h1 className="text-2xl font-bold">{searchQuery}</h1>
       </div>
     </div>
   );

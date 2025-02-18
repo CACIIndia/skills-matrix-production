@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import HeaderMenu from "@/components/common/Header/Menu";
+import { useAppContext } from "@/app/context/AppContext";
 
 type HeaderProps = {
   onClick: () => void;
@@ -12,31 +13,10 @@ type HeaderProps = {
 
 const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
   const router = useRouter();
-  const pathname = usePathname(); // Get current path
-  const [searchQuery, setSearchQuery] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("searchQuery") || "";
-    }
-    return "";
-  });
-
-  useEffect(() => {
-    if (searchQuery.trim()) {
-      localStorage.setItem("searchQuery", searchQuery);
-    }
-  }, [searchQuery]);
-
-  const handleSearch = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (  searchQuery.trim()) {
-      const searchURL = `/search`;
-      if (pathname !== "/search") {
-        localStorage.setItem("searchQuery", searchQuery);
-        router.push(searchURL);
-      } else {
-        setSearchQuery(searchQuery);
-      }
-    }
-  };
+  const pathname = usePathname(); 
+  const { searchQuery, setSearchQuery } = useAppContext();
+ 
+ 
 
   return (
     <header className="flex items-center justify-between lg:gap-4 pl-4 pr-4 h-14">
@@ -82,8 +62,11 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
             placeholder="Search name or job title"
             className="w-full h-full border-none outline-none"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={handleSearch}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              router.push("/search");
+            }}
+
           />
         </div>
       </div>
