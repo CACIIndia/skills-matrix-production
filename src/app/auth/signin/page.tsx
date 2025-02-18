@@ -40,10 +40,10 @@ const SignIn = () => {
         </h1>
         <button
           onClick={() => signIn("azure-ad")}
-          className='text-md btn-light flex w-80 items-center justify-center rounded-md border border-gray-300 px-4 py-3 font-semibold text-gray-700 transition duration-150 ease-in-out'
+          className='  text-md flex w-80 items-center justify-center rounded-md border border-gray-300 px-4 py-3 font-semibold text-[#FFFFFF] transition duration-150 ease-in-out bg-[#363535] '
           aria-label='Sign in with Microsoft'
         >
-          <CgMicrosoft className='mr-2 text-2xl text-blue-500' />
+          <CgMicrosoft className='mr-2 text-2xl text-blue-500 ' />
           SIGN IN WITH MICROSOFT
         </button>
       </div>
