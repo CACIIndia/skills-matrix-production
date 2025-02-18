@@ -74,22 +74,10 @@ export default function MasterLayout({
           />
 
           {/* Main Content */}
-          <div className='relative'>
-            {/* Banner */}
-            <Banner />
-            {/* Profile Header Positioned Over the Banner */}
-            <div className='absolute left-1/2 top-[80%] mt-7 -translate-x-1/2 -translate-y-1/2 transform'>
-              <ProfileHeader
-                data={data}
-                isLoading={isLoading}
-                editProfile={editProfile}
-              />
-            </div>
-          </div>
 
           <main
-            className='content grow pt-5'
-            style={{ marginTop: "90px", width: "100%" }}
+            className='content grow'
+            style={{ width: "100%" }}
           >
             {children}
           </main>
