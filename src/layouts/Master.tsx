@@ -58,11 +58,14 @@ export default function MasterLayout({
     <>
       <div className='flex'>
         <div className={`wrapper flex grow flex-col`}>
-          {/* Header */}
-          <div className="h-[56px] bg-yellow-300 fixed"></div>
+          <Header
+            onClick={toggleSearchModal}
+            mobileSideBarClick={toggleMobileSidebar}
+          />
+
           {/* Main Content */}
           <div>
-            <Banner/>
+            <Banner />
           </div>
           <main
             className='content grow pt-5'
@@ -79,14 +82,6 @@ export default function MasterLayout({
           isOpen={isSearchModalOpen}
           onClose={closeSearchModal}
           users={users || []}
-        />
-      )}
-
-      {/* Sidebar Modal for Mobile */}
-      {isSidebarVisible && (
-        <MobileSideBar
-          isOpen={isSidebarModalOpen}
-          onClose={toggleMobileSidebar} // Close sidebar modal when clicking outside
         />
       )}
     </>
