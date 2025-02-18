@@ -59,48 +59,12 @@ export default function MasterLayout({
     <>
     
       <div className="flex">
-        {/* Desktop Sidebar */}
-        <div
-          onMouseEnter={() => setIsExpanded(true)}
-          className="fixed z-10 hidden lg:block"
-          style={{
-            width: sidebarWidth,
-            height: "100vh",
-            transition: "width 0.3s ease",
-          }}
-        >
-          <Sidebar isExpanded={isExpanded} toggleSidebar={toggleSidebar} />
-        </div>
-
-        {/* Main Content Area */}
         <div
           className={`wrapper flex grow flex-col`}
-          style={{
-            marginLeft:
-              screenSize === "lg" || screenSize === "xl" || screenSize === "2xl"
-                ? contentMarginLeft
-                : "",
-            transition: "margin-left 0.3s ease",
-          }}
         >
-          {/* Header */}
-          <div
           
-            className="fixed z-1"
-            style={{
-              width:
-                screenSize === "sm" || screenSize === "md"
-                  ? "100%"
-                  : `calc(100% - ${contentMarginLeft})`,
-            
-              transition: "width 0.3s ease",
-              height:"80px"
-       
-            }}
-          >
             <Header onClick={toggleSearchModal} mobileSideBarClick ={toggleMobileSidebar}  />
-           
-          </div>
+         
 
           {/* Main Content */}
          
@@ -120,13 +84,7 @@ export default function MasterLayout({
         />
       )}
 
-      {/* Sidebar Modal for Mobile */}
-      {isSidebarVisible && (
-        <MobileSideBar
-          isOpen={isSidebarModalOpen}
-          onClose={toggleMobileSidebar} // Close sidebar modal when clicking outside
-        />
-      )}
+ 
     </>
   );
 }
