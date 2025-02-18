@@ -259,7 +259,8 @@ const AddProject: React.FC<AddProjectModalProps> = ({
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className='w-full border p-2'
-              min={minProjectDate}
+              min={minProjectDate }
+              max={new Date().toISOString().split('T')[0]}
             />
             {formik.touched.startDate && formik.errors.startDate && (
               <p className='text-sm text-red-500'>{formik.errors.startDate}</p>
