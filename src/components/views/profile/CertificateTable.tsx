@@ -158,7 +158,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
   };
 
   return (
-    <div className='min-h-[400px]'>
+    <div className=''>
       <Table
         headers={headers}
         isSearchable={isSearchable}
