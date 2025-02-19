@@ -6,7 +6,6 @@ import ProfileHeader from "@/components/views/profile/Header";
 import ProfileSkeleton from "@/components/skeletons/Profile";
 import { useEffect } from "react";
 import { getProfile } from "@/lib/api/getProfile";
-import Banner from "@/components/custom-icons/Banner";
 import { useParams } from "next/navigation";
 import ProfileMenu from "@/components/views/profile/Menu";
 
@@ -35,9 +34,11 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
   }, [userId, setViewedProfile]);
 
   return (
-    <div className='w-full'>
+    <div className='relative w-full'>
+      {/* Banner */}
       <div className='banner relative'>
-        <div className='absolute left-1/2 top-full mt-7 -translate-x-1/2 -translate-y-1/2 transform'>
+        {/* Profile Header positioned 70% down */}
+        <div className='absolute-profile-header'>
           <ProfileHeader
             data={data}
             isLoading={isLoading}
@@ -46,16 +47,17 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
         </div>
       </div>
 
-      <div className='border-2 border-[green]'>
-        <div className='border-2 border-[blue]'>
-          <ProfileMenu />
-        </div>
+      {/* Profile Menu */}
+      <div className='mt-[120px]  container-fixed ' style={{marginTop:"140px"}}>
+        <ProfileMenu />
+      </div>
 
-        {/* Children content */}
+      {/* Children content */}
+      <div className='mt-4 container-fixed'>
         {isLoading || !data ? (
           <ProfileSkeleton />
         ) : (
-          <div className='mt-[80px] border-2 border-[blue]'>{children}</div>
+          <div className='mt-[80px]'>{children}</div>
         )}
       </div>
     </div>

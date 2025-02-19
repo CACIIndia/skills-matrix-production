@@ -10,10 +10,12 @@ import { useEffect, useState } from "react";
 import { Certificate } from "@/lib/types/profile";
 import useGetTrainingDataByUserId from "@/lib/hooks/Training/useGetTraining";
 import TableSkeleton from "@/components/skeletons/TableSkeleton";
+import { useParams } from "next/navigation";
 
 const CertificatePage = () => {
+   const params = useParams();
   const { profile, categorySkills } = useAppContext();
-  const { data: certificates, refetch, isLoading } = useGetCertificates(profile.id);
+  const { data: certificates, refetch, isLoading } = useGetCertificates(params?.id || profile?.id);
  // const { data: categoryskills } = useGetSkillCategory();
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
   const { data: training_data } = useGetTrainingDataByUserId(
@@ -27,7 +29,7 @@ const CertificatePage = () => {
   }, [certificates]);
 
   const { handleDelete, handleEdit, handleUpload, handleDownload } =
-    useCertificateHandlers(profile.id);
+    useCertificateHandlers(params?.id || profile?.id);
 
   const headers = [
     {

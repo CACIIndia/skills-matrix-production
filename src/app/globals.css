@@ -2305,17 +2305,21 @@ video {
 
 .container-fixed {
   flex-grow: 1;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  /* padding-left: 1rem;
+  padding-right: 1.5rem; */
+  /* border: 2px solid #000000; */
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 @media (min-width: 1280px) {
   .container-fixed {
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-    max-width: 1280px;
+   margin-left: 15%;
+   margin-right: 15%;
+    /* padding-left: 2.5rem;
+    padding-right: 2.5rem; */
+    /* max-width: 1280px; */
+    /* border: 2px solid red; */
   }
 }
 
@@ -9119,4 +9123,30 @@ input[type='file']::file-selector-button {
   background-position: center;
   height: 192px;
   width: 100%;
+}
+.hero-bg {
+  position: relative;
+}
+.profile-header {
+  position: absolute;
+  bottom: 20px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10; /* Ensure it's above other elements */
+  background-color: #006ae6;
+}
+/* .absolute-profile-header{
+  position: "absolute";
+            top: "115%";
+            left: "50%";
+            transform: "translate(-50%; -50%)";
+
+            border: "1px solid black";
+            display: "flex";
+            align-items: "center";
+            justify-content: "center"
+} */
+.absolute-profile-header {
+  @apply absolute top-[115%] left-1/2 -translate-x-1/2 -translate-y-1/2 
+         flex items-center justify-center !important;
 }
