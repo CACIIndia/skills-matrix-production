@@ -23,12 +23,14 @@ type ProfileSkillsProps = {
   createdById?: string;
   userSkills?: UserSkill[];
   showEditButton?: boolean;
+  disableEdit?:boolean
 };
 
 const ProfileSkills = ({
   createdById = "",
   userSkills = [],
   showEditButton,
+  disableEdit=false
 }: ProfileSkillsProps) => {
   const mappedUserSkills = userSkillsMapper(userSkills);
 
@@ -61,7 +63,7 @@ const ProfileSkills = ({
           <div className='card-header flex items-center justify-between'>
             <h3 className='card-title'>Skills</h3>
 
-            {showEditButton && (
+            {disableEdit || showEditButton && (
               <button
                 className='btn btn-sm btn-icon btn-clear btn-primary'
                 onClick={() => setIsOpen(true)}

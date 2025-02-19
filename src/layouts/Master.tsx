@@ -67,7 +67,7 @@ export default function MasterLayout({
   return (
     <>
       <div className='flex'>
-        <div className={`wrapper flex grow flex-col`}>
+        <div className={` flex grow flex-col`}>
           <Header
             onClick={toggleSearchModal}
             mobileSideBarClick={toggleMobileSidebar}
