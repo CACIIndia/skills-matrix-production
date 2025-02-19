@@ -13,6 +13,7 @@ import Training from "../../training/page";
 
 const OverviewPage = () => {
   const { viewedProfile } = useAppContext();
+  
   return (
     <>
     <div className='lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3'>
