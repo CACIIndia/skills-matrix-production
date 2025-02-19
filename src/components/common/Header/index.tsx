@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import HeaderMenu from "@/components/common/Header/Menu";
 import { useAppContext } from "@/app/context/AppContext";
+import HeaderSearch from "./HeaderSearch";
 
 type HeaderProps = {
   onClick: () => void;
@@ -14,7 +15,7 @@ type HeaderProps = {
 const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
   const router = useRouter();
   const pathname = usePathname(); 
-  const { searchQuery, setSearchQuery } = useAppContext();
+  // const { searchQuery, setSearchQuery } = useAppContext();
  
  
 
@@ -55,7 +56,8 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
           <span className="text-md font-semibold">Profile</span>
           <div className="mt-1 active menu-item menu-item-active:border-b-primary menu-item-here:border-b-primary border-b-2 border-b-transparent"></div>
         </Link>
-        <div className="w-full h-10 flex items-center border border-gray-200 gap-2 px-2 rounded-lg">
+        <HeaderSearch />
+        {/* <div className="w-full h-10 flex items-center border border-gray-200 gap-2 px-2 rounded-lg">
           <i className="ki-filled ki-magnifier"></i>
           <input
             type="text"
@@ -68,7 +70,7 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
             }}
 
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="flex items-center gap-2 w-[10%] justify-end">
