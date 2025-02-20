@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { UserDetails } from "@/lib/types/profile";
 import Image from "next/image";
-import default_image from "../../../../public/assets/media/avatars/default-image.png";
+import default_image from "../../../../public/assets/media/avatars/default-images.png";
 import { uploadImage } from "@/app/utils/imageUpload";
 import { useAppContext } from "@/app/context/AppContext";
 import image_spinner from "../../../../public/assets/media/misc/spinner.gif";

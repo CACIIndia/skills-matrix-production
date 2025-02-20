@@ -17,8 +17,8 @@ const ProfileMenu = () => {
 
   const handleMenuClick = (path: string) => {
     setActivePath(path); 
-    const sectionId = path.split("/").pop(); // Extracts "overview", "skills", etc.
-    const section = document.getElementById(sectionId);
+    const sectionId = path.split("/").pop(); 
+    const section = document.getElementById(sectionId || "");
     if (section) {
       section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
