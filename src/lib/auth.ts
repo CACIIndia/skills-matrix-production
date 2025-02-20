@@ -3,7 +3,7 @@ import { AuthOptions, getServerSession } from "next-auth";
 import db from "./db";
 import { fetchUserProfile } from "./microsoft-graph";
 import { JWT } from "next-auth/jwt";
-import { updateJoiningDate } from "@/app/actions/updateUserMicrosoftProfile";
+
 
 interface ProfileWithId {
    tid: string;
