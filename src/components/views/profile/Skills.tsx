@@ -133,7 +133,7 @@ const ProfileSkills = ({
       </div>
 
       {
-        params?.id &&<Modal
+        !params?.id &&<Modal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         title='Edit Skills'
