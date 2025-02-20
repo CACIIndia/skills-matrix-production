@@ -5,11 +5,13 @@ import TableSkeleton from "@/components/skeletons/TableSkeleton";
 import TrainingInfoCard from "@/components/views/profile/TrainingInfo";
 import TrainingList from "@/components/views/profile/TrainingList";
 import { filterTrainings } from "@/lib/utils/trainingFilter";
+import { useParams } from "next/navigation";
 
 const Training = () => {
-  const { profile, isLoading } = useAppContext();
+  const params = useParams();
+  const { profile, isLoading,viewedProfile } = useAppContext();
   const { currentInProgress, otherTrainings } = filterTrainings(
-    profile?.trainingEmployees || [],
+   params.id ? viewedProfile?.trainingEmployees : profile?.trainingEmployees || [],
   );
 
   return (
