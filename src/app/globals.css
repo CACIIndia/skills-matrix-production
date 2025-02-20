@@ -9135,17 +9135,6 @@ input[type='file']::file-selector-button {
   z-index: 10; /* Ensure it's above other elements */
   background-color: #006ae6;
 }
-/* .absolute-profile-header{
-  position: "absolute";
-            top: "115%";
-            left: "50%";
-            transform: "translate(-50%; -50%)";
-
-            border: "1px solid black";
-            display: "flex";
-            align-items: "center";
-            justify-content: "center"
-} */
 .absolute-profile-header {
   @apply absolute top-[115%] left-1/2 -translate-x-1/2 -translate-y-1/2 
          flex items-center justify-center !important;

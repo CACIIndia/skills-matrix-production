@@ -168,6 +168,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
         renderCell={renderCell}
         isPaginated={true}
         noDataMessage={noDataMessage}
+        tableHeading={"Certifications"}
       />
 
       {/* Add Certificate Modal */}

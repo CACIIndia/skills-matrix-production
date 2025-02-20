@@ -48,7 +48,7 @@ const OverviewPage = () => {
           <CertificatePage />
         </div>
       </div>
-      <div className='lg:gap-7.5 mt-4 grid grid-cols-1 lg:mt-8 lg:grid-cols-3'>
+      <div className='lg:gap-7.5 my-4 grid grid-cols-1 lg:mt-8 lg:grid-cols-3 '>
         <div className='col-span-3 grid gap-5'>
           <Training />
         </div>
