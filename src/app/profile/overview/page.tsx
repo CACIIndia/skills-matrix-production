@@ -21,7 +21,7 @@ const OverviewPage = () => {
 
   return (
     <div className=' '>
-      <div className='lg:gap-7.5 grid grid-cols-1 lg:grid-cols-3'>
+      <div id="overview" className='lg:gap-7.5 grid grid-cols-1 lg:grid-cols-3'>
         <div className='col-span-1 grid gap-5'>
           {/*  @ TODO This should come from the endpoint  */}
           <ProfileGeneralInfo
@@ -57,7 +57,7 @@ const OverviewPage = () => {
         )} */}
         </div>
       </div>
-      <div className='lg:gap-7.5 mt-4 grid grid-cols-1 lg:mt-8 lg:grid-cols-3'>
+      <div  id="skills" className='lg:gap-7.5 mt-4 grid grid-cols-1 lg:mt-8 lg:grid-cols-3'>
         <div className='col-span-3 grid gap-5'>
           <ProfileSkills
             createdById={profile?.id}
@@ -66,12 +66,12 @@ const OverviewPage = () => {
           />
         </div>
       </div>
-      <div className='lg:gap-7.5 mt-4 grid grid-cols-1 lg:mt-8 lg:grid-cols-3'>
+      <div id="certificates" className='lg:gap-7.5 mt-4 grid grid-cols-1 lg:mt-8 lg:grid-cols-3'>
         <div className='col-span-3 grid gap-5'>
           <CertificatePage />
         </div>
       </div>
-      <div className='lg:gap-7.5 mt-4 grid grid-cols-1 lg:mt-8 lg:grid-cols-3'>
+      <div id="training" className='lg:gap-7.5 my-4 grid grid-cols-1 lg:mt-8 lg:grid-cols-3'>
         <div className='col-span-3 grid gap-5'>
           <Training />
         </div>
