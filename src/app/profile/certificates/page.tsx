@@ -15,11 +15,12 @@ import { useParams } from "next/navigation";
 const CertificatePage = () => {
    const params = useParams();
   const { profile, categorySkills } = useAppContext();
+ 
   const { data: certificates, refetch, isLoading } = useGetCertificates(params?.id || profile?.id);
- // const { data: categoryskills } = useGetSkillCategory();
+  
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
   const { data: training_data } = useGetTrainingDataByUserId(
-    profile?.id,
+    params?.id ? false : profile?.id,
     "employeeId",
     "Completed",
   );
@@ -90,16 +91,11 @@ const CertificatePage = () => {
             refetch={refetch}
             trainingData={training_data || []}
             isSearchable={true}
-            addNewData={true}
+            addNewData={params?.id? false:true}
             noDataMessage="No certifications found"
           />
 
-          {/* <ResumeCard
-            iconSrc='/assets/media/file-types/pdf.svg'
-            iconAlt='PDF file icon'
-            title='Resume'
-            timestamp='3 days ago'
-          /> */}
+        
         </div>
       </div>
     </div>
