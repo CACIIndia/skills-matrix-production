@@ -103,13 +103,12 @@ const ProfileSkills = ({
                                 "badge-blue p-2": level === 4,
                               })}
                             >
-                              {userSkill.skill.name} |{" "}
-                              {SKILL_LEVELS[level]?.name}
+                              {userSkill.skill.name} 
                             </span>
                           ))}
                         </div>
                         {level !== 1 && (
-                          <div className='my-4 h-[1px] bg-gray-200'></div>
+                          <div className='my-4 h-[1px] border-b border-b-gray-200'></div>
                         )}
                       </div>
                     );
