@@ -95,11 +95,11 @@ const ProfileSkills = ({
                             <span
                               key={userSkill.id}
                               className={classNames("badge badge-sm", {
-                                "badge-outline": level === 0,
-                                "badge-blue-basic": level === 1,
-                                "badge-orange": level === 2,
-                                "badge-green": level === 3,
-                                "badge-blue": level === 4,
+                                "badge-outline p-2": level === 0,
+                                "badge-blue-basic p-2": level === 1,
+                                "badge-orange p-2": level === 2,
+                                "badge-green p-2": level === 3,
+                                "badge-blue p-2": level === 4,
                               })}
                             >
                               {userSkill.skill.name} |{" "}
