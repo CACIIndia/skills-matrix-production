@@ -10,6 +10,7 @@ import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
 import { useAppContext } from "@/app/context/AppContext";
 import CertificatePage from "../../certificates/page";
 import Training from "../../training/page";
+import Bio from "@/components/views/profile/ProfileBio";
 
 const OverviewPage = () => {
   const { viewedProfile } = useAppContext();
@@ -22,12 +23,8 @@ const OverviewPage = () => {
         {/* <ProfileAdditionalInfo additionalInfo={viewedProfile?.additionalInfo} /> */}
       </div>
       <div className='col-span-2 grid gap-5'>
-        <ProfileSkills userSkills={viewedProfile?.userSkills || []} />
-        {/* {viewedProfile?.projects?.length > 0 && (
-          <ProfileProjectHistory
-            projects={viewedProfile?.projects || DEFAULT_USER_DETAILS.projects}
-          />
-        )} */}
+       <Bio></Bio>
+       
       </div>
      
     </div>
