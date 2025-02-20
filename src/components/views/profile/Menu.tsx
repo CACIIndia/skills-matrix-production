@@ -11,8 +11,7 @@ import { useState } from "react";
 
 const ProfileMenu = () => {
   const { id } = useParams();
-
-  const items = id ? VIEW_PROFILE_MENU_ITEMS : PROFILE_MENU_ITEMS;
+  const items = PROFILE_MENU_ITEMS;
   const [activePath, setActivePath] = useState(items[0]?.path || "");
 
   const handleMenuClick = (path: string) => {

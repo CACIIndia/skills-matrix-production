@@ -12,6 +12,7 @@ import { updateUserSkills } from "@/app/actions/updateUserSkills";
 import userSkillsMapper from "@/lib/mappers/userSkillsMapper";
 import { useAppContext } from "@/app/context/AppContext";
 import toast from "react-hot-toast";
+import { useParams } from "next/navigation";
 
 export type SelectedSkill = {
   createdById: string;
@@ -33,9 +34,9 @@ const ProfileSkills = ({
   disableEdit = false,
 }: ProfileSkillsProps) => {
   const mappedUserSkills = userSkillsMapper(userSkills);
-  console.log("user skills", userSkills);
   const { setProfile, profile } = useAppContext();
   const [isOpen, setIsOpen] = useState(false);
+  const params = useParams();
   const [initialselectedSkills, setinitialselectedSkills] =
     useState(mappedUserSkills);
   const [selectedSkills, setSelectedSkills] = useState(mappedUserSkills);
@@ -131,7 +132,8 @@ const ProfileSkills = ({
         </div>
       </div>
 
-      <Modal
+      {
+        params?.id &&<Modal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         title='Edit Skills'
@@ -145,6 +147,10 @@ const ProfileSkills = ({
           setSelectedSkills={setSelectedSkills}
         />
       </Modal>
+
+      }
+
+      
     </div>
   );
 };
