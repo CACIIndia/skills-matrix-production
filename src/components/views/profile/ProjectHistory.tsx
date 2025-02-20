@@ -131,25 +131,29 @@ const ProjectHistoryCard = ({
                                     {item.description}
                                   </span>
                                 </div>
-                                <div className='flex gap-2.5'>
+                                <div className='flex'>
                                   {isProjectEditable && (
                                     <div
-                                      className='cursor-pointer'
+                                      className='cursor-pointer btn btn-sm btn-icon btn-clear btn-primary'
                                       onClick={() => {
                                         setIsOpen(true);
                                         setIsEdit(true);
                                         setEditData(item);
                                       }}
                                     >
-                                      <EditIcon />
+                                      {/* <EditIcon /> */}
+                                      <i className='ki-filled ki-notepad-edit'></i>
+
                                     </div>
                                   )}
                                   {isProjectDeletable && (
                                     <div
-                                      className='cursor-pointer'
+                                      className='cursor-pointer btn btn-sm btn-icon btn-clear btn-primary'
                                       onClick={() => deleteProject(item.id)}
                                     >
-                                      <DeleteIcon />
+                                      {/* <DeleteIcon /> */}
+                                      <i className='ki-filled ki-trash'></i>
+
                                     </div>
                                   )}
                                 </div>
@@ -260,25 +264,29 @@ const ProjectHistoryCard = ({
                                     {item.description}
                                   </span>
                                 </div>
-                                <div className='flex gap-2.5'>
+                                <div className='flex'>
                                   {isProjectEditable && (
                                     <div
-                                      className='cursor-pointer'
+                                      className='cursor-pointer btn btn-sm btn-icon btn-clear btn-primary'
                                       onClick={() => {
                                         setIsOpen(true);
                                         setIsEdit(true);
                                         setEditData(item);
                                       }}
                                     >
-                                      <EditIcon />
+                                      {/* <EditIcon /> */}
+                                      <i className='ki-filled ki-notepad-edit'></i>
+
                                     </div>
                                   )}
                                   {isProjectDeletable && (
                                     <div
-                                      className='cursor-pointer'
+                                      className='cursor-pointer btn btn-sm btn-icon btn-clear btn-primary'
                                       onClick={() => deleteProject(item.id)}
                                     >
-                                      <DeleteIcon />
+                                      {/* <DeleteIcon /> */}
+                                      <i className='ki-filled ki-trash'></i>
+
                                     </div>
                                   )}
                                 </div>

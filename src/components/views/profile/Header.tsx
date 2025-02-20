@@ -9,6 +9,8 @@ import { useAppContext } from "@/app/context/AppContext";
 import image_spinner from "../../../../public/assets/media/misc/spinner.gif";
 import ProfileHeaderSkeleton from "@/components/skeletons/ProfileHeader";
 import RoleIcon from "@/components/custom-icons/RoleIcon";
+import LocationIcon from "@/components/custom-icons/LocationIcon";
+import EmailIcon from "@/components/custom-icons/EmailIcon";
 
 type ProfileHeaderProps = {
   data?: UserDetails;
@@ -74,8 +76,7 @@ const ProfileHeader = ({
 
   return (
     <div className='hero-bg bg-cover bg-center bg-no-repeat'>
-      <div className=' flex flex-col items-center gap-4'>
-  
+      <div className='flex flex-col items-center gap-4'>
         {/* Profile Image */}
         <div className='flex flex-col items-center'>
           <Image
@@ -94,9 +95,9 @@ const ProfileHeader = ({
             disabled={uploading}
           />
         </div>
-  
+
         {/* Profile Details (Name, Role, Location, Email) */}
-        <div className='flex flex-col items-center gap-2 mt-1'>
+        <div className='mt-1 flex flex-col items-center gap-2'>
           {data?.name && (
             <div className='flex items-center gap-1.5'>
               <div className='font-inter text-lg font-bold text-gray-900'>
@@ -117,25 +118,27 @@ const ProfileHeader = ({
               </svg>
             </div>
           )}
-  
-          <div className='flex flex-wrap items-center justify-center gap-2 text-sm'>
+
+          <div className='flex flex-wrap items-center justify-center gap-3 text-sm'>
             {data?.role && (
               <div className='flex items-center gap-1.5'>
                 <RoleIcon />
-                <span className='text-gray-600'>{data?.role}</span>
+                <span className='text-gray-800 text-[14px]'>{data?.role}</span>
               </div>
             )}
             {data?.location && (
               <div className='flex items-center gap-1.5'>
-                <i className='ki-filled ki-geolocation text-sm text-primary'></i>
-                <span className='text-gray-600'>{data?.location}</span>
+                <LocationIcon/>
+
+                <span className='text-gray-800 text-[14px]'>{data?.location}</span>
               </div>
             )}
             {data?.email && (
               <div className='flex items-center gap-1.5'>
-                <i className='ki-filled ki-sms mt-[2px] text-sm text-primary'></i>
+               <EmailIcon/>
+
                 <a
-                  className='text-gray-600 hover:text-primary'
+                  className='text-gray-800 text-[14px] hover:text-primary'
                   href={`mailto:${data?.email}`}
                 >
                   {data?.email}
@@ -144,11 +147,9 @@ const ProfileHeader = ({
             )}
           </div>
         </div>
-  
       </div>
     </div>
   );
-  
 };
 
 export default ProfileHeader;
