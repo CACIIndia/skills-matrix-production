@@ -561,6 +561,10 @@ video {
   --tw-danger-light-dark: #302024;
   --tw-danger-clarity-dark: rgba(228, 40, 85, 0.2);
   --tw-danger-inverse-dark: #ffffff;
+  --tw-badge-blue:#2F00A6;
+  --tw-badge-green:#008842;
+  --tw-badge-orange:#C44B00;
+  --tw-badge-blue-basic:#006BE7;
   --tw-warning-dark: #c59a00;
   --tw-warning-active-dark: #d9aa00;
   --tw-warning-light-dark: #242320;
@@ -4022,6 +4026,51 @@ video {
   background-color: var(--tw-dark-light);
   border-color: var(--tw-dark-clarity);
 }
+
+.badge-blue {
+  color: #fff;
+  background-color: var(--tw-badge-blue);
+}
+
+.badge-outline.badge-blue {
+  color: var(--tw-badge-blue);
+  background-color: rgba(var(--tw-badge-blue), 0.2);
+  border-color: var(--tw-badge-blue);
+}
+
+.badge-green {
+  color: #fff;
+  background-color: var(--tw-badge-green);
+}
+
+.badge-outline.badge-green {
+  color: var(--tw-badge-green);
+  background-color: rgba(var(--tw-badge-green), 0.2);
+  border-color: var(--tw-badge-green);
+}
+
+.badge-orange {
+  color: #fff;
+  background-color: var(--tw-badge-orange);
+}
+
+.badge-outline.badge-orange {
+  color: var(--tw-badge-orange);
+  background-color: rgba(var(--tw-badge-orange), 0.2);
+  border-color: var(--tw-badge-orange);
+}
+
+.badge-blue-basic {
+  color: #fff;
+  background-color: var(--tw-badge-blue-basic);
+}
+
+.badge-outline.badge-blue-basic {
+  color: var(--tw-badge-blue-basic);
+  background-color: rgba(var(--tw-badge-blue-basic), 0.2);
+  border-color: var(--tw-badge-blue-basic);
+}
+
 
 .rating {
   display: inline-flex;

@@ -23,37 +23,37 @@ type ProfileSkillsProps = {
   createdById?: string;
   userSkills?: UserSkill[];
   showEditButton?: boolean;
-  disableEdit?:boolean
+  disableEdit?: boolean;
 };
 
 const ProfileSkills = ({
   createdById = "",
   userSkills = [],
   showEditButton,
-  disableEdit=false
+  disableEdit = false,
 }: ProfileSkillsProps) => {
   const mappedUserSkills = userSkillsMapper(userSkills);
-
+  console.log("user skills", userSkills);
   const { setProfile, profile } = useAppContext();
   const [isOpen, setIsOpen] = useState(false);
-  const [initialselectedSkills,setinitialselectedSkills] = useState(mappedUserSkills);
+  const [initialselectedSkills, setinitialselectedSkills] =
+    useState(mappedUserSkills);
   const [selectedSkills, setSelectedSkills] = useState(mappedUserSkills);
-  
 
-
- useEffect(()=>{
-  setSelectedSkills(initialselectedSkills);
- },[isOpen])
+  useEffect(() => {
+    setSelectedSkills(initialselectedSkills);
+  }, [isOpen]);
   const handleEdit = async () => {
     const toastId = toast.loading("Updating Skills...");
     const tempSelectedSkill = [...selectedSkills];
     const result = await updateUserSkills(createdById, selectedSkills);
 
-    setProfile(() => {return {...profile, ...result?.updatedUser }});
+    setProfile(() => {
+      return { ...profile, ...result?.updatedUser };
+    });
     toast.success(result.message, { id: toastId });
     setSelectedSkills(tempSelectedSkill);
     setinitialselectedSkills(tempSelectedSkill);
-
   };
 
   return (
@@ -63,44 +63,57 @@ const ProfileSkills = ({
           <div className='card-header flex items-center justify-between'>
             <h3 className='card-title'>Skills</h3>
 
-            {disableEdit || showEditButton && (
-              <button
-                className='btn btn-sm btn-icon btn-clear btn-primary'
-                onClick={() => setIsOpen(true)}
-              >
-                <i className='ki-filled ki-notepad-edit'></i>
-              </button>
-            )}
+            {disableEdit ||
+              (showEditButton && (
+                <button
+                  className='btn btn-sm btn-icon btn-clear btn-primary'
+                  onClick={() => setIsOpen(true)}
+                >
+                  <i className='ki-filled ki-notepad-edit'></i>
+                </button>
+              ))}
           </div>
 
           <div className='card-body'>
-            <div className='mb-2 flex flex-wrap gap-2.5'>
-              {userSkills && userSkills?.length > 0 ? (
-                <div className='mb-2 flex flex-wrap gap-2.5'>
-                  {userSkills?.map((userSkill) => {
-                    const level = userSkill.level;
-                    const { name } = SKILL_LEVELS[level];
+            <div className='mb-2 flex flex-col'>
+              {userSkills && userSkills.length > 0 ? (
+                <>
+                  {[4, 3, 2, 1].map((level) => {
+                    const filteredSkills = userSkills.filter(
+                      (skill) => skill.level === level,
+                    );
 
-                    if (!name) {
-                      return null;
-                    }
+                    if (filteredSkills.length === 0) return null;
 
                     return (
-                      <span
-                        key={userSkill.id}
-                        className={classNames("badge badge-sm", {
-                          "badge-outline": level === 0,
-                          "badge-danger": level === 1,
-                          "badge-warning": level === 2,
-                          "badge-primary": level === 3,
-                          "badge-success": level === 4,
-                        })}
-                      >
-                        {userSkill.skill.name} | {name}
-                      </span>
+                      <div key={level} className='flex flex-col'>
+                        <h4 className='mb-1 text-lg font-light text-gray-700'>
+                          {SKILL_LEVELS[level]?.name}{" "}
+                        </h4>
+                        <div className='flex flex-wrap gap-[8px]'>
+                          {filteredSkills.map((userSkill) => (
+                            <span
+                              key={userSkill.id}
+                              className={classNames("badge badge-sm", {
+                                "badge-outline p-2": level === 0,
+                                "badge-blue-basic p-2": level === 1,
+                                "badge-orange p-2": level === 2,
+                                "badge-green p-2": level === 3,
+                                "badge-blue p-2": level === 4,
+                              })}
+                            >
+                              {userSkill.skill.name} |{" "}
+                              {SKILL_LEVELS[level]?.name}
+                            </span>
+                          ))}
+                        </div>
+                        {level !== 1 && (
+                          <div className='my-4 h-[1px] bg-gray-200'></div>
+                        )}
+                      </div>
                     );
                   })}
-                </div>
+                </>
               ) : (
                 <div className='text-center text-gray-600'>
                   <p>No skills found</p>
@@ -125,7 +138,7 @@ const ProfileSkills = ({
         title='Edit Skills'
         buttonText='Update'
         handler={handleEdit}
-        customWidth="w-[100%] lg:w-[70%] h-[100%] lg:h-[90%]"
+        customWidth='w-[100%] lg:w-[70%] h-[100%] lg:h-[90%]'
       >
         <EditSkills
           createdById={createdById}

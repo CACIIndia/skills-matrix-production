@@ -11,6 +11,7 @@ import { DEFAULT_USER_DETAILS } from "@/lib/constants/profile";
 import CertificatePage from "../certificates/page";
 import Training from "../training/page";
 import Bio from "@/components/views/profile/ProfileBio";
+import ProjectPage from "../project/page";
 
 const OverviewPage = () => {
   const { profile } = useAppContext();
@@ -67,6 +68,11 @@ const OverviewPage = () => {
       <div id="training" className='lg:gap-7.5 my-4 grid grid-cols-1 lg:mt-8 lg:grid-cols-3'>
         <div className='col-span-3 grid gap-5'>
           <Training />
+        </div>
+      </div>
+      <div id="project" className='lg:gap-7.5 my-4 grid grid-cols-1 lg:mt-8 lg:grid-cols-3'>
+        <div className='col-span-3 grid gap-5'>
+          <ProjectPage />
         </div>
       </div>
     </div>
