@@ -79,45 +79,56 @@ const ProfileSkills = ({
             <div className='mb-2 flex flex-col'>
               {userSkills && userSkills.length > 0 ? (
                 <>
-                  {[4, 3, 2, 1].map((level) => {
-                    const filteredSkills = userSkills.filter(
-                      (skill) => skill.level === level,
+                  {(() => {
+                    const levelsWithSkills = [4, 3, 2, 1].filter((level) =>
+                      userSkills.some((skill) => skill.level === level),
                     );
 
-                    if (filteredSkills.length === 0) return null;
+                    const multipleLevels = levelsWithSkills.length > 1; // Check if there are multiple skill levels
 
-                    return (
-                      <div key={level} className='flex flex-col'>
-                        <h4 className='mb-1 text-lg font-light text-gray-700'>
-                          {SKILL_LEVELS[level]?.name}{" "}
-                        </h4>
-                        <div className='flex flex-wrap gap-[8px]'>
-                          {filteredSkills.map((userSkill) => (
-                            <span
-                              key={userSkill.id}
-                              className={classNames("badge badge-sm", {
-                                "badge-outline p-2": level === 0,
-                                "badge-blue-basic p-2": level === 1,
-                                "badge-orange p-2": level === 2,
-                                "badge-green p-2": level === 3,
-                                "badge-blue p-2": level === 4,
-                              })}
-                            >
-                              {userSkill.skill.name} 
-                            </span>
-                          ))}
+                    return levelsWithSkills.map((level, index) => {
+                      const filteredSkills = userSkills.filter(
+                        (skill) => skill.level === level,
+                      );
+
+                      if (filteredSkills.length === 0) return null;
+
+                      return (
+                        <div key={level} className='flex flex-col'>
+                          {multipleLevels && (
+                            <h4 className='mb-1 text-lg font-light text-gray-700'>
+                              {SKILL_LEVELS[level]?.name}
+                            </h4>
+                          )}
+                          <div className='flex flex-wrap gap-[8px]'>
+                            {filteredSkills.map((userSkill) => (
+                              <span
+                                key={userSkill.id}
+                                className={classNames("badge badge-sm", {
+                                  "badge-outline p-2": level === 0,
+                                  "badge-blue-basic p-2": level === 1,
+                                  "badge-orange p-2": level === 2,
+                                  "badge-green p-2": level === 3,
+                                  "badge-blue p-2": level === 4,
+                                })}
+                              >
+                                {userSkill.skill.name}
+                              </span>
+                            ))}
+                          </div>
+                          {multipleLevels &&
+                            index !== levelsWithSkills.length - 1 && (
+                              <div className='my-4 h-[1px] border-b border-b-gray-200'></div>
+                            )}
                         </div>
-                        {level !== 1 && (
-                          <div className='my-4 h-[1px] border-b border-b-gray-200'></div>
-                        )}
-                      </div>
-                    );
-                  })}
+                      );
+                    });
+                  })()}
                 </>
               ) : (
                 <div className='text-center text-gray-600'>
                   <p>No skills found</p>
-                  {showEditButton && (
+                  {showEditButton && !params?.id && (
                     <button
                       className='btn btn-primary mt-4'
                       onClick={() => setIsOpen(true)}
@@ -132,25 +143,22 @@ const ProfileSkills = ({
         </div>
       </div>
 
-      {
-        !params?.id &&<Modal
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        title='Edit Skills'
-        buttonText='Update'
-        handler={handleEdit}
-        customWidth='w-[100%] lg:w-[70%] h-[100%] lg:h-[90%]'
-      >
-        <EditSkills
-          createdById={createdById}
-          selectedSkills={selectedSkills}
-          setSelectedSkills={setSelectedSkills}
-        />
-      </Modal>
-
-      }
-
-      
+      {!params?.id && (
+        <Modal
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          title='Edit Skills'
+          buttonText='Update'
+          handler={handleEdit}
+          customWidth='w-[100%] lg:w-[70%] h-[100%] lg:h-[90%]'
+        >
+          <EditSkills
+            createdById={createdById}
+            selectedSkills={selectedSkills}
+            setSelectedSkills={setSelectedSkills}
+          />
+        </Modal>
+      )}
     </div>
   );
 };
