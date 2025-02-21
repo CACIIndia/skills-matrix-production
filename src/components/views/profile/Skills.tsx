@@ -84,7 +84,7 @@ const ProfileSkills = ({
                       userSkills.some((skill) => skill.level === level),
                     );
 
-                    const multipleLevels = levelsWithSkills.length > 1; // Check if there are multiple skill levels
+                    const multipleLevels = levelsWithSkills.length > 1;
 
                     return levelsWithSkills.map((level, index) => {
                       const filteredSkills = userSkills.filter(
@@ -95,11 +95,10 @@ const ProfileSkills = ({
 
                       return (
                         <div key={level} className='flex flex-col'>
-                          {multipleLevels && (
-                            <h4 className='mb-1 text-lg font-light text-gray-700'>
-                              {SKILL_LEVELS[level]?.name}
-                            </h4>
-                          )}
+                          <h4 className='mb-1 text-lg font-light text-gray-700'>
+                            {SKILL_LEVELS[level]?.name}
+                          </h4>
+
                           <div className='flex flex-wrap gap-[8px]'>
                             {filteredSkills.map((userSkill) => (
                               <span
