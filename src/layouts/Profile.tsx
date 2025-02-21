@@ -48,7 +48,7 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
       </div>
 
       {/* Profile Menu */}
-      <div className='mt-[120px]  container-fixed ' style={{marginTop:"140px"}}>
+      <div className='mt-[120px]  container-fixed' style={{marginTop:"165px"}}>
         <ProfileMenu />
       </div>
 
