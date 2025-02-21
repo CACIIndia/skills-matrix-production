@@ -22,6 +22,7 @@ type ProjectHistoryCardProps = {
   setEditData: (data: any) => void;
   isOpen: boolean;
   joiningDate: string | null;
+  viewedProfile: boolean;
 };
 
 const ProjectHistoryCard = ({
@@ -31,6 +32,7 @@ const ProjectHistoryCard = ({
   setEditData,
   isOpen,
   joiningDate,
+  viewedProfile,
 }: ProjectHistoryCardProps) => {
   const mutationDelete = useDeleteProject();
   const { removeDeletedProject } = useAppContext();
@@ -78,7 +80,8 @@ const ProjectHistoryCard = ({
           <div className='card-header flex justify-between'>
             <h3 className='card-title'>Projects History</h3>
             <h3 className='card-title'>
-              <button
+              {
+                !viewedProfile&&  <button
                 onClick={() => {
                   setIsOpen(!isOpen);
                   setIsEdit(false);
@@ -88,6 +91,8 @@ const ProjectHistoryCard = ({
               >
                 <CiSquarePlus size={32} />
               </button>
+              }
+            
             </h3>
           </div>
           <div className='card-body text-start'>
@@ -131,25 +136,29 @@ const ProjectHistoryCard = ({
                                     {item.description}
                                   </span>
                                 </div>
-                                <div className='flex gap-2.5'>
-                                  {isProjectEditable && (
+                                <div className='flex'>
+                                  {isProjectEditable && !viewedProfile && (
                                     <div
-                                      className='cursor-pointer'
+                                      className='cursor-pointer btn btn-sm btn-icon btn-clear btn-primary'
                                       onClick={() => {
                                         setIsOpen(true);
                                         setIsEdit(true);
                                         setEditData(item);
                                       }}
                                     >
-                                      <EditIcon />
+                                      {/* <EditIcon /> */}
+                                      <i className='ki-filled ki-notepad-edit'></i>
+
                                     </div>
                                   )}
-                                  {isProjectDeletable && (
+                                  {isProjectDeletable && !viewedProfile && (
                                     <div
-                                      className='cursor-pointer'
+                                      className='cursor-pointer btn btn-sm btn-icon btn-clear btn-primary'
                                       onClick={() => deleteProject(item.id)}
                                     >
-                                      <DeleteIcon />
+                                      {/* <DeleteIcon /> */}
+                                      <i className='ki-filled ki-trash'></i>
+
                                     </div>
                                   )}
                                 </div>
@@ -260,25 +269,29 @@ const ProjectHistoryCard = ({
                                     {item.description}
                                   </span>
                                 </div>
-                                <div className='flex gap-2.5'>
-                                  {isProjectEditable && (
+                                <div className='flex'>
+                                  {isProjectEditable && !viewedProfile && (
                                     <div
-                                      className='cursor-pointer'
+                                      className='cursor-pointer btn btn-sm btn-icon btn-clear btn-primary'
                                       onClick={() => {
                                         setIsOpen(true);
                                         setIsEdit(true);
                                         setEditData(item);
                                       }}
                                     >
-                                      <EditIcon />
+                                      {/* <EditIcon /> */}
+                                      <i className='ki-filled ki-notepad-edit'></i>
+
                                     </div>
                                   )}
-                                  {isProjectDeletable && (
+                                  {isProjectDeletable &&!viewedProfile && (
                                     <div
-                                      className='cursor-pointer'
+                                      className='cursor-pointer btn btn-sm btn-icon btn-clear btn-primary'
                                       onClick={() => deleteProject(item.id)}
                                     >
-                                      <DeleteIcon />
+                                      {/* <DeleteIcon /> */}
+                                      <i className='ki-filled ki-trash'></i>
+
                                     </div>
                                   )}
                                 </div>
