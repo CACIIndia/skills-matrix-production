@@ -13,14 +13,12 @@ type HeaderProps = {
 };
 
 const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
-  const router = useRouter();
-  const pathname = usePathname(); 
-  // const { searchQuery, setSearchQuery } = useAppContext();
+ 
  
  
 
   return (
-    <header className="flex items-center justify-between lg:gap-4 pl-4 pr-4 h-14">
+    <header className="flex items-center justify-between lg:gap-4 pl-4 pr-4 h-14 fixed top-0 left-0 w-full " style={{backgroundColor:"white",zIndex:130}}>
       <div className="w-[15%]">
         <Link href="/">
         <svg
@@ -57,20 +55,7 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
           <div className="mt-1 active menu-item menu-item-active:border-b-primary menu-item-here:border-b-primary border-b-2 border-b-transparent"></div>
         </Link>
         <HeaderSearch />
-        {/* <div className="w-full h-10 flex items-center border border-gray-200 gap-2 px-2 rounded-lg">
-          <i className="ki-filled ki-magnifier"></i>
-          <input
-            type="text"
-            placeholder="Search name or job title"
-            className="w-full h-full border-none outline-none"
-            value={searchQuery}
-            onChange={(e) => {
-              setSearchQuery(e.target.value);
-              router.push("/search");
-            }}
-
-          />
-        </div> */}
+        
       </div>
 
       <div className="flex items-center gap-2 w-[10%] justify-end">
