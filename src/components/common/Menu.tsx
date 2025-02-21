@@ -19,7 +19,7 @@ const Menu = ({ items = [],handleMenuClick,activePath }: MenuProps) => {
 
   return (
     <div className='grid'>
-      <div className='scrollable-x-auto static'>
+      <div className='scrollable-x-auto pb-1 static'>
         <div className='menu gap-3'>
           {items.map(({ name, path, defaultActive }) => {
             // Determine if the item is active
