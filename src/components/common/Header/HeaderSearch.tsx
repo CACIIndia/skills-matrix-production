@@ -7,14 +7,14 @@ import default_image from "../../../../public/assets/media/avatars/default-image
 
 const HeaderSearch: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const { data: users } = useGetUsers();
+  const { data: users, isLoading } = useGetUsers();
   const { profile } = useAppContext();
   const searchRef = useRef<HTMLDivElement>(null);
 
   const filteredUsers = searchQuery
     ? users?.filter(
         (user: { id: string; name: string; email: string; image?: string }) =>
-          user.id !== profile.id &&
+          user.id !== profile?.id &&
           (user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
             user.email.toLowerCase().includes(searchQuery.toLowerCase())),
       )
@@ -41,21 +41,29 @@ const HeaderSearch: React.FC = () => {
 
   return (
     <div className='relative w-full' ref={searchRef}>
-      <div className='flex h-10 w-full items-center gap-2 rounded-lg border border-gray-200 px-2'>
-        <i className='ki-filled ki-magnifier'></i>
-        <input
-          type='text'
-          placeholder='Search profile'
-          className='h-full w-full border-none outline-none'
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
+       <div className="flex h-10 w-full items-center gap-2 rounded-lg border border-gray-200 px-2">
+        {isLoading ? (
+          <div className="h-6 w-6 animate-pulse rounded-full bg-gray-300"></div>
+        ) : (
+          <i className="ki-filled ki-magnifier"></i>
+        )}
+        {isLoading ? (
+          <div className="h-8 w-full animate-pulse rounded bg-gray-300"></div>
+        ) : (
+          <input
+            type="text"
+            placeholder="Search profile"
+            className="h-full w-full border-none outline-none"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        )}
       </div>
 
       <div
         className={`absolute left-0 top-full z-40 mt-2 w-full overflow-hidden rounded-b-lg bg-white shadow-lg transition-all duration-300 ease-in-out ${searchQuery ? "h-[300px] max-h-min overflow-y-auto border border-gray-200 duration-300" : "h-0 duration-100"}`}
       >
-        {filteredUsers.length > 0 ? (
+        {filteredUsers?.length > 0 ? (
           filteredUsers?.map(
             (user: {
               id: string;
