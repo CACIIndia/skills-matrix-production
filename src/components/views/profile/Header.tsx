@@ -80,7 +80,7 @@ const ProfileHeader = ({
         {/* Profile Image */}
         <div className='flex flex-col items-center'>
           <Image
-            className='profile_image border-3 border-success size-[100px] rounded-full'
+            className='profile_image border-3 border-success size-[100px] rounded-full object-cover'
             src={uploading ? image_spinner : profileImage || default_image}
             alt={data?.name || "Profile"}
             width={100}
