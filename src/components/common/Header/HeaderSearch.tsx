@@ -53,7 +53,7 @@ const HeaderSearch: React.FC = () => {
       </div>
 
       <div
-        className={`absolute left-0 top-full z-40 mt-2 w-full overflow-hidden rounded-lg bg-white shadow-lg transition-all duration-300 ease-in-out ${searchQuery ? "h-[300px] max-h-min overflow-y-auto border border-gray-200 duration-300" : "h-0 duration-100"}`}
+        className={`absolute left-0 top-full z-40 mt-2 w-full overflow-hidden rounded-b-lg bg-white shadow-lg transition-all duration-300 ease-in-out ${searchQuery ? "h-[300px] max-h-min overflow-y-auto border border-gray-200 duration-300" : "h-0 duration-100"}`}
       >
         {filteredUsers.length > 0 ? (
           filteredUsers?.map(
