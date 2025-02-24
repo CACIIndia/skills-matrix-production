@@ -34,10 +34,12 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
   }, [userId, setViewedProfile]);
 
   return (
-    <div className='relative w-full'>
+    <div className='relative w-full' style={{backgroundColor:"white"}}>
+ 
+      <div className="fixed top-0 " style={{backgroundColor:"white",width:"100%",height:"400px",zIndex:100}}>
       {/* Banner */}
-      <div className='banner relative'>
-        {/* Profile Header positioned 70% down */}
+      <div className='banner  relative'  >
+       
         <div className='absolute-profile-header'>
           <ProfileHeader
             data={data}
@@ -48,12 +50,12 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
       </div>
 
       {/* Profile Menu */}
-      <div className='mt-[120px]  container-fixed' style={{marginTop:"165px"}}>
+      <div className='container-fixed ' style={{marginTop:"120px"}} >
         <ProfileMenu />
       </div>
-
+      </div>
       {/* Children content */}
-      <div className='mt-4 container-fixed'>
+      <div className='mt-4 container-fixed' >
         {isLoading || !data ? (
           <ProfileSkeleton />
         ) : (
