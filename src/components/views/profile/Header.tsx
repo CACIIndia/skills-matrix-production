@@ -76,7 +76,7 @@ const ProfileHeader = ({
 
   return (
     <div className='hero-bg bg-cover bg-center bg-no-repeat'>
-      <div className='flex flex-col items-center gap-4'>
+      <div className='flex flex-col items-center gap-1'>
         {/* Profile Image */}
         <div className='flex flex-col items-center'>
           <Image
