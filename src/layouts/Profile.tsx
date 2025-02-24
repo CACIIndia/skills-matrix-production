@@ -36,7 +36,7 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
   return (
     <div className='relative w-full' style={{backgroundColor:"white"}}>
  
-      <div className="fixed top-0 " style={{backgroundColor:"white",width:"100%",height:"400px",zIndex:100}}>
+      <div className="fixed top-0 " style={{backgroundColor:"white",width:"100%",height:"400px",zIndex:100,border:"1px solid red"}}>
       {/* Banner */}
       <div className='banner  relative'  >
        
@@ -50,7 +50,7 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
       </div>
 
       {/* Profile Menu */}
-      <div className='container-fixed ' style={{marginTop:"120px"}} >
+      <div className='container-fixed ' style={{marginTop:"130px"}} >
         <ProfileMenu />
       </div>
       </div>
