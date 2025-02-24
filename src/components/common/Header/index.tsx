@@ -50,7 +50,7 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
       </div>
 
       <div className="flex gap-4 items-center w-[80%] h-full">
-        <Link className="link text-md h-[32px]" href="/profile">
+        <Link className="link text-md h-[32px]" href="/profile/overview">
           <span className="text-md font-semibold">Profile</span>
           <div className="mt-1 active menu-item menu-item-active:border-b-primary menu-item-here:border-b-primary border-b-2 border-b-transparent"></div>
         </Link>
