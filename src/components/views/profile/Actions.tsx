@@ -1,10 +1,10 @@
 const ProfileActions = () => {
   return (
     <div className='flex items-center gap-2.5 lg:pb-4'>
-      <button className='dropdown-toggle btn btn-sm btn-primary'>
+      <button className='dropdown-toggle btn btn-sm btn-primary hidden lg:flex'>
         <i className='ki-filled ki-users'></i> Connect
       </button>
-      <button className='btn btn-sm btn-icon btn-light' style={{ zIndex: -10 }}>
+      <button className='btn btn-sm btn-icon btn-light hidden lg:flex' style={{ zIndex: -10 }}>
         <i className='ki-filled ki-messages'></i>
       </button>
       <div
@@ -14,7 +14,7 @@ const ProfileActions = () => {
       >
         <button
           style={{ zIndex: -10 }}
-          className='dropdown-toggle btn btn-sm btn-icon btn-light'
+          className='dropdown-toggle btn btn-sm btn-icon btn-light hidden lg:flex'
         >
           <i className='ki-filled ki-dots-vertical'></i>
         </button>

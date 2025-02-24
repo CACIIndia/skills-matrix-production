@@ -96,11 +96,11 @@ export default function SearchPage() {
         {/* Sidebar for Filters */}
         <div
           ref={menuRef}
-          className={`fixed left-0 top-0 z-30 h-[100%] transform overflow-y-auto bg-white shadow-lg transition-transform
+          className={`fixed left-0 top-0 z-30 w-[50%] h-[100%] transform overflow-y-auto bg-white shadow-lg transition-transform
             duration-300 ease-in-out ${isMenuOpen ? "translate-x-0" : "-translate-x-full"} flex flex-col gap-y-4 lg:relative 
             lg:w-[15%] lg:translate-x-0 lg:shadow-none`}
         >
-          <span className='ml-[10px] flex items-center gap-x-2 font-inter font-semibold text-[#6D6E82]'>
+          <span className='ml-[10px] mt-[10px] lg:mt-0 flex items-center gap-x-2 font-inter font-semibold text-[#6D6E82]'>
             <FilterIcon />
             Filter by skills
           </span>
@@ -119,10 +119,10 @@ export default function SearchPage() {
         )}
 
         {/* Mobile filter button */}
-        <div className='px-14 lg:hidden'>
+        <div className='pl-[30px] md:pl-14 lg:hidden'>
           <button
             onClick={() => setIsMenuOpen(true)}
-            className='flex items-center gap-x-2 rounded-[8px] border border-gray-600 px-2 py-2 font-inter font-semibold text-[#6D6E82]'
+            className='flex items-center text-[14px] lg:text-[16px] gap-x-2 rounded-[8px] border border-gray-600 px-2 py-2 font-inter font-semibold text-[#6D6E82]'
           >
             <FilterIcon />
             Filter by skills
@@ -130,7 +130,7 @@ export default function SearchPage() {
         </div>
 
         {/* Main Content */}
-        <div className='w-[100%] px-[40px] lg:w-[85%]'>
+        <div className='w-[100%] h-[100%] overflow-y-auto px-[30px] md:px-[40px] lg:w-[85%] mt-[16px] md:mt-0'>
           <SearchResultProfiles
             profiles={users || []}
             searchFilters={searchFilters}
