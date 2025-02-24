@@ -8,13 +8,9 @@ import { uploadImage } from "@/app/utils/imageUpload";
 import { useAppContext } from "@/app/context/AppContext";
 import image_spinner from "../../../../public/assets/media/misc/spinner.gif";
 import ProfileHeaderSkeleton from "@/components/skeletons/ProfileHeader";
-/* import RoleIcon from "@/components/custom-icons/RoleIcon";
-import LocationIcon from "@/components/custom-icons/LocationIcon";
-import EmailIcon from "@/components/custom-icons/EmailIcon"; */
 import { PiSuitcaseSimpleBold } from "react-icons/pi";
 import { GrLocation } from "react-icons/gr";
 import { HiOutlineMail } from "react-icons/hi";
-import { ImUserTie } from "react-icons/im";
 
 type ProfileHeaderProps = {
   data?: UserDetails;
