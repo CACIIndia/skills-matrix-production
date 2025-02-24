@@ -8,9 +8,13 @@ import { uploadImage } from "@/app/utils/imageUpload";
 import { useAppContext } from "@/app/context/AppContext";
 import image_spinner from "../../../../public/assets/media/misc/spinner.gif";
 import ProfileHeaderSkeleton from "@/components/skeletons/ProfileHeader";
-import RoleIcon from "@/components/custom-icons/RoleIcon";
+/* import RoleIcon from "@/components/custom-icons/RoleIcon";
 import LocationIcon from "@/components/custom-icons/LocationIcon";
-import EmailIcon from "@/components/custom-icons/EmailIcon";
+import EmailIcon from "@/components/custom-icons/EmailIcon"; */
+import { PiSuitcaseSimpleBold } from "react-icons/pi";
+import { GrLocation } from "react-icons/gr";
+import { HiOutlineMail } from "react-icons/hi";
+import { ImUserTie } from "react-icons/im";
 
 type ProfileHeaderProps = {
   data?: UserDetails;
@@ -122,23 +126,23 @@ const ProfileHeader = ({
           <div className='flex flex-wrap items-center justify-center gap-3 text-sm'>
             {data?.role && (
               <div className='flex items-center gap-1.5'>
-                <RoleIcon />
-                <span className='text-gray-800 text-[14px]'>{data?.role}</span>
+                <PiSuitcaseSimpleBold className='h-[20px] w-[20px]' />
+                <span className='text-[14px] text-gray-800'>{data?.role}</span>
               </div>
             )}
             {data?.location && (
               <div className='flex items-center gap-1.5'>
-                <LocationIcon/>
-
-                <span className='text-gray-800 text-[14px]'>{data?.location}</span>
+                <GrLocation className='h-[20px] w-[20px]' />
+                <span className='text-[14px] text-gray-800'>
+                  {data?.location}
+                </span>
               </div>
             )}
             {data?.email && (
               <div className='flex items-center gap-1.5'>
-               <EmailIcon/>
-
+                <HiOutlineMail className='h-[20px] w-[20px]' />
                 <a
-                  className='text-gray-800 text-[14px] hover:text-primary'
+                  className='text-[14px] text-gray-800 hover:text-primary'
                   href={`mailto:${data?.email}`}
                 >
                   {data?.email}
