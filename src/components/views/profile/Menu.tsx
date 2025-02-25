@@ -6,13 +6,24 @@ import {
   PROFILE_MENU_ITEMS,
   VIEW_PROFILE_MENU_ITEMS,
 } from "@/lib/constants/header";
-import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useParams, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const ProfileMenu = () => {
   const { id } = useParams();
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab");
   const items = PROFILE_MENU_ITEMS;
   const [activePath, setActivePath] = useState(items[0]?.path || "");
+
+  useEffect(()=>{
+    if(tab){
+      const activeItem = items.find((item) => item.name.includes(tab));
+      if(activeItem){
+        setActivePath(activeItem.path);
+      }
+    }
+  },[])
 
   const handleMenuClick = (path: string) => {
     setActivePath(path); 
