@@ -76,7 +76,9 @@ const ProjectHistoryCard = ({
       <div
         className={`transition-all duration-300 ${selectedProject ? "md:w-2/3" : "w-full"}`}
       >
-        <div className='card' style={{ zIndex: -1 }}>
+        <div className='card' 
+        // style={{ zIndex: -1 }}
+        >
           <div className='card-header flex justify-between'>
             <h3 className='card-title'>Projects History</h3>
             <h3 className='card-title'>

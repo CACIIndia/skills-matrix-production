@@ -18,7 +18,7 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
  
 
   return (
-    <header className="flex items-center justify-between lg:gap-4 pl-4 pr-4 h-14 fixed top-0 left-0 w-full " style={{backgroundColor:"white",zIndex:130}}>
+    <header className="flex items-center justify-between lg:gap-4 pl-4 pr-4 h-14 fixed top-0 left-0 w-full " style={{backgroundColor:"white",zIndex:100}}>
       <div className="w-[15%]">
         <Link href="/">
         <svg
