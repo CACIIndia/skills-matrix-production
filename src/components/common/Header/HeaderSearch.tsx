@@ -53,9 +53,9 @@ const HeaderSearch: React.FC = () => {
           <div className='h-8 w-full animate-pulse rounded bg-gray-300'></div>
         ) : (
           <input
-            type='text'
-            placeholder='Search profile'
-            className='h-full w-full border-none outline-none'
+            type="text"
+            placeholder="Quick search by name"
+            className="h-full w-full border-none outline-none"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

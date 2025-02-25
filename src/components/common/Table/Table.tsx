@@ -138,7 +138,7 @@ const Table = <T,>({
                     onClick={() =>
                       setIsAddModalOpen ? setIsAddModalOpen(true) : ""
                     }
-                    className='btn btn-sm btn-icon btn-clear btn-primary'
+                    className='btn btn-sm btn-icon text-primary hover:bg-primary-hover hover:text-white'
                   >
                     {/* <CiSquarePlus size={32} /> */}
                     <i className='ki-filled ki-notepad-edit'></i>
