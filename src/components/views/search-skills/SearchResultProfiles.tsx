@@ -10,6 +10,7 @@ import { BsMicrosoftTeams } from "react-icons/bs";
 import { IoMailUnread } from "react-icons/io5";
 import { SKILL_LEVELS } from "@/lib/constants/profile";
 import classNames from "classnames";
+import Link from "next/link";
 
 interface Profile {
   id: string;
@@ -59,7 +60,8 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
   const filteredProfiles = profiles?.filter((profile) => {
     return (
       (searchQuery === "" ||
-        profile.name.toLowerCase().includes(searchQuery.toLowerCase())) &&
+        profile.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        profile?.role?.toLowerCase().includes(searchQuery.toLowerCase())) &&
       (jobFilter === "" || profile.role === jobFilter) &&
       (locationFilter === "" || profile.location === locationFilter) &&
       selectedItems.every((item) =>
@@ -144,10 +146,10 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
                     <span
                       className={classNames("badge badge-sm", {
                         "badge-outline": level === 0,
-                        "badge-danger": level === 1,
-                        "badge-warning": level === 2,
-                        "badge-primary": level === 3,
-                        "badge-success": level === 4,
+                        "badge-blue-basic": level === 1,
+                        "badge-orange": level === 2,
+                        "badge-green": level === 3,
+                        "badge-blue": level === 4,
                       })}
                     >
                       {name} | {skill.skill.name}
@@ -162,7 +164,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
                   onClick={() =>
                     window.open(`/profile/overview/${rowData.id}`, "_blank")
                   }
-                  className='text-nowrap rounded-[4px] bg-green-600 px-2 text-white transition duration-300 hover:bg-blue-600'
+                  className='text-nowrap rounded-[4px] bg-rose-500 px-2 text-white transition duration-300 hover:bg-blue-600'
                 >
                   +{rowData.userSkills.length - 2}
                 </button>
@@ -178,14 +180,18 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
   };
 
   return (
-    <div className='w-full p-6'>
-      <div className='pb-7.5 flex flex-wrap items-center justify-between gap-5 lg:items-end'>
+    <div className='w-full md:p-6 font-inter text-[#6D6E82]'>
+      <div className='flex flex-wrap items-center justify-between gap-5 pb-2 lg:items-end'>
         <div className='flex flex-col justify-center gap-2'>
-          <h1 className='text-xl font-semibold leading-none text-gray-900'>
-            <i className='ki-filled ki-users text-primary'></i> Profiles
+          <h1 className='text-xl font-bold leading-none text-gray-900'>
+            Search
           </h1>
+          <p className='text-[14px] lg:text-[16px] font-light'>
+            Use the entry field below to search by name or job title. You can
+            also use the skills side panel to apply further filtering{" "}
+          </p>
         </div>
-        <div className='flex items-center gap-2.5'>
+        {/*  <div className='flex items-center gap-2.5'>
           <button
             className='dropdown-toggle btn btn-sm btn-primary'
             onClick={() => router.push(`/advance-search`)}
@@ -193,19 +199,22 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
             <i className='ki-filled ki-magnifier text-2xs'></i>
             Advance Search
           </button>
-        </div>
+        </div> */}
       </div>
 
-      <div className='flex w-[100%] items-center gap-4 rounded-md bg-white'>
-        <input
-          type='text'
-          placeholder='Search profiles...'
-          className='flex-grow rounded-md border border-gray-300 p-2 text-sm focus:ring focus:ring-blue-300'
-          value={searchQuery}
-          onChange={(e) => onFilterChange("searchQuery", e.target.value)}
-        />
+      <div className='flex flex-col items-start md:flex-row  w-[100%] md:items-center gap-4 rounded-md bg-white'>
+        <div className='flex h-10 w-full items-center gap-2 rounded-lg border border-gray-200 px-2'>
+          <i className='ki-filled ki-magnifier'></i>
+          <input
+            type='text'
+            placeholder='Search name or job title'
+            className='h-full w-full border-none outline-none'
+            value={searchQuery}
+            onChange={(e) => onFilterChange("searchQuery", e.target.value)}
+          />
+        </div>
 
-        <select
+        {/* <select
           value={jobFilter}
           onChange={(e) => onFilterChange("jobFilter", e.target.value)}
           className='basis-[15%] rounded-md border border-gray-300 p-2 text-sm text-gray-700 focus:ring focus:ring-blue-300'
@@ -219,12 +228,12 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
               {job}
             </option>
           ))}
-        </select>
+        </select> */}
 
         <select
           value={locationFilter}
           onChange={(e) => onFilterChange("locationFilter", e.target.value)}
-          className='basis-[15%] rounded-md border border-gray-300 p-2 text-sm text-gray-700 focus:ring focus:ring-blue-300'
+          className='basis-[15%] w-[100%] rounded-md border border-gray-300 p-2 text-sm text-gray-700 focus:ring focus:ring-blue-300'
         >
           <option value='' className='hidden'>
             Location
@@ -239,10 +248,18 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
 
         <button
           onClick={() => resetSearchFilters()}
-          className='btn btn-sm btn-danger rounded-md bg-red-500 px-6 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300'
+          className='btn btn-sm btn-danger text-nowrap rounded-md bg-red-500 px-6 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300'
         >
           <i className='ki-filled ki-trash'></i> Clear Search
         </button>
+      </div>
+      <div className='mt-3'>
+        <p>
+          {"Couldn't find what you were looking for? Try our"}{" "}
+          <Link className='text-[#1B84FF] underline' href={"/advance-search"}>
+            advanced search
+          </Link>
+        </p>
       </div>
 
       {selectedItems?.length > 0 && (
@@ -278,8 +295,8 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
       <div className='pb-7.5 mt-4 flex flex-wrap items-center justify-between gap-5 lg:items-end'>
         <div className='flex flex-col justify-center gap-2'>
           <h1 className='text-xl font-semibold leading-none text-gray-900'>
-            <i className='ki-filled ki-users text-primary'></i> Search Results (
-            {filteredProfiles.length})
+            {/* <i className='ki-filled ki-users text-primary'></i> */} Search Results {/* (
+            {filteredProfiles.length}) */}
           </h1>
         </div>
       </div>

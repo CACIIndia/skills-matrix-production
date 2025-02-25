@@ -35,7 +35,8 @@ const Modal = ({
     <Dialog
       open={isOpen}
       onClose={onClose}
-      className='relative z-10 focus:outline-none'
+      className='relative focus:outline-none'
+      style={{ zIndex: 100 }}
     >
       <DialogBackdrop className='fixed inset-0 bg-black/30' />
 
