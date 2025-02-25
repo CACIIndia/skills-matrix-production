@@ -1,13 +1,29 @@
 import { useEffect, useState } from "react";
 import Menu from "@/components/common/Menu";
 import ProfileActions from "@/components/views/profile/Actions";
-import { PROFILE_MENU_ITEMS } from "@/lib/constants/header";
+import {
+  PROFILE_MENU_ITEMS,
+  VIEW_PROFILE_MENU_ITEMS,
+} from "@/lib/constants/header";
+import { useParams, useSearchParams } from "next/navigation";
 
 const ProfileMenu = () => {
+  const { id } = useParams();
+  const searchParams = useSearchParams();
+  const tab = searchParams.get("tab");
   const items = PROFILE_MENU_ITEMS;
   const [activePath, setActivePath] = useState(items[0]?.path || "");
   const [isScrolling, setIsScrolling] = useState(false);
   const scrollOffset = 400;
+
+  useEffect(()=>{
+    if(tab){
+      const activeItem = items.find((item) => item.name.includes(tab));
+      if(activeItem){
+        setActivePath(activeItem.path);
+      }
+    }
+  },[])
 
   const handleMenuClick = (path: string) => {
     setIsScrolling(true);

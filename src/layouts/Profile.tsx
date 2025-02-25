@@ -25,6 +25,7 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
 
   useEffect(() => {
     if (userId) {
+      setViewedProfile(null);
       const fetchData = async () => {
         let user_data = await getProfile(userId);
         setViewedProfile(user_data.user);

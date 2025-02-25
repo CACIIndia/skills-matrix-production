@@ -1,8 +1,8 @@
 const Bio = () => {
   return (
     <>
-      <div className='lg:gap-7.5 flex flex-col gap-5'>
-        <div className='card'>
+      <div className='lg:gap-7.5 flex flex-col gap-5 h-[100%]' >
+        <div className='card h-[100%]'>
           <div className='card-header flex items-center justify-between'>
             <h3 className='card-title'>Edit Bio</h3>
           </div>
