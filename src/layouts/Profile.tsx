@@ -34,28 +34,34 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
   }, [userId, setViewedProfile]);
 
   return (
-    <div className='relative w-full' style={{backgroundColor:"white"}}>
- 
-      <div className="fixed top-0 " style={{backgroundColor:"white",width:"100%",height:"400px",zIndex:100,border:"1px solid red"}}>
-      {/* Banner */}
-      <div className='banner  relative'  >
-       
-        <div className='absolute-profile-header'>
-          <ProfileHeader
-            data={data}
-            isLoading={isLoading}
-            editProfile={editProfile}
-          />
+    <div className='relative w-full' style={{ backgroundColor: "white" }}>
+      <div
+        className='fixed top-0'
+        style={{
+          backgroundColor: "white",
+          width: "100%",
+          height: "400px",
+          zIndex: 10,
+        }}
+      >
+        {/* Banner */}
+        <div className='banner relative'>
+          <div className='absolute-profile-header'>
+            <ProfileHeader
+              data={data}
+              isLoading={isLoading}
+              editProfile={editProfile}
+            />
+          </div>
+        </div>
+
+        {/* Profile Menu */}
+        <div className='container-fixed' style={{ marginTop: "130px" }}>
+          <ProfileMenu />
         </div>
       </div>
-
-      {/* Profile Menu */}
-      <div className='container-fixed ' style={{marginTop:"130px"}} >
-        <ProfileMenu />
-      </div>
-      </div>
       {/* Children content */}
-      <div className='mt-4 container-fixed' >
+      <div className='container-fixed mt-4'>
         {isLoading || !data ? (
           <ProfileSkeleton />
         ) : (

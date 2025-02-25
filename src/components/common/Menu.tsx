@@ -8,24 +8,26 @@ type MenuProps = {
     name: string;
     path: string;
     defaultActive?: boolean;
-   
   }[];
-  handleMenuClick?: (path: string) => void; 
+  handleMenuClick?: (path: string) => void;
   activePath?: string;
 };
 
-const Menu = ({ items = [],handleMenuClick,activePath }: MenuProps) => {
+const Menu = ({ items = [], handleMenuClick, activePath }: MenuProps) => {
   const pathname = usePathname();
 
   return (
     <div className='grid'>
-      <div className='scrollable-x-auto pb-1 static'>
+      <div className='scrollable-x-auto static pb-1'>
         <div className='menu gap-3'>
           {items.map(({ name, path, defaultActive }) => {
             // Determine if the item is active
-            const isActive = activePath ?activePath === path: pathname.startsWith(path.replace(/\[.*?\]/, "")) || defaultActive;
+            const isActive = activePath
+              ? activePath === path
+              : pathname.startsWith(path.replace(/\[.*?\]/, "")) ||
+                defaultActive;
 
-              // pathname.startsWith(path.replace(/\[.*?\]/, "")) || defaultActive;
+            // pathname.startsWith(path.replace(/\[.*?\]/, "")) || defaultActive;
 
             return (
               <div
@@ -38,7 +40,7 @@ const Menu = ({ items = [],handleMenuClick,activePath }: MenuProps) => {
                   href={path}
                   className='menu-link gap-1.5 px-2 pb-2 lg:pb-4'
                   onClick={(e) => {
-                    if(handleMenuClick){
+                    if (handleMenuClick) {
                       e.preventDefault();
                       handleMenuClick(path);
                     }

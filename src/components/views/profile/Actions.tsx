@@ -4,7 +4,9 @@ const ProfileActions = () => {
       <button className='dropdown-toggle btn btn-sm btn-primary hidden lg:flex'>
         <i className='ki-filled ki-users'></i> Connect
       </button>
-      <button className='btn btn-sm btn-icon btn-light hidden lg:flex' style={{ zIndex: -10 }}>
+      <button className='btn btn-sm btn-icon btn-light hidden lg:flex' 
+      // style={{ zIndex: -10 }}
+      >
         <i className='ki-filled ki-messages'></i>
       </button>
       <div
@@ -13,7 +15,7 @@ const ProfileActions = () => {
         data-dropdown-placement='bottom-end'
       >
         <button
-          style={{ zIndex: -10 }}
+          // style={{ zIndex: -10 }}
           className='dropdown-toggle btn btn-sm btn-icon btn-light hidden lg:flex'
         >
           <i className='ki-filled ki-dots-vertical'></i>
