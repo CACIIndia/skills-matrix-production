@@ -92,7 +92,7 @@ const ProfileMenu = () => {
           handleMenuClick={handleMenuClick}
           activePath={activePath}
         />
-        <ProfileActions />
+        {/* <ProfileActions /> */}
       </div>
     </div>
   );
