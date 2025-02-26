@@ -561,6 +561,10 @@ video {
   --tw-danger-light-dark: #302024;
   --tw-danger-clarity-dark: rgba(228, 40, 85, 0.2);
   --tw-danger-inverse-dark: #ffffff;
+  --tw-badge-blue:#2F00A6;
+  --tw-badge-green:#008842;
+  --tw-badge-orange:#C44B00;
+  --tw-badge-blue-basic:#006BE7;
   --tw-warning-dark: #c59a00;
   --tw-warning-active-dark: #d9aa00;
   --tw-warning-light-dark: #242320;
@@ -2305,17 +2309,21 @@ video {
 
 .container-fixed {
   flex-grow: 1;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  /* padding-left: 1rem;
+  padding-right: 1.5rem; */
+  /* border: 2px solid #000000; */
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 @media (min-width: 1280px) {
   .container-fixed {
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 2.5rem;
-    padding-right: 2.5rem;
-    max-width: 1280px;
+   margin-left: 15%;
+   margin-right: 15%;
+    /* padding-left: 2.5rem;
+    padding-right: 2.5rem; */
+    /* max-width: 1280px; */
+    /* border: 2px solid red; */
   }
 }
 
@@ -4018,6 +4026,51 @@ video {
   background-color: var(--tw-dark-light);
   border-color: var(--tw-dark-clarity);
 }
+
+.badge-blue {
+  color: #fff;
+  background-color: var(--tw-badge-blue);
+}
+
+.badge-outline.badge-blue {
+  color: var(--tw-badge-blue);
+  background-color: rgba(var(--tw-badge-blue), 0.2);
+  border-color: var(--tw-badge-blue);
+}
+
+.badge-green {
+  color: #fff;
+  background-color: var(--tw-badge-green);
+}
+
+.badge-outline.badge-green {
+  color: var(--tw-badge-green);
+  background-color: rgba(var(--tw-badge-green), 0.2);
+  border-color: var(--tw-badge-green);
+}
+
+.badge-orange {
+  color: #fff;
+  background-color: var(--tw-badge-orange);
+}
+
+.badge-outline.badge-orange {
+  color: var(--tw-badge-orange);
+  background-color: rgba(var(--tw-badge-orange), 0.2);
+  border-color: var(--tw-badge-orange);
+}
+
+.badge-blue-basic {
+  color: #fff;
+  background-color: var(--tw-badge-blue-basic);
+}
+
+.badge-outline.badge-blue-basic {
+  color: var(--tw-badge-blue-basic);
+  background-color: rgba(var(--tw-badge-blue-basic), 0.2);
+  border-color: var(--tw-badge-blue-basic);
+}
+
 
 .rating {
   display: inline-flex;
@@ -9111,4 +9164,27 @@ html.dark .\[html\.dark_\&\]\:hidden {
 
 input[type='file']::file-selector-button {
   display: none;
+}
+
+.banner {
+  background-image: url('/Banner.png');
+  background-size: cover;
+  background-position: center;
+  height: 192px;
+  width: 100%;
+}
+.hero-bg {
+  position: relative;
+}
+.profile-header {
+  position: absolute;
+  bottom: 20px; /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10; /* Ensure it's above other elements */
+  background-color: #006ae6;
+}
+.absolute-profile-header {
+  @apply absolute top-[115%] left-1/2 -translate-x-1/2 -translate-y-1/2 
+         flex items-center justify-center !important;
 }

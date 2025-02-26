@@ -14,10 +14,11 @@ const getProjectRoles = async (): Promise<ProjectRole[]> => {
   }
 };
 
-const useGetProjectRoles = () => {
+const useGetProjectRoles = (defaultEnabled: boolean = true) => {
   return useQuery({
     queryKey: ["projectRoles"],
     queryFn: getProjectRoles,
+    enabled: defaultEnabled
   });
 };
 

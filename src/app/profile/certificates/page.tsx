@@ -10,14 +10,17 @@ import { useEffect, useState } from "react";
 import { Certificate } from "@/lib/types/profile";
 import useGetTrainingDataByUserId from "@/lib/hooks/Training/useGetTraining";
 import TableSkeleton from "@/components/skeletons/TableSkeleton";
+import { useParams } from "next/navigation";
 
 const CertificatePage = () => {
+   const params = useParams();
   const { profile, categorySkills } = useAppContext();
-  const { data: certificates, refetch, isLoading } = useGetCertificates(profile.id);
- // const { data: categoryskills } = useGetSkillCategory();
+ 
+  const { data: certificates, refetch, isLoading } = useGetCertificates(params?.id || profile?.id);
+  
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
   const { data: training_data } = useGetTrainingDataByUserId(
-    profile?.id,
+    params?.id ? false : profile?.id,
     "employeeId",
     "Completed",
   );
@@ -27,7 +30,7 @@ const CertificatePage = () => {
   }, [certificates]);
 
   const { handleDelete, handleEdit, handleUpload, handleDownload } =
-    useCertificateHandlers(profile.id);
+    useCertificateHandlers(params?.id || profile?.id);
 
   const headers = [
     {
@@ -88,16 +91,11 @@ const CertificatePage = () => {
             refetch={refetch}
             trainingData={training_data || []}
             isSearchable={true}
-            addNewData={true}
+            addNewData={params?.id? false:true}
             noDataMessage="No certifications found"
           />
 
-          {/* <ResumeCard
-            iconSrc='/assets/media/file-types/pdf.svg'
-            iconAlt='PDF file icon'
-            title='Resume'
-            timestamp='3 days ago'
-          /> */}
+        
         </div>
       </div>
     </div>
