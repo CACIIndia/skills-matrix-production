@@ -172,12 +172,9 @@ const ProjectHistoryCard = ({
                                   <span className='text-2sm font-medium text-gray-500'>
                                     Code:
                                   </span>
-                                  <Link
-                                    className='text-2sm font-semibold text-primary'
-                                    href='#'
-                                  >
+                                  <span className='text-2sm font-semibold text-primary'>
                                     {projectCode}
-                                  </Link>
+                                  </span>
                                 </div>
                                 {members.length > 0 && (
                                   <div className='flex items-center gap-1.5'>

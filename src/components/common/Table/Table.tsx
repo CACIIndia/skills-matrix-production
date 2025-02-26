@@ -111,9 +111,9 @@ const Table = <T,>({
       <div className='card card-grid h-full min-w-full'>
         <div className='card-header flex flex-col items-start'>
           <div className='flex w-[100%] items-center justify-between'>
-            {tableHeading && (
+            {tableHeading ? (
               <h1 className='card-title py-1 pl-[10px]'>{tableHeading}</h1>
-            )}
+            ): <div className="w-[32px]"></div>}
             <div className="flex gap-x-2 items-center">
               {isSearchable ? (
                 <div className='input input-sm flex max-w-48 items-center'>
@@ -140,8 +140,10 @@ const Table = <T,>({
                     }
                     className='btn btn-sm btn-icon text-primary hover:bg-primary-hover hover:text-white'
                   >
-                    {/* <CiSquarePlus size={32} /> */}
-                    <i className='ki-filled ki-notepad-edit'></i>
+                    <CiSquarePlus size={32} />
+                    {/* <i className='ki-filled ki-notepad-edit'></i> */}
+
+                  
 
                   </button>
                 </h3>
