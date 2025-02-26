@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import Menu from "@/components/common/Menu";
 import ProfileActions from "@/components/views/profile/Actions";
