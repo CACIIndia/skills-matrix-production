@@ -101,7 +101,7 @@ const ProfileMenuContent = () => {
 
 const ProfileMenu = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<></>}>
       <ProfileMenuContent />
     </Suspense>
   );
