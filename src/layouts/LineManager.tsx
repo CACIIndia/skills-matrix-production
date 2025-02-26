@@ -22,7 +22,7 @@ export default function LineManagerLayout({ children }: { children: React.ReactN
           (t) => (
             <div className="flex items-center gap-2">
              
-              <span className="text-yellow-900">⚠️ Warning: You don't have access!</span>
+             <span className="text-yellow-900">⚠️ Warning: You don&apos;t have access!</span>
               
             </div>
           ),
