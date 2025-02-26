@@ -36,11 +36,11 @@ const Legend: React.FC<LegendProps> = ({
                     className={classNames(
                       "inline-flex h-8 w-8 items-center justify-center rounded-full text-xs font-medium",
                       {
-                     "badge-outline": skill.level === 0,
-                          "badge-danger": skill.level === 1,
-                          "badge-warning": skill.level === 2,
-                          "badge-primary": skill.level === 3,
-                          "badge-success": skill.level === 4,
+                        "badge-outline": skill?.level === 0,
+                        "badge-blue-basic": skill?.level === 1,
+                        "badge-orange": skill?.level === 2,
+                        "badge-green": skill?.level === 3,
+                        "badge-blue": skill?.level === 4,
                       },
                     )}
                   >

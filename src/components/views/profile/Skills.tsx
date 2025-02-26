@@ -67,7 +67,7 @@ const ProfileSkills = ({
             {disableEdit ||
               (showEditButton && (
                 <button
-                  className='btn btn-sm btn-icon btn-clear btn-primary'
+                  className='btn btn-sm btn-icon text-primary hover:bg-primary-hover hover:text-white'
                   onClick={() => setIsOpen(true)}
                 >
                   <i className='ki-filled ki-notepad-edit'></i>
