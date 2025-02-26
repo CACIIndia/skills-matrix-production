@@ -158,7 +158,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
   };
 
   return (
-    <div className='min-h-[400px]'>
+    <div className=''>
       <Table
         headers={headers}
         isSearchable={isSearchable}
@@ -168,6 +168,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
         renderCell={renderCell}
         isPaginated={true}
         noDataMessage={noDataMessage}
+        tableHeading={"Certifications"}
       />
 
       {/* Add Certificate Modal */}

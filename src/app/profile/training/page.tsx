@@ -5,16 +5,18 @@ import TableSkeleton from "@/components/skeletons/TableSkeleton";
 import TrainingInfoCard from "@/components/views/profile/TrainingInfo";
 import TrainingList from "@/components/views/profile/TrainingList";
 import { filterTrainings } from "@/lib/utils/trainingFilter";
+import { useParams } from "next/navigation";
 
 const Training = () => {
-  const { profile, isLoading } = useAppContext();
+  const params = useParams();
+  const { profile, isLoading,viewedProfile } = useAppContext();
   const { currentInProgress, otherTrainings } = filterTrainings(
-    profile?.trainingEmployees || [],
+   params.id ? viewedProfile?.trainingEmployees : profile?.trainingEmployees || [],
   );
 
   return (
     <div className=' '>
-      <div className='lg:gap-7.5 grid grid-cols-1 lg:grid-cols-3'>
+      <div className='lg:gap-7.5 grid grid-cols-1 lg:grid-cols-3 '>
         <div className='col-span-1 grid gap-5'>
           <TrainingInfoCard
             data={{
@@ -30,7 +32,7 @@ const Training = () => {
           />
         </div>
 
-        <div className='col-span-2 grid gap-5'>
+        <div className='col-span-2 grid gap-5 mt-4 lg:mt-0'>
           {(isLoading || !profile) ? (
               <TableSkeleton
                 cols={5}

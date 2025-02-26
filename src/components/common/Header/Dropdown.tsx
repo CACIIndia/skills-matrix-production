@@ -65,7 +65,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
       className={`absolute right-0 mt-2 w-[250px] rounded-lg border border-gray-200 bg-white shadow-lg transition-opacity duration-300 ${
         isOpen ? "opacity-100" : "opacity-0"
       }`}
-      style={{ display: isOpen ? "block" : "none", zIndex: 1000 }}
+      style={{ display: isOpen ? "block" : "none" }}
     >
       <div className='menu-default bg-white'>
         <div className='flex items-center justify-between gap-1.5 px-5 py-1.5'>
