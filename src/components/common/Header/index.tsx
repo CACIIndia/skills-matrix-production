@@ -6,6 +6,7 @@ import Link from "next/link";
 import HeaderMenu from "@/components/common/Header/Menu";
 import { useAppContext } from "@/app/context/AppContext";
 import HeaderSearch from "./HeaderSearch";
+import NavLink from "../Navlink";
 
 type HeaderProps = {
   onClick: () => void;
@@ -13,15 +14,14 @@ type HeaderProps = {
 };
 
 const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
- 
- 
- 
-
   return (
-    <header className="flex items-center justify-between lg:gap-4 pl-4 pr-4 h-14 fixed top-0 left-0 w-full " style={{backgroundColor:"white",zIndex:100}}>
-      <div className="w-[15%]">
-        <Link href="/">
-        <svg
+    <header
+      className='fixed left-0 top-0 flex h-14 w-full items-center justify-between pl-4 pr-4 lg:gap-4'
+      style={{ backgroundColor: "white", zIndex: 100 }}
+    >
+      <div className='w-[15%]'>
+        <Link href='/'>
+          <svg
             className=''
             version='1.0'
             id='CACI_Logo'
@@ -49,18 +49,16 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
         </Link>
       </div>
 
-      <div className="flex gap-4 items-center w-[80%] h-full">
-        <Link className="link text-md h-[32px]" href="/profile/overview">
-          <span className="text-md font-semibold">Profile</span>
-          <div className="mt-1 active menu-item menu-item-active:border-b-primary menu-item-here:border-b-primary border-b-2 border-b-transparent"></div>
-        </Link>
+      <div className='flex h-full w-[80%] items-center gap-4'>
+        <NavLink href='/profile/overview'>Profile</NavLink>
+        <NavLink href='/search'>Search</NavLink>
+
         <HeaderSearch />
-        
       </div>
 
-      <div className="flex items-center gap-2 w-[10%] justify-end">
-        <button className="btn btn-icon btn-icon-lg size-9 rounded-full text-gray-500 hover:bg-primary-light hover:text-primary-hover">
-          <i className="ki-filled ki-notification-on"></i>
+      <div className='flex w-[10%] items-center justify-end gap-2'>
+        <button className='btn btn-icon btn-icon-lg size-9 rounded-full text-gray-500 hover:bg-primary-light hover:text-primary-hover'>
+          <i className='ki-filled ki-notification-on'></i>
         </button>
         <HeaderMenu />
       </div>

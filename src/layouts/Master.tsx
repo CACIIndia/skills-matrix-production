@@ -77,7 +77,7 @@ export default function MasterLayout({
 
           <main
             className='content grow mt-16'
-            style={{ width: "100%",zIndex:90,marginTop:"55px"}}
+            style={{ width: "100%",zIndex:90}}
           >
             {children}
           </main>
