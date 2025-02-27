@@ -1,15 +1,10 @@
 "use client";
 import { useEffect, useState, Suspense } from "react";
 import Menu from "@/components/common/Menu";
-import ProfileActions from "@/components/views/profile/Actions";
-import {
-  PROFILE_MENU_ITEMS,
-  VIEW_PROFILE_MENU_ITEMS,
-} from "@/lib/constants/header";
-import { useParams, useSearchParams } from "next/navigation";
+import { PROFILE_MENU_ITEMS } from "@/lib/constants/header";
+import { useSearchParams } from "next/navigation";
 
 const ProfileMenuContent = () => {
-  const { id } = useParams();
   const searchParams = useSearchParams();
   const tab = searchParams.get("tab");
   const items = PROFILE_MENU_ITEMS;
@@ -19,12 +14,29 @@ const ProfileMenuContent = () => {
 
   useEffect(() => {
     if (tab) {
-      const activeItem = items.find((item) => item.name.includes(tab));
+      const activeItem = items.find(
+        (item) => item.name.toLowerCase() === tab.toLowerCase(),
+      );
+
       if (activeItem) {
         setActivePath(activeItem.path);
+
+        setTimeout(() => {
+          const sectionId = activeItem.path.split("/").pop();
+          const section = document.getElementById(sectionId || "");
+
+          if (section) {
+            const sectionTop =
+              section.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+              top: sectionTop - scrollOffset,
+              behavior: "smooth",
+            });
+          }
+        }, 500);
       }
     }
-  }, []);
+  }, [tab]);
 
   const handleMenuClick = (path: string) => {
     setIsScrolling(true);
@@ -50,7 +62,8 @@ const ProfileMenuContent = () => {
     const handleScroll = () => {
       if (isScrolling) return;
 
-      let currentSection = "";
+      let currentSection = activePath;
+      let foundSection = false;
 
       items.forEach(({ path }, index) => {
         const sectionId = path.split("/").pop();
@@ -64,6 +77,7 @@ const ProfileMenuContent = () => {
             sectionTop > -section.offsetHeight / 2
           ) {
             currentSection = path;
+            foundSection = true;
           }
 
           if (
@@ -72,11 +86,11 @@ const ProfileMenuContent = () => {
             index === items.length - 1
           ) {
             currentSection = path;
+            foundSection = true;
           }
         }
       });
-
-      if (currentSection && currentSection !== activePath) {
+      if (foundSection && currentSection !== activePath && !tab) {
         setActivePath(currentSection);
       }
     };
@@ -87,7 +101,7 @@ const ProfileMenuContent = () => {
 
   return (
     <div>
-      <div className="mb-2 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:items-end">
+      <div className='mb-2 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:items-end'>
         <Menu
           items={items}
           handleMenuClick={handleMenuClick}
