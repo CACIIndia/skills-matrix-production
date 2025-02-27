@@ -473,7 +473,7 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                 className='btn btn-secondary'
                 onClick={handleToggleAddModal}
               >
-                Cancel
+                Close
               </button>
               <button type='submit' className='btn btn-primary'>
                 Upload
