@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaTrash } from "react-icons/fa";
 import AddCertificateModal from "./AddCertificate";
 import EditCertificateModal from "./EditCertificateModal";
@@ -156,7 +156,17 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
         return value;
     }
   };
-
+  useEffect(() => {
+    if (isAddModalOpen || isEditModalOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+  
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+    };
+  }, [isAddModalOpen, isEditModalOpen]);
   return (
     <div className=''>
       <Table
