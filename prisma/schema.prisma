@@ -1,0 +1,217 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id                   String          @id @default(uuid())
+  name                 String?
+  email                String?         @unique
+  emailVerified        DateTime?
+  image                String?
+  phone                String?
+  location             String?
+  sfiaLevel            String?
+  reportedTo           String?
+  reportedToId         String?
+  role                 String?
+  createdAt            DateTime        @default(now())
+  joiningDate          DateTime?
+  updatedAt            DateTime        @updatedAt
+  status               Int             @default(1)
+  additionalInfo       AdditionalInfo?
+  projects             CACIProfile[]
+  Certification        Certification[]
+  sessions             Session[]
+  SfiaLevel            SfiaLevel[]
+  SkillCategory        SkillCategory[]
+  trainingCreatedByIds Training[]      @relation("trainingCreatedByIds")
+  trainingEmployees    Training[]      @relation("trainingEmployees")
+  userSkills           UserSkill[]
+}
+
+model Skill {
+  id            String         @id @default(uuid())
+  name          String
+  categoryId    String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  status        Int            @default(1)
+  skillCategory SkillCategory? @relation(fields: [categoryId], references: [id])
+  userSkills    UserSkill[]
+}
+
+model SkillCategory {
+  id             String          @id @default(uuid())
+  name           String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  createdById    String
+  status         Int             @default(1)
+  certifications Certification[]
+  skills         Skill[]
+  createdBy      User            @relation(fields: [createdById], references: [id])
+}
+
+model UserSkill {
+  id          String   @id @default(uuid())
+  skillId     String
+  level       Int
+  createdAt   DateTime @default(now())
+  createdById String
+  updatedAt   DateTime @updatedAt
+  status      Int      @default(1)
+  user        User     @relation(fields: [createdById], references: [id])
+  skill       Skill    @relation(fields: [skillId], references: [id])
+}
+
+model AdditionalInfo {
+  id           String   @id @default(uuid())
+  discipline   String?
+  specialism   String?
+  employeeType String?
+  location     String?
+  costCentre   String?
+  userId       String   @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  status       Int      @default(1)
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model Discipline {
+  id     String  @id @default(uuid())
+  name   String?
+  status Int     @default(1)
+}
+
+model Location {
+  id         String  @id @default(uuid())
+  name       String?
+  costCentre String?
+  status     Int     @default(1)
+}
+
+model Specialism {
+  id         String  @id @default(uuid())
+  name       String?
+  discipline Int?
+  status     Int     @default(1)
+}
+
+model SfiaLevel {
+  id          String   @id @default(uuid())
+  level       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdById String
+  status      Int      @default(1)
+  createdBy   User     @relation(fields: [createdById], references: [id])
+}
+
+model Certification {
+  id                         String        @id @default(uuid()) @db.Uuid
+  name                       String
+  url                        String
+  obtainedDate               DateTime
+  expiryDate                 DateTime
+  description                String
+  createdAt                  DateTime      @default(now())
+  updatedAt                  DateTime      @default(now()) @updatedAt
+  createdById                String
+  categoryId                 String
+  categoryName               String
+  isTrainingLinked           Boolean       @default(false)
+  trainingRecordCategoryId   String?
+  trainingRecordCategoryName String?
+  trainingRecordId           String?
+  trainingRecordName         String?
+  trainingRecordSkillId      String?
+  status                     Int           @default(1)
+  skillId                    String?
+  skillName                  String?
+  skillCategory              SkillCategory @relation(fields: [categoryId], references: [id])
+  createdBy                  User          @relation(fields: [createdById], references: [id])
+  trainingRecord             Training?     @relation("certificationTrainingRecord", fields: [trainingRecordId], references: [id])
+  trainings                  Training[]    @relation("trainingCertificationsIds")
+}
+
+model TrainingStatus {
+  id        String     @id @default(uuid())
+  name      String
+  status    Int        @default(1)
+  trainings Training[]
+}
+
+model Training {
+  id               String          @id @default(uuid())
+  categoryId       String
+  categoryName     String
+  skillId          String?
+  skillName        String
+  fromDate         DateTime
+  tentativeEndDate DateTime
+  description      String
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  createdById      String
+  statusId         String
+  employeeId       String
+  employeeName     String
+  certificationId  String?         @db.Uuid
+  status           Int             @default(1)
+  certifications   Certification[] @relation("certificationTrainingRecord")
+  certificationIds Certification?  @relation("trainingCertificationsIds", fields: [certificationId], references: [id])
+  createdBy        User            @relation("trainingCreatedByIds", fields: [createdById], references: [id])
+  employee         User            @relation("trainingEmployees", fields: [employeeId], references: [id])
+  trainingStatus   TrainingStatus  @relation(fields: [statusId], references: [id])
+}
+
+model Project {
+  id          String        @id @default(uuid())
+  name        String
+  code        String?
+  description String?
+  status      Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  profiles    CACIProfile[]
+}
+
+model CACIProfile {
+  id               String    @id @default(uuid())
+  employeeId       String
+  employeeName     String
+  employeeImage    String?
+  projectId        String
+  projectName      String
+  roleInProject    String?
+  isCurrentProject Boolean   @default(false)
+  startDate        DateTime
+  endDate          DateTime?
+  description      String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  employee         User      @relation(fields: [employeeId], references: [id])
+  project          Project   @relation(fields: [projectId], references: [id])
+}
+
+model ProjectRole {
+  id        String   @id @default(uuid())
+  name      String
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

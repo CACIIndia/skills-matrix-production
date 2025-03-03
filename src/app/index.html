@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Matrix</title>
+    <style>
+        :root {
+            --tw-drawer-background-color: #fff;
+            --tw-drawer-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            --tw-backdrop-background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .drawer {
+            transition: transform 300ms ease;
+            position: fixed;
+            background-color: var(--tw-drawer-background-color);
+            width: 250px; /* Adjust width as needed */
+            height: 100%;
+            top: 0;
+            left: 0;
+            transform: translateX(-100%);
+            box-shadow: var(--tw-drawer-box-shadow);
+            z-index: 1000;
+        }
+        
+        .drawer.open {
+            transform: translateX(0);
+        }
+        
+        .drawer-backdrop {
+            position: fixed;
+            inset: 0;
+            background-color: var(--tw-backdrop-background-color);
+            opacity: 0;
+            transition: opacity 300ms ease;
+            z-index: 999;
+        }
+        
+        .drawer-backdrop.show {
+            opacity: 1;
+        }
+        
+        .drawer-start {
+            left: 0;
+        }
+        
+        .drawer-end {
+            right: 0;
+        }
+        
+        .drawer-top {
+            top: 0;
+            transform: translateY(-100%);
+            height: auto;
+            width: 100%;
+        }
+        
+        .drawer-top.open {
+            transform: translateY(0);
+        }
+        
+        .drawer-bottom {
+            bottom: 0;
+            transform: translateY(100%);
+            height: auto;
+            width: 100%;
+        }
+        
+        .drawer-bottom.open {
+            transform: translateY(0);
+        }
+        
+        .drawer-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+    </style>
+</head>
+<body>
+    <button class="drawer-toggle" onclick="toggleDrawer()">Toggle Drawer</button>
+    
+    <div id="drawer" class="drawer">
+        <div class="drawer-content">
+            <h2>Drawer Content</h2>
+            <p>This is some content inside the drawer.</p>
+        </div>
+    </div>
+    
+    <div id="backdrop" class="drawer-backdrop" onclick="toggleDrawer()"></div>
+    
+    <script>
+        function toggleDrawer() {
+            const drawer = document.getElementById('drawer');
+            const backdrop = document.getElementById('backdrop');
+            drawer.classList.toggle('open');
+            backdrop.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
