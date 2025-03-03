@@ -9,8 +9,9 @@ export async function DELETE(req: Request) {
       return NextResponse.json({ message: "Profile ID is required" }, { status: 400 });
     }
 
-    const deletedProfile = await db.cACIProfile.delete({
+    const deletedProfile = await db.cACIProfile.update({
       where: { id: profileId },
+      data: { status: false },
     });
 
     return NextResponse.json({ message: "Profile deleted successfully" }, { status: 200 });
