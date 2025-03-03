@@ -29,6 +29,8 @@ type State = {
   addProject: (data: any) => void;
   replaceEditedProject: (data: any) => void;
   removeDeletedProject: (id: any) => void;
+  setSearchQuery: Dispatch<SetStateAction<string>>;
+  searchQuery: string;
 };
 
 // Create the context
@@ -49,7 +51,8 @@ export const AppProvider = ({ children }: AppProviderProps) => {
   const [profile, setProfile] = useState<any>();
   const [viewedProfile, setViewedProfile] = useState<any>();
   const user = session?.user;
-  console.log(profile,"profileprofileprofile");
+  const [searchQuery, setSearchQuery] = useState("");
+
 
   const toggleSelectedItem = (item: SkillCategory) => {
     setSelectedItems((prevSelected) => {
@@ -130,7 +133,9 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         removeAllSelectedSkills,
         addProject,
         replaceEditedProject,
-        removeDeletedProject
+        removeDeletedProject,
+        setSearchQuery,
+        searchQuery
       }}
     >
       {children}

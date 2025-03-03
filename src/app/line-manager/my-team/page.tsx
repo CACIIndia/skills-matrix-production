@@ -39,6 +39,10 @@ const TeamCard: React.FC<TeamCardProps> = ({
   id,
   image,
 }) => {
+  const handleClick = () => {
+    window.open(`/profile/overview/${id}`, "_blank"); // Opens in a new tab
+  };
+  
   const renderSkills = () => {
     if (!skills.length) return <span>N/A</span>; // Handle empty skills
 
@@ -52,7 +56,8 @@ const TeamCard: React.FC<TeamCardProps> = ({
           ))}
           <span
             className="badge badge-sm badge-outline cursor-pointer text-primary"
-            onClick={() => (window.location.href = `/profile/overview/${id}`)}
+            
+            onClick={() => (window.location.href = `/profile/overview/${id}?tab=skills`,"_blank")} 
           >
             +{skills.length - 2} more
           </span>
@@ -82,12 +87,14 @@ const TeamCard: React.FC<TeamCardProps> = ({
           </div>
           <div className="grid place-items-center">
             <a
-              className="text-base font-semibold text-gray-900 hover:text-primary-active mb-px text-primary"
-              href={`/profile/overview/${id}`}
+              className="text-base font-semibold text-gray-900 hover:text-primary-active mb-px text-primary cursor-pointer"
+              onClick={handleClick}
             >
               {name || "N/A"}
             </a>
-            <span className="text-2sm font-medium text-gray-600 hover:text-primary-active cursor-pointer">
+            <span className="text-2sm font-medium text-gray-600 hover:text-primary-active cursor-pointer"
+             onClick={() => window.open(`mailto:${email}`, "_blank")}
+            >
               {email || "N/A"}
             </span>
           </div>

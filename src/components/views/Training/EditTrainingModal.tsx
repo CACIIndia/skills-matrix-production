@@ -277,7 +277,7 @@ const EditTraining = ({
               onClick={onClose}
               className='rounded-md bg-gray-300 px-4 py-2'
             >
-              Cancel
+              Close
             </button>
             <button
               type='submit'

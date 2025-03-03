@@ -421,7 +421,7 @@ const EditCertificateModal: React.FC<EditCertificateModalProps> = ({
                 className='btn btn-secondary'
                 onClick={handleToggleEditModal}
               >
-                Cancel
+                Close
               </button>
               <button type='submit' className='btn btn-primary'>
                 Update

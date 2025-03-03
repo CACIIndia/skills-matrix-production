@@ -34,7 +34,7 @@ const SearchModal: React.FC<ModalProps> = ({ isOpen, onClose, users }) => {
   return (
     <div
       className={`fixed inset-0 flex w-full items-center justify-center bg-gray-800 bg-opacity-85 text-start transition-opacity duration-300`}
-      style={{ zIndex: 10 }}
+      // style={{ zIndex: 10 }}
     >
       <div className='relative h-[400px] max-h-[400px] w-[90%] max-w-[550px] rounded-lg bg-white p-4 shadow-lg'>
         <div className='modal-header flex items-center justify-between border-b border-gray-200 px-5 py-4'>

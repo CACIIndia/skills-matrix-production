@@ -1,7 +1,7 @@
 import db from "@/lib/db";
 import { UserDetails } from "@/lib/types/profile";
 import { uploadUserImageBuffer } from "./utils/uploadUserImageBuffer";
-import { fetchEmployeeHireDate, fetchUserManager, fetchUserProfile, fetchUserProfilePicture } from "@/lib/microsoft-graph";
+import { fetchUserManager, fetchUserProfile, fetchUserProfilePicture } from "@/lib/microsoft-graph";
 import { ERROR_CODES } from "@/lib/utils/errorCodes";
 
 const updateUserMicrosoftProfile = async (
@@ -30,12 +30,6 @@ const updateUserMicrosoftProfile = async (
   const updateManagerResponse = await updateManager(accessToken, userId);
   if (!updateManagerResponse.success) {
     response.error_code = updateManagerResponse.error_code;
-    return response;
-  }
-
-  const updateJoiningDateResponse = await updateJoiningDate(accessToken, userId);
-  if (!updateJoiningDateResponse.success) {
-    response.error_code = updateJoiningDateResponse.error_code;
     return response;
   }
 
@@ -72,7 +66,10 @@ async function updateProfile(
     "success": false,
     "error_code": '',
   };
-    const userProfile = await fetchUserProfile(accessToken);
+    const userProfile = await fetchUserProfile(
+      accessToken,
+      'id,mail,displayName,jobTitle,officeLocation,mobilePhone,employeeHireDate'
+    );
     if (userProfile.error) {
       response.error_code = userProfile.error || ERROR_CODES.UNKNOWN_ERROR;
     } else {
@@ -83,30 +80,7 @@ async function updateProfile(
           location: userProfile.officeLocation,
           role: userProfile.jobTitle,
           phone: userProfile.mobilePhone,
-        },
-      });
-      response.success = true;
-    }
-
-  return response;
-}
-
- async function updateJoiningDate(
-  accessToken: string,
-  userId: string,
-) {
-  let response = {
-    "success": false,
-    "error_code": '',
-  };
-    const employeeHireDate = await fetchEmployeeHireDate(accessToken);
-    if (employeeHireDate.error) {
-      response.error_code = employeeHireDate.error || ERROR_CODES.UNKNOWN_ERROR;
-    } else if (employeeHireDate.employeeHireDate !== null){
-      await db.user.update({
-        where: { id: userId },
-        data: {
-          joiningDate: employeeHireDate.employeeHireDate,
+          joiningDate: userProfile.employeeHireDate,
         },
       });
       response.success = true;
@@ -142,4 +116,4 @@ async function updateManager(
   return response;
 }
 
-export { updateUserMicrosoftProfile ,updateJoiningDate};
+export { updateUserMicrosoftProfile};

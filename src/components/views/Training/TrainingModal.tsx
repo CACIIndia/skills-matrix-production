@@ -300,7 +300,7 @@ const CreateTraining = ({
               onClick={onClose}
               className='px-6 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-100'
             >
-              Cancel
+              Close
             </button>
             <button
               type='submit'

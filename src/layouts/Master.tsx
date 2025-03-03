@@ -6,7 +6,10 @@ import Header from "@/components/common/Header/index";
 import SearchModal from "@/components/common/Header/SearchModal";
 import useGetUsers from "@/lib/hooks/useGetUsers";
 import MobileSideBar from "@/components/common/mobileSideBar";
-
+import Banner from "@/components/custom-icons/Banner";
+import ProfileHeader from "@/components/views/profile/Header";
+import { useParams } from "next/navigation";
+import { useAppContext } from "@/app/context/AppContext";
 
 export default function MasterLayout({
   children,
@@ -22,7 +25,14 @@ export default function MasterLayout({
   const toggleMobileSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
   };
+  const params = useParams();
+  const userId = params.id ? String(params.id) : "";
+  const editProfile = userId ? false : true;
 
+  const { profile, viewedProfile, setViewedProfile, isLoading } =
+    useAppContext();
+
+  const data = userId ? viewedProfile : profile;
   // Set dynamic sidebar width and main content margin
   const sidebarWidth = isExpanded ? "14%" : "5%";
   const contentMarginLeft = isExpanded ? "14%" : "5%";
@@ -30,7 +40,6 @@ export default function MasterLayout({
   const toggleSearchModal = () => setSearchModalOpen((prev) => !prev);
   const closeSearchModal = () => setSearchModalOpen(false);
   const toggleSidebar = () => setIsExpanded((prev) => !prev);
-  
 
   useEffect(() => {
     setScreenWidth(window.innerWidth);
@@ -48,66 +57,30 @@ export default function MasterLayout({
     screenWidth >= 1536
       ? "2xl"
       : screenWidth >= 1280
-      ? "xl"
-      : screenWidth >= 1024
-      ? "lg"
-      : screenWidth >= 768
-      ? "md"
-      : "sm";
+        ? "xl"
+        : screenWidth >= 1024
+          ? "lg"
+          : screenWidth >= 768
+            ? "md"
+            : "sm";
 
   return (
     <>
-    
-      <div className="flex">
-        {/* Desktop Sidebar */}
-        <div
-          onMouseEnter={() => setIsExpanded(true)}
-          className="fixed z-10 hidden lg:block"
-          style={{
-            width: sidebarWidth,
-            height: "100vh",
-            transition: "width 0.3s ease",
-          }}
-        >
-          <Sidebar isExpanded={isExpanded} toggleSidebar={toggleSidebar} />
-        </div>
-
-        {/* Main Content Area */}
-        <div
-          className={`wrapper flex grow flex-col`}
-          style={{
-            marginLeft:
-              screenSize === "lg" || screenSize === "xl" || screenSize === "2xl"
-                ? contentMarginLeft
-                : "",
-            transition: "margin-left 0.3s ease",
-          }}
-        >
-          {/* Header */}
-          <div
-          
-            className="fixed z-1"
-            style={{
-              width:
-                screenSize === "sm" || screenSize === "md"
-                  ? "100%"
-                  : `calc(100% - ${contentMarginLeft})`,
-            
-              transition: "width 0.3s ease",
-              height:"80px"
-       
-            }}
-          >
-            <Header onClick={toggleSearchModal} mobileSideBarClick ={toggleMobileSidebar}  />
-           
-          </div>
+      <div className='flex'>
+        <div className={` flex grow flex-col`}>
+          <Header
+            onClick={toggleSearchModal}
+            mobileSideBarClick={toggleMobileSidebar}
+          />
 
           {/* Main Content */}
-         
-            <main className=" grow content pt-5" style={{ marginTop: "90px",width:"100%" }}>
-              {children}
-            </main>
-          
+
+          <main
+            className='content grow mt-16'
+            style={{ width: "100%",zIndex:90}}
+          >
+            {children}
+          </main>
         </div>
       </div>
 
@@ -117,14 +90,6 @@ export default function MasterLayout({
           isOpen={isSearchModalOpen}
           onClose={closeSearchModal}
           users={users || []}
-        />
-      )}
-
-      {/* Sidebar Modal for Mobile */}
-      {isSidebarVisible && (
-        <MobileSideBar
-          isOpen={isSidebarModalOpen}
-          onClose={toggleMobileSidebar} // Close sidebar modal when clicking outside
         />
       )}
     </>

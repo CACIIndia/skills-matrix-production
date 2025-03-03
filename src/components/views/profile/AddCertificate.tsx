@@ -366,7 +366,7 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                       tabIndex={-1}
                       data-qa='bulk-upload-button'
                       type={"button"}
-                      className='pointer-events-none flex h-[100%] w-[46px] flex-grow-0 cursor-pointer items-center justify-center rounded-l-[6px] btn-primary'
+                      className='btn-primary pointer-events-none flex h-[100%] w-[46px] flex-grow-0 cursor-pointer items-center justify-center rounded-l-[6px]'
                     >
                       <FileUploadIcon />
                     </button>
@@ -378,7 +378,7 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                       ref={fileInputRef}
                       accept='application/pdf'
                       onChange={handleFileChange}
-                      className='w-full border px-2 py-2 cursor-pointer'
+                      className='w-full cursor-pointer border px-2 py-2'
                     />
                   </div>
                 </div>
@@ -473,7 +473,7 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                 className='btn btn-secondary'
                 onClick={handleToggleAddModal}
               >
-                Cancel
+                Close
               </button>
               <button type='submit' className='btn btn-primary'>
                 Upload

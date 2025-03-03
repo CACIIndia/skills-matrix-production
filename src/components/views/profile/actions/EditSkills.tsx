@@ -90,10 +90,10 @@ const EditSkills = ({
                         "badge badge-sm select-none rounded-full px-3 py-1.5 text-sm font-medium transition-colors duration-200",
                         {
                           "!bg-gray-200 !text-gray-600": level === 0,
-                          "!bg-red-100 !text-red-600": level === 1,
-                          "!bg-yellow-100 !text-yellow-600": level === 2,
-                          "!bg-blue-100 !text-blue-600": level === 3,
-                          "!bg-green-100 !text-green-600": level === 4,
+                          "badge-blue-basic": level === 1,
+                          "badge-orange": level === 2,
+                          "badge-green": level === 3,
+                          "badge-blue": level === 4,
                         },
                       )}
                     >

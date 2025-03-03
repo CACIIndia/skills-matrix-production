@@ -298,7 +298,7 @@ const AddProject: React.FC<AddProjectModalProps> = ({
             type='button'
             className='btn btn-secondary'
           >
-            Cancel
+            Close
           </button>
           <button type='submit' className='btn btn-primary'>
             {isEdit ? "Update" : "Submit"}

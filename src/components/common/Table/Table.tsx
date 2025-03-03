@@ -9,6 +9,7 @@ import { BsMicrosoftTeams } from "react-icons/bs";
 import { IoMailUnread } from "react-icons/io5";
 import classNames from "classnames";
 import { SKILL_LEVELS } from "@/lib/constants/profile";
+import EditIcon from "@/components/custom-icons/EditIcon";
 
 type TableHeaders = {
   key: string;
@@ -109,37 +110,45 @@ const Table = <T,>({
     <div className='grid'>
       <div className='card card-grid h-full min-w-full'>
         <div className='card-header flex flex-col items-start'>
-          {tableHeading && <h1 className='card-title py-1'>{tableHeading}</h1>}
           <div className='flex w-[100%] items-center justify-between'>
-            {isSearchable ? (
-              <div className='input input-sm flex max-w-48 items-center'>
-                <i className='ki-filled ki-magnifier' />
-                <input
-                  placeholder='Search..'
-                  type='text'
-                  className='ml-2'
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery ? setSearchQuery(e?.target?.value) : "";
-                    handleSearch ? handleSearch(e?.target?.value) : "";
-                  }}
-                />
-              </div>
-            ) : (
-              <div className='max-w-48'></div>
-            )}
-            {addNewData && (
-              <h3 className='card-title'>
-                <button
-                  onClick={() =>
-                    setIsAddModalOpen ? setIsAddModalOpen(true) : ""
-                  }
-                  className='btn btn-sm btn-icon btn-clear btn-primary'
-                >
-                  <CiSquarePlus size={32} />
-                </button>
-              </h3>
-            )}
+            {tableHeading ? (
+              <h1 className='card-title py-1 pl-[10px]'>{tableHeading}</h1>
+            ): <div className="w-[32px]"></div>}
+            <div className="flex gap-x-2 items-center">
+              {isSearchable ? (
+                <div className='input input-sm flex max-w-48 items-center'>
+                  <i className='ki-filled ki-magnifier' />
+                  <input
+                    placeholder='Search..'
+                    type='text'
+                    className='ml-2'
+                    value={searchQuery}
+                    onChange={(e) => {
+                      setSearchQuery ? setSearchQuery(e?.target?.value) : "";
+                      handleSearch ? handleSearch(e?.target?.value) : "";
+                    }}
+                  />
+                </div>
+              ) : (
+                <div className='max-w-48'></div>
+              )}
+              {addNewData ? (
+                <h3 className='card-title'>
+                  <button
+                    onClick={() =>
+                      setIsAddModalOpen ? setIsAddModalOpen(true) : ""
+                    }
+                    className='btn btn-sm btn-icon text-primary hover:bg-primary-hover hover:text-white'
+                  >
+                    <CiSquarePlus size={32} />
+                    {/* <i className='ki-filled ki-notepad-edit'></i> */}
+
+                  
+
+                  </button>
+                </h3>
+              ) : <div className="w-[32px]"></div>}
+            </div>
           </div>
         </div>
         <div className='card-body overflow-x-auto'>
