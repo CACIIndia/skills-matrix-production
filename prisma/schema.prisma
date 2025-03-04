@@ -27,6 +27,7 @@ model User {
   reportedTo           String?
   reportedToId         String?
   role                 String?
+  aboutMe              String?
   createdAt            DateTime        @default(now())
   joiningDate          DateTime?
   updatedAt            DateTime        @updatedAt
