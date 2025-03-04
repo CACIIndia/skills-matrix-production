@@ -50,6 +50,7 @@ export async function addTraining(data: TrainingAddData): Promise<AddTrainingRes
           trainingStatus: {
             name: "In Progress",
           },
+          status: 1,
         },
       });
       if (existingInProgressTraining) {

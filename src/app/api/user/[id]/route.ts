@@ -21,6 +21,7 @@ export async function GET(_: Request, { params }: { params: { id: string } }) {
       db.training.findMany({
         where: {
           employeeId: id,
+          status: 1
         },
         include: {
           trainingStatus: {
