@@ -59,6 +59,16 @@ const ProfileMenuContent = () => {
   };
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sectionFromUrl = urlParams.get("section");
+ 
+    if (sectionFromUrl) {
+      const matchedItem = items.find(({ path }) => path.split("/").pop() === sectionFromUrl);
+      if (matchedItem) {
+        handleMenuClick(matchedItem.path);
+      }
+    }
+    
     const handleScroll = () => {
       if (isScrolling) return;
 
