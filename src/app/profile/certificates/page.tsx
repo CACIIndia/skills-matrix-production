@@ -40,6 +40,12 @@ const CertificatePage = () => {
       className: "w-[150px] cursor-pointer",
     },
     {
+      key: "skillName",
+      label: "Skill",
+      sortable: true,
+      className: "w-[150px] cursor-pointer",
+    },
+    {
       key: "name",
       label: "Name",
       sortable: true,
