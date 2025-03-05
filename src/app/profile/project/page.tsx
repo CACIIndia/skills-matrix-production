@@ -96,7 +96,7 @@ export default function ProjectPage() {
           title={`${isEdit ? "Edit" : "Add"} Project`}
           buttonText='Update'
           // handler={handleEdit}
-          customWidth='w-[100%] lg:w-[40%] h-auto lg:h-auto'
+          customWidth='w-[100%] lg:w-[40%] h-auto lg:h-[60%]'
           isFromAddProject={true}
           icon={
             isEdit ? (
