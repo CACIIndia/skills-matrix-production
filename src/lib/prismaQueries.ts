@@ -16,6 +16,9 @@ export const fullUserInclude = (userId: string) => Prisma.validator<Prisma.UserI
     },
   },
   projects: {
+    where: {
+      status: true
+    },
     include: {
       project: {
         include: {

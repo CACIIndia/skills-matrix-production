@@ -48,6 +48,7 @@ export async function editTraining(trainingId :string,data: TrainingEditData): P
     const existingTraining = await db.training.findUnique({
       where: {
         id: trainingId,
+        status: 1
       },
     });
 

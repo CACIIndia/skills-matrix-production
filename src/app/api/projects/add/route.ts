@@ -25,6 +25,7 @@ export async function POST(req: Request) {
         employeeId: body.employeeId,
         projectId: body.projectId,
         isCurrentProject: true,
+        status: true
       },
     });
  
@@ -54,6 +55,9 @@ export async function POST(req: Request) {
       },
       include: {
         projects: {
+          where: {
+            status: true
+           },
           include: {
             project: {
               include: {
