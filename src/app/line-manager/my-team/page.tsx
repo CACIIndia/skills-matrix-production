@@ -57,7 +57,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
           <span
             className="badge badge-sm badge-outline cursor-pointer text-primary"
             
-            onClick={() => (window.location.href = `/profile/overview/${id}?tab=skills`,"_blank")} 
+            onClick={() => window.open(`/profile/overview/${id}?section=skills`, "_blank")}
           >
             +{skills.length - 2} more
           </span>
