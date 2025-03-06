@@ -42,7 +42,7 @@ export default function LineManagerLayout({ children }: { children: React.ReactN
   
   return (
     <>
-      <div style={{marginTop:"55px"}} className="flex flex-nowrap items-center lg:items-end justify-between border-b border-b-gray-200 dark:border-b-coal-100 gap-6 mb-5 lg:mb-10">
+      <div className="flex flex-nowrap items-center lg:items-end justify-between border-b border-b-gray-200 dark:border-b-coal-100 gap-6 mb-5 lg:mb-10">
           <div className="grid container-fixed">
             <div className="scrollable-x-auto">
               <Menu items={LINE_MANAGER_MENU_ITEMS} />

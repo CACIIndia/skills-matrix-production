@@ -91,7 +91,7 @@ export default function SearchPage() {
   }, [isMenuOpen]);
 
   return (
-    <div className='h-[calc(100vh-56px)] w-full overflow-y-auto pt-[16px] mt-[56px] '>
+    <div className='h-[calc(100vh-56px)] w-full overflow-y-auto pt-[16px]'>
       <div className='flex h-[100%] w-[100%] flex-col lg:flex-row'>
         {/* Sidebar for Filters */}
         <div
