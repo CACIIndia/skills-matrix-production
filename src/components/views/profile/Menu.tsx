@@ -10,7 +10,7 @@ const ProfileMenuContent = () => {
   const items = PROFILE_MENU_ITEMS;
   const [activePath, setActivePath] = useState(items[0]?.path || "");
   const [isScrolling, setIsScrolling] = useState(false);
-  const scrollOffset = 400;
+  const scrollOffset = 460;
   const router = useRouter();
 
   useEffect(() => {
@@ -116,8 +116,8 @@ const ProfileMenuContent = () => {
   }, [items, activePath, isScrolling]);
 
   return (
-    <div>
-      <div className='mb-2 flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:items-end'>
+    <div className=" w-[100%]">
+      <div className='w-[100%] flex flex-nowrap items-center justify-between gap-6 border-b border-b-gray-200 lg:items-end'>
         <Menu
           items={items}
           handleMenuClick={handleMenuClick}

@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { getProfile } from "@/lib/api/getProfile";
 import { useParams } from "next/navigation";
 import ProfileMenu from "@/components/views/profile/Menu";
+import HeaderSearch from "@/components/common/Header/HeaderSearch";
 
 type ProfileLayoutProps = {
   children: React.ReactNode;
@@ -35,19 +36,29 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
   }, [userId, setViewedProfile]);
 
   return (
-    <div className='relative w-full' style={{ backgroundColor: "white" }}>
+    <div className='relative w-[100%]' style={{ backgroundColor: "white" }}>
       <div
-        className='fixed top-0'
+        className={`border-b-coal-100 border-b-[1px] md:border-b-0`}
         style={{
           backgroundColor: "white",
           width: "100%",
+          position: "sticky",
+          top: "56px",
+          left: 0,
+          right: 0,
           height: "400px",
           zIndex: 10,
         }}
       >
+        <div className='p-2 md:hidden'>
+          <HeaderSearch />
+        </div>
         {/* Banner */}
         <div className='banner relative'>
-          <div className='absolute-profile-header'>
+          <div
+            className='absolute-profile-header'
+            style={{ paddingBottom: "15px" }}
+          >
             <ProfileHeader
               data={data}
               isLoading={isLoading}
@@ -57,17 +68,16 @@ const ProfileLayout = ({ children }: ProfileLayoutProps) => {
         </div>
 
         {/* Profile Menu */}
-        <div className='container-fixed' style={{ marginTop: "130px" }}>
+        <div
+          className='container-fixed mb-4 hidden md:flex'
+          style={{ marginTop: "130px" }}
+        >
           <ProfileMenu />
         </div>
       </div>
       {/* Children content */}
       <div className='container-fixed mt-4'>
-        {isLoading || !data ? (
-          <ProfileSkeleton />
-        ) : (
-          <div className='mt-[80px]'>{children}</div>
-        )}
+        {isLoading || !data ? <ProfileSkeleton /> : <div>{children}</div>}
       </div>
     </div>
   );
