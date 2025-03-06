@@ -3,8 +3,8 @@ import db from "@/lib/db";
 import { getSession } from "next-auth/react";
 
 type AddBioData = {
-  userId: string;
-  bioDetails: string;
+  id: string;
+  aboutMe: string;
 };
 type AddBioResponse = {
   message: string;
@@ -12,7 +12,7 @@ type AddBioResponse = {
 };
 export async function addBio(data: AddBioData): Promise<AddBioResponse> {
   const session = await getSession();
-
+  console.log("session",session)
   if (!session?.user) {
     throw new Error("User is not authenticated");
   }
@@ -20,10 +20,10 @@ export async function addBio(data: AddBioData): Promise<AddBioResponse> {
   try {
     await db.user.update({
       data: {
-        aboutMe: data.bio,
+        aboutMe: data.aboutMe,
       },
       where: {
-        id: data.userId,
+        id: data.id,
       },
     });
 

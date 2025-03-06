@@ -1,7 +1,7 @@
 import { addBio } from "@/app/actions/bio/addBio";
 import toast from "react-hot-toast";
 
-export const useBioHandlers = ( refetch: () => void) => {
+export const useBioHandlers = (refetch: () => void) => {
   // Function to add training data
   const addBioData = async (BioData: any, closeModal: () => void) => {
     const toastId = toast.loading("Please wait...");
