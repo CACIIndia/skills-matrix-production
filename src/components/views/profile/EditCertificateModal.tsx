@@ -169,7 +169,7 @@ const EditCertificateModal: React.FC<EditCertificateModalProps> = ({
 
   return (
     isEditModalOpen && (
-      <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
+      <div className='fixed inset-0 z-[120] flex items-center justify-center bg-black bg-opacity-50'>
         <div className='mx-2 h-[95%] w-[100%] overflow-y-auto rounded-md bg-white p-6 shadow-lg sm:mx-0 sm:h-auto sm:w-[600px]'>
           <div className='flex flex-wrap items-center justify-between'>
             <h3 className='mb-4 text-lg font-semibold'>Edit Certificate</h3>
