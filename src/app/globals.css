@@ -9188,3 +9188,31 @@ input[type='file']::file-selector-button {
   @apply absolute top-[115%] left-1/2 -translate-x-1/2 -translate-y-1/2 
          flex items-center justify-center !important;
 }
+.styled-content table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.styled-content th,
+.styled-content td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.styled-content th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.styled-content ol,
+.styled-content ul {
+  padding-left: 20px;
+}
+
+.styled-content ol {
+  list-style-type: decimal;
+}
+
+.styled-content ul {
+  list-style-type: disc;
+}
