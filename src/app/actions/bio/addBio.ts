@@ -1,6 +1,6 @@
 "use server";
+import { getSession } from "@/lib/auth";
 import db from "@/lib/db";
-import { getSession } from "next-auth/react";
 
 type AddBioData = {
   id: string;
