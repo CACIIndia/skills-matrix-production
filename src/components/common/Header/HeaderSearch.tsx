@@ -7,6 +7,7 @@ import default_image from "../../../../public/assets/media/avatars/default-image
 
 const HeaderSearch: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [profileClicked, setProfileClicked] = useState(false);
   const { data: users, isLoading } = useGetUsers();
   const { profile } = useAppContext();
   const searchRef = useRef<HTMLDivElement>(null);
@@ -22,8 +23,9 @@ const HeaderSearch: React.FC = () => {
       ? [...users]
       : [];
 
-  const profileClickHandler = () => {
-    setSearchQuery("");
+  const profileClickHandler = (user: string) => {
+    setProfileClicked(true);
+    setSearchQuery(user);
   };
 
   useEffect(() => {
@@ -32,7 +34,7 @@ const HeaderSearch: React.FC = () => {
         searchRef?.current &&
         !searchRef?.current.contains(event?.target as Node)
       ) {
-        setSearchQuery("");
+        setProfileClicked(true);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -57,12 +59,13 @@ const HeaderSearch: React.FC = () => {
             placeholder="Quick search by name"
             className="h-full w-full border-none outline-none"
             value={searchQuery}
+            onClick={() => setProfileClicked(false)}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         )}
       </div>
 
-      {searchQuery?.length >= 2 && (
+      {(searchQuery?.length >= 2 && !profileClicked) && (
         <div
           className={`absolute left-0 top-full z-40 mt-2 w-full overflow-y-auto rounded-b-lg bg-white shadow-lg transition-all duration-300 ease-in-out ${searchQuery ? "h-[300px] max-h-min overflow-y-auto border border-gray-200 duration-300" : "h-0 duration-100"}`}
         >
@@ -78,7 +81,7 @@ const HeaderSearch: React.FC = () => {
                   href={`/profile/overview/${String(user.id)}`}
                   key={user.id}
                   className='menu-item p-2'
-                  onClick={profileClickHandler}
+                  onClick={() => profileClickHandler(user?.name)}
                 >
                   <div className='menu-link flex justify-between gap-2'>
                     <div className='flex items-center gap-2.5'>
