@@ -162,7 +162,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
               {rowData.userSkills.length > 2 && (
                 <button
                   onClick={() =>
-                    window.open(`/profile/overview/${rowData.id}`, "_blank")
+                    window.open(`/profile/overview/${rowData.id}?section=skills`, "_blank")
                   }
                   className='text-nowrap rounded-[4px] bg-rose-500 px-2 text-white transition duration-300 hover:bg-blue-600'
                 >

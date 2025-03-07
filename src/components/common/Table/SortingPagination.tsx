@@ -20,8 +20,8 @@ const SortingPagination: React.FC<PaginationProps> = ({
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
-    <div className='card-footer text-2sm flex-col justify-center gap-5 font-medium text-gray-600 md:flex-row md:justify-between'>
-      <div className='order-2 flex items-center gap-5 md:order-1'>
+    <div className='card-footer text-2sm md:gap-5 font-medium text-gray-600 flex justify-between flex-wrap'>
+      <div className='flex items-center md:gap-5'>
         <span>Rows per page:</span>
         <select
           value={itemsPerPage}
@@ -38,7 +38,7 @@ const SortingPagination: React.FC<PaginationProps> = ({
           <option value='15'>15</option>
         </select>
       </div>
-      <div className='order-1 flex items-center justify-between gap-6 md:order-2'>
+      <div className='flex items-center justify-between md:gap-6'>
         <span>
           {totalItems === 0 || itemsPerPage === 0
             ? "0-0 of 0"
@@ -47,7 +47,7 @@ const SortingPagination: React.FC<PaginationProps> = ({
                 totalItems,
               )} of ${totalItems} Records`}
         </span>
-        <div className='flex gap-3 items-center'>
+        <div className='flex md:gap-3 items-center'>
           <button
             className='btn btn-sm btn-icon btn-clear btn-primary'
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

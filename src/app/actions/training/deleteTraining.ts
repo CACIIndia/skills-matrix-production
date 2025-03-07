@@ -32,9 +32,12 @@ export async function deleteTraining(trainingId: string): Promise<DeleteTraining
       throw new Error("User is not authorized to delete this training");
     }
 
-    await db.training.delete({
+    await db.training.update({
       where: {
         id: trainingId,
+      },
+      data: {
+        status: 0,
       },
     });
 

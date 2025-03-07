@@ -111,23 +111,31 @@ const Table = <T,>({
       <div className='card card-grid h-full min-w-full'>
         <div className='card-header flex flex-col items-start'>
           <div className='flex w-[100%] items-center justify-between'>
-            {tableHeading ? (
-              <h1 className='card-title py-1 pl-[10px]'>{tableHeading}</h1>
-            ): <div className="w-[32px]"></div>}
-            <div className="flex gap-x-2 items-center">
+            <div className=''>
+              {tableHeading ? (
+                <h1 className='card-title py-1'>{tableHeading}</h1>
+              ) : (
+                <div className='w-[32px]'></div>
+              )}
+              <div></div>
+            </div>
+
+            <div className='flex items-center gap-x-2'>
               {isSearchable ? (
-                <div className='input input-sm flex max-w-48 items-center'>
-                  <i className='ki-filled ki-magnifier' />
-                  <input
-                    placeholder='Search..'
-                    type='text'
-                    className='ml-2'
-                    value={searchQuery}
-                    onChange={(e) => {
-                      setSearchQuery ? setSearchQuery(e?.target?.value) : "";
-                      handleSearch ? handleSearch(e?.target?.value) : "";
-                    }}
-                  />
+                <div className='hidden md:flex'>
+                  <div className='input input-sm flex max-w-48 items-center'>
+                    <i className='ki-filled ki-magnifier' />
+                    <input
+                      placeholder='Search..'
+                      type='text'
+                      className='ml-2'
+                      value={searchQuery}
+                      onChange={(e) => {
+                        setSearchQuery ? setSearchQuery(e?.target?.value) : "";
+                        handleSearch ? handleSearch(e?.target?.value) : "";
+                      }}
+                    />
+                  </div>
                 </div>
               ) : (
                 <div className='max-w-48'></div>
@@ -142,14 +150,32 @@ const Table = <T,>({
                   >
                     <CiSquarePlus size={32} />
                     {/* <i className='ki-filled ki-notepad-edit'></i> */}
-
-                  
-
                   </button>
                 </h3>
-              ) : <div className="w-[32px]"></div>}
+              ) : (
+                <div className='w-[32px]'></div>
+              )}
             </div>
           </div>
+          {isSearchable ? (
+            <div className='w-[100%] md:hidden'>
+              <div className='input input-sm flex items-center'>
+                <i className='ki-filled ki-magnifier' />
+                <input
+                  placeholder='Search..'
+                  type='text'
+                  className='ml-2'
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery ? setSearchQuery(e?.target?.value) : "";
+                    handleSearch ? handleSearch(e?.target?.value) : "";
+                  }}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className='w-[100%]'></div>
+          )}
         </div>
         <div className='card-body overflow-x-auto'>
           <table className='table-border table'>
@@ -203,16 +229,16 @@ const Table = <T,>({
               )}
             </tbody>
           </table>
-          {!searchQuery && isPaginated && (
-            <SortingPagination
-              currentPage={currentPage}
-              totalItems={data?.length}
-              itemsPerPage={itemsPerPage}
-              setCurrentPage={setCurrentPage}
-              setItemsPerPage={setItemsPerPage}
-            />
-          )}
         </div>
+        {!searchQuery && isPaginated && (
+          <SortingPagination
+            currentPage={currentPage}
+            totalItems={data?.length}
+            itemsPerPage={itemsPerPage}
+            setCurrentPage={setCurrentPage}
+            setItemsPerPage={setItemsPerPage}
+          />
+        )}
       </div>
     </div>
   );
