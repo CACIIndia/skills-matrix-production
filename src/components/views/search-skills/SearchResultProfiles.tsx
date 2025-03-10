@@ -183,9 +183,14 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
     <div className='w-full md:p-6 font-inter text-[#6D6E82]'>
       <div className='flex flex-wrap items-center justify-between gap-5 pb-2 lg:items-end'>
         <div className='flex flex-col justify-center gap-2'>
-          <h1 className='text-xl font-bold leading-none text-gray-900'>
-            Search
-          </h1>
+          <div className="flex items-center justify-between">
+            <h1 className='text-xl font-bold leading-none text-gray-900'>
+              Search
+            </h1>
+            <button className="border border-danger text-[14px] text-danger px-2 py-1 rounded-md" onClick={() => resetSearchFilters()}>
+              Clear Search
+            </button>
+          </div>
           <p className='text-[14px] lg:text-[16px] font-light'>
             Use the entry field below to search by name or job title. You can
             also use the skills side panel to apply further filtering{" "}
@@ -233,7 +238,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
         <select
           value={locationFilter}
           onChange={(e) => onFilterChange("locationFilter", e.target.value)}
-          className='basis-[15%] w-[100%] rounded-md border border-gray-300 p-2 text-sm text-gray-700 focus:ring focus:ring-blue-300'
+          className='basis-[15%] rounded-md border border-gray-300 p-2 text-sm text-gray-700 focus:ring focus:ring-blue-300'
         >
           <option value='' className='hidden'>
             Location
@@ -246,12 +251,12 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
           ))}
         </select>
 
-        <button
+       {/*  <button
           onClick={() => resetSearchFilters()}
           className='btn btn-sm btn-danger text-nowrap rounded-md bg-red-500 px-6 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300'
         >
           <i className='ki-filled ki-trash'></i> Clear Search
-        </button>
+        </button> */}
       </div>
       <div className='mt-3'>
         <p>
