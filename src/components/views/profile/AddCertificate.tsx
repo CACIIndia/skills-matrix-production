@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import FileUploadIcon from "@/components/custom-icons/FileUploadIcon";
-import CustomSelect from "@/components/reusable-components/CustomSelect";
+import CustomSelect from "@/components/form-controls/CustomSelect";
 
 type AddCertificateModalProps = {
   isAddModalOpen: boolean;

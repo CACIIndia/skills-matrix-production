@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Skill, Training } from "@/lib/types/profile";
-import CustomSelect from "@/components/reusable-components/CustomSelect";
+import CustomSelect from "@/components/form-controls/CustomSelect";
 
 export type TrainingStatus = {
   id: string;
