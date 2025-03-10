@@ -24,7 +24,7 @@ const OverviewPage = () => {
           {/* <ProfileAdditionalInfo additionalInfo={viewedProfile?.additionalInfo} /> */}
         </div>
         <div className='col-span-2 grid gap-5'>
-          <Bio></Bio>
+          <Bio data ={viewedProfile}></Bio>
         </div>
       </div>
 

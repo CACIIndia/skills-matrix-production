@@ -46,7 +46,7 @@ const OverviewPage = () => {
         </div>
 
         <div className='col-span-2 grid gap-5'>
-          <Bio />
+        <Bio data ={profile}></Bio>
         </div>
       </div>
       <div
