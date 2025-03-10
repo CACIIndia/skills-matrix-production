@@ -5,7 +5,7 @@ const TeamSkeleton = () => (
         <div className='h-10 w-[200px] rounded-lg bg-gray-200'></div>
         </div>
 
-      <div className='  grid gap-5 grid-cols-3 w-full border border-red-100'>
+      <div className='  grid gap-5 lg:grid-cols-3  w-full'>
         <div className='h-64 rounded-lg bg-gray-200'></div>
         <div className='h-64 rounded-lg bg-gray-200'></div>
         <div className='h-64 rounded-lg bg-gray-200'></div>

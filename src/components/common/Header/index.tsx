@@ -18,6 +18,7 @@ type HeaderProps = {
 
 const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { profile } = useAppContext();
 
   return (
     <header
@@ -70,8 +71,10 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
 
       <div className='hidden h-[100%] w-[70%] items-center gap-4 md:flex text-nowrap'>
         <NavLink href='/profile/overview'>Profile</NavLink>
-        <NavLink href='/search-by-skills'>Search by skills</NavLink>
-
+        <NavLink href='/search-by-skills'>Search</NavLink>
+        {
+          profile?.isLineManager && ( <NavLink href='/line-manager'>Manager</NavLink> )
+        }
         <HeaderSearch />
       </div>
 
