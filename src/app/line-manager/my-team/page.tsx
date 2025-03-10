@@ -5,6 +5,7 @@ import TeamsSkeleton from "@/components/skeletons/TeamSkeleton";
 import useGetUsersByLineManager from "@/lib/hooks/common/useGetUsersByLineManager";
 import Image from "next/image";
 import React from "react";
+import { HiOutlineMail } from "react-icons/hi";
 
 const defaultImagePath = "/assets/media/avatars/default-image.png";
 
@@ -92,11 +93,16 @@ const TeamCard: React.FC<TeamCardProps> = ({
             >
               {name || "N/A"}
             </a>
+            <span className="flex items-center gap-1.5">
+            <HiOutlineMail className='h-[15px] w-[15px]' />
             <span className="text-2sm font-medium text-gray-600 hover:text-primary-active cursor-pointer"
              onClick={() => window.open(`mailto:${email}`, "_blank")}
             >
               {email || "N/A"}
             </span>
+            </span>
+           
+            
           </div>
         </div>
         <div className="grid">
@@ -170,7 +176,7 @@ const TeamsContainer: React.FC = () => {
         <div className="flex flex-col items-stretch gap-5 lg:gap-7.5">
           <div className="flex flex-wrap items-center gap-5 justify-between">
             <h3 className="text-lg text-[#6D6E82] ">
-             Showing  ({transformedTeams.length}) Team Members 
+             Showing  ({transformedTeams.length}) Team members 
             </h3>
           </div>
           <TeamCards teams={transformedTeams} />
