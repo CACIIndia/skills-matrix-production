@@ -169,8 +169,8 @@ const TeamsContainer: React.FC = () => {
       <div className="container-fixed">
         <div className="flex flex-col items-stretch gap-5 lg:gap-7.5">
           <div className="flex flex-wrap items-center gap-5 justify-between">
-            <h3 className="text-lg text-gray-800 font-semibold">
-             Members -  {transformedTeams.length} 
+            <h3 className="text-lg text-[#6D6E82] ">
+             Showing  ({transformedTeams.length}) Team Members 
             </h3>
           </div>
           <TeamCards teams={transformedTeams} />
