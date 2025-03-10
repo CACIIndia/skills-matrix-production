@@ -46,9 +46,9 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
           {" "}
           Profile{" "}
         </NavLinkMobile>
-        <NavLinkMobile href='/search' onClick={() => setIsOpen(false)}>
+        <NavLinkMobile href='/search-by-skills' onClick={() => setIsOpen(false)}>
           {" "}
-          Search{" "}
+          Search by skills{" "}
         </NavLinkMobile>
       </div>
       <div className='flex w-[75%] justify-center md:w-[10%] md:justify-start'>
@@ -68,9 +68,9 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
         </Link>
       </div>
 
-      <div className='hidden h-[100%] w-[70%] items-center gap-4 md:flex'>
+      <div className='hidden h-[100%] w-[70%] items-center gap-4 md:flex text-nowrap'>
         <NavLink href='/profile/overview'>Profile</NavLink>
-        <NavLink href='/search'>Search</NavLink>
+        <NavLink href='/search-by-skills'>Search by skills</NavLink>
 
         <HeaderSearch />
       </div>
