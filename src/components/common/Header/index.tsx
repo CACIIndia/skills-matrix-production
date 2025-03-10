@@ -73,7 +73,7 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
         <NavLink href='/profile/overview'>Profile</NavLink>
         <NavLink href='/search'>Search</NavLink>
         {
-          profile?.isLineManager && ( <NavLink href='/line-manager/my-team'>Manager</NavLink> )
+          profile?.isLineManager && ( <NavLink href='/line-manager'>Manager</NavLink> )
         }
         <HeaderSearch />
       </div>
