@@ -18,13 +18,13 @@ const OverviewPage = () => {
 
   return (
     <>
-      <div id="overview" className='lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3' style={{marginTop:"400px"}}>
+      <div id="overview" className='lg:gap-7.5 grid grid-cols-1 gap-5 lg:grid-cols-3'>
         <div className='col-span-1 grid gap-5'>
           <ProfileGeneralInfo data={viewedProfile} disableEdit={true} />
           {/* <ProfileAdditionalInfo additionalInfo={viewedProfile?.additionalInfo} /> */}
         </div>
         <div className='col-span-2 grid gap-5'>
-          <Bio></Bio>
+          <Bio data ={viewedProfile}></Bio>
         </div>
       </div>
 

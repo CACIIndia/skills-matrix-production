@@ -22,7 +22,7 @@ const OverviewPage = () => {
   );
 
   return (
-    <div style={{ marginTop: "400px" }}>
+    <div>
       <div id='overview' className='lg:gap-7.5 grid grid-cols-1 lg:grid-cols-3'>
         <div className='col-span-1 grid gap-5'>
           {/*  @ TODO This should come from the endpoint  */}
@@ -46,7 +46,7 @@ const OverviewPage = () => {
         </div>
 
         <div className='col-span-2 grid gap-5'>
-          <Bio />
+        <Bio data ={profile}></Bio>
         </div>
       </div>
       <div

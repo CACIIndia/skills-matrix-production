@@ -38,7 +38,7 @@ const HeaderMenu = () => {
     <div className="relative inline-block" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
-        className="flex items-center space-x-2 p-1 rounded-full hover:bg-gray-300"
+        className="p-1 rounded-full hover:bg-gray-300"
       >
            <Image
               alt='Profile'

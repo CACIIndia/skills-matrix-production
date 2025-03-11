@@ -81,9 +81,9 @@ export default function Certifications() {
       <div className="container-fixed">
         <div className="pb-7.5 flex flex-wrap items-center justify-between gap-5 lg:items-end">
           <div className="flex flex-col justify-center gap-2">
-            <h1 className="text-xl font-semibold leading-none text-gray-900">
-              Certifications
-            </h1>
+          <h3 className="text-lg text-[#6D6E82] ">
+             Showing  {certificatesData.length} team certifications 
+            </h3>
           </div>
         </div>
       </div>

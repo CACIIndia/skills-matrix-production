@@ -32,6 +32,9 @@ const config: Config = {
         "primary-text-active": '#1B84FF',
         "primary-hover": '#1B84FF',
         "primary-light": "#eff6ff",
+        "mob-nav-link-active-bg": "#B1D2F9",
+        "mob-nav-link-active-text":"#1347B0"
+
       },
     },
   },
