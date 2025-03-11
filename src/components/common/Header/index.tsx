@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import HeaderMenu from "@/components/common/Header/Menu";
@@ -19,6 +19,23 @@ type HeaderProps = {
 const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const { profile } = useAppContext();
+  const clickOutsideRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isOpen &&
+        clickOutsideRef.current &&
+        !clickOutsideRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isOpen]);
 
   return (
     <header
@@ -38,6 +55,7 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
         </button>
       </div>
       <div
+        ref={clickOutsideRef}
         className={`fixed left-0 right-0 top-[57px] flex w-[100%] flex-col bg-white shadow-lg transition-all duration-300 ease-in-out ${isOpen ? "scale-100 opacity-100" : "pointer-events-none scale-95 opacity-0"}`}
       >
         <NavLinkMobile
@@ -47,10 +65,19 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
           {" "}
           Profile{" "}
         </NavLinkMobile>
-        <NavLinkMobile href='/search-by-skills' onClick={() => setIsOpen(false)}>
+        <NavLinkMobile
+          href='/search-by-skills'
+          onClick={() => setIsOpen(false)}
+        >
           {" "}
           Search by skills{" "}
         </NavLinkMobile>
+        {profile?.isLineManager && (
+          <NavLinkMobile href='/line-manager' onClick={() => setIsOpen(false)}>
+            {" "}
+            Manager{" "}
+          </NavLinkMobile>
+        )}
       </div>
       <div className='flex w-[75%] justify-center md:w-[10%] md:justify-start'>
         <Link href='/'>
@@ -69,12 +96,12 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
         </Link>
       </div>
 
-      <div className='hidden h-[100%] w-[70%] items-center gap-4 md:flex text-nowrap'>
+      <div className='hidden h-[100%] w-[70%] items-center gap-4 text-nowrap md:flex'>
         <NavLink href='/profile/overview'>Profile</NavLink>
         <NavLink href='/search-by-skills'>Search</NavLink>
-        {
-          profile?.isLineManager && ( <NavLink href='/line-manager'>Manager</NavLink> )
-        }
+        {profile?.isLineManager && (
+          <NavLink href='/line-manager'>Manager</NavLink>
+        )}
         <HeaderSearch />
       </div>
 
