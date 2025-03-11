@@ -1,16 +1,23 @@
-import { useAppContext } from "@/app/context/AppContext";
 import Modal from "@/components/common/Modal";
 import { useBioHandlers } from "@/lib/hooks/profile/bio/useBioHandlers";
 import { useRef, useState } from "react";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 import { Editor } from "@tinymce/tinymce-react";
 import useGetUsers from "@/lib/hooks/useGetUsers";
-import toast from "react-hot-toast";
 import { Editor as TinyMCEEditor } from "tinymce";
+import { useParams } from "next/navigation";
+import { BioType } from "@/lib/types/profile";
 
-const Bio = () => {
+interface BioProps {
+  data: BioType;
+}
+
+const Bio: React.FC<BioProps> = ({
+  data,
+}) => {
+  const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
-  const { profile, setProfile } = useAppContext();
+  const [profile, setProfile] = useState(data);
   const [isEditorLoading, setIsEditorLoading] = useState(true); // Track loading state
   const { data: aboutMe, refetch, isLoading } = useGetUsers();
   const { addBioData } = useBioHandlers(refetch);
@@ -18,12 +25,12 @@ const Bio = () => {
   const handleSaveBio = async () => {
     if (editorRef.current) {
       const bioContent = editorRef.current.getContent();
-      const plainText = editorRef.current.getContent({ format: "text" }).trim();
+      // const plainText = editorRef.current.getContent({ format: "text" }).trim();
 
-      if (!plainText) {
-        toast.error("Bio cannot be empty!");
-        return;
-      }
+      // if (!plainText) {
+      //   toast.error("Bio cannot be empty!");
+      //   return;
+      // }
 
       const bioData = {
         id: profile?.id,
@@ -45,12 +52,14 @@ const Bio = () => {
         <div className='card h-[100%]'>
           <div className='card-header flex items-center justify-between'>
             <h3 className='card-title'>Edit Bio</h3>
-            <button
-              className='btn btn-sm btn-icon text-primary hover:bg-primary-hover hover:text-white'
-              onClick={() => setIsOpen(true)}
-            >
-              <i className='ki-filled ki-notepad-edit'></i>
-            </button>
+            {!params.id && (
+              <button
+                className='btn btn-sm btn-icon text-primary hover:bg-primary-hover hover:text-white'
+                onClick={() => setIsOpen(true)}
+              >
+                <i className='ki-filled ki-notepad-edit'></i>
+              </button>
+            )}
           </div>
 
           <div className='card-body'>
@@ -65,15 +74,17 @@ const Bio = () => {
                   ) : (
                     <div className='flex flex-col items-center justify-center text-center'>
                       <div>No bio found, still some work to do...😄</div>
-                      <button
-                        onClick={() => setIsOpen(true)}
-                        className='btn-primary relative mb-4 mt-2 rounded bg-[#0d6efd] px-4 py-2 text-white transition duration-300 hover:bg-blue-700'
-                      >
-                        <div className='flex items-center justify-center space-x-1'>
-                          <HiOutlineDocumentAdd className='h-6 w-6' />
-                          <div>Add Bio</div>
-                        </div>
-                      </button>
+                      {!params.id && (
+                        <button
+                          onClick={() => setIsOpen(true)}
+                          className='btn-primary relative mb-4 mt-2 rounded bg-[#0d6efd] px-4 py-2 text-white transition duration-300 hover:bg-blue-700'
+                        >
+                          <div className='flex items-center justify-center space-x-1'>
+                            <HiOutlineDocumentAdd className='h-6 w-6' />
+                            <div>Add Bio</div>
+                          </div>
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>
@@ -91,16 +102,16 @@ const Bio = () => {
           buttonText='Save'
           handler={handleSaveBio}
         >
-          {isEditorLoading && ( // Show loader while the editor is initializing
+          {isEditorLoading && (
             <div className='flex h-20 items-center justify-center'>
               <div className='h-10 w-10 animate-spin rounded-full border-t-2 border-blue-500'></div>
             </div>
           )}
           <Editor
-            apiKey='eycdh8k4ejq9nylgatmemrpxk0j5tmihnzru6zjxo1881ayn' // Optional if using self-hosted TinyMCE
+            apiKey='eycdh8k4ejq9nylgatmemrpxk0j5tmihnzru6zjxo1881ayn'
             onInit={(_: unknown, editor: TinyMCEEditor) => {
               editorRef.current = editor;
-              setIsEditorLoading(false); // Hide loader when editor is ready
+              setIsEditorLoading(false);
             }}
             initialValue={profile?.aboutMe}
             init={{
