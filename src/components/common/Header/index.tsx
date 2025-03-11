@@ -98,7 +98,7 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
 
       <div className='hidden h-[100%] w-[70%] items-center gap-4 text-nowrap md:flex'>
         <NavLink href='/profile/overview'>Profile</NavLink>
-        <NavLink href='/search-by-skills'>Search</NavLink>
+        <NavLink href='/search-by-skills'>Search by skills</NavLink>
         {profile?.isLineManager && (
           <NavLink href='/line-manager'>Manager</NavLink>
         )}
