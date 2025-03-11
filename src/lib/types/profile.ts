@@ -68,7 +68,10 @@ export interface GeneralInfo {
   reportedToId :string;
 }
 
-
+export interface BioType {
+  id?: string;
+  aboutMe: string;
+}
 export interface Certificate  {
   id?:string;
   name: string;
