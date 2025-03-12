@@ -44,7 +44,7 @@ const Bio: React.FC<BioProps> = ({ data }) => {
   return (
     <>
       <div className='lg:gap-7.5 flex h-[100%] flex-col gap-5'>
-        <div className='card h-[100%]'>
+        <div className='card h-[100%] max-h-[290px]'>
           <div className='card-header flex items-center justify-between'>
             <h3 className='card-title'>Edit Bio</h3>
             {!params.id && (
@@ -58,13 +58,13 @@ const Bio: React.FC<BioProps> = ({ data }) => {
           </div>
 
           <div className='card-body'>
-            <div className='mb-2 flex flex-wrap gap-2.5'>
-              <div className='m-auto mt-[50px] flex h-[100px] items-center justify-center'>
-                <div className='flex h-full flex-col flex-wrap items-center justify-center space-y-4'>
+            <div className='mb-2 flex flex-wrap gap-2.5  '>
+              <div className='m-auto  flex  items-center justify-center w-full h-[200px]'>
+                <div className='flex h-full flex-col flex-wrap items-center justify-center  w-full  '>
                   {profile?.aboutMe ? (
                     <div
                       dangerouslySetInnerHTML={{ __html: profile.aboutMe }}
-                      className='styled-content text-left text-gray-700'
+                      className='styled-content text-left text-gray-700  w-full h-full overflow-y-auto'
                     />
                   ) : (
                     <div className='flex flex-col items-center justify-center text-center'>
