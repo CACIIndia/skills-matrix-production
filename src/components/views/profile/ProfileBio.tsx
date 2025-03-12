@@ -7,44 +7,39 @@ import useGetUsers from "@/lib/hooks/useGetUsers";
 import { Editor as TinyMCEEditor } from "tinymce";
 import { useParams } from "next/navigation";
 import { BioType } from "@/lib/types/profile";
+import { CKEditor } from "ckeditor4-react";
 
 interface BioProps {
   data: BioType;
 }
 
-const Bio: React.FC<BioProps> = ({
-  data,
-}) => {
+const Bio: React.FC<BioProps> = ({ data }) => {
   const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [profile, setProfile] = useState(data);
-  const [isEditorLoading, setIsEditorLoading] = useState(true); // Track loading state
+  const [isEditorLoading, setIsEditorLoading] = useState(false);
   const { data: aboutMe, refetch, isLoading } = useGetUsers();
   const { addBioData } = useBioHandlers(refetch);
   const editorRef = useRef<TinyMCEEditor | null>(null);
+  const [bioContent, setBioContent] = useState("");
+
+  const handleEditorChange = (evt: any) => {
+    const data = evt.editor.getData();
+    setBioContent(data);
+  };
   const handleSaveBio = async () => {
-    if (editorRef.current) {
-      const bioContent = editorRef.current.getContent();
-      // const plainText = editorRef.current.getContent({ format: "text" }).trim();
+    const bioData = {
+      id: profile?.id,
+      aboutMe: bioContent,
+    };
 
-      // if (!plainText) {
-      //   toast.error("Bio cannot be empty!");
-      //   return;
-      // }
-
-      const bioData = {
-        id: profile?.id,
+    await addBioData(bioData, () => {
+      setProfile((prevProfile: any) => ({
+        ...prevProfile,
         aboutMe: bioContent,
-      };
-
-      await addBioData(bioData, () => {
-        setProfile((prevProfile: any) => ({
-          ...prevProfile,
-          aboutMe: bioContent,
-        }));
-        setIsOpen(false);
-      });
-    }
+      }));
+      setIsOpen(false);
+    });
   };
   return (
     <>
@@ -107,26 +102,25 @@ const Bio: React.FC<BioProps> = ({
               <div className='h-10 w-10 animate-spin rounded-full border-t-2 border-blue-500'></div>
             </div>
           )}
-          <Editor
-            apiKey='eycdh8k4ejq9nylgatmemrpxk0j5tmihnzru6zjxo1881ayn'
-            onInit={(_: unknown, editor: TinyMCEEditor) => {
-              editorRef.current = editor;
-              setIsEditorLoading(false);
-            }}
-            initialValue={profile?.aboutMe}
-            init={{
+       
+
+          <CKEditor
+            initData={profile?.aboutMe}
+            onChange={handleEditorChange}
+            config={{
+              versionCheck: false,
               height: 300,
-              menubar: false,
-              plugins: ["emoticons", "lists", "link", "image", "table", "code"],
-              toolbar:
-                "undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | emoticons link image table | code",
-              content_style:
-                "body { font-family:Arial,sans-serif; font-size:14px }",
-              menu: {
-                insert: { title: "Insert", items: "emoticons" },
-              },
-              branding: false,
-              placeholder: "Write your bio here...",
+              toolbar: [
+                ["Bold", "Italic", "Underline", "Strike"],
+                ["NumberedList", "BulletedList"],
+                ["Link", "Unlink"],
+                ["Table", "Image"],
+                ["Source"],
+              ],
+              removePlugins: "elementspath", // Remove unnecessary elements
+            }}
+            onInstanceReady={(event) => {
+              editorRef.current = event.editor; // Store instance properly
             }}
           />
         </Modal>
