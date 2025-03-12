@@ -25,9 +25,8 @@ export async function GET() {
     .sort(([categoryA], [categoryB]) => categoryA.localeCompare(categoryB))
     .map(([category, skills]) => ({
       category,
-      skills,
+      skills: skills.sort((a, b) => a.name.localeCompare(b.name)),
     }));
 
   return NextResponse.json(result);
 }
-
