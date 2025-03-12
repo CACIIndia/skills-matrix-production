@@ -57,7 +57,7 @@ const GeneralInfoCard: React.FC<GeneralInfoCardProps> = ({
   }, [data]);
 
   return (
-    <div className='card border border-red-100 max-h-[300px] mb-[16px] lg:mb-[0px] ' >
+    <div className='card border border-red-100 max-h-[290px] mb-[16px] lg:mb-[0px] ' >
       <div className='card-header'>
         <h3 className='card-title'>General Info</h3>
       </div>

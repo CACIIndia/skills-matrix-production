@@ -7,49 +7,44 @@ import useGetUsers from "@/lib/hooks/useGetUsers";
 import { Editor as TinyMCEEditor } from "tinymce";
 import { useParams } from "next/navigation";
 import { BioType } from "@/lib/types/profile";
+import { CKEditor } from "ckeditor4-react";
 
 interface BioProps {
   data: BioType;
 }
 
-const Bio: React.FC<BioProps> = ({
-  data,
-}) => {
+const Bio: React.FC<BioProps> = ({ data }) => {
   const params = useParams();
   const [isOpen, setIsOpen] = useState(false);
   const [profile, setProfile] = useState(data);
-  const [isEditorLoading, setIsEditorLoading] = useState(true); // Track loading state
+  const [isEditorLoading, setIsEditorLoading] = useState(false);
   const { data: aboutMe, refetch, isLoading } = useGetUsers();
   const { addBioData } = useBioHandlers(refetch);
   const editorRef = useRef<TinyMCEEditor | null>(null);
+  const [bioContent, setBioContent] = useState("");
+
+  const handleEditorChange = (evt: any) => {
+    const data = evt.editor.getData();
+    setBioContent(data);
+  };
   const handleSaveBio = async () => {
-    if (editorRef.current) {
-      const bioContent = editorRef.current.getContent();
-      // const plainText = editorRef.current.getContent({ format: "text" }).trim();
+    const bioData = {
+      id: profile?.id,
+      aboutMe: bioContent,
+    };
 
-      // if (!plainText) {
-      //   toast.error("Bio cannot be empty!");
-      //   return;
-      // }
-
-      const bioData = {
-        id: profile?.id,
+    await addBioData(bioData, () => {
+      setProfile((prevProfile: any) => ({
+        ...prevProfile,
         aboutMe: bioContent,
-      };
-
-      await addBioData(bioData, () => {
-        setProfile((prevProfile: any) => ({
-          ...prevProfile,
-          aboutMe: bioContent,
-        }));
-        setIsOpen(false);
-      });
-    }
+      }));
+      setIsOpen(false);
+    });
   };
   return (
     <>
       <div className='lg:gap-7.5 flex h-[100%] flex-col gap-5'>
-        <div className='card h-[100%]'>
+        <div className='card h-[100%] max-h-[290px]'>
           <div className='card-header flex items-center justify-between'>
             <h3 className='card-title'>Edit Bio</h3>
             {!params.id && (
@@ -63,13 +58,13 @@ const Bio: React.FC<BioProps> = ({
           </div>
 
           <div className='card-body'>
-            <div className='mb-2 flex flex-wrap gap-2.5'>
-              <div className='m-auto mt-[50px] flex h-[100px] items-center justify-center'>
-                <div className='flex h-full flex-col flex-wrap items-center justify-center space-y-4'>
+            <div className='mb-2 flex flex-wrap gap-2.5  '>
+              <div className='m-auto  flex  items-center justify-center w-full h-[200px]'>
+                <div className='flex h-full flex-col flex-wrap items-center justify-center  w-full  '>
                   {profile?.aboutMe ? (
                     <div
                       dangerouslySetInnerHTML={{ __html: profile.aboutMe }}
-                      className='styled-content text-left text-gray-700'
+                      className='styled-content text-left text-gray-700  w-full h-full overflow-y-auto'
                     />
                   ) : (
                     <div className='flex flex-col items-center justify-center text-center'>
@@ -107,26 +102,25 @@ const Bio: React.FC<BioProps> = ({
               <div className='h-10 w-10 animate-spin rounded-full border-t-2 border-blue-500'></div>
             </div>
           )}
-          <Editor
-            apiKey='eycdh8k4ejq9nylgatmemrpxk0j5tmihnzru6zjxo1881ayn'
-            onInit={(_: unknown, editor: TinyMCEEditor) => {
-              editorRef.current = editor;
-              setIsEditorLoading(false);
-            }}
-            initialValue={profile?.aboutMe}
-            init={{
+       
+
+          <CKEditor
+            initData={profile?.aboutMe}
+            onChange={handleEditorChange}
+            config={{
+              versionCheck: false,
               height: 300,
-              menubar: false,
-              plugins: ["emoticons", "lists", "link", "image", "table", "code"],
-              toolbar:
-                "undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist outdent indent | emoticons link image table | code",
-              content_style:
-                "body { font-family:Arial,sans-serif; font-size:14px }",
-              menu: {
-                insert: { title: "Insert", items: "emoticons" },
-              },
-              branding: false,
-              placeholder: "Write your bio here...",
+              toolbar: [
+                ["Bold", "Italic", "Underline", "Strike"],
+                ["NumberedList", "BulletedList"],
+                ["Link", "Unlink"],
+                ["Table", "Image"],
+                ["Source"],
+              ],
+              removePlugins: "elementspath", // Remove unnecessary elements
+            }}
+            onInstanceReady={(event) => {
+              editorRef.current = event.editor; // Store instance properly
             }}
           />
         </Modal>
