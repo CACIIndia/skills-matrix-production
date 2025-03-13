@@ -13,11 +13,15 @@ import TableSkeleton from "@/components/skeletons/TableSkeleton";
 import { useParams } from "next/navigation";
 
 const CertificatePage = () => {
-   const params = useParams();
+  const params = useParams();
   const { profile, categorySkills } = useAppContext();
- 
-  const { data: certificates, refetch, isLoading } = useGetCertificates(params?.id || profile?.id);
-  
+
+  const {
+    data: certificates,
+    refetch,
+    isLoading,
+  } = useGetCertificates(params?.id || profile?.id);
+
   const [certificatesData, setCertificatesData] = useState<Certificate[]>([]);
   const { data: training_data } = useGetTrainingDataByUserId(
     params?.id ? false : profile?.id,
@@ -97,11 +101,11 @@ const CertificatePage = () => {
             refetch={refetch}
             trainingData={training_data || []}
             isSearchable={true}
-            addNewData={params?.id? false:true}
-            noDataMessage="No certifications found"
-          />
+            addNewData={params?.id ? false : true}
+            noDataMessage='No certifications found'
+            showActions={{edit:true, delete:true,download:true}}
 
-        
+          />
         </div>
       </div>
     </div>
