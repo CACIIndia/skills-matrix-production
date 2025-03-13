@@ -34,7 +34,7 @@ interface CertificateTableProps {
   isSearchable: boolean;
   addNewData: boolean;
   noDataMessage: string;
-  showActions?: { edit?: boolean; delete?: boolean; download?: boolean }; // 👈 NEW PROP
+  showActions?: { edit?: boolean; delete?: boolean; download?: boolean };
 }
 
 const CertificateTable: React.FC<CertificateTableProps> = ({
