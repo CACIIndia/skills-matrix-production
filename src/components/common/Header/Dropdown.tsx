@@ -115,7 +115,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
             </Link>
           </div>
           {profile?.isLineManager && (
-            <div className='menu-item'>
+            <div className='menu-item hidden lg:flex'>
               <Link
                 className='menu-link hover:text-primary'
                 href='/line-manager/my-team'
