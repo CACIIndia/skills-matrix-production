@@ -196,7 +196,7 @@ const TrainingSchedule: React.FC = () => {
         </div>
       )}
 
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense>
         {isAddModalOpen && (
           <CreateTraining
             isOpen={isAddModalOpen}
