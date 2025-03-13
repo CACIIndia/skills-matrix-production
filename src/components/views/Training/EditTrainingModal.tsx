@@ -150,8 +150,7 @@ const EditTraining = ({
 
   return isOpen ? (
     <div
-      className='fixed inset-0 z-[100] flex items-center justify-center bg-gray-700 bg-opacity-80'
-      style={{ backdropFilter: "blur(4px)" }}
+      className='fixed inset-0 z-[100] flex items-center justify-center bg-black/30'
     >
       <div className='relative w-full max-w-lg rounded-lg bg-white p-6 shadow-xl'>
         <h2 className='mb-4 text-xl font-semibold'>Edit Training Data</h2>
