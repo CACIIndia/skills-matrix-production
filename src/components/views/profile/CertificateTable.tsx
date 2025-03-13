@@ -7,7 +7,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import Table from "@/components/common/Table/Table";
 import { getFormattedDate } from "@/components/common/Date-Handling/DateFormat";
 
-
 type TableHeaders = {
   key: string;
   label: string;
@@ -16,7 +15,7 @@ type TableHeaders = {
 };
 type CategorySkillsData = {
   category: string;
-  categoryId?: string; 
+  categoryId?: string;
   skills: Skill[];
 };
 interface CertificateTableProps {
@@ -35,6 +34,7 @@ interface CertificateTableProps {
   isSearchable: boolean;
   addNewData: boolean;
   noDataMessage: string;
+  showActions?: { edit?: boolean; delete?: boolean; download?: boolean };
 }
 
 const CertificateTable: React.FC<CertificateTableProps> = ({
@@ -49,7 +49,8 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
   trainingData = [],
   isSearchable,
   addNewData,
-  noDataMessage
+  noDataMessage,
+  showActions
 }) => {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -68,11 +69,11 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
     skillId: "",
     skillName: "",
     trainingRecordId: "",
-   /*  trainingRecordCategoryId: "",
+    /*  trainingRecordCategoryId: "",
     trainingRecordCategoryName: "",
     trainingRecordSkillId: "",
     trainingRecordName: "", */
-    isTrainingLinked: false
+    isTrainingLinked: false,
   });
 
   const [editingFile, setEditingFile] = useState<File | undefined>();
@@ -114,30 +115,29 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
     setEditingId(null);
   };
 
-
   const renderCell = (key: string, value: string, rowData: Certificate) => {
     switch (key) {
       case "obtainedDate":
-        case "expiryDate":
-          return value ? getFormattedDate(value) : "N/A";
+      case "expiryDate":
+        return value ? getFormattedDate(value) : "N/A";
       case "actions":
         return (
           <div className='flex gap-3 text-xl'>
-            <button
+            {showActions?.edit && (<button
               className='text-primary'
               onClick={() => handleEditCertificate(rowData?.id || "", rowData)}
               title='Edit'
             >
               <i className='ki-filled ki-notepad-edit' />
-            </button>
-            <button
+            </button>)}
+            {showActions?.delete && (<button
               className='text-danger'
               onClick={() => onDelete(rowData?.id || "", refetch)}
               title='Delete'
             >
               <FaTrash />
-            </button>
-            <button
+            </button>)}
+            {showActions?.download && (<button
               className='text-success'
               onClick={() =>
                 onDownload(
@@ -149,7 +149,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
               title='Download'
             >
               <i className='ki-filled ki-folder-down' />
-            </button>
+            </button>)}
           </div>
         );
       default:
@@ -162,7 +162,7 @@ const CertificateTable: React.FC<CertificateTableProps> = ({
     } else {
       document.body.classList.remove("overflow-hidden");
     }
-  
+
     return () => {
       document.body.classList.remove("overflow-hidden");
     };
