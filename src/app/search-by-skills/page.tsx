@@ -92,8 +92,8 @@ export default function SearchPage() {
             lg:top-0 lg:h-[100%] ${isMenuOpen ? "translate-x-0" : "-translate-x-full"} 
             flex flex-col gap-y-4 lg:relative lg:w-[15%] lg:translate-x-0 lg:shadow-none`}
         >
-          <div className='flex h-[100%] flex-col space-y-2 overflow-y-auto pb-[16px] lg:pb-0 lg:py-[16px]'>
-            <div className="flex flex-col gap-y-2 sticky top-0 z-30 bg-white py-[16px] lg:py-0">
+          <div className='flex h-[100%] flex-col space-y-2 overflow-y-auto pb-[10px]'>
+            <div className="flex flex-col gap-y-2 sticky top-0 z-30 bg-white py-[16px] lg:py-0 lg:pt-[16px] lg:pb-[10px]">
               <div className='flex items-center justify-between px-[10px]'>
                 <span className='flex items-center gap-x-2 pl-[10px] font-inter font-semibold text-[#6D6E82] lg:mt-0'>
                   <FilterIcon />
