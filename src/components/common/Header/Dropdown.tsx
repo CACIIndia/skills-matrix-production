@@ -114,7 +114,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
               <span className='menu-title'>Sync Azure AD</span>
             </Link>
           </div>
-          {profile?.isLineManager && (
+          {/* {profile?.isLineManager && (
             <div className='menu-item hidden lg:flex'>
               <Link
                 className='menu-link hover:text-primary'
@@ -126,7 +126,7 @@ const HeaderDropdown = ({ isOpen, onClose }: HeaderDropdownProps) => {
                 <span className='menu-title'>Line Manager</span>
               </Link>
             </div>
-          )}
+          )} */}
           {/* <div className='menu-separator'></div>
           <div className='menu-item mb-0.5'>
             <div className='menu-link'>
