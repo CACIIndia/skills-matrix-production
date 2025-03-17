@@ -339,7 +339,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
             label: "Location",
           },
         ]}
-        isSearchable={true}
+        isSearchable={false}
         addNewData={false}
         data={filteredProfiles}
         isPaginated={true}
