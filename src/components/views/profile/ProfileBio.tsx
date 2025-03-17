@@ -1,6 +1,6 @@
 import Modal from "@/components/common/Modal";
 import { useBioHandlers } from "@/lib/hooks/profile/bio/useBioHandlers";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
 import { Editor } from "@tinymce/tinymce-react";
 import useGetUsers from "@/lib/hooks/useGetUsers";
@@ -23,11 +23,16 @@ const Bio: React.FC<BioProps> = ({ data }) => {
   const editorRef = useRef<TinyMCEEditor | null>(null);
   const [bioContent, setBioContent] = useState("");
 
+  useEffect(()=>{
+    setBioContent(profile?.aboutMe);
+  },[])
+
   const handleEditorChange = (evt: any) => {
     const data = evt.editor.getData();
     setBioContent(data);
   };
   const handleSaveBio = async () => {
+    console.log(bioContent,"bioContent");
     const bioData = {
       id: profile?.id,
       aboutMe: bioContent,
@@ -105,7 +110,7 @@ const Bio: React.FC<BioProps> = ({ data }) => {
        
 
           <CKEditor
-            initData={profile?.aboutMe}
+            initData={bioContent}
             onChange={handleEditorChange}
             config={{
               versionCheck: false,
@@ -117,10 +122,11 @@ const Bio: React.FC<BioProps> = ({ data }) => {
                 ["Table", "Image"],
                 ["Source"],
               ],
-              removePlugins: "elementspath", // Remove unnecessary elements
+              removePlugins: "elementspath", 
+              removeDialogTabs: "link:target;link:advanced",
             }}
             onInstanceReady={(event) => {
-              editorRef.current = event.editor; // Store instance properly
+              editorRef.current = event.editor;
             }}
           />
         </Modal>
