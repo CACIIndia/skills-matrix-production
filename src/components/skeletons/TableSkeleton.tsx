@@ -9,7 +9,7 @@ interface TableSkeletonProps {
 }
 
 const TableSkeleton: React.FC<TableSkeletonProps> = ({
-  cols,
+  cols = 5,
   rows = 5,
   tableHeader,
   isSearchable,
@@ -45,7 +45,7 @@ const TableSkeleton: React.FC<TableSkeletonProps> = ({
           </div>
         </div>
 
-        <div className='card-body'>
+        <div className='card-body overflow-x-auto'>
           <table className='table-border table'>
             <thead>
               <tr>
@@ -97,41 +97,3 @@ const TableSkeleton: React.FC<TableSkeletonProps> = ({
 };
 
 export default TableSkeleton;
-
-{
-  /* {Array(5)
-              .fill("")
-              .map((_, rowIndex) => (
-                <tr key={rowIndex}>
-                  <td>
-                    <div className='h-6 w-12 bg-gray-200 rounded'></div>
-                  </td>
-                  <td>
-                    <div className='h-6 w-24 bg-gray-200 rounded'></div>
-                  </td>
-                  <td>
-                    <div className='h-6 w-24 bg-gray-200 rounded'></div>
-                  </td>
-                  <td>
-                    <div className='h-6 w-24 bg-gray-200 rounded'></div>
-                  </td>
-                </tr>
-              ))} */
-}
-
-{
-  /*  <th className='w-[60px]'>
-                <div className='h-4 w-12 bg-gray-200 rounded'></div>
-              </th>
-              <th>
-                <div className='h-4 w-24 bg-gray-200 rounded'></div>
-              </th>
-              <th>
-                <div className='h-4 w-24 bg-gray-200 rounded'></div>
-              </th> */
-}
-{
-  /*   <th>
-                <div className='h-4 w-24 bg-gray-200 rounded'></div>
-              </th> */
-}
