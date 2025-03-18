@@ -109,7 +109,8 @@ const Header = ({ onClick, mobileSideBarClick }: HeaderProps) => {
         {/*   <button className='btn btn-icon btn-icon-lg size-9 rounded-full text-gray-500 hover:bg-primary-light hover:text-primary-hover'>
           <i className='ki-filled ki-notification-on'></i>
         </button> */}
-        <HeaderMenu />
+        {profile?  <HeaderMenu /> : <div className='h-9 w-9 animate-pulse rounded-full bg-gray-300'></div> }
+       
       </div>
     </header>
   );
