@@ -11,6 +11,7 @@ import { IoMailUnread } from "react-icons/io5";
 import { SKILL_LEVELS } from "@/lib/constants/profile";
 import classNames from "classnames";
 import Link from "next/link";
+import TableSkeleton from "@/components/skeletons/TableSkeleton";
 
 interface Profile {
   id: string;
@@ -32,6 +33,7 @@ interface SearchFilters {
 
 interface SearchResultProfilesProps {
   profiles: Profile[];
+  isLoading: boolean;
   searchFilters: SearchFilters;
   onFilterChange: (filterName: string, value: string | number) => void;
   jobData: string[];
@@ -41,6 +43,7 @@ interface SearchResultProfilesProps {
 
 const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
   profiles,
+  isLoading,
   searchFilters,
   onFilterChange,
   jobData,
@@ -320,7 +323,8 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
         </div>
       </div>
 
-      <Table
+      {!isLoading ? (
+        <Table
         headers={[
           {
             key: "name",
@@ -346,6 +350,19 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
         noDataMessage='No Profiles found'
         renderCell={renderCell}
       />
+      ) : (
+        <div>
+          <TableSkeleton
+            cols={5}
+            rows={4}
+            tableHeader={false}
+            isSearchable={false}
+            addNewData={false}
+          />
+        </div>
+      )}
+
+      
     </div>
   );
 };

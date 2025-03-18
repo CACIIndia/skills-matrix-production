@@ -18,7 +18,7 @@ export default function SearchPage() {
   } = useAppContext();
   const [jobTitleData, setJobTitleData] = useState<any[]>([]);
   const [locationData, setLocationData] = useState([]);
-  const { data: users } = useGetUsers();
+  const { data: users, isLoading } = useGetUsers();
   const [searchFilters, setSearchFilters] = useState({
     searchQuery: "",
     jobFilter: "",
@@ -87,13 +87,10 @@ export default function SearchPage() {
         {/* Sidebar for Filters */}
         <div
           ref={menuRef}
-          className={`fixed left-0 top-14 z-30 h-[calc(100%-56px)] 
-            w-[100%] bg-white shadow-lg duration-300 ease-in-out 
-            lg:top-0 lg:h-[100%] ${isMenuOpen ? "translate-x-0" : "-translate-x-full"} 
-            flex flex-col gap-y-4 lg:relative lg:w-[15%] lg:translate-x-0 lg:shadow-none`}
+          className={`fixed left-0 top-14 z-30 h-[calc(100%-56px)] w-[100%] bg-white shadow-lg duration-300 ease-in-out lg:top-0 lg:h-[100%] ${isMenuOpen ? "translate-x-0" : "-translate-x-full"} flex flex-col gap-y-4 lg:relative lg:w-[15%] lg:translate-x-0 lg:shadow-none`}
         >
           <div className='flex h-[100%] flex-col space-y-2 overflow-y-auto pb-[10px]'>
-            <div className="flex flex-col gap-y-2 sticky top-0 z-30 bg-white py-[16px] lg:py-0 lg:pt-[16px] lg:pb-[10px]">
+            <div className='sticky top-0 z-30 flex flex-col gap-y-2 bg-white py-[16px] lg:py-0 lg:pb-[10px] lg:pt-[16px]'>
               <div className='flex items-center justify-between px-[10px]'>
                 <span className='flex items-center gap-x-2 pl-[10px] font-inter font-semibold text-[#6D6E82] lg:mt-0'>
                   <FilterIcon />
@@ -136,6 +133,7 @@ export default function SearchPage() {
 
             <MenuAccordion
               handleItemClick={handleItemClick}
+              isLoading={isLoading}
               data={categorySkills || []}
             />
           </div>
@@ -153,11 +151,10 @@ export default function SearchPage() {
         <div className='relative p-2 md:hidden'>
           <HeaderSearch />
         </div>
-        <div className='pl-[30px] md:pl-14 lg:hidden mt-[10px]'>
+        <div className='mt-[10px] pl-[30px] md:pl-14 lg:hidden'>
           <button
             onClick={() => setIsMenuOpen(true)}
-            className='flex items-center gap-x-2 
-            font-semibold text-primary-text text-[20px]'
+            className='flex items-center gap-x-2 text-[20px] font-semibold text-primary-text'
           >
             <FilterIcon />
             Filter by skills
@@ -168,6 +165,7 @@ export default function SearchPage() {
         <div className='mt-[16px] h-[100%] w-[100%] lg:overflow-y-auto px-[30px] md:mt-0 md:px-[40px] lg:w-[85%]'>
           <SearchResultProfiles
             profiles={users || []}
+            isLoading={isLoading}
             searchFilters={searchFilters}
             onFilterChange={handleFilterChange}
             resetSearchFilters={resetSearchFilters}
