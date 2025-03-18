@@ -2,7 +2,6 @@ import Modal from "@/components/common/Modal";
 import { useBioHandlers } from "@/lib/hooks/profile/bio/useBioHandlers";
 import { useEffect, useRef, useState } from "react";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
-import { Editor } from "@tinymce/tinymce-react";
 import useGetUsers from "@/lib/hooks/useGetUsers";
 import { Editor as TinyMCEEditor } from "tinymce";
 import { useParams } from "next/navigation";
@@ -27,12 +26,16 @@ const Bio: React.FC<BioProps> = ({ data }) => {
     setBioContent(profile?.aboutMe);
   },[])
 
+  useEffect(()=>{
+    if(!isOpen) setBioContent(profile?.aboutMe);
+    
+  },[isOpen])
+
   const handleEditorChange = (evt: any) => {
     const data = evt.editor.getData();
     setBioContent(data);
   };
   const handleSaveBio = async () => {
-    console.log(bioContent,"bioContent");
     const bioData = {
       id: profile?.id,
       aboutMe: bioContent,
@@ -45,6 +48,7 @@ const Bio: React.FC<BioProps> = ({ data }) => {
       }));
       setIsOpen(false);
     });
+    setBioContent(bioContent);
   };
   return (
     <>
