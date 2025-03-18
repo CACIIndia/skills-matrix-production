@@ -1,11 +1,8 @@
 import Image from "next/image";
 import { Project } from "@/lib/types/profile";
-import Link from "next/link";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import defaultImage from "../../../../public/assets/media/avatars/default-image.png";
 import { CiSquarePlus } from "react-icons/ci";
-import EditIcon from "@/components/custom-icons/EditIcon";
-import DeleteIcon from "@/components/custom-icons/DeleteIcon";
 import useDeleteProject from "@/lib/hooks/profile/projects/useDeleteProjects";
 import toast from "react-hot-toast";
 import { useAppContext } from "@/app/context/AppContext";
@@ -14,6 +11,7 @@ import {
   isProjectDeletable,
   isProjectEditable,
 } from "@/lib/constants/GlobalVariables";
+import { scrollToSection } from "@/lib/utils/common";
 
 type ProjectHistoryCardProps = {
   projects: Project[];
@@ -39,20 +37,16 @@ const ProjectHistoryCard = ({
   const currentProject =
     projects?.filter((project) => project.isCurrentProject) || [];
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
   const previousProjects =
     projects?.filter((project) => !project.isCurrentProject) || [];
   const memberListRef = useRef<HTMLDivElement>(null);
-  
-  useEffect(() => {
-    if (isScrolled && selectedProject && memberListRef.current) {
-      setIsScrolled(false);
-      memberListRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
-    }
-  }, [isScrolled, selectedProject]);
+
+  const setCurrentProject= (project: Project) => {
+    setSelectedProject(project);
+    setTimeout(()=>{
+      scrollToSection("project-members");
+    });
+  }
 
   const deleteProject = async (profileId: string) => {
     setSelectedProject(null);
@@ -188,7 +182,7 @@ const ProjectHistoryCard = ({
                                           key={member.id}
                                           className='flex cursor-pointer'
                                           onClick={() => {
-                                            setSelectedProject(item);
+                                            setCurrentProject(item);
                                           }}
                                         >
                                           <Image
@@ -205,9 +199,9 @@ const ProjectHistoryCard = ({
                                       ))}
                                       {remainingMembersCount > 0 && (
                                         <div
-                                          onClick={() =>
-                                            setSelectedProject(item)
-                                          }
+                                          onClick={() => {
+                                            setCurrentProject(item);
+                                          }}
                                           className='flex cursor-pointer'
                                         >
                                           <span className='hover:z-5 text-3xs text-primary-inverse relative inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary font-semibold leading-none ring-1 ring-primary-light'>
@@ -315,8 +309,7 @@ const ProjectHistoryCard = ({
                                       {displayedMembers?.map((member: any) => (
                                         <div
                                           onClick={() => {
-                                            setSelectedProject(item);
-                                            setIsScrolled(true);
+                                            setCurrentProject(item);
                                           }}
                                           key={member.id}
                                           className='flex cursor-pointer'
@@ -335,9 +328,9 @@ const ProjectHistoryCard = ({
                                       ))}
                                       {remainingMembersCount > 0 && (
                                         <div
-                                          onClick={() =>
-                                            setSelectedProject(item)
-                                          }
+                                          onClick={() => {
+                                            setCurrentProject(item);
+                                          }}
                                           className='flex cursor-pointer'
                                         >
                                           <span className='hover:z-5 text-3xs text-primary-inverse relative inline-flex size-7 shrink-0 items-center justify-center rounded-full bg-primary font-semibold leading-none ring-1 ring-primary-light'>
@@ -388,6 +381,7 @@ const ProjectHistoryCard = ({
         <div
           className={`card 300 mt-4 w-full border bg-white md:relative md:ml-4 md:mt-0 md:w-1/3`}
           style={{ maxHeight: "79vh", minHeight: "200px", overflowY: "auto" }} // Ensure visibility
+          id="project-members"
         >
           {" "}
           <div className='card-header flex justify-between'>

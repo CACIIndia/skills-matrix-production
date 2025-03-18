@@ -8,8 +8,6 @@ export async function GET() {
     },
   });
 
-
-
   if (!skills) {
     return NextResponse.json({ message: "Skills not found" }, { status: 404 });
   }
@@ -23,12 +21,12 @@ export async function GET() {
     {},
   );
 
-  const result = Object.entries(categorisedSkills).map(
-    ([category, skills]) => ({
+  const result = Object.entries(categorisedSkills)
+    .sort(([categoryA], [categoryB]) => categoryA.localeCompare(categoryB))
+    .map(([category, skills]) => ({
       category,
-      skills,
-    }),
-  );
+      skills: skills.sort((a, b) => a.name.localeCompare(b.name)),
+    }));
 
   return NextResponse.json(result);
 }

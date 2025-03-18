@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 import { useAppContext } from "@/app/context/AppContext";
 import useEditProject from "@/lib/hooks/profile/projects/useEditProject";
 import { convertToLocalDate } from "@/components/common/Date-Handling/DateFormat";
-import CustomSelect from "@/components/reusable-components/CustomSelect";
+import CustomSelect from "@/components/form-controls/CustomSelect";
 
 type Project = {
   id: string;

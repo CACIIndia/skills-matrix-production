@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Skill, Training } from "@/lib/types/profile";
+import CustomSelect from "@/components/form-controls/CustomSelect";
 
 export type TrainingStatus = {
   id: string;
@@ -33,6 +34,11 @@ type Employee = {
   image: string;
 };
 
+type Option = {
+  value: string;
+  label: string;
+};
+
 const EditTraining = ({
   isOpen,
   onClose,
@@ -43,6 +49,10 @@ const EditTraining = ({
   initialTrainingData,
 }: EditTrainingProps) => {
   const [skills, setSkills] = useState<Skill[]>([]);
+  const [employeeOptions, setEmployeeOptions] = useState<Option[]>([]);
+  const [trainingStatusOptions, setTrainingStatusOptions] = useState<Option[]>([]);
+  const [categoryOptions, setCategoryOptions] = useState<Option[]>([]);
+  const [skillOptions, setSkillOptions] = useState<Option[]>([]);
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -88,6 +98,44 @@ const EditTraining = ({
   });
 
   useEffect(() => {
+    if (employeeData) {
+      setEmployeeOptions(
+        employeeData?.map((employee) => ({
+          value: employee?.id,
+          label: employee?.name,
+        })),
+      );
+    }
+
+    if (trainingStatus) {
+      setTrainingStatusOptions(
+        trainingStatus?.map((status) => ({
+          value: status?.id,
+          label: status?.name,
+        })),
+      );
+    }
+
+    if (categoriesData) {
+      setCategoryOptions(
+        categoriesData?.map((cat) => ({
+          value: cat?.category,
+          label: cat?.category,
+        })),
+      );
+    }
+
+    if (skills) {
+      setSkillOptions(
+        skills?.map((skill) => ({
+          value: skill?.id,
+          label: skill?.name,
+        })),
+      );
+    }
+  }, [categoriesData, skills, employeeData]);
+
+  useEffect(() => {
     if (isOpen) {
       formik.resetForm();
     }
@@ -102,8 +150,7 @@ const EditTraining = ({
 
   return isOpen ? (
     <div
-      className='fixed inset-0 z-[100] flex items-center justify-center bg-gray-700 bg-opacity-80'
-      style={{ backdropFilter: "blur(4px)" }}
+      className='fixed inset-0 z-[100] flex items-center justify-center bg-black/30'
     >
       <div className='relative w-full max-w-lg rounded-lg bg-white p-6 shadow-xl'>
         <h2 className='mb-4 text-xl font-semibold'>Edit Training Data</h2>
@@ -116,19 +163,20 @@ const EditTraining = ({
               <label className='mb-1 block text-sm font-medium'>
                 Select Employee<span className='text-red-500'>*</span>
               </label>
-              <select
+              <CustomSelect
+                options={employeeOptions}
                 name='employeeId'
-                value={formik.values.employeeId}
-                onChange={formik.handleChange}
-                className='w-full rounded-md border border-gray-300 p-2'
-              >
-                <option value=''>Select Employee</option>
-                {employeeData.map((emp) => (
-                  <option key={emp.id} value={emp.id}>
-                    {emp.name}
-                  </option>
-                ))}
-              </select>
+                value={
+                  employeeOptions?.find(
+                    (opt) => opt?.value === formik?.values?.employeeId,
+                  ) || null
+                }
+                onBlur={() => formik?.setFieldTouched("employeeId", true)}
+                onChange={(selected) =>
+                  formik.setFieldValue("employeeId", selected?.value || "")
+                }
+                placeholder='Select Employee'
+              />
               {formik.touched.employeeId && formik.errors.employeeId ? (
                 <div className='text-sm text-red-500'>
                   {formik.errors.employeeId}
@@ -140,19 +188,20 @@ const EditTraining = ({
               <label className='mb-1 block text-sm font-medium'>
                 Training Status<span className='text-red-500'>*</span>
               </label>
-              <select
-                name='statusId'
-                value={formik.values.statusId}
-                onChange={formik.handleChange}
-                className='w-full rounded-md border border-gray-300 p-2'
-              >
-                <option value=''>Select Status</option>
-                {trainingStatus.map((status) => (
-                  <option key={status.id} value={status.id}>
-                    {status.name}
-                  </option>
-                ))}
-              </select>
+              <CustomSelect
+                  options={trainingStatusOptions}
+                  name='statusId'
+                  value={
+                    trainingStatusOptions?.find(
+                      (opt) => opt?.value === formik?.values?.statusId,
+                    ) || null
+                  }
+                  onBlur={() => formik?.setFieldTouched("statusId", true)}
+                  onChange={(selected) =>
+                    formik.setFieldValue("statusId", selected?.value || "")
+                  }
+                  placeholder='Select Status'
+                />
               {formik.touched.statusId && formik.errors.statusId ? (
                 <div className='text-sm text-red-500'>
                   {formik.errors.statusId}
@@ -163,19 +212,20 @@ const EditTraining = ({
           <div className='mt-4 grid grid-cols-2 gap-4'>
             <div>
               <label className='mb-1 block text-sm font-medium'>Category<span className='text-red-500'>*</span></label>
-              <select
+              <CustomSelect
+                options={categoryOptions}
                 name='categoryName'
-                value={formik.values.categoryName}
-                onChange={formik.handleChange}
-                className='w-full rounded-md border border-gray-300 p-2'
-              >
-                <option value=''>Select Category</option>
-                {categoriesData.map((cat) => (
-                  <option key={cat.category} value={cat.category}>
-                    {cat.category}
-                  </option>
-                ))}
-              </select>
+                value={
+                  categoryOptions?.find(
+                    (opt) => opt?.value === formik?.values?.categoryName,
+                  ) || null
+                }
+                onBlur={() => formik?.setFieldTouched("categoryName", true)}
+                onChange={(selected) =>
+                  formik.setFieldValue("categoryName", selected?.value || "")
+                }
+                placeholder='Select category'
+              />
               {formik.touched.categoryName && formik.errors.categoryName ? (
                 <div className='text-sm text-red-500'>
                   {formik.errors.categoryName}
@@ -185,21 +235,20 @@ const EditTraining = ({
 
             <div>
               <label className='mb-1 block text-sm font-medium'>Skill<span className='text-red-500'>*</span></label>
-              <select
+              <CustomSelect
+                options={skillOptions}
                 name='skillId'
-                id='formik-skillId'
-                value={formik.values.skillId}
-                onChange={formik.handleChange}
-                className='w-full rounded-md border border-gray-300 p-2'
-                disabled={!formik.values.categoryName}
-              >
-                <option value=''>Select Skill</option>
-                {skills.map((sk) => (
-                  <option key={sk.id} value={sk.id}>
-                    {sk.name}
-                  </option>
-                ))}
-              </select>
+                value={
+                  skillOptions?.find(
+                    (opt) => opt?.value === formik?.values?.skillId,
+                  ) || null
+                }
+                onBlur={() => formik?.setFieldTouched("skillId", true)}
+                onChange={(selected) =>
+                  formik.setFieldValue("skillId", selected?.value || "")
+                }
+                placeholder='Select or search a skill'
+              />
               {formik.touched.skillId && formik.errors.skillId ? (
                 <div className='text-sm text-red-500'>
                   {formik.errors.skillId}

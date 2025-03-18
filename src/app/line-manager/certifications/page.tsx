@@ -8,7 +8,7 @@ import { Certificate } from "@/lib/types/profile";
 
 // Lazy load CertificateTable
 const CertificateTable = React.lazy(
-  () => import("@/components/views/profile/CertificateTable")
+  () => import("@/components/views/profile/CertificateTable"),
 );
 
 export default function Certifications() {
@@ -59,12 +59,18 @@ export default function Certifications() {
       sortable: true,
       className: "min-w-[135px]",
     },
+    {
+      key: "actions",
+      label: "Actions",
+      sortable: false,
+      className: "min-w-[135px]",
+    },
   ];
 
   if (isLoading || !profile) {
     return (
       <div>
-        <div className="container-fixed">
+        <div className='container-fixed'>
           <TableSkeleton
             cols={5}
             tableHeader={false}
@@ -78,17 +84,26 @@ export default function Certifications() {
 
   return (
     <>
-      <div className="container-fixed">
-        <div className="pb-7.5 flex flex-wrap items-center justify-between gap-5 lg:items-end">
-          <div className="flex flex-col justify-center gap-2">
-            <h1 className="text-xl font-semibold leading-none text-gray-900">
-              Certifications
-            </h1>
+      <div className='container-fixed'>
+        <div className='pb-7.5 flex flex-wrap items-center justify-between gap-5 lg:items-end'>
+          <div className='flex flex-col justify-center gap-2'>
+            <h3 className='text-lg text-[#6D6E82]'>
+              Showing {certificatesData.length} team certifications
+            </h3>
           </div>
         </div>
       </div>
-      <div className="container-fixed">
-        <Suspense fallback={<TableSkeleton cols={5} tableHeader={true} isSearchable={false} addNewData={false}/>}>
+      <div className='container-fixed'>
+        <Suspense
+          fallback={
+            <TableSkeleton
+              cols={5}
+              tableHeader={true}
+              isSearchable={false}
+              addNewData={false}
+            />
+          }
+        >
           <CertificateTable
             headers={headers}
             certificates={certificatesData}
@@ -101,7 +116,8 @@ export default function Certifications() {
             trainingData={[]}
             isSearchable={true}
             addNewData={false}
-            noDataMessage="No certifications found"
+            noDataMessage='No certifications found'
+            showActions={{edit:false, delete:false,download:true}}
           />
         </Suspense>
       </div>

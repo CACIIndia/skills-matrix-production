@@ -163,9 +163,9 @@ const TrainingSchedule: React.FC = () => {
       <div className="container-fixed">
         <div className="pb-7.5 flex flex-wrap items-center justify-between gap-5 lg:items-end">
           <div className="flex flex-col justify-center gap-2">
-            <h1 className="text-xl font-semibold leading-none text-gray-900">
-              Training - Schedule
-            </h1>
+          <h3 className="text-lg text-[#6D6E82] ">
+             Showing  {trainingData.length} team training 
+            </h3>
           </div>
         </div>
       </div>
@@ -191,11 +191,12 @@ const TrainingSchedule: React.FC = () => {
             renderCell={renderCell}
             isPaginated={true}
             noDataMessage="No trainings found"
+            tableHeading="Training"
           />
         </div>
       )}
 
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense>
         {isAddModalOpen && (
           <CreateTraining
             isOpen={isAddModalOpen}

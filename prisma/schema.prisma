@@ -27,6 +27,7 @@ model User {
   reportedTo           String?
   reportedToId         String?
   role                 String?
+  aboutMe              String?
   createdAt            DateTime        @default(now())
   joiningDate          DateTime?
   updatedAt            DateTime        @updatedAt
@@ -204,6 +205,7 @@ model CACIProfile {
   description      String?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
+  status    Boolean  @default(true)
   employee         User      @relation(fields: [employeeId], references: [id])
   project          Project   @relation(fields: [projectId], references: [id])
 }

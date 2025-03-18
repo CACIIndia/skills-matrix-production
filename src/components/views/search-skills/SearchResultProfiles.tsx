@@ -162,7 +162,10 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
               {rowData.userSkills.length > 2 && (
                 <button
                   onClick={() =>
-                    window.open(`/profile/overview/${rowData.id}`, "_blank")
+                    window.open(
+                      `/profile/overview/${rowData.id}?section=skills`,
+                      "_blank",
+                    )
                   }
                   className='text-nowrap rounded-[4px] bg-rose-500 px-2 text-white transition duration-300 hover:bg-blue-600'
                 >
@@ -180,13 +183,21 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
   };
 
   return (
-    <div className='w-full md:p-6 font-inter text-[#6D6E82]'>
+    <div className='w-full font-inter text-[#6D6E82] md:p-6'>
       <div className='flex flex-wrap items-center justify-between gap-5 pb-2 lg:items-end'>
         <div className='flex flex-col justify-center gap-2'>
-          <h1 className='text-xl font-bold leading-none text-gray-900'>
-            Search
-          </h1>
-          <p className='text-[14px] lg:text-[16px] font-light'>
+          <div className='flex items-center justify-between'>
+            <h1 className='text-xl font-bold leading-none text-gray-900'>
+              Search
+            </h1>
+            <button
+              className='lg:hidden border-danger text-danger rounded-md border px-2 py-1 text-[14px]'
+              onClick={() => resetSearchFilters()}
+            >
+              Clear Search
+            </button>
+          </div>
+          <p className='text-[14px] font-light lg:text-[16px]'>
             Use the entry field below to search by name or job title. You can
             also use the skills side panel to apply further filtering{" "}
           </p>
@@ -202,7 +213,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
         </div> */}
       </div>
 
-      <div className='flex flex-col items-start md:flex-row  w-[100%] md:items-center gap-4 rounded-md bg-white'>
+      <div className='flex w-[100%] flex-col items-start gap-4 rounded-md bg-white md:flex-row md:items-center'>
         <div className='flex h-10 w-full items-center gap-2 rounded-lg border border-gray-200 px-2'>
           <i className='ki-filled ki-magnifier'></i>
           <input
@@ -233,7 +244,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
         <select
           value={locationFilter}
           onChange={(e) => onFilterChange("locationFilter", e.target.value)}
-          className='basis-[15%] w-[100%] rounded-md border border-gray-300 p-2 text-sm text-gray-700 focus:ring focus:ring-blue-300'
+          className='basis-[15%] rounded-md border border-gray-300 p-2 text-sm text-gray-700 focus:ring focus:ring-blue-300'
         >
           <option value='' className='hidden'>
             Location
@@ -245,13 +256,19 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
             </option>
           ))}
         </select>
-
         <button
+          className='hidden lg:flex border-danger text-danger rounded-md border px-2 py-2 text-[14px] text-nowrap'
+          onClick={() => resetSearchFilters()}
+        >
+          Clear Search
+        </button>
+
+        {/*  <button
           onClick={() => resetSearchFilters()}
           className='btn btn-sm btn-danger text-nowrap rounded-md bg-red-500 px-6 py-2 text-white hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-300'
         >
           <i className='ki-filled ki-trash'></i> Clear Search
-        </button>
+        </button> */}
       </div>
       <div className='mt-3'>
         <p>
@@ -295,7 +312,9 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
       <div className='pb-7.5 mt-4 flex flex-wrap items-center justify-between gap-5 lg:items-end'>
         <div className='flex flex-col justify-center gap-2'>
           <h1 className='text-xl font-semibold leading-none text-gray-900'>
-            {/* <i className='ki-filled ki-users text-primary'></i> */} Search Results {/* (
+            {/* <i className='ki-filled ki-users text-primary'></i> */} Search
+            Results{" "}
+            {/* (
             {filteredProfiles.length}) */}
           </h1>
         </div>
@@ -320,7 +339,7 @@ const SearchResultProfiles: FC<SearchResultProfilesProps> = ({
             label: "Location",
           },
         ]}
-        isSearchable={true}
+        isSearchable={false}
         addNewData={false}
         data={filteredProfiles}
         isPaginated={true}

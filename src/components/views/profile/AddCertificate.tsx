@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import FileUploadIcon from "@/components/custom-icons/FileUploadIcon";
+import CustomSelect from "@/components/form-controls/CustomSelect";
 
 type AddCertificateModalProps = {
   isAddModalOpen: boolean;
@@ -19,6 +20,11 @@ type CategorySkillsData = {
   skills: Skill[];
 };
 
+type Option = {
+  value: string;
+  label: string;
+};
+
 const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
   isAddModalOpen,
   handleToggleAddModal,
@@ -28,6 +34,9 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [skills, setSkills] = useState<Skill[]>([]);
+  const [trainingOptions, setTrainingOptions] = useState<Option[]>([]);
+  const [categoryOptions, setCategoryOptions] = useState<Option[]>([]);
+  const [skillOptions, setSkillOptions] = useState<Option[]>([]);
   // Formik form handling
   const formik = useFormik({
     initialValues: {
@@ -114,6 +123,35 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
   }; */
   //console.log(formik.errors,"formikerroes");
 
+  
+  useEffect(() => {
+    if (trainingData) {
+      setTrainingOptions(
+        trainingData?.map((training) => ({
+          value: training?.id,
+          label: `${training?.skillName}: ${training?.categoryName}`
+        })),
+      );
+    }
+    if (categorySkills) {
+      setCategoryOptions(
+        categorySkills?.map((cat) => ({
+          value: cat?.category,
+          label: cat?.category,
+        })),
+      );
+    }
+
+    if (skills) {
+      setSkillOptions(
+        skills?.map((skill) => ({
+          value: skill?.id,
+          label: skill?.name,
+        })),
+      );
+    }
+  }, [categorySkills, skills, trainingData]);
+  
   useEffect(() => {
     formik?.resetForm({
       values: {
@@ -144,8 +182,8 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
 
   return (
     isAddModalOpen && (
-      <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
-        <div className='mx-2 h-[95%] w-[100%] overflow-y-auto rounded-md bg-white p-6 shadow-lg sm:mx-0 sm:h-auto sm:w-[600px]'>
+      <div className='fixed inset-0 z-[120] flex items-center justify-center bg-black bg-opacity-50'>
+        <div className='mx-2 h-[90%] w-[100%] overflow-y-auto rounded-md bg-white p-6 shadow-lg sm:mx-0 sm:h-auto sm:w-[600px]'>
           <div className='flex flex-wrap items-center justify-between'>
             <h3 className='mb-4 text-lg font-semibold'>Add New Certificate</h3>
             {trainingData.length > 0 && (
@@ -211,51 +249,33 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                   Training List<span className='text-red-500'>*</span>
                 </label>
                 <div className='flex-1'>
-                  <select
-                    id='trainingRecordId'
+                  <CustomSelect
+                    options={trainingData.map((training) => ({
+                      value: training.id,
+                      label: `${training.skillName} - ${training.categoryName}`,
+                    }))}
                     name='trainingRecordId'
-                    onBlur={formik.handleBlur}
-                    value={formik?.values?.trainingRecordId}
-                    onChange={(e) => {
-                      const selectedTrainingId = e.target.value;
+                    value={
+                      trainingOptions?.find(
+                        (opt) => opt?.value === formik?.values?.trainingRecordId,
+                      ) || null
+                    }
+                    onBlur={() => formik?.setFieldTouched('trainingRecordId', true)}
+                    onChange={(selected) => {
+                      const selectedTrainingId = selected?.value;
                       const selectedTraining = trainingData.find(
-                        (training) => training.id === selectedTrainingId,
+                        (training) => training.id === selectedTrainingId
                       );
                       if (selectedTraining) {
-                        formik.setFieldValue(
-                          "trainingRecordId",
-                          selectedTraining.id,
-                        );
-                        formik.setFieldValue(
-                          "categoryId",
-                          selectedTraining.categoryId,
-                        );
-
-                        formik.setFieldValue(
-                          "categoryName",
-                          selectedTraining.categoryName,
-                        );
-                        formik.setFieldValue(
-                          "skillId",
-                          selectedTraining?.skillId,
-                        );
-                        formik.setFieldValue(
-                          "skillName",
-                          selectedTraining?.skillName,
-                        );
+                        formik.setFieldValue('trainingRecordId', selectedTraining.id);
+                        formik.setFieldValue('categoryId', selectedTraining.categoryId);
+                        formik.setFieldValue('categoryName', selectedTraining.categoryName);
+                        formik.setFieldValue('skillId', selectedTraining?.skillId);
+                        formik.setFieldValue('skillName', selectedTraining?.skillName);
                       }
                     }}
-                    className='w-full border p-2'
-                  >
-                    <option value='' disabled>
-                      Select a training
-                    </option>
-                    {trainingData.map((training) => (
-                      <option key={training.id} value={training.id}>
-                        {training.skillName} - {training.categoryName}
-                      </option>
-                    ))}
-                  </select>
+                    placeholder='Select a training'
+                  />
                   {formik.touched.trainingRecordId &&
                     formik.errors.trainingRecordId && (
                       <p className='text-sm text-red-500'>
@@ -272,23 +292,21 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                   Category<span className='text-red-500'>*</span>
                 </label>
                 <div className='flex-1'>
-                  <select
+                  <CustomSelect
+                    options={categoryOptions}
                     name='categoryName'
-                    value={formik?.values?.categoryName}
-                    onChange={formik?.handleChange}
-                    onBlur={formik.handleBlur}
-                    className='w-full border p-2'
-                    disabled={!!formik?.values?.trainingRecordId}
-                  >
-                    <option value='' disabled>
-                      Select a category
-                    </option>
-                    {categorySkills?.map((cat) => (
-                      <option key={cat?.category} value={cat?.category}>
-                        {cat?.category}
-                      </option>
-                    ))}
-                  </select>
+                    value={
+                      categoryOptions?.find(
+                        (opt) => opt?.value === formik?.values?.categoryName,
+                      ) || null
+                    }
+                    onBlur={() => formik?.setFieldTouched("categoryName", true)}
+                    onChange={(selected) =>
+                      formik.setFieldValue("categoryName", selected?.value || "")
+                    }
+                    placeholder='Select or search a category'
+                  />
+                  
                   {formik.touched.categoryName &&
                     formik.errors.categoryName && (
                       <p className='text-sm text-red-500'>
@@ -304,23 +322,20 @@ const AddCertificateModal: React.FC<AddCertificateModalProps> = ({
                   Skill<span className='text-red-500'>*</span>
                 </label>
                 <div className='flex-1'>
-                  <select
-                    name='skillId'
-                    value={formik?.values?.skillId}
-                    onChange={formik?.handleChange}
-                    onBlur={formik.handleBlur}
-                    className='w-full border p-2'
-                    disabled={!formik?.values?.categoryName}
-                  >
-                    <option value='' disabled>
-                      Select skill
-                    </option>
-                    {skills?.map((sk) => (
-                      <option key={sk?.id} value={sk?.id}>
-                        {sk?.name}
-                      </option>
-                    ))}
-                  </select>
+                  <CustomSelect
+                      options={skillOptions}
+                      name='skillId'
+                      value={
+                        skillOptions?.find(
+                          (opt) => opt?.value === formik?.values?.skillId,
+                        ) || null
+                      }
+                      onBlur={() => formik?.setFieldTouched("skillId", true)}
+                      onChange={(selected) =>
+                        formik.setFieldValue("skillId", selected?.value || "")
+                      }
+                      placeholder='Select or search a skill'
+                    />
                   {formik.touched.skillId && formik.errors.skillId ? (
                     <div className='text-sm text-red-500'>
                       {formik.errors?.skillId}

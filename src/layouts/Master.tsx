@@ -66,32 +66,30 @@ export default function MasterLayout({
 
   return (
     <>
-      <div className='flex'>
-        <div className={` flex grow flex-col`}>
-          <Header
-            onClick={toggleSearchModal}
-            mobileSideBarClick={toggleMobileSidebar}
-          />
+      <div className='h-[100%]'>
+        <Header
+          onClick={toggleSearchModal}
+          mobileSideBarClick={toggleMobileSidebar}
+        />
 
-          {/* Main Content */}
+        {/* Main Content */}
 
-          <main
-            className='content grow mt-16'
-            style={{ width: "100%",zIndex:90}}
-          >
-            {children}
-          </main>
-        </div>
+        <main
+          className='content mt-16 grow'
+          style={{ width: "100%", zIndex: 90 }}
+        >
+          {children}
+        </main>
       </div>
 
       {/* Search Modal */}
-      {isSearchModalOpen && (
+      {/*  {isSearchModalOpen && (
         <SearchModal
           isOpen={isSearchModalOpen}
           onClose={closeSearchModal}
           users={users || []}
         />
-      )}
+      )} */}
     </>
   );
 }

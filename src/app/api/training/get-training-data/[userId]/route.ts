@@ -26,6 +26,7 @@ export async function GET(request: Request, { params }: { params: { userId: stri
     const whereCondition: any = {};
     if (filter_type === "createdBy") {
       whereCondition.createdById = userId;
+ 
     } else if (filter_type === "employeeId") {
       whereCondition.employeeId = userId;
     } else {
@@ -34,7 +35,7 @@ export async function GET(request: Request, { params }: { params: { userId: stri
         { status: 400 }
       );
     }
-
+    whereCondition.status =1;
     if (statusId) {
       whereCondition.statusId = statusId;
     }
