@@ -89,10 +89,9 @@ const HeaderSearch: React.FC = () => {
             onClick={() => setProfileClicked(false)}
             onChange={(e)=>{
               setSearchQuery(e.target.value);
-              // if(profileClicked){
-              //   console.log("profile clicked");
-              //   setProfileClicked(false);
-              // }
+              if(profileClicked){
+                setProfileClicked(false);
+              }
             }}
           />
         )}
