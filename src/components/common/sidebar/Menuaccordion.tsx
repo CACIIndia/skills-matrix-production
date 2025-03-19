@@ -1,7 +1,6 @@
 import { useAppContext } from "@/app/context/AppContext";
 import React, { useState } from "react";
 import { skillsHexColors } from "@/lib/constants/SkillsHexColors";
-import { is } from "tinymce";
 
 interface Skill {
   id: string;
