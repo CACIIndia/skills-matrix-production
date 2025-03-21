@@ -7,7 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 function Menu({ submenu, link, name, isExpanded }: any) {
   const router = useRouter();
   const pathname = usePathname();
-  const { selectedItems, toggleSelectedItem, categorySkills } = useAppContext();
+  const { selectedItems, toggleSelectedItem, categorySkills,isLoading } = useAppContext();
 
   const handleItemClick = (skill: any) => {
     toggleSelectedItem(skill);
@@ -84,6 +84,7 @@ function Menu({ submenu, link, name, isExpanded }: any) {
         <MenuAccordion
           handleItemClick={handleItemClick}
           data={categorySkills || []}
+          isLoading={isLoading}
         />
       )}
     </div>

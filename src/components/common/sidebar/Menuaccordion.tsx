@@ -14,11 +14,13 @@ interface Category {
 }
 
 interface MenuAccordionProps {
+  isLoading: boolean;
   data: Category[];
   handleItemClick: (skill: Skill) => void;
 }
 
 const MenuAccordion: React.FC<MenuAccordionProps> = ({
+  isLoading,
   data,
   handleItemClick,
 }) => {
@@ -37,8 +39,12 @@ const MenuAccordion: React.FC<MenuAccordionProps> = ({
     setActiveCategory(activeCategory === category ? null : category);
   };
 
-  return (
-    <div className='menu-accordion relative block gap-0.5 pl-[10px] before:absolute before:bottom-0 before:left-[20px] before:top-0 before:border-l before:border-[#6D6E82] w-[100%]'>
+  return isLoading ? (
+    <div className='flex h-[100%] w-[100%] justify-center overflow-x-hidden'>
+      <div className='h-[100%] w-[90%] animate-pulse rounded-md bg-gray-200'></div>
+    </div>
+  ) : (
+    <div className='menu-accordion relative block w-[100%] gap-0.5 pl-[10px] before:absolute before:bottom-0 before:left-[20px] before:top-0 before:border-l before:border-[#6D6E82]'>
       {updatedData?.map((category) => {
         const sortedSkills = category.skills.sort((a, b) =>
           a?.name?.localeCompare(b?.name),

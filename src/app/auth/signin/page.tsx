@@ -2,14 +2,26 @@
 
 import { signIn } from "next-auth/react";
 import { CgMicrosoft } from "react-icons/cg";
+import { useState } from "react";
+import { LuLoaderCircle } from "react-icons/lu";
 
 const SignIn = () => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSignIn = async () => {
+    setLoading(true);
+    try {
+      await signIn("azure-ad");
+    } catch (error) {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className='flex min-h-screen items-center justify-center bg-gray-100'>
       <div className='flex flex-col items-center rounded-lg bg-white p-8 shadow-md'>
         <div className='mb-8'>
           <svg
-            className=''
             version='1.0'
             id='CACI_Logo'
             width='200'
@@ -39,12 +51,19 @@ const SignIn = () => {
           Skills Matrix
         </h1>
         <button
-          onClick={() => signIn("azure-ad")}
-          className='  text-md flex w-80 items-center justify-center rounded-md border border-gray-300 px-4 py-3 font-semibold text-[#FFFFFF] transition duration-150 ease-in-out bg-[#363535] '
+          onClick={handleSignIn}
+          className={`text-md flex w-80 items-center justify-center rounded-md border border-gray-300 px-4 py-3 font-semibold text-[#FFFFFF] transition duration-150 ease-in-out ${loading ? "bg-opacity-85" : ""} bg-[#363535]`}
           aria-label='Sign in with Microsoft'
+          disabled={loading}
         >
-          <CgMicrosoft className='mr-2 text-2xl text-blue-500 ' />
-          SIGN IN WITH MICROSOFT
+          {loading ? (
+            <LuLoaderCircle className='h-6 w-6 animate-spin text-blue-500' />
+          ) : (
+            <>
+              <CgMicrosoft className='mr-2 text-2xl text-blue-500' />
+              SIGN IN WITH MICROSOFT
+            </>
+          )}
         </button>
       </div>
     </div>

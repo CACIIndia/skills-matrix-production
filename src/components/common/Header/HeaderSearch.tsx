@@ -4,13 +4,40 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useRef, useEffect } from "react";
 import default_image from "../../../../public/assets/media/avatars/default-image.png";
+import { usePathname } from "next/navigation";
 
 const HeaderSearch: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const {viewedProfile} = useAppContext();
   const [profileClicked, setProfileClicked] = useState(false);
   const { data: users, isLoading } = useGetUsers();
   const { profile } = useAppContext();
   const searchRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+  
+
+
+  useEffect(() => {
+    // when path name changes from profile/overview/id then reset search query
+   
+    const isProfileOverviewPage = /^\/profile\/overview\/[^/]+$/.test(pathname);
+    if (!isProfileOverviewPage) {
+      setSearchQuery("");
+    }
+  }, [pathname]);
+
+  useEffect(()=>{
+    // when user refreshes the page and viewed profile is not null
+    // then set search query to viewed profile name
+  
+    const isProfileOverviewPage = /^\/profile\/overview\/[^/]+$/.test(pathname);
+      if(viewedProfile && isProfileOverviewPage)
+      setSearchQuery(viewedProfile.name);
+      setProfileClicked(true);
+  },[viewedProfile])
+
+ 
+  
 
   const filteredUsers = searchQuery
     ? users?.filter(
@@ -60,7 +87,12 @@ const HeaderSearch: React.FC = () => {
             className="h-full w-full border-none outline-none"
             value={searchQuery}
             onClick={() => setProfileClicked(false)}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e)=>{
+              setSearchQuery(e.target.value);
+              if(profileClicked){
+                setProfileClicked(false);
+              }
+            }}
           />
         )}
       </div>
